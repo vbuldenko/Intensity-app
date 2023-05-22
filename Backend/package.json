@@ -1,0 +1,11 @@
+{
+  "name": "intensity_be",
+  "version": "1.0.0",
+  "description": "backend part of the app",
+  "main": "index.js",
+  "scripts": {
+    "test": " "
+  },
+  "author": "Vlad Buldenko",
+  "license": "ISC"
+}
