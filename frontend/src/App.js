@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
 
-import Header from './components/Header';
 import Home from './components/Home';
 import About from './components/About';
 import Services from './components/Services';
@@ -20,7 +19,6 @@ function App() {
     return (
         <div className="App">
             <Navbar />
-            <Header />
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />

@@ -1,51 +1,54 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* .App {
+    height: 100vh;
+} */
 
 /* App.css */
 @media (max-width: 768px) {
-  .App {
-    padding: 10px;
-  }
+    .App {
+        padding: 10px;
+    }
 }
 
 /* Header.css */
 @media (max-width: 768px) {
-  .App-header {
-    padding: 10px;
-  }
+    .App-header {
+        padding: 10px;
+    }
 }
 
 /* About.css */
 @media (max-width: 768px) {
-  .AboutSection {
-    padding: 10px;
-  }
+    .AboutSection {
+        padding: 10px;
+    }
 }
 
 /* Services.css */
 @media (max-width: 768px) {
-  .ServicesSection {
-    padding: 10px;
-  }
+    .ServicesSection {
+        padding: 10px;
+    }
 }
 
 /* Contact.css */
 @media (max-width: 768px) {
-  .ContactSection {
-    padding: 10px;
-  }
+    .ContactSection {
+        padding: 10px;
+    }
 }
 
 /* Footer.css */
 @media (max-width: 768px) {
-  .App-footer {
-    padding: 10px;
-  }
+    .App-footer {
+        padding: 10px;
+    }
 }
