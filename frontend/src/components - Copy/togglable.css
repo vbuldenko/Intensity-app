@@ -1,0 +1,14 @@
+.togglable-button {
+    background-color: #23425c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.togglable-button:hover {
+    background-color: #041d36;
+}
