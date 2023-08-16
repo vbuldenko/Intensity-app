@@ -1,3 +1,76 @@
+.schedule-section * {
+    box-sizing: border-box;
+    margin: 0;
+}
 .schedule-section {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    margin: 2em 0 0.25em 0;
+}
+
+.schedule-week {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1em;
+    margin: 0;
+}
+
+.schedule-day * {
+    margin: 0;
+}
+.schedule-day {
+    padding: 1em;
+}
+
+.schedule-day.active {
+    color: rgb(100, 39, 212);
+    border-bottom: 2px solid black;
+}
+
+.schedule-info {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding-bottom: 2em;
+}
+
+.schedule-current-date {
+    background: rgb(145, 156, 204);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2em 2em;
+    margin: 0;
+}
+
+.schedule-current-date span {
+    background: white;
+    padding: 0.5em 2em;
+}
+
+.schedule-training {
+    display: flex;
+    gap: 4em;
+    justify-content: space-between;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 1em;
+    padding: 2em;
+    border-radius: 1em;
+}
+
+.schedule-training span {
+    font-size: 0.75em;
+}
+
+.schedule-training-details {
+    display: flex;
+    gap: 4em;
+}
+
+.schedule-training button {
+    font-weight: bold;
+    width: 15%;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
