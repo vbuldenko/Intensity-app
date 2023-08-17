@@ -1,4 +1,8 @@
 import './schedule.css';
+import photo from '../images/550-hijack.webp';
+import anzhphoto from '../images/anzhel.jpg';
+import babiychuk from '../images/Babiychuk.jpg';
+import tkachuk from '../images/Tkachuk.jpg';
 
 function Schedule() {
     return (
@@ -7,32 +11,38 @@ function Schedule() {
             <div>
                 <ul className="schedule-week">
                     <li className="schedule-day">
-                        <p>14</p>
-                        <h2>MON</h2>
+                        <p className="schedule-day-abbrev">{'<'}</p>
                     </li>
                     <li className="schedule-day">
-                        <p>15</p>
-                        <h2>TUE</h2>
+                        <p>Aug 14</p>
+                        <p className="schedule-day-abbrev">MON</p>
+                    </li>
+                    <li className="schedule-day">
+                        <p>Aug 15</p>
+                        <p className="schedule-day-abbrev">TUE</p>
                     </li>
                     <li className="schedule-day active">
-                        <p>16</p>
-                        <h2>WED</h2>
+                        <p>Aug 16</p>
+                        <p className="schedule-day-abbrev">WED</p>
                     </li>
                     <li className="schedule-day">
-                        <p>17</p>
-                        <h2>THU</h2>
+                        <p>Aug 17</p>
+                        <p className="schedule-day-abbrev">THU</p>
                     </li>
                     <li className="schedule-day">
-                        <p>18</p>
-                        <h2>FRI</h2>
+                        <p>Aug 18</p>
+                        <p className="schedule-day-abbrev">FRI</p>
                     </li>
                     <li className="schedule-day">
-                        <p>19</p>
-                        <h2>SAT</h2>
+                        <p>Aug 19</p>
+                        <p className="schedule-day-abbrev">SAT</p>
                     </li>
                     <li className="schedule-day">
-                        <p>20</p>
-                        <h2>SUN</h2>
+                        <p>Aug 20</p>
+                        <p className="schedule-day-abbrev">SUN</p>
+                    </li>
+                    <li className="schedule-day">
+                        <p className="schedule-day-abbrev">{'>'}</p>
                     </li>
                 </ul>
                 <div className="schedule-info">
@@ -50,10 +60,14 @@ function Schedule() {
                                 </b>
                                 <span>50 min</span>
                             </div>
-                            <div>Image</div>
+                            <img className="schedule-trainer" src={babiychuk} />
                             <div>
                                 <b>Functional</b>
                                 <p>Anastsia Babiychuk</p>
+                            </div>
+                            <div>
+                                <b>People</b>
+                                <p>5</p>
                             </div>
                         </div>
 
@@ -67,10 +81,14 @@ function Schedule() {
                                 </b>
                                 <span>50 min</span>
                             </div>
-                            <div>Image</div>
+                            <img className="schedule-trainer" src={anzhphoto} />
                             <div>
                                 <b>Fly Stretching</b>
                                 <p>Anzhelika</p>
+                            </div>
+                            <div>
+                                <b>People</b>
+                                <p>8</p>
                             </div>
                         </div>
 
@@ -84,10 +102,14 @@ function Schedule() {
                                 </b>
                                 <span>50 min</span>
                             </div>
-                            <div>Image</div>
+                            <img className="schedule-trainer" src={tkachuk} />
                             <div>
                                 <b>Heels</b>
                                 <p>Anastasia Tkachuk</p>
+                            </div>
+                            <div>
+                                <b>People</b>
+                                <p>6</p>
                             </div>
                         </div>
 
@@ -101,10 +123,14 @@ function Schedule() {
                                 </b>
                                 <span>50 min</span>
                             </div>
-                            <div>Image</div>
+                            <img className="schedule-trainer" src={tkachuk} />
                             <div>
                                 <b>Stretching</b>
                                 <p>Anastasia Tkachuk</p>
+                            </div>
+                            <div>
+                                <b>People</b>
+                                <p>6</p>
                             </div>
                         </div>
 

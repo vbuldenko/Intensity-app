@@ -1,12 +1,12 @@
 .schedule-section * {
     box-sizing: border-box;
-    margin: 0;
+    margin: 0 1em;
 }
 .schedule-section {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 2em 0 0.25em 0;
+    margin: 2em 0;
 }
 
 .schedule-week {
@@ -23,6 +23,11 @@
 }
 .schedule-day {
     padding: 1em;
+}
+
+.schedule-day-abbrev {
+    font-size: 2.25em;
+    font-weight: 700;
 }
 
 .schedule-day.active {
@@ -53,9 +58,10 @@
     display: flex;
     gap: 4em;
     justify-content: space-between;
+    align-items: center;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     margin: 1em;
-    padding: 2em;
+    padding: 1em 2em;
     border-radius: 1em;
 }
 
@@ -65,10 +71,18 @@
 
 .schedule-training-details {
     display: flex;
-    gap: 4em;
+    width: 40%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.schedule-trainer {
+    width: 80px;
+    border-radius: 50%;
 }
 
 .schedule-training button {
+    padding: 1em;
     font-weight: bold;
     width: 15%;
     border: none;
