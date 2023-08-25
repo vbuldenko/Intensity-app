@@ -1,5 +1,4 @@
-import './schedule.css';
-import photo from '../images/550-hijack.webp';
+import './styles/schedule.css';
 import anzhphoto from '../images/anzhel.jpg';
 import babiychuk from '../images/Babiychuk.jpg';
 import tkachuk from '../images/Tkachuk.jpg';

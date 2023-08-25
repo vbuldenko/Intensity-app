@@ -1,4 +1,4 @@
-import './account.css';
+import './styles/account.css';
 
 function Account() {
     let dates = [

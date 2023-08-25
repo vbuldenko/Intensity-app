@@ -1,0 +1,40 @@
+import '../styles/admin.css';
+import anzhphoto from '../../images/anzhel.jpg';
+import { NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+
+function Admin() {
+    const activeStyles = {
+        fontWeight: '800',
+        textDecoration: 'underline',
+        color: '#000000',
+    };
+
+    const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);
+
+    return (
+        <section className="admin-section">
+            <nav className="admin-menu">
+                <NavLink to={'/account'} end style={styleChanger}>
+                    Overview
+                </NavLink>
+                <NavLink to={'/account/schedule'} style={styleChanger}>
+                    Schedule
+                </NavLink>
+                <NavLink to={'/account/clients'} style={styleChanger}>
+                    Clients
+                </NavLink>
+                <NavLink to={'/account/team'} style={styleChanger}>
+                    Team
+                </NavLink>
+                <NavLink to={'/account/settings'} style={styleChanger}>
+                    Settings
+                </NavLink>
+                <p>Log out</p>
+            </nav>
+            <Outlet />
+        </section>
+    );
+}
+
+export default Admin;

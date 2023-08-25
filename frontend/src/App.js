@@ -12,31 +12,42 @@ import Prices from './components/Prices';
 import Contacts from './components/Contacts';
 import LoginForm from './components/LoginForm';
 import Account from './components/Account';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
+
+import Admin from './components/Admin/Admin';
+import Overview from './components/Admin/Overview';
+import AdminSchedule from './components/Admin/Schedule';
+import Clients from './components/Admin/Clients';
+import Settings from './components/Admin/Settings';
+import Team from './components/Admin/Team';
+import Layout from './components/Layout';
 
 function App() {
     return (
         <div className="App">
-            <Navbar />
-            <main>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/schedule" element={<Schedule />} />
-                    <Route path="/prices" element={<Prices />} />
-                    <Route path="/contacts" element={<Contacts />} />
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="about" element={<About />} />
+                    <Route path="services" element={<Services />} />
+                    <Route path="schedule" element={<Schedule />} />
+                    <Route path="prices" element={<Prices />} />
+                    <Route path="contacts" element={<Contacts />} />
                     {/* <Route path="/users" element={<Users users={users} />} /> */}
                     {/* <Route
                         path="/users/:id"
                         element={<User user={selectedUser} />}
                     /> */}
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/account" element={<Account />} />
-                </Routes>
-            </main>
-            <Footer />
+                    <Route path="login" element={<LoginForm />} />
+
+                    <Route path="account" element={<Admin />}>
+                        <Route index element={<Overview />} />
+                        <Route path="schedule" element={<AdminSchedule />} />
+                        <Route path="clients" element={<Clients />} />
+                        <Route path="team" element={<Team />} />
+                        <Route path="settings" element={<Settings />} />
+                    </Route>
+                </Route>
+            </Routes>
         </div>
     );
 }

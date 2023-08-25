@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import './loginform.css';
+import './styles/loginform.css';
 
 import { notifyWith } from '../reducers/notificationReducer';
 import { signUserIn } from '../reducers/userReducer';
