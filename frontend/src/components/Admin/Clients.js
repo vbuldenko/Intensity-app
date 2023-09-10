@@ -1,148 +1,84 @@
 import './clients.css';
+import { useState } from 'react';
+import Client from './Client';
+import { Link, useSearchParams } from 'react-router-dom';
 
-export default function Clients() {
-    const clients = {
-        all: 175,
-        active: 100,
-        list: [
-            {
-                id: 1,
-                name: 'Alice',
-                fullname: 'Alice Baber',
-                abonement: 6,
-                purchase_date: '01.07.23',
-                expiration_date: '01.08.23',
-                expired: false,
-                pause: 1,
-                paused: false,
-                left: 1,
-                history: [
-                    {
-                        date: '11.07.23',
-                        time: '10:00',
-                        class: 'Tabata',
-                        trainer: 'Morozova',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '15.07.23',
-                        time: '12:00',
-                        class: 'Fly',
-                        trainer: 'Babiychuk',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '17.07.23',
-                        time: '9:00',
-                        class: 'Yoga',
-                        trainer: 'Morozova',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '18.07.23',
-                        time: '20:00',
-                        class: 'Stretching',
-                        trainer: 'Babiychuk',
-                        deducted: true,
-                        deduction_reason:
-                            'unchecked less than 3 hours before the class',
-                    },
-                    {
-                        date: '22.07.23',
-                        time: '19:00',
-                        class: 'Heels',
-                        trainer: 'Tkachuk',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                ],
-            },
-            {
-                id: 2,
-                name: 'Alice',
-                fullname: 'Alice Baber',
-                abonement: 6,
-                purchase_date: '01.07.23',
-                expiration_date: '01.08.23',
-                expired: false,
-                pause: 1,
-                paused: false,
-                left: 1,
-                history: [
-                    {
-                        date: '11.07.23',
-                        time: '10:00',
-                        class: 'Tabata',
-                        trainer: 'Morozova',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '15.07.23',
-                        time: '12:00',
-                        class: 'Fly',
-                        trainer: 'Babiychuk',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '17.07.23',
-                        time: '9:00',
-                        class: 'Yoga',
-                        trainer: 'Morozova',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '18.07.23',
-                        time: '20:00',
-                        class: 'Stretching',
-                        trainer: 'Babiychuk',
-                        deducted: true,
-                        deduction_reason:
-                            'unchecked less than 3 hours before the class',
-                    },
-                    {
-                        date: '22.07.23',
-                        time: '19:00',
-                        class: 'Heels',
-                        trainer: 'Tkachuk',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                ],
-            },
-        ],
-    };
+export default function Clients({ clients }) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const viewMode = searchParams.get('view');
+
+    function handleViewChange(key, value) {
+        setSearchParams((prevParams) => {
+            if (value === null) {
+                prevParams.delete(key);
+            } else {
+                prevParams.set(key, value);
+            }
+            return prevParams;
+        });
+    }
+
+    // const [viewMode, setViewMode] = useState('list'); // 'list' or 'tiles'
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredClients = clients.list.filter((client) =>
+        client.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
-        <div className="clients">
-            <div className="clients-section">
-                <p>All clients</p>
-                <p>{clients.all}</p>
-            </div>
-            <div className="clients-section">
-                <p>Active clients</p>
-                <p>{clients.active}</p>
-            </div>
-            <div className="clients-section clients-list">
-                <div className="clients-list-title">
-                    <div className="clients-title-header">
-                        <p>name</p>
-                        <p>abonement</p>
-                        <p>left class attendings</p>
-                    </div>
-                    <input type="text" placeholder="search for client..." />
+        <div className="clients-container">
+            <div className="header">
+                <div className="header-info">
+                    <p>All Clients: {clients.all}</p>
+                    <p className="active-clients">
+                        Active Clients: {clients.active}
+                    </p>
                 </div>
-                {clients.list.map((client) => (
-                    <div key={client.id} className="client">
-                        <p>{client.fullname}</p>
-                        <p>{client.abonement}</p>
-                        <p>{client.left}</p>
-                    </div>
+                <div className="view-modes">
+                    <button
+                        className={`view-button ${
+                            viewMode === 'list' ? 'active' : ''
+                        }`}
+                        onClick={() => handleViewChange('view', 'list')}
+                    >
+                        <i className="material-icons">view_list</i>
+                    </button>
+                    <button
+                        className={`view-button ${
+                            viewMode === 'tiles' ? 'active' : ''
+                        }`}
+                        onClick={() => handleViewChange('view', 'tiles')}
+                    >
+                        <i className="material-icons">view_module</i>
+                    </button>
+                </div>
+                <div className="search">
+                    <i className="material-icons">search</i>
+                    <input
+                        type="text"
+                        placeholder="Search clients..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </div>
+            </div>
+            <div className={`clients-list ${viewMode}`}>
+                {filteredClients.map((client) => (
+                    <Link
+                        to={`${client.id}`}
+                        key={client.id}
+                        className={`client ${viewMode}`}
+                        state={{ search: `?${searchParams.toString()}` }}
+                    >
+                        <p className="client-name">{client.fullname}</p>
+                        <p className="client-phone">{client.phone}</p>
+                        <p className="client-email">{client.email}</p>
+                        <p className="client-details">
+                            Abonement: {client.current_abonement.amount} | Left:{' '}
+                            {client.current_abonement.left} | Expiration Date:{' '}
+                            {client.current_abonement.expiration_date}
+                        </p>
+                    </Link>
                 ))}
             </div>
         </div>

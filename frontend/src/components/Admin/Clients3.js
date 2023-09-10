@@ -1,28 +1,7 @@
-import React from 'react';
-import './App.css';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, useMatch } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import './clients.css';
 
-import Home from './components/Home';
-import About from './components/About';
-import Services from './components/Services';
-import Schedule from './components/Schedule';
-import Prices from './components/Prices';
-import Contacts from './components/Contacts';
-import LoginForm from './components/LoginForm';
-import Account from './components/Account';
-
-import Admin from './components/Admin/Admin';
-import Overview from './components/Admin/Overview';
-import AdminSchedule from './components/Admin/Schedule';
-import Clients from './components/Admin/Clients';
-import Settings from './components/Admin/Settings';
-import Team from './components/Admin/Team';
-import Layout from './components/Layout';
-import Client from './components/Admin/Client';
-
-function App() {
+export default function Clients() {
     const clients = {
         all: 175,
         active: 100,
@@ -30,8 +9,6 @@ function App() {
             {
                 id: 1,
                 fullname: 'Alice Baber',
-                phone: '097-99-100-25',
-                email: 'bubab@gmail.com',
                 prev_abonements: [
                     {
                         purchase_date: '1.06.23',
@@ -99,8 +76,6 @@ function App() {
             {
                 id: 2,
                 fullname: 'Margo Sokur',
-                phone: '097-99-100-25',
-                email: 'bubab@gmail.com',
                 prev_abonements: null,
                 current_abonement: {
                     amount: 4,
@@ -134,41 +109,37 @@ function App() {
             },
         ],
     };
-    return (
-        <div className="App">
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="services" element={<Services />} />
-                    <Route path="schedule" element={<Schedule />} />
-                    <Route path="prices" element={<Prices />} />
-                    <Route path="contacts" element={<Contacts />} />
-                    {/* <Route path="/users" element={<Users users={users} />} /> */}
-                    {/* <Route
-                        path="/users/:id"
-                        element={<User user={selectedUser} />}
-                    /> */}
-                    <Route path="login" element={<LoginForm />} />
 
-                    <Route path="account" element={<Admin />}>
-                        <Route index element={<Overview />} />
-                        <Route path="schedule" element={<AdminSchedule />} />
-                        <Route
-                            path="clients"
-                            element={<Clients clients={clients} />}
-                        />
-                        <Route
-                            path="clients/:id"
-                            element={<Client list={clients.list} />}
-                        />
-                        <Route path="team" element={<Team />} />
-                        <Route path="settings" element={<Settings />} />
-                    </Route>
-                </Route>
-            </Routes>
+    return (
+        <div className="clients">
+            <div className="clients-header">
+                <div className="all-clients">
+                    <p>All clients</p>
+                    <p>{clients.all}</p>
+                </div>
+                <div className="active-clients">
+                    <p>Active clients</p>
+                    <p>{clients.active}</p>
+                </div>
+                <div className="clients-list-header">
+                    <input type="text" placeholder="search for client..." />
+                </div>
+            </div>
+
+            <div className="clients-list">
+                <div className="clients-list-content">
+                    {clients.list.map((client) => (
+                        <Link key={client.id} to={`${client.id}`}>
+                            <div className="client-gen">
+                                <p>{client.fullname}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+            <div className="client-info">
+                <Outlet context={{ list: clients.list }} />
+            </div>
         </div>
     );
 }
-
-export default App;

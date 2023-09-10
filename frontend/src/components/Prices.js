@@ -74,12 +74,12 @@ function Prices() {
                         <p>₴250</p>
                     </div>
                     <div>
-                        <p>5 trainings</p>
+                        <p>8 trainings</p>
                         <p>₴1000</p>
                         <p>225</p>
                     </div>
                     <div>
-                        <p>10 trainings</p>
+                        <p>12 trainings</p>
                         <p>₴1500</p>
                         <p>225</p>
                     </div>

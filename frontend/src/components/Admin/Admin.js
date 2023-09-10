@@ -15,19 +15,19 @@ function Admin() {
     return (
         <section className="admin-section">
             <nav className="admin-menu">
-                <NavLink to={'/account'} end style={styleChanger}>
+                <NavLink to={'.'} end style={styleChanger}>
                     Overview
                 </NavLink>
-                <NavLink to={'/account/schedule'} style={styleChanger}>
+                <NavLink to={'schedule'} style={styleChanger}>
                     Schedule
                 </NavLink>
-                <NavLink to={'/account/clients'} style={styleChanger}>
+                <NavLink to={'clients'} style={styleChanger}>
                     Clients
                 </NavLink>
-                <NavLink to={'/account/team'} style={styleChanger}>
+                <NavLink to={'team'} style={styleChanger}>
                     Team
                 </NavLink>
-                <NavLink to={'/account/settings'} style={styleChanger}>
+                <NavLink to={'settings'} style={styleChanger}>
                     Settings
                 </NavLink>
                 <p>Log out</p>
