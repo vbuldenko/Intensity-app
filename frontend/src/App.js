@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import './app.css';
+import './input.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
