@@ -30,8 +30,11 @@ POST http://localhost:3001/api/users/
 content-type: application/json
 
 {
-    "username": "walder",
-    "name": "Walder Hawk",
+    "username": "walderhawk",
+    "name": "Walder",
+    "surname": "Hawk",
+    "email": "hawkwalder@gmail.com",
+    "phone": "0978612345",
     "password": "password"
 }
 ###
@@ -39,7 +42,7 @@ POST http://localhost:3001/api/login/
 content-type: application/json
 
 {
-    "username": "walder",
+    "username": "walderhawk",
     "password": "password"
 }
 

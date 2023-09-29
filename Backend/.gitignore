@@ -3,3 +3,6 @@
 /.pnp
 .pnp.js
 
+# misc
+.DS_Store
+
