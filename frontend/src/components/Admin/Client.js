@@ -5,7 +5,7 @@ import {
     useLocation,
 } from 'react-router-dom';
 import clientPhoto from '../../images/Tkachuk.jpg';
-import './client.css';
+import './styles/client.css';
 
 export default function Client({ list }) {
     const { id } = useParams();

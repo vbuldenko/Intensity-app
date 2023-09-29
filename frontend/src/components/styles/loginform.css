@@ -1,10 +1,18 @@
+.login-wrapper {
+    margin: 2em auto;
+    width: 400px;
+    box-shadow: 0 0 2px black;
+    border-radius: 1em;
+    padding: 1em;
+}
+
 .login-form {
     display: flex;
+    gap: 1em;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 1em;
     padding: 2em;
+    border-bottom: 1px solid gray;
 }
 
 .login-form h1 {
@@ -13,9 +21,7 @@
 }
 
 .login-form div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    width: 100%;
 }
 
 .login-form input[type='text'],
@@ -23,10 +29,11 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 250px;
+    width: 100%;
 }
 
 .login-form button[type='submit'] {
+    width: 100%;
     padding: 10px 20px;
     background-color: #4caf50;
     color: white;
@@ -38,4 +45,10 @@
 
 .login-form button[type='submit']:hover {
     background-color: #45a049;
+}
+
+.signup-subsection {
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
 }

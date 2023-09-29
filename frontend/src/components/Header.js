@@ -1,11 +1,9 @@
 import './styles/Header.css';
 import { Link, NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logUserOut } from '../reducers/userReducer';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
     const user = useSelector(({ user }) => user);
-    const dispatch = useDispatch();
 
     const activeStyles = {
         fontWeight: '800',
@@ -18,7 +16,7 @@ export default function Header() {
     return (
         <header className="main-header">
             <Link className="logo" to="/">
-                In10sity
+                Intensity
             </Link>
             <nav className="main-navbar">
                 <NavLink to="/services" style={styleChanger}>
@@ -34,23 +32,14 @@ export default function Header() {
                     Contacts
                 </NavLink>
                 {user ? (
-                    <div className="user-info">
-                        <span>{user.name} logged in</span>
-                        <button
-                            className="logout-button"
-                            onClick={() => dispatch(logUserOut())}
-                        >
-                            logout
-                        </button>
-                    </div>
+                    <NavLink to="/account" style={styleChanger}>
+                        My account
+                    </NavLink>
                 ) : (
-                    <NavLink to="/login" style={styleChanger}>
-                        Login
+                    <NavLink to="/sign-in" style={styleChanger}>
+                        Log In
                     </NavLink>
                 )}
-                <NavLink to="/account" style={styleChanger}>
-                    Personal account
-                </NavLink>
             </nav>
         </header>
     );

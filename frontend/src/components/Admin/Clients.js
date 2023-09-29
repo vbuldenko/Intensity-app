@@ -1,4 +1,4 @@
-import './clients.css';
+import './styles/clients.css';
 import { useState } from 'react';
 import Client from './Client';
 import { Link, useSearchParams } from 'react-router-dom';

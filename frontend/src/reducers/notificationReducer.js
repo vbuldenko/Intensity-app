@@ -15,7 +15,7 @@ export const { setNotification } = notificationSlice.actions;
 export const notifyWith = (message) => {
     return (dispatch) => {
         dispatch(setNotification(message));
-        setTimeout(() => dispatch(setNotification(null)), 5000);
+        setTimeout(() => dispatch(setNotification(null)), 2000);
     };
 };
 

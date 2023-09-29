@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logUserOut } from '../../reducers/userReducer';
 
-function Admin() {
+export default function User() {
     const dispatch = useDispatch();
 
     const activeStyles = {
@@ -25,12 +25,6 @@ function Admin() {
                 <NavLink to={'schedule'} style={styleChanger}>
                     Schedule
                 </NavLink>
-                <NavLink to={'clients'} style={styleChanger}>
-                    Clients
-                </NavLink>
-                <NavLink to={'team'} style={styleChanger}>
-                    Team
-                </NavLink>
                 <NavLink to={'settings'} style={styleChanger}>
                     Settings
                 </NavLink>
@@ -45,5 +39,3 @@ function Admin() {
         </section>
     );
 }
-
-export default Admin;

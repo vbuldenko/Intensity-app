@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import './styles/loginform.css';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 import { notifyWith } from '../reducers/notificationReducer';
 import { signUserIn } from '../reducers/userReducer';
@@ -10,48 +10,66 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const notification = useSelector(({ notification }) => notification);
 
     const dispatch = useDispatch();
+    const location = useLocation();
+    const path = location.state?.from || '/account';
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        console.log('1');
         try {
-            dispatch(signUserIn({ username, password }));
+            await dispatch(signUserIn({ username, password }));
             setUsername('');
             setPassword('');
-            navigate('/');
-        } catch (exception) {
-            dispatch(notifyWith({ text: 'Wrong credentials', error: true }));
+            navigate(path, { replace: true }); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack
+        } catch (error) {
+            dispatch(notifyWith(error.response.data.error));
         }
     };
 
     return (
-        <form className="login-form" onSubmit={handleLogin}>
-            <h1>Log in to application</h1>
-            <div>
-                username
-                <input
-                    id="username"
-                    type="text"
-                    value={username}
-                    name="Username"
-                    onChange={({ target }) => setUsername(target.value)}
-                />
+        <div className="login-wrapper">
+            <form className="login-form" onSubmit={handleLogin}>
+                <h1>Log in to application</h1>
+                {notification ? <h1>{notification}</h1> : null}
+                <div>
+                    <input
+                        id="username"
+                        type="text"
+                        value={username}
+                        name="Username"
+                        placeholder="username"
+                        onChange={({ target }) => setUsername(target.value)}
+                    />
+                </div>
+                <div>
+                    <input
+                        id="password"
+                        type="password"
+                        value={password}
+                        name="Password"
+                        placeholder="password"
+                        onChange={({ target }) => setPassword(target.value)}
+                    />
+                </div>
+                <button id="login-button" type="submit">
+                    Log In
+                </button>
+            </form>
+            <div className="signup-subsection">
+                <div>
+                    New here?{' '}
+                    <Link className="logo" to="/sign-up">
+                        Sign Up
+                    </Link>
+                </div>
+                <div>
+                    <button>Forgot password?</button>
+                </div>
             </div>
-            <div>
-                password
-                <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    name="Password"
-                    onChange={({ target }) => setPassword(target.value)}
-                />
-            </div>
-            <button id="login-button" type="submit">
-                login
-            </button>
-        </form>
+        </div>
     );
 };
 

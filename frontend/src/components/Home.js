@@ -1,11 +1,21 @@
 import './styles/home.css';
-import Header from './Header';
+import background from '../images/home_background.jpg';
 
 function Home() {
     return (
-        <section className="home-section">
-            <h2>Why to choose Us</h2>
-            <p>Describe different types of trainigs</p>
+        <section
+            style={{ backgroundImage: `url(${background})` }}
+            className="home-section"
+        >
+            <div className="intensity-hero">
+                {/* <p>welcome to</p> */}
+                <h1>INTENSITY</h1>
+                <h3>FITNESS AND DANSE STUDIO</h3>
+                <div>
+                    <h2>A place of your health, strength and energy</h2>
+                    <button>Look for details</button>
+                </div>
+            </div>
         </section>
     );
 }

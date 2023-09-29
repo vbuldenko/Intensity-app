@@ -56,11 +56,11 @@
         "json-server": "^0.17.3",
         "tailwindcss": "^3.3.3"
     },
+    "proxy": "http://localhost:3001/",
     "options": {
         "allowedHosts": [
             "localhost",
             ".localhost"
-        ],
-        "proxy": "https://localhost:3001/"
+        ]
     }
 }

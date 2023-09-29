@@ -98,8 +98,8 @@ export default function Schedule() {
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
     }
 
-    let selectedDayTrainings = trainings.filter((meeting) =>
-        isSameDay(parseISO(meeting.startDatetime), selectedDay)
+    let selectedDayTrainings = trainings.filter((training) =>
+        isSameDay(parseISO(training.startDatetime), selectedDay)
     );
 
     return (
@@ -198,9 +198,11 @@ export default function Schedule() {
                                     </button>
 
                                     <div className="w-1 h-1 mx-auto mt-1">
-                                        {trainings.some((meeting) =>
+                                        {trainings.some((training) =>
                                             isSameDay(
-                                                parseISO(meeting.startDatetime),
+                                                parseISO(
+                                                    training.startDatetime
+                                                ),
                                                 day
                                             )
                                         ) && (
@@ -220,14 +222,14 @@ export default function Schedule() {
                         </h2>
                         <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
                             {selectedDayTrainings.length > 0 ? (
-                                selectedDayTrainings.map((meeting) => (
-                                    <Meeting
-                                        meeting={meeting}
-                                        key={meeting.id}
+                                selectedDayTrainings.map((training) => (
+                                    <Training
+                                        training={training}
+                                        key={training.id}
                                     />
                                 ))
                             ) : (
-                                <p>No meetings for today.</p>
+                                <p>No trainings for today.</p>
                             )}
                         </ol>
                     </section>
@@ -237,30 +239,30 @@ export default function Schedule() {
     );
 }
 
-function Meeting({ meeting }) {
-    let startDateTime = parseISO(meeting.startDatetime);
+function Training({ training }) {
+    let startDateTime = parseISO(training.startDatetime);
 
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
             <img
-                src={meeting.imageUrl}
+                src={training.imageUrl}
                 alt=""
                 className="flex-none w-10 h-10 rounded-full"
             />
             <div className="flex-auto items-center">
-                <p className="text-gray-900">{meeting.name}</p>
+                <p className="text-gray-900">{training.name}</p>
                 <p className="mt-0.5">
-                    <time dateTime={meeting.startDatetime}>
+                    <time dateTime={training.startDatetime}>
                         {format(startDateTime, 'h:mm a')}
                     </time>
                     {' - '}
-                    {meeting.duration} min
+                    {training.duration} min
                 </p>
             </div>
 
             <div className="flex-auto items-center">
-                <p className="text-gray-900">{meeting.training}</p>
-                <p>Places left: {meeting.places}</p>
+                <p className="text-gray-900">{training.training}</p>
+                <p>Places left: {training.places}</p>
             </div>
             <Menu
                 as="div"

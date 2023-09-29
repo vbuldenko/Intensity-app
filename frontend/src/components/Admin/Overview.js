@@ -1,62 +1,8 @@
 import '../styles/overview.css';
-import anzhphoto from '../../images/anzhel.jpg';
+
+import { user, income, expenses, saleData } from '../../test_data/data';
 
 export default function Overview() {
-    const user = {
-        img: anzhphoto,
-        name: 'Anzhelika Morozova',
-        type: 'owner',
-        date: '21 Aug 2023',
-    };
-    const income = [
-        { id: 1, title: 'Total income', amount: 30000 },
-        { id: 2, title: 'Income of a day', amount: 1500 },
-        { id: 3, title: 'Total abonement sales', amount: 10 },
-        { id: 4, title: 'Profit', amount: 0 },
-    ];
-    const expenses = {
-        rent: 30000,
-        utilities: 1500,
-        taxes: 1340,
-        salary: [
-            { id: 1, name: 'Nastya Babiychuk', amount: 1500 },
-            { id: 2, name: 'Lera Narozhna', amount: 1000 },
-            { id: 3, name: 'Nastya Tkachuk', amount: 1500 },
-        ],
-    };
-    const saleData = [
-        {
-            name: 'Vitaliy Klichko',
-            date: '24.08.23',
-            abonement: 8,
-            price: 2000,
-        },
-        {
-            name: 'Vitaliy Klichko',
-            date: '24.08.23',
-            abonement: 8,
-            price: 2000,
-        },
-        {
-            name: 'Vitaliy Klichko',
-            date: '24.08.23',
-            abonement: 8,
-            price: 2000,
-        },
-        {
-            name: 'Vitaliy Klichko',
-            date: '24.08.23',
-            abonement: 8,
-            price: 2000,
-        },
-        {
-            name: 'Vitaliy Klichko',
-            date: '24.08.23',
-            abonement: 8,
-            price: 2000,
-        },
-    ];
-
     return (
         <div className="overview">
             <div className="user">
@@ -116,8 +62,8 @@ export default function Overview() {
                     <p className="sale-abonement">abonement</p>
                     <p className="sale-price">amount</p>
                 </div>
-                {saleData.map((sale) => (
-                    <div className="sale-data">
+                {saleData.map((sale, i) => (
+                    <div key={i} className="sale-data">
                         <p className="sale-name">{sale.name}</p>
                         <p className="sale-date">{sale.date}</p>
                         <p className="sale-abonement">{sale.abonement}</p>
