@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   passwordHash: String,
+  role: String,
 });
 
 userSchema.plugin(uniqueValidator);

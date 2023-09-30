@@ -19,7 +19,8 @@ usersRouter.get("/:id", async (request, response) => {
 });
 
 usersRouter.post("/", async (request, response, next) => {
-  const { username, name, surname, email, phone, password } = request.body;
+  const { username, name, surname, email, phone, password, role } =
+    request.body;
   if (!password || !username || !surname || !email || !name) {
     return response
       .status(400)
@@ -42,6 +43,7 @@ usersRouter.post("/", async (request, response, next) => {
     email,
     phone,
     passwordHash,
+    role,
   });
 
   try {
