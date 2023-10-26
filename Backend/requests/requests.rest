@@ -1,13 +1,8 @@
 GET http://localhost:3001/
 ###
-GET http://localhost:3001/api/abonements/
-###
 GET http://localhost:3001/api/users/6517d0a5914ad6f86c9800e5/
 ###
-GET http://localhost:3001/api/blogs/2
-###
-DELETE http://localhost:3001/api/blogs/649ca0c266d4e9ffd3e0002c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdWtra2trIiwiaWQiOiI2NGFhZjU1OGY2MmFjNDRmMDViMDc2NjYiLCJpYXQiOjE2ODg5MjU3MTB9.FoinEH17ATldVjIhoX2FCpaP6Xb9ONls8o-H_uph5L8
+GET http://localhost:3001/api/abonements/
 ###
 POST http://localhost:3001/api/abonements/
 content-type: application/json
@@ -93,13 +88,17 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:3001/api/blogs/64d66a7b32c6208637301965
+GET http://localhost:3001/api/training-sessions/
+###
+POST http://localhost:3001/api/training-sessions/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1MTdkMGE1OTE0YWQ2Zjg2Yzk4MDBlNSIsImlhdCI6MTY5Njk1OTMwNH0.DuJE2r-2EtZ45qh2p0l6vcjk8ANWl0JB0lE0ido9H7E
 
 {
-    "title": "Awesome text jjj",
-    "author": "Some James",
-    "url": "https://wwww.google.com",
-    "likes": "45",
-    "user": "6488a708f136a179aaa18d15"
+    "time": "09:00",
+    "day": "Monday",
+    "instructor": "Anzhelika",
+    "maxCapacity": 8,
+    "registeredClients":[]
 }
+###
