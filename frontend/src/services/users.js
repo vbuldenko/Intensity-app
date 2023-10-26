@@ -1,17 +1,21 @@
 import axios from 'axios';
-// import storageService from './storage';
+import storageService from './storage';
 const baseUrl = '/api/users';
 
-// const token = storageService.loadUser()
-//     ? `Bearer ${storageService.loadUser().token}`
-//     : null;
+const token = storageService.loadUser()
+    ? `Bearer ${storageService.loadUser().token}`
+    : null;
 
-// const config = {
-//     headers: { Authorization: token },
-// };
+const config = {
+    headers: { Authorization: token },
+};
 
 const getAll = async () => {
     const response = await axios.get(baseUrl);
+    return response.data;
+};
+const getUserById = async (id) => {
+    const response = await axios.get(`${baseUrl}/${id}`, config);
     return response.data;
 };
 
@@ -32,4 +36,4 @@ const remove = (id) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, create, update, remove };
+export default { getAll, getUserById, create, update, remove };

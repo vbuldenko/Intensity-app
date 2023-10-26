@@ -1,11 +1,16 @@
-import '../styles/admin.css';
+import './styles/user.css';
+import { useState, useEffect } from 'react';
 import anzhphoto from '../../images/anzhel.jpg';
 import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logUserOut } from '../../reducers/userReducer';
+import usersService from '../../services/users';
 
-export default function User() {
+export default function User({ user }) {
+    const [userData, setUserData] = useState(null);
+
+    console.log(userData);
     const dispatch = useDispatch();
 
     const activeStyles = {
@@ -16,9 +21,15 @@ export default function User() {
 
     const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);
 
+    useEffect(() => {
+        if (user) {
+            usersService.getUserById(user.id).then((data) => setUserData(data));
+        }
+    }, [user]);
+
     return (
-        <section className="admin-section">
-            <nav className="admin-menu">
+        <section className="user-section">
+            <nav className="user-menu">
                 <NavLink to={'.'} end style={styleChanger}>
                     Overview
                 </NavLink>
@@ -35,7 +46,7 @@ export default function User() {
                     Log Out
                 </button>
             </nav>
-            <Outlet />
+            <Outlet context={userData} />
         </section>
     );
 }

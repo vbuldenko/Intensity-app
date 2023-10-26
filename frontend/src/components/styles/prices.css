@@ -24,7 +24,7 @@
     border-radius: 1em;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
-.prices-subsection .abonements {
+.prices-subsection .abonements-prices {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
@@ -34,7 +34,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 1em;
 }
-.abonements div {
+.abonements-prices div {
     display: flex;
     justify-content: space-between;
     gap: 2em;

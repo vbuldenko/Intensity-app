@@ -18,6 +18,7 @@ import NotFound from './components/NotFound';
 import Admin from './components/Admin/Admin';
 import User from './components/User/User';
 import Overview from './components/Admin/Overview';
+import UserOverview from './components/User/UserOverview';
 import AdminSchedule from './components/Admin/Schedule';
 import Clients from './components/Admin/Clients';
 import Settings from './components/Admin/Settings';
@@ -34,6 +35,9 @@ import { trainers } from './test_data/data';
 
 export default function App() {
     const dispatch = useDispatch();
+    const user = useSelector(({ user }) => user);
+    const date = new Date();
+    console.log(date.toString());
     const userRole = '';
 
     useEffect(() => {
@@ -55,10 +59,23 @@ export default function App() {
                         <Route
                             path="account"
                             element={
-                                userRole === 'admin' ? <Admin /> : <User />
+                                userRole === 'admin' ? (
+                                    <Admin />
+                                ) : (
+                                    <User user={user} />
+                                )
                             }
                         >
-                            <Route index element={<Overview />} />
+                            <Route
+                                index
+                                element={
+                                    userRole === 'admin' ? (
+                                        <Overview />
+                                    ) : (
+                                        <UserOverview />
+                                    )
+                                }
+                            />
                             <Route
                                 path="schedule"
                                 element={<AdminSchedule />}

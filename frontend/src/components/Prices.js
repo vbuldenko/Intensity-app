@@ -9,7 +9,7 @@ function Prices() {
             <div className="prices-subsection">
                 <span>Group classes</span>
                 <img src={group} />
-                <div className="abonements">
+                <div className="abonements-prices">
                     <div>
                         <p>Test</p>
                         <p>₴350</p>
@@ -48,7 +48,7 @@ function Prices() {
             <div className="prices-subsection">
                 <span>Individual trainings</span>
                 <img src={indiv} />
-                <div className="abonements">
+                <div className="abonements-prices">
                     <div>
                         <p>1 training</p>
                         <p>₴600</p>
@@ -68,7 +68,7 @@ function Prices() {
             <div className="prices-subsection">
                 <span>Children groups</span>
                 <img src={kids} />
-                <div className="abonements">
+                <div className="abonements-prices">
                     <div>
                         <p>1 training</p>
                         <p>₴250</p>

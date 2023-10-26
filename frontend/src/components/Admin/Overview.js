@@ -1,17 +1,29 @@
 import '../styles/overview.css';
+import { useOutletContext } from 'react-router-dom';
+import { startOfToday, format } from 'date-fns';
 
 import { user, income, expenses, saleData } from '../../test_data/data';
 
 export default function Overview() {
+    const userData = useOutletContext();
+    if (!userData) {
+        return null;
+    }
+
+    const { name, surname, role } = userData;
+
+    let today = format(startOfToday(), 'dd-MMM-yyyy');
     return (
         <div className="overview">
             <div className="user">
                 <img className="user-img" src={user.img} />
                 <div>
-                    <p className="user-name">{user.name}</p>
-                    <span>{user.type}</span>
+                    <p className="user-name">
+                        {name} {surname}
+                    </p>
+                    <span>{role}</span>
                 </div>
-                <p className="user-date">{user.date}</p>
+                <p className="user-date">{today}</p>
             </div>
 
             <div className="income">

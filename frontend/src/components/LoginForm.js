@@ -18,7 +18,6 @@ const LoginForm = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        console.log('1');
         try {
             await dispatch(signUserIn({ username, password }));
             setUsername('');

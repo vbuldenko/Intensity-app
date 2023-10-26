@@ -6,7 +6,7 @@ import './styles/loginform.css';
 import { notifyWith } from '../reducers/notificationReducer';
 import { signUserIn } from '../reducers/userReducer';
 
-const LoginForm = () => {
+const SignUpForm = () => {
     const [signUpData, setSignUpData] = useState({
         username: '',
         name: '',
@@ -125,4 +125,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default SignUpForm;

@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
   },
   passwordHash: String,
   role: String,
+  abonements: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Abonement",
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator);

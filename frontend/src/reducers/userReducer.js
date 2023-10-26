@@ -22,6 +22,7 @@ export const signUserIn = (userInfo) => {
         try {
             const user = await loginService.login(userInfo);
             storageService.saveUser(user);
+
             dispatch(setUser(user));
         } catch (error) {
             // // Handle the login error here
