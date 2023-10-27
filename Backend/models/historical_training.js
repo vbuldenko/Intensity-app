@@ -27,7 +27,7 @@ const trainingsEnum = [
     "Fly Kids (11-16)",
 ];
 
-const trainingSchema = new mongoose.Schema({
+const historicalTrainingSchema = new mongoose.Schema({
     date: {
         type: Date,
     },
@@ -61,7 +61,7 @@ const trainingSchema = new mongoose.Schema({
     ],
 });
 
-trainingSchema.set("toJSON", {
+historicalTrainingSchema.set("toJSON", {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
@@ -69,4 +69,4 @@ trainingSchema.set("toJSON", {
     },
 });
 
-module.exports = mongoose.model("Training", trainingSchema);
+module.exports = mongoose.model("HistoricalTraining", trainingSchema);

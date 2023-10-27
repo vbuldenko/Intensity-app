@@ -336,3 +336,5 @@ const predefinedSchedule = [
         maxCapacity: 8,
     },
 ];
+
+module.exports = predefinedSchedule;
