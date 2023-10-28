@@ -25,31 +25,33 @@ export default function Abonement({ status, abonement }) {
             </div>
             {/* Look at id property of training history */}
             <div className="abonement-training-history">
-                {abonement.history.map((el) => {
-                    return (
-                        <div
-                            key={el._id}
-                            className="abonement-training-history-element"
-                        >
-                            <p>date: {el.date}</p>
-                            <p>time: {el.time}</p>
-                            <p>class: {el.class}</p>
-                            <p>trainer: {el.trainer}</p>
-                            {el.deducted ? (
-                                <p
-                                    style={{
-                                        color: 'red',
-                                        border: '1px solid red',
-                                        borderRadius: '0.5em',
-                                        padding: '0.25em',
-                                    }}
-                                >
-                                    deducted: {el.deduction_reason}
-                                </p>
-                            ) : null}
-                        </div>
-                    );
-                })}
+                {abonement.history
+                    ? abonement.history.map((el) => {
+                          return (
+                              <div
+                                  key={el._id}
+                                  className="abonement-training-history-element"
+                              >
+                                  <p>date: {el.date}</p>
+                                  <p>time: {el.time}</p>
+                                  <p>class: {el.class}</p>
+                                  <p>trainer: {el.trainer}</p>
+                                  {el.deducted ? (
+                                      <p
+                                          style={{
+                                              color: 'red',
+                                              border: '1px solid red',
+                                              borderRadius: '0.5em',
+                                              padding: '0.25em',
+                                          }}
+                                      >
+                                          deducted: {el.deduction_reason}
+                                      </p>
+                                  ) : null}
+                              </div>
+                          );
+                      })
+                    : null}
             </div>
         </div>
     );

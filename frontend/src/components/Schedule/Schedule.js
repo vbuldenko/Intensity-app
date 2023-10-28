@@ -13,13 +13,12 @@ import { useState } from 'react';
 import MonthView from './Month';
 import WeekView from './Week';
 import Training from './Training';
-import { trainings } from '../../test_data/data';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function Schedule() {
+export default function Schedule({ trainings }) {
     const today = startOfToday();
     const [selectedDay, setSelectedDay] = useState(today);
     const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
@@ -32,7 +31,7 @@ export default function Schedule() {
     });
 
     const selectedDayTrainings = trainings.filter((training) =>
-        isSameDay(parseISO(training.startDatetime), selectedDay)
+        isSameDay(parseISO(training.date), selectedDay)
     );
 
     function handleViewChange(event) {

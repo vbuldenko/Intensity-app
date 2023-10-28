@@ -4,76 +4,126 @@ const userExtractor = require("../utils/middleware").userExtractor;
 const predefinedSchedule = require("../utils/predefined_schedule");
 
 trainingRouter.get("/", async (request, response, next) => {
-    try {
-        // const trainingSessions = await Training.aggregate([
-        //     {
-        //         $group: {
-        //             _id: "$day", // Assuming 'day' is the field in your schema
-        //             trainings: { $push: "$$ROOT" }, // Store the entire document in the 'sessions' array
-        //         },
-        //     },
-        // ]);
-
-        response.json(predefinedSchedule);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const trainingSessions = await Training.find({});
+    response.json(trainingSessions);
+  } catch (error) {
+    next(error);
+  }
 });
 
-trainingRouter.put("/:id", async (request, response, next) => {
-    const id = request.params.id;
-    const updatedData = request.body;
+trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
+  const id = request.params.id;
+  const user = request.user;
+  const { updateType } = request.body;
 
-    try {
-        const updatedItem = await Training.findByIdAndUpdate(id, updatedData, {
-            new: true,
-            runValidators: true,
-            context: "query",
+  try {
+    if (!user) {
+      return response
+        .status(401)
+        .json({ error: "Unauthorized: User not authenticated!" });
+    }
+
+    if (updateType !== "reservation" && updateType !== "cancellation") {
+      return response.status(400).json({ error: "Invalid updateType." });
+    }
+
+    const training = await Training.findById(id);
+
+    if (!training) {
+      return response.status(404).json({ error: "Training not found." });
+    }
+
+    if (updateType === "reservation") {
+      if (training.registeredClients.includes(user.id)) {
+        return response.status(400).json({
+          error: "Already reserved: You have already reserved your place!",
         });
-        response.json(updatedItem);
-    } catch (error) {
-        next(error);
+      }
+
+      training.registeredClients.push(user.id);
+    } else if (updateType === "cancellation") {
+      if (!training.registeredClients.includes(user.id)) {
+        return response
+          .status(400)
+          .json({ error: "Not reserved: You have not reserved a place!" });
+      }
+
+      training.registeredClients = training.registeredClients.filter(
+        (clientId) => clientId.toString() !== user.id
+      );
     }
-});
 
-trainingRouter.post("/", userExtractor, async (request, response, next) => {
-    const { body, user } = request;
-
-    try {
-        if (!user) {
-            return response
-                .status(401)
-                .json({ error: "operation not permitted" });
-        }
-
-        const newTrainingSession = new Training(body);
-        const savedTrainingSession = await newTrainingSession.save();
-
-        response.status(201).json(savedTrainingSession);
-    } catch (error) {
-        console.log(body);
-        next(error);
-    }
+    const savedTraining = await training.save();
+    response.json(savedTraining);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // trainingRouter.post("/", userExtractor, async (request, response, next) => {
-//     const { body, user } = request;
+//   const { body, user } = request;
+
+//   try {
+//     if (!user) {
+//       return response.status(401).json({ error: "operation not permitted" });
+//     }
+
+//     const newTrainingSession = new Training(body);
+//     const savedTrainingSession = await newTrainingSession.save();
+
+//     response.status(201).json(savedTrainingSession);
+//   } catch (error) {
+//     console.log(body);
+//     next(error);
+//   }
+// });
+
+// trainingRouter.delete(
+//   "/:id",
+//   userExtractor,
+//   async (request, response, next) => {
+//     const user = request.user;
+//     const training = await Training.findById(request.params.id);
 
 //     try {
-//         if (!user) {
-//             return response
-//                 .status(401)
-//                 .json({ error: "operation not permitted" });
-//         }
+//       if (!training) {
+//         return response.status(404).json({ error: "Training is not found" });
+//       }
+//       // Similarly look at user.id here too!!!
+//       if (!user && !user.role === 'admin') {
+//         return response
+//           .status(403)
+//           .json({ error: "Not authorized to delete this training" });
+//       }
 
-//         const newTrainingSession = new Training(body);
-//         const savedTrainingSession = await newTrainingSession.save();
-
-//         response.status(201).json(savedTrainingSession);
+//       await Training.findByIdAndRemove(request.params.id);
+//       response.status(204).end();
 //     } catch (error) {
-//         console.log(body);
-//         next(error);
+//       next(error);
 //     }
-// });
+//   }
+// );
+
+// trainingRouter.delete(
+//   "/",
+//   userExtractor,
+//   async (request, response, next) => {
+//     const user = request.user;
+
+//     try {
+//       if (!user ) {
+//         return response
+//           .status(403)
+//           .json({ error: "Not authorized to delete all items" });
+//       }
+
+//       await Training.deleteMany({})
+//       response.status(204).end();
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 
 module.exports = trainingRouter;

@@ -29,6 +29,7 @@ import Client from './components/Admin/Client';
 import AuthProtected from './components/AuthRequired';
 
 import { loadLoggedInUser } from './reducers/userReducer';
+import { initializeTrainings } from './reducers/trainingReducer';
 
 import { clients } from './test_data/data';
 import { trainers } from './test_data/data';
@@ -36,12 +37,14 @@ import { trainers } from './test_data/data';
 export default function App() {
     const dispatch = useDispatch();
     const user = useSelector(({ user }) => user);
+    const trainings = useSelector(({ trainings }) => trainings);
     const date = new Date();
-    console.log(date.toString());
+    console.log(trainers);
     const userRole = '';
 
     useEffect(() => {
         dispatch(loadLoggedInUser());
+        dispatch(initializeTrainings());
     }, []);
 
     return (
@@ -50,7 +53,10 @@ export default function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="services" element={<Services />} />
-                    <Route path="schedule" element={<Schedule />} />
+                    <Route
+                        path="schedule"
+                        element={<Schedule trainings={trainings} />}
+                    />
                     <Route path="prices" element={<Prices />} />
                     <Route path="contacts" element={<Contacts />} />
                     <Route path="sign-in" element={<LoginForm />} />

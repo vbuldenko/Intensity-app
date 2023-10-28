@@ -1,32 +1,24 @@
-import { format, parseISO } from 'date-fns';
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import { Fragment } from 'react';
 
 export default function Training({ training, classNames }) {
-    let startDateTime = parseISO(training.startDatetime);
-
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-            <img
-                src={training.imageUrl}
-                alt=""
-                className="flex-none w-10 h-10 rounded-full"
-            />
             <div className="flex-auto items-center">
-                <p className="text-gray-900">{training.name}</p>
-                <p className="mt-0.5">
-                    <time dateTime={training.startDatetime}>
-                        {format(startDateTime, 'h:mm a')}
-                    </time>
+                <p className="text-gray-900">
+                    {training.time}
                     {' - '}
-                    {training.duration} min
+                    {training.type}
+                </p>
+                <p className="mt-0.5">50 min</p>
+                <p>
+                    Places left:{' '}
+                    {training.maxCapacity - training.registeredClients.length}
                 </p>
             </div>
-
             <div className="flex-auto items-center">
-                <p className="text-gray-900">{training.training}</p>
-                <p>Places left: {training.places}</p>
+                <p className="text-gray-900">{training.instructor}</p>
             </div>
             <Menu
                 as="div"
@@ -64,7 +56,7 @@ export default function Training({ training, classNames }) {
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Edit
+                                        Reserve
                                     </a>
                                 )}
                             </Menu.Item>
