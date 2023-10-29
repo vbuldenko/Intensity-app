@@ -48,12 +48,15 @@ export const initializeTrainings = () => {
 //     };
 // };
 
-// export const updateTraining = (id, modifiedTraining) => {
-//     return async (dispatch) => {
-//         const updatedTraining = await trainingService.update(id, modifiedTraining);
-//         dispatch(updateExistingTraining(updatedTraining));
-//     };
-// };
+export const updateTraining = (id, updateTypeBody) => {
+    return async (dispatch) => {
+        const updatedTraining = await trainingService.update(
+            id,
+            updateTypeBody
+        );
+        dispatch(updateExistingTraining(updatedTraining));
+    };
+};
 
 // export const deleteTraining = (id) => {
 //     return (dispatch) => {

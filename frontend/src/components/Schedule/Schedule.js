@@ -141,7 +141,6 @@ export default function Schedule({ trainings }) {
                             {selectedDayTrainings.length > 0 ? (
                                 selectedDayTrainings.map((training) => (
                                     <Training
-                                        classNames={classNames}
                                         training={training}
                                         key={training.id}
                                     />

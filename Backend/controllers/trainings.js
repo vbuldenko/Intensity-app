@@ -1,7 +1,9 @@
 const trainingRouter = require("express").Router();
 const Training = require("../models/training");
+const Abonement = require("../models/abonement");
 const userExtractor = require("../utils/middleware").userExtractor;
 const predefinedSchedule = require("../utils/predefined_schedule");
+const initializeTrainingSessions = require("../utils/trainingsInitiator");
 
 trainingRouter.get("/", async (request, response, next) => {
   try {
@@ -15,7 +17,11 @@ trainingRouter.get("/", async (request, response, next) => {
 trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
   const id = request.params.id;
   const user = request.user;
-  const { updateType } = request.body;
+  const { updateType, abonementId } = request.body;
+  const currentDate = new Date();
+  //Modify later!!!!!!!!!!!!!!!!!!!!!!!!
+  const active_abonement = await Abonement.findById(abonementId);
+  console.log(active_abonement);
 
   try {
     if (!user) {
@@ -29,6 +35,7 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
     }
 
     const training = await Training.findById(id);
+    console.log(training);
 
     if (!training) {
       return response.status(404).json({ error: "Training not found." });
@@ -41,7 +48,8 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
         });
       }
 
-      training.registeredClients.push(user.id);
+      training.registeredClients.push(user.id); //add user to list of registered clients
+      active_abonement.history.push(training.id); //wy not _id?
     } else if (updateType === "cancellation") {
       if (!training.registeredClients.includes(user.id)) {
         return response
@@ -51,10 +59,14 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
 
       training.registeredClients = training.registeredClients.filter(
         (clientId) => clientId.toString() !== user.id
+      ); // delete user from list of registered clients
+      active_abonement.history = active_abonement.history.filter(
+        (trainingId) => trainingId.toString() !== training.id
       );
     }
 
     const savedTraining = await training.save();
+    await active_abonement.save();
     response.json(savedTraining);
   } catch (error) {
     next(error);
@@ -105,25 +117,36 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
 //   }
 // );
 
-// trainingRouter.delete(
-//   "/",
-//   userExtractor,
-//   async (request, response, next) => {
-//     const user = request.user;
+trainingRouter.post("/", userExtractor, async (request, response, next) => {
+  const { body, user } = request;
 
-//     try {
-//       if (!user ) {
-//         return response
-//           .status(403)
-//           .json({ error: "Not authorized to delete all items" });
-//       }
+  try {
+    if (!user) {
+      return response.status(401).json({ error: "operation not permitted" });
+    }
+    initializeTrainingSessions();
+    response.status(201);
+  } catch (error) {
+    console.log(body);
+    next(error);
+  }
+});
 
-//       await Training.deleteMany({})
-//       response.status(204).end();
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+trainingRouter.delete("/", userExtractor, async (request, response, next) => {
+  const user = request.user;
+
+  try {
+    if (!user) {
+      return response
+        .status(403)
+        .json({ error: "Not authorized to delete all items" });
+    }
+
+    await Training.deleteMany({});
+    response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = trainingRouter;

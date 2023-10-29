@@ -1,84 +1,117 @@
-import { Menu, Transition } from '@headlessui/react';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
-import { Fragment } from 'react';
+import { useState } from 'react';
 
-export default function Training({ training, classNames }) {
+import { updateTraining } from '../../reducers/trainingReducer';
+import { updateAbonement } from '../../reducers/abonementReducer';
+import { notifyWith } from '../../reducers/notificationReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import abonement from '../../services/abonement';
+
+export default function Training({ training }) {
+    function getActiveAbonement(abonements) {
+        const currentDate = new Date();
+        const activeAbonement = abonements.filter((abonement) => {
+            const expirationDate = new Date(abonement.expiration_date);
+            return expirationDate >= currentDate;
+        })[0];
+        return activeAbonement;
+    }
+    const notification = useSelector(({ notification }) => notification);
+
+    const activeAbonement = useSelector(({ abonements }) =>
+        getActiveAbonement(abonements)
+    );
+
+    const [reserved, setReserved] = useState(false);
+    const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+
+    // Combined handler for reservation and cancellation.
+    const handleAction = async (updateType) => {
+        const updatedAbonement = { ...activeAbonement };
+        console.log(updatedAbonement);
+        console.log(updateAbonement.history);
+
+        if (updateType === 'reservation') {
+            updatedAbonement.left = updatedAbonement.left - 1;
+            updatedAbonement.history.push(training.id);
+        } else if (updateType === 'cancellation') {
+            updatedAbonement.left = updatedAbonement.left + 1;
+            updatedAbonement.history = updatedAbonement.history.filter(
+                (el) => el !== training.id
+            );
+        }
+        console.log(updatedAbonement);
+
+        // try {
+        //     await dispatch(
+        //         updateTraining(training.id, {
+        //             updateType,
+        //             abonementId: activeAbonement.id,
+        //         })
+        //     );
+        //     await dispatch(
+        //         updateAbonement(activeAbonement.id, updatedAbonement)
+        //     );
+        //     setReserved((prev) => !prev);
+        // } catch (error) {
+        //     setError(true);
+        //     dispatch(notifyWith(error.response.data.error));
+        //     setTimeout(() => {
+        //         setError(false);
+        //     }, 3000);
+        // }
+    };
+
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+            {notification && error && (
+                <div
+                    style={{
+                        color: 'red',
+                        border: '1px solid red',
+                        padding: '1em',
+                        borderRadius: '1em',
+                    }}
+                >
+                    {notification}
+                </div>
+            )}
             <div className="flex-auto items-center">
-                <p className="text-gray-900">
+                <b className="text-gray-900">
                     {training.time}
                     {' - '}
                     {training.type}
+                </b>
+                <p className="mt-0.5">Duration: 50 min</p>
+                <p className="text-gray-900">
+                    Trainer: <b>{training.instructor}</b>
                 </p>
-                <p className="mt-0.5">50 min</p>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5em',
+                }}
+            >
+                <button
+                    style={{
+                        border: `1px solid ${reserved ? 'red' : 'green'}`,
+                        padding: '0.25em 1em',
+                        borderRadius: '0.5em',
+                    }}
+                    onClick={() =>
+                        handleAction(reserved ? 'cancellation' : 'reservation')
+                    }
+                >
+                    {reserved ? 'Cancel' : 'Reserve'}
+                </button>
                 <p>
                     Places left:{' '}
                     {training.maxCapacity - training.registeredClients.length}
                 </p>
             </div>
-            <div className="flex-auto items-center">
-                <p className="text-gray-900">{training.instructor}</p>
-            </div>
-            <Menu
-                as="div"
-                className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
-            >
-                <div>
-                    <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
-                        <span className="sr-only">Open options</span>
-                        <EllipsisVerticalIcon
-                            className="w-6 h-6"
-                            aria-hidden="true"
-                        />
-                    </Menu.Button>
-                </div>
-
-                <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="py-1">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active
-                                                ? 'bg-gray-100 text-gray-900'
-                                                : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Reserve
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active
-                                                ? 'bg-gray-100 text-gray-900'
-                                                : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Cancel
-                                    </a>
-                                )}
-                            </Menu.Item>
-                        </div>
-                    </Menu.Items>
-                </Transition>
-            </Menu>
         </li>
     );
 }

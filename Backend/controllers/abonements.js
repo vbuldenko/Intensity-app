@@ -11,6 +11,22 @@ abonementRouter.get("/", async (request, response, next) => {
   }
 });
 
+// get abonnements by user ID
+abonementRouter.get("/user", userExtractor, async (request, response, next) => {
+  const { user } = request;
+  console.log(user);
+  try {
+    if (!user) {
+      return response.status(401).json({ error: "operation not permitted" });
+    }
+
+    const abonnements = await Abonement.find({ user: user.id });
+    response.json(abonnements);
+  } catch (error) {
+    next(error);
+  }
+});
+
 abonementRouter.get("/:id", async (request, response, next) => {
   try {
     const abonement = await Abonement.findById(request.params.id);
@@ -39,22 +55,9 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
     }
 
     //Adding properties not declared in the first place
-    body.purchase_date = new Date("2023-09-18T17:51:08.892Z");
+    body.purchase_date = new Date();
     body.paused = false;
     body.left = body.amount;
-    // body.activation_date = null;
-    // body.expiration_date = null;
-
-    // For the test only!!!
-    if (!body.activation_date) {
-      const currentDate = new Date("2023-09-19T17:51:08.892Z");
-      // Calculate the expiration date by adding one month to the current date
-      const expirationDate = new Date(currentDate);
-      expirationDate.setMonth(currentDate.getMonth() + 1);
-
-      body.activation_date = currentDate;
-      body.expiration_date = expirationDate;
-    }
 
     const abonement = new Abonement({ ...body, user: user.id }); //Why here user.id and not user._id? Why there no error? Lookup later for better understanding!!!
     const savedAbonement = await abonement.save();
@@ -67,24 +70,41 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
   }
 });
 
-// abonementRouter.put("/:id", async (request, response, next) => {
-//   const blog = request.body;
+abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
+  const { body, user } = request;
 
-//   try {
-//     const updatedItem = await Blog.findByIdAndUpdate(request.params.id, blog, {
-//       new: true,
-//       runValidators: true,
-//       context: "query",
-//     });
-//     const populatedBlog = await Blog.findById(updatedItem._id).populate(
-//       "user",
-//       { username: 1, name: 1 }
-//     );
-//     response.json(populatedBlog);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+  try {
+    if (!user) {
+      return response.status(401).json({ error: "operation not permitted" });
+    }
+
+    if (!body.activation_date) {
+      const currentDate = new Date();
+      // Calculate the expiration date by adding one month to the current date
+      const expirationDate = new Date(currentDate);
+      expirationDate.setMonth(currentDate.getMonth() + 1);
+
+      body.activation_date = currentDate;
+      body.expiration_date = expirationDate;
+    }
+
+    const updatedAbonement = await Abonement.findByIdAndUpdate(
+      request.params.id,
+      body,
+      {
+        new: true,
+        runValidators: true,
+        context: "query",
+      }
+    );
+    const populatedAbonement = await Abonement.findById(
+      updatedAbonement._id
+    ).populate("history");
+    response.json(populatedAbonement);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // abonementRouter.delete(
 //   "/:id",

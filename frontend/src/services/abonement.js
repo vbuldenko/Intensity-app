@@ -1,6 +1,6 @@
 import axios from 'axios';
 import storageService from './storage';
-const baseUrl = '/api/training-sessions';
+const baseUrl = '/api/abonements';
 
 const token = storageService.loadUser()
     ? `Bearer ${storageService.loadUser().token}`
@@ -11,6 +11,11 @@ const config = {
 
 const getAll = async () => {
     const response = await axios.get(baseUrl);
+    return response.data;
+};
+
+const getAllByUserId = async () => {
+    const response = await axios.get(`${baseUrl}/user`, config);
     return response.data;
 };
 
@@ -25,12 +30,8 @@ const getAll = async () => {
 //     return response.data;
 // };
 
-const update = async (id, updateTypeBody) => {
-    const response = await axios.put(
-        `${baseUrl}/${id}`,
-        updateTypeBody,
-        config
-    );
+const update = async (id, body) => {
+    const response = await axios.put(`${baseUrl}/${id}`, body, config);
     return response.data;
 };
 
@@ -41,4 +42,4 @@ const update = async (id, updateTypeBody) => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 // export default { getAll, create, addcomment, update, remove };
-export default { getAll, update };
+export default { getAll, getAllByUserId, update };

@@ -34,8 +34,8 @@ export default function Abonement({ status, abonement }) {
                               >
                                   <p>date: {el.date}</p>
                                   <p>time: {el.time}</p>
-                                  <p>class: {el.class}</p>
-                                  <p>trainer: {el.trainer}</p>
+                                  <p>class: {el.type}</p>
+                                  <p>trainer: {el.instructor}</p>
                                   {el.deducted ? (
                                       <p
                                           style={{
