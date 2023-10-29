@@ -29,37 +29,37 @@ export default function Training({ training }) {
     const handleAction = async (updateType) => {
         const updatedAbonement = { ...activeAbonement };
         console.log(updatedAbonement);
-        console.log(updateAbonement.history);
 
         if (updateType === 'reservation') {
             updatedAbonement.left = updatedAbonement.left - 1;
-            updatedAbonement.history.push(training.id);
+            // updatedAbonement.history.push(training.id);
         } else if (updateType === 'cancellation') {
             updatedAbonement.left = updatedAbonement.left + 1;
-            updatedAbonement.history = updatedAbonement.history.filter(
-                (el) => el !== training.id
-            );
+            // updatedAbonement.history = updatedAbonement.history.filter(
+            //     (el) => el !== training.id
+            // );
         }
         console.log(updatedAbonement);
 
-        // try {
-        //     await dispatch(
-        //         updateTraining(training.id, {
-        //             updateType,
-        //             abonementId: activeAbonement.id,
-        //         })
-        //     );
-        //     await dispatch(
-        //         updateAbonement(activeAbonement.id, updatedAbonement)
-        //     );
-        //     setReserved((prev) => !prev);
-        // } catch (error) {
-        //     setError(true);
-        //     dispatch(notifyWith(error.response.data.error));
-        //     setTimeout(() => {
-        //         setError(false);
-        //     }, 3000);
-        // }
+        try {
+            await dispatch(
+                updateTraining(training.id, {
+                    updateType,
+                    abonementId: activeAbonement.id,
+                })
+            );
+            await dispatch(
+                updateAbonement(updatedAbonement.id, updatedAbonement)
+            );
+            setReserved((prev) => !prev);
+        } catch (error) {
+            console.log(error);
+            setError(true);
+            // dispatch(notifyWith(error.response.data.error));
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
+        }
     };
 
     return (
