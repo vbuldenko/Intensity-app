@@ -17,7 +17,7 @@ export default function Training({ training }) {
     }
     const notification = useSelector(({ notification }) => notification);
 
-    const activeAbonement = useSelector(({ abonements }) =>
+    const { history, ...abRest } = useSelector(({ abonements }) =>
         getActiveAbonement(abonements)
     );
 
@@ -27,29 +27,30 @@ export default function Training({ training }) {
 
     // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
-        const updatedAbonement = { ...activeAbonement };
+        const updatedAbonement = { ...abRest };
         console.log(updatedAbonement);
+        console.log(updateType);
 
         if (updateType === 'reservation') {
             updatedAbonement.left = updatedAbonement.left - 1;
-            // updatedAbonement.history.push(training.id);
+            updatedAbonement.history = [...history, training.id];
         } else if (updateType === 'cancellation') {
             updatedAbonement.left = updatedAbonement.left + 1;
-            // updatedAbonement.history = updatedAbonement.history.filter(
-            //     (el) => el !== training.id
-            // );
+            updatedAbonement.history = updatedAbonement.history.filter(
+                (el) => el !== training.id
+            );
         }
         console.log(updatedAbonement);
 
         try {
             await dispatch(
-                updateTraining(training.id, {
-                    updateType,
-                    abonementId: activeAbonement.id,
-                })
+                updateAbonement(updatedAbonement.id, updatedAbonement)
             );
             await dispatch(
-                updateAbonement(updatedAbonement.id, updatedAbonement)
+                updateTraining(training.id, {
+                    updateType,
+                    abonementId: updatedAbonement.id,
+                })
             );
             setReserved((prev) => !prev);
         } catch (error) {
