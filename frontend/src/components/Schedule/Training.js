@@ -29,6 +29,9 @@ export default function Training({ training }) {
         const trainingTime = new Date(training.date);
         const threeHoursBeforeTraining = new Date(trainingTime);
         threeHoursBeforeTraining.setHours(trainingTime.getHours() - 3);
+        console.log('current time', currentTime);
+        console.log('training time', trainingTime);
+        console.log('three hours before training', threeHoursBeforeTraining);
 
         if (
             (updateType === 'reservation' &&
@@ -48,21 +51,21 @@ export default function Training({ training }) {
             dispatch(removeReservation(training.id));
         }
 
-        try {
-            await dispatch(
-                updateTraining(training.id, {
-                    updateType,
-                    abonementId: activeAbonement.id,
-                })
-            );
-        } catch (error) {
-            console.log(error);
-            setError(true);
-            dispatch(notifyWith(error.response.data.error));
-            setTimeout(() => {
-                setError(false);
-            }, 3000);
-        }
+        // try {
+        //     await dispatch(
+        //         updateTraining(training.id, {
+        //             updateType,
+        //             abonementId: activeAbonement.id,
+        //         })
+        //     );
+        // } catch (error) {
+        //     console.log(error);
+        //     setError(true);
+        //     dispatch(notifyWith(error.response.data.error));
+        //     setTimeout(() => {
+        //         setError(false);
+        //     }, 3000);
+        // }
     };
 
     return (
