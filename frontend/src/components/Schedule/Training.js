@@ -1,62 +1,64 @@
 import { useState } from 'react';
-
 import { updateTraining } from '../../reducers/trainingReducer';
-import { updateAbonement } from '../../reducers/abonementReducer';
+import {
+    addReservation,
+    removeReservation,
+} from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import abonement from '../../services/abonement';
 
 export default function Training({ training }) {
-    function getActiveAbonement(abonements) {
-        const currentDate = new Date();
-        const activeAbonement = abonements.filter((abonement) => {
-            const expirationDate = new Date(abonement.expiration_date);
-            return expirationDate >= currentDate;
-        })[0];
-        return activeAbonement;
-    }
     const notification = useSelector(({ notification }) => notification);
-
-    const { history, ...abRest } = useSelector(({ abonements }) =>
-        getActiveAbonement(abonements)
+    const activeAbonement = useSelector(({ abonements }) =>
+        abonements.find((abonement) => {
+            const expirationDate = new Date(abonement.expiration_date);
+            return expirationDate >= new Date();
+        })
     );
-
-    const [reserved, setReserved] = useState(false);
+    const reservedTrainings = useSelector(
+        ({ reservedTrainings }) => reservedTrainings
+    );
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
 
+    const isReserved = reservedTrainings.includes(training.id);
+
     // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
-        const updatedAbonement = { ...abRest };
-        console.log(updatedAbonement);
-        console.log(updateType);
+        const currentTime = new Date();
+        const trainingTime = new Date(training.date);
+        const threeHoursBeforeTraining = new Date(trainingTime);
+        threeHoursBeforeTraining.setHours(trainingTime.getHours() - 3);
+
+        if (
+            (updateType === 'reservation' &&
+                currentTime >= threeHoursBeforeTraining) ||
+            (updateType === 'cancellation' &&
+                currentTime >= threeHoursBeforeTraining)
+        ) {
+            console.log(
+                "You can't reserve or cancel a training less than 3 hours before it starts."
+            );
+            return;
+        }
 
         if (updateType === 'reservation') {
-            updatedAbonement.left = updatedAbonement.left - 1;
-            updatedAbonement.history = [...history, training.id];
+            dispatch(addReservation(training.id));
         } else if (updateType === 'cancellation') {
-            updatedAbonement.left = updatedAbonement.left + 1;
-            updatedAbonement.history = updatedAbonement.history.filter(
-                (el) => el !== training.id
-            );
+            dispatch(removeReservation(training.id));
         }
-        console.log(updatedAbonement);
 
         try {
             await dispatch(
-                updateAbonement(updatedAbonement.id, updatedAbonement)
-            );
-            await dispatch(
                 updateTraining(training.id, {
                     updateType,
-                    abonementId: updatedAbonement.id,
+                    abonementId: activeAbonement.id,
                 })
             );
-            setReserved((prev) => !prev);
         } catch (error) {
             console.log(error);
             setError(true);
-            // dispatch(notifyWith(error.response.data.error));
+            dispatch(notifyWith(error.response.data.error));
             setTimeout(() => {
                 setError(false);
             }, 3000);
@@ -98,15 +100,19 @@ export default function Training({ training }) {
             >
                 <button
                     style={{
-                        border: `1px solid ${reserved ? 'red' : 'green'}`,
+                        border: `1px solid ${isReserved ? 'red' : 'green'}`,
                         padding: '0.25em 1em',
                         borderRadius: '0.5em',
+                        color: 'white',
+                        background: `${isReserved ? 'red' : 'green'}`,
                     }}
                     onClick={() =>
-                        handleAction(reserved ? 'cancellation' : 'reservation')
+                        handleAction(
+                            isReserved ? 'cancellation' : 'reservation'
+                        )
                     }
                 >
-                    {reserved ? 'Cancel' : 'Reserve'}
+                    {isReserved ? 'Cancel' : 'Reserve'}
                 </button>
                 <p>
                     Places left:{' '}

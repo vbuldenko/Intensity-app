@@ -15,12 +15,9 @@ trainingRouter.get("/", async (request, response, next) => {
 });
 
 trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
-    const id = request.params.id;
+    const trainingId = request.params.id;
     const user = request.user;
     const { updateType, abonementId } = request.body;
-    //Modify later!!!!!!!!!!!!!!!!!!!!!!!!
-    // const active_abonement = await Abonement.findById(abonementId);
-    // console.log(active_abonement);
 
     try {
         if (!user) {
@@ -28,17 +25,21 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
                 .status(401)
                 .json({ error: "Unauthorized: User not authenticated!" });
         }
-
         if (updateType !== "reservation" && updateType !== "cancellation") {
             return response.status(400).json({ error: "Invalid updateType." });
         }
 
-        const training = await Training.findById(id);
+        const training = await Training.findById(trainingId);
+        const active_abonement = await Abonement.findById(abonementId);
 
         if (!training) {
             return response.status(404).json({ error: "Training not found." });
         }
-
+        if (!active_abonement) {
+            return response
+                .status(404)
+                .json({ error: "Active abonement not found." });
+        }
         if (updateType === "reservation") {
             if (training.registeredClients.includes(user.id)) {
                 return response.status(400).json({
@@ -46,8 +47,9 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
                 });
             }
 
-            training.registeredClients.push(user.id); //add user to list of registered clients
-            // active_abonement.history.push(training.id); //wy not _id?
+            training.registeredClients.push(user.id); //add user id to list of registered clients
+            active_abonement.left -= 1; //deduct 1 training from active abonement
+            active_abonement.history.push(training.id); //wy not _id?
         } else if (updateType === "cancellation") {
             if (!training.registeredClients.includes(user.id)) {
                 return response.status(400).json({
@@ -57,16 +59,17 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
 
             training.registeredClients = training.registeredClients.filter(
                 (clientId) => clientId.toString() !== user.id
-            ); // delete user from list of registered clients
-            // active_abonement.history = active_abonement.history.filter(
-            //     (trainingId) => trainingId.toString() !== training.id
-            // );
+            ); // delete user id from list of registered clients
+            active_abonement.left += 1; //return 1 training to active abonement
+            active_abonement.history = active_abonement.history.filter(
+                (trainingId) => trainingId.toString() !== training.id
+            );
         }
 
         const savedTraining = await training.save();
-        // await active_abonement.save();
+        await active_abonement.save();
         console.log(savedTraining);
-        // console.log(active_abonement);
+        console.log(active_abonement);
         response.json(savedTraining);
     } catch (error) {
         next(error);
