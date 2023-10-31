@@ -33,17 +33,6 @@ usersRouter.get("/:id", userExtractor, async (request, response) => {
   }
 });
 
-// usersRouter.get("/:id", userExtractor, async (request, response) => {
-//   const { user } = request; //To ensure that authenticated user can acces his userdata
-
-//   if (user.id !== request.params.id) {
-//     return response.status(401).json({ error: "Access denied" });
-//   }
-
-//   const users = await User.findById(request.params.id).populate("abonements");
-//   response.json(users);
-// });
-
 usersRouter.post("/", async (request, response, next) => {
   const { username, name, surname, email, phone, password, role } =
     request.body;

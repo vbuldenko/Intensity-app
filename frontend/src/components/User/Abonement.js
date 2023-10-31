@@ -7,13 +7,19 @@ export default function Abonement({ status, abonement }) {
                     <span className={status}>{status}</span>
                 </div>
                 <div>
-                    <b>From:</b> {abonement.activation_date}
+                    <b>From:</b>{' '}
+                    {abonement.activation_date
+                        ? abonement.activation_date.slice(0, 16)
+                        : null}
                 </div>
                 <div>
-                    <b>To:</b> {abonement.expiration_date}
+                    <b>To:</b>{' '}
+                    {abonement.expiration_date
+                        ? abonement.expiration_date.slice(0, 16)
+                        : null}
                 </div>
                 <div>
-                    <b>Purchase date:</b> {abonement.purchase_date}
+                    <b>Purchase date:</b> {abonement.purchase_date.slice(0, 16)}
                 </div>
                 <div>
                     <b>Amount of trainings:</b> {abonement.amount}
@@ -29,10 +35,10 @@ export default function Abonement({ status, abonement }) {
                     ? abonement.history.map((el) => {
                           return (
                               <div
-                                  key={el._id}
+                                  key={el.id}
                                   className="abonement-training-history-element"
                               >
-                                  <p>date: {el.date}</p>
+                                  <p>date: {el.date.slice(0, 10)}</p>
                                   <p>time: {el.time}</p>
                                   <p>class: {el.type}</p>
                                   <p>trainer: {el.instructor}</p>

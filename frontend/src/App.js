@@ -40,7 +40,7 @@ export default function App() {
     const user = useSelector(({ user }) => user);
     const trainings = useSelector(({ trainings }) => trainings);
     const date = new Date();
-    console.log('App rendered');
+    console.log('App component');
     const userRole = '';
 
     useEffect(() => {

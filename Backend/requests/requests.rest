@@ -18,21 +18,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
 
 {
     "amount": 10,
-    "history": [{
-      "date": "2023-10-19T17:51:08.892Z",
-      "time": "2023-10-19T17:51:08.892Z",
-      "class": "Fly-Stretching",
-      "trainer": "Babiychuk"
-    },
-    {
-      "date": "2023-10-19T17:51:08.892Z",
-      "time": "2023-10-19T17:51:08.892Z",
-      "class": "Healthy back",
-      "trainer": "Buldenko",
-      "deducted": true,
-      "deduction_reason": "Refused lately"
-    }]
 }
+###
+GET http://localhost:3001/api/users/
 ###
 POST http://localhost:3001/api/users/
 content-type: application/json

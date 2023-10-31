@@ -25,7 +25,9 @@ export default function UserOverview() {
                     </p>
                     <span className="user-role">{role}</span>
                 </div>
-                <p className="user-date">{currentDate.toUTCString()}</p>
+                <p className="user-date">
+                    {currentDate.toString().slice(0, 16)}
+                </p>
             </div>
 
             <Abonements abonements={abonements} currentDate={currentDate} />
