@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 import { notifyWith } from '../reducers/notificationReducer';
-import { signUserIn } from '../reducers/userReducer';
+import { signUserIn } from '../reducers/loginReducer';
 
 const LoginForm = () => {
     const navigate = useNavigate();

@@ -28,7 +28,7 @@ import Layout from './components/Layout';
 import Client from './components/Admin/Client';
 import AuthProtected from './components/AuthRequired';
 
-import { loadLoggedInUser } from './reducers/userReducer';
+import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeAbonements } from './reducers/abonementReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
 
@@ -39,14 +39,17 @@ export default function App() {
     const dispatch = useDispatch();
     const user = useSelector(({ user }) => user);
     const trainings = useSelector(({ trainings }) => trainings);
-    const date = new Date();
-    console.log('App component');
+    console.log('App component user', user);
     const userRole = '';
 
+    const fetchData = async () => {
+        await dispatch(loadLoggedInUser());
+        await dispatch(initializeAbonements());
+        await dispatch(initializeTrainings());
+    };
+
     useEffect(() => {
-        dispatch(loadLoggedInUser());
-        dispatch(initializeAbonements());
-        dispatch(initializeTrainings());
+        fetchData();
     }, []);
 
     return (

@@ -3,7 +3,7 @@ import anzhphoto from '../../images/anzhel.jpg';
 import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logUserOut } from '../../reducers/userReducer';
+import { logUserOut } from '../../reducers/loginReducer';
 
 function Admin() {
     const dispatch = useDispatch();

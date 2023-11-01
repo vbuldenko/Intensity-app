@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import trainingReducer from './reducers/trainingReducer';
 import reservationsReducer from './reducers/reservationsReducer';
 import notificationReducer from './reducers/notificationReducer';
-import userReducer from './reducers/userReducer';
+import loginReducer from './reducers/loginReducer';
 import usersReducer from './reducers/usersReducer';
 import abonementReducer from './reducers/abonementReducer';
 
@@ -12,7 +12,7 @@ const store = configureStore({
         reservedTrainings: reservationsReducer,
         trainings: trainingReducer,
         notification: notificationReducer,
-        user: userReducer,
+        user: loginReducer,
         users: usersReducer,
     },
 });

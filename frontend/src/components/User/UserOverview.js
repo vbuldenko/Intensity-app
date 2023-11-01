@@ -1,8 +1,5 @@
 import './styles/useroverview.css';
 import { useOutletContext } from 'react-router-dom';
-
-import { user, saleData } from '../../test_data/data';
-
 import Abonements from './Abonements';
 
 export default function UserOverview() {
@@ -18,7 +15,7 @@ export default function UserOverview() {
     return (
         <div className="user-overview">
             <div className="user">
-                <img className="user-img" src={user.img} />
+                {/* <img className="user-img" src={userData.img} /> */}
                 <div>
                     <p className="user-name">
                         {name} {surname}

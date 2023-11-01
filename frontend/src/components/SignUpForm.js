@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import './styles/loginform.css';
 
 import { notifyWith } from '../reducers/notificationReducer';
-import { signUserIn } from '../reducers/userReducer';
+import { signUserIn } from '../reducers/loginReducer';
 
 const SignUpForm = () => {
     const [signUpData, setSignUpData] = useState({

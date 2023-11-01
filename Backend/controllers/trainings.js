@@ -46,6 +46,16 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
                     error: "Already reserved: You have already reserved your place!",
                 });
             }
+            // //Activate abonement if it is not
+            // if (!body.activation_date) {
+            //     const currentDate = new Date();
+            //     // Calculate the expiration date by adding one month to the current date
+            //     const expirationDate = new Date(currentDate);
+            //     expirationDate.setMonth(currentDate.getMonth() + 1);
+
+            //     body.activation_date = currentDate;
+            //     body.expiration_date = expirationDate;
+            // }
 
             training.registeredClients.push(user.id); //add user id to list of registered clients
             active_abonement.left -= 1; //deduct 1 training from active abonement
