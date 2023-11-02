@@ -1,0 +1,41 @@
+.account-section {
+    margin: 1em;
+    box-sizing: border-box;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+}
+
+.account-subsection {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+}
+
+.abonement,
+.abonement-dates {
+    display: flex;
+    gap: 1em;
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.abonement {
+    flex-direction: column;
+}
+
+.abonement-dates {
+    flex-wrap: wrap;
+}
+
+.abonement-dates * {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 1em;
+    padding: 1em;
+}

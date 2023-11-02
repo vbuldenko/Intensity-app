@@ -1,0 +1,17 @@
+.trainer-info {
+    background-color: rgb(201, 235, 173);
+    display: flex;
+    gap: 0.5em;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.trainer-history {
+    display: flex;
+    gap: 1em;
+}
+
+.trainer-history-element {
+    padding: 1em;
+    box-shadow: 0 0 2px black;
+}
