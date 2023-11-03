@@ -21,7 +21,9 @@ abonementRouter.get("/user", userExtractor, async (request, response, next) => {
                 .json({ error: "operation not permitted" });
         }
 
-        const abonnements = await Abonement.find({ user: user.id });
+        const abonnements = await Abonement.find({ user: user.id }).populate({
+            history,
+        });
         response.json(abonnements);
     } catch (error) {
         next(error);

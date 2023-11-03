@@ -1,8 +1,11 @@
 import Togglable from './Togglable';
 import Abonement from './Abonement';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-export default function Abonements({ abonements, currentDate }) {
+export default function Abonements({ currentDate }) {
+    const abonements = useSelector(({ abonements }) => abonements);
+    console.log(abonements);
     const [abonementView, setAbonementView] = useState('all');
 
     const filteredAbonements = filterAbonements(abonements, abonementView);

@@ -1,6 +1,4 @@
 import './App.css';
-
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
@@ -28,6 +26,8 @@ import Layout from './components/Layout';
 import Client from './components/Admin/Client';
 import AuthProtected from './components/AuthRequired';
 
+import storageService from './services/storage';
+
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
 import { initializeAbonements } from './reducers/abonementReducer';
@@ -37,14 +37,19 @@ import { trainers } from './test_data/data';
 
 export default function App() {
     const dispatch = useDispatch();
+    const isAuthenticated = storageService.loadUser();
 
     console.log('App state');
     const userRole = '';
 
     useEffect(() => {
-        dispatch(initializeAbonements());
-        dispatch(initializeTrainings());
-    }, []);
+        console.log('App useEffect run');
+        if (isAuthenticated) {
+            dispatch(loadLoggedInUser());
+            dispatch(initializeAbonements());
+            dispatch(initializeTrainings());
+        }
+    }, [isAuthenticated]);
 
     return (
         <div className="App">

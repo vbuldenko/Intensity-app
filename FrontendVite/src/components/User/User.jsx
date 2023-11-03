@@ -1,10 +1,9 @@
 import './styles/user.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logUserOut } from '../../reducers/loginReducer';
 
 export default function User() {
-    const user = useSelector(({ user }) => user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ export default function User() {
     const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);
     const handleLogOut = () => {
         dispatch(logUserOut());
-        navigate('/sign-in');
+        navigate('/sign-in'); //Maybe there no need for this?
     };
 
     return (
@@ -36,7 +35,7 @@ export default function User() {
                     Log Out
                 </button>
             </nav>
-            <Outlet context={user} />
+            <Outlet />
         </section>
     );
 }

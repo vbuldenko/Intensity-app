@@ -1,14 +1,12 @@
 import './styles/useroverview.css';
-import { useOutletContext } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Abonements from './Abonements';
 
 export default function UserOverview() {
-    const userData = useOutletContext();
-    if (!userData) {
+    const user = useSelector(({ user }) => user);
+    if (!user) {
         return null;
     }
-
-    const { name, surname, role, abonements } = userData;
 
     const currentDate = new Date();
 
@@ -18,16 +16,16 @@ export default function UserOverview() {
                 {/* <img className="user-img" src={userData.img} /> */}
                 <div>
                     <p className="user-name">
-                        {name} {surname}
+                        {user.name} {user.surname}
                     </p>
-                    <span className="user-role">{role}</span>
+                    <span className="user-role">{user.role}</span>
                 </div>
                 <p className="user-date">
                     {currentDate.toString().slice(0, 16)}
                 </p>
             </div>
 
-            <Abonements abonements={abonements} currentDate={currentDate} />
+            <Abonements currentDate={currentDate} />
         </div>
     );
 }

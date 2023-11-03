@@ -31,7 +31,7 @@ export default function Abonement({ status, abonement }) {
             </div>
             {/* Look at id property of training history */}
             <div className="abonement-training-history">
-                {abonement.history
+                {abonement.history.length > 0
                     ? abonement.history.map((el) => {
                           return (
                               <div
