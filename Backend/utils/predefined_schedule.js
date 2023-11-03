@@ -44,14 +44,14 @@ const predefinedSchedule = [
   {
     day: "Monday",
     time: "20:00",
-    type: "Yoga Stretch",
+    type: "Fly Yoga",
     instructor: "Anzhelika",
     maxCapacity: 8,
   },
   {
     day: "Tuesday",
     time: "09:00",
-    type: "Yoga",
+    type: "Pilates",
     instructor: "Valeriya",
     maxCapacity: 8,
   },
@@ -65,7 +65,7 @@ const predefinedSchedule = [
   {
     day: "Tuesday",
     time: "11:00",
-    type: "Pilates",
+    type: "Yoga",
     instructor: "Valeriya",
     maxCapacity: 8,
   },
@@ -163,7 +163,7 @@ const predefinedSchedule = [
   {
     day: "Thursday",
     time: "09:00",
-    type: "Yoga",
+    type: "Pilates",
     instructor: "Valeriya",
     maxCapacity: 8,
   },
@@ -177,7 +177,7 @@ const predefinedSchedule = [
   {
     day: "Thursday",
     time: "11:00",
-    type: "Pilates",
+    type: "Yoga",
     instructor: "Valeriya",
     maxCapacity: 8,
   },
@@ -268,7 +268,7 @@ const predefinedSchedule = [
   {
     day: "Friday",
     time: "20:00",
-    type: "Yoga Stretch",
+    type: "Fly Yoga",
     instructor: "Anzhelika",
     maxCapacity: 8,
   },

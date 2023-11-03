@@ -16,7 +16,7 @@ const trainingsEnum = [
   "ABS",
   "Fly Stretching",
   "Tabata",
-  "Yoga Stretch",
+  "Fly Yoga",
   "Yoga",
   "Functional",
   "Pilates",
