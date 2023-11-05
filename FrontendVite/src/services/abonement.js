@@ -19,10 +19,10 @@ const getAllByUserId = async () => {
     return response.data;
 };
 
-// const create = async (newObject) => {
-//     const response = await axios.post(baseUrl, newObject, config);
-//     return response.data;
-// };
+const create = async (newObject) => {
+    const response = await axios.post(baseUrl, newObject, config);
+    return response.data;
+};
 // const addcomment = async (id, comment) => {
 //     const response = await axios.post(`${baseUrl}/${id}/comments/`, {
 //         comment,
@@ -42,4 +42,4 @@ const update = async (id, body) => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 // export default { getAll, create, addcomment, update, remove };
-export default { getAll, getAllByUserId, update };
+export default { getAll, getAllByUserId, create, update };

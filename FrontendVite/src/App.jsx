@@ -17,6 +17,7 @@ import Admin from './components/Admin/Admin';
 import User from './components/User/User';
 import Overview from './components/Admin/Overview';
 import UserOverview from './components/User/UserOverview';
+import Purchases from './components/User/Purchases';
 import AdminSchedule from './components/Admin/Schedule';
 import Clients from './components/Admin/Clients';
 import Settings from './components/Admin/Settings';
@@ -79,6 +80,7 @@ export default function App() {
                                     )
                                 }
                             />
+                            <Route path="purchases" element={<Purchases />} />
                             <Route
                                 path="schedule"
                                 element={<AdminSchedule />}

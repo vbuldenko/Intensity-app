@@ -39,16 +39,16 @@ export const initializeAbonements = () => {
     };
 };
 
-// export const createTraining = (training) => {
-//     return async (dispatch) => {
-//         try {
-//             const newTraining = await trainingService.create(training);
-//             dispatch(addBlog(newTraining));
-//         } catch (error) {
-//             console.log('Error occured');
-//         }
-//     };
-// };
+export const createAbonement = (abonement) => {
+    return async (dispatch) => {
+        try {
+            const newAbonement = await abonementService.create(abonement);
+            dispatch(addAbonement(newAbonement));
+        } catch (error) {
+            console.log('Error occured');
+        }
+    };
+};
 
 export const updateAbonement = (id, updateBody) => {
     return async (dispatch) => {
