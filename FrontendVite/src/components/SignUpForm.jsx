@@ -1,25 +1,24 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import './styles/loginform.css';
 
 import { notifyWith } from '../reducers/notificationReducer';
-import { signUserIn } from '../reducers/loginReducer';
+import { createUser } from '../reducers/usersReducer';
 
 const SignUpForm = () => {
-    const [signUpData, setSignUpData] = useState({
+    const defaultUserData = {
         username: '',
         name: '',
         surname: '',
         email: '',
         phone: '',
         password: '',
-    });
+    };
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        console.log(signUpData);
-    }
+    const [signUpData, setSignUpData] = useState(defaultUserData);
+    const navigate = useNavigate();
+    const notification = useSelector(({ notification }) => notification);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -31,22 +30,22 @@ const SignUpForm = () => {
 
     const dispatch = useDispatch();
 
-    // const handleLogin = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //         dispatch(signUserIn({ username, password }));
-    //         setUsername('');
-    //         setPassword('');
-    //         navigate('/');
-    //     } catch (exception) {
-    //         dispatch(notifyWith({ text: 'Wrong credentials', error: true }));
-    //     }
-    // };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await dispatch(createUser(signUpData));
+            setSignUpData(defaultUserData);
+            navigate('/login', { replace: true });
+        } catch (error) {
+            dispatch(notifyWith(error.response.data.error));
+        }
+    };
 
     return (
         <div className="login-wrapper">
             <form className="login-form" onSubmit={handleSubmit}>
-                <h1>Log in to application</h1>
+                <h1>Create an account</h1>
+                {notification && <h1>{notification}</h1>}
                 <div>
                     <input
                         id="username"
@@ -116,9 +115,6 @@ const SignUpForm = () => {
                     <Link className="logo" to="/sign-in">
                         Log In
                     </Link>
-                </div>
-                <div>
-                    <button>Forgot password?</button>
                 </div>
             </div>
         </div>

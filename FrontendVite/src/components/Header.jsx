@@ -37,7 +37,7 @@ export default function Header() {
                     </NavLink>
                 ) : (
                     <NavLink to="/sign-in" style={styleChanger}>
-                        Log In
+                        Log In/Sign Up
                     </NavLink>
                 )}
             </nav>
