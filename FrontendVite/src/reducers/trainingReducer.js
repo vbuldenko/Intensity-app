@@ -48,12 +48,9 @@ export const initializeTrainings = () => {
 //     };
 // };
 
-export const updateTraining = (id, updateTypeBody) => {
+export const updateTraining = (id, updateType) => {
     return async (dispatch) => {
-        const updatedTraining = await trainingService.update(
-            id,
-            updateTypeBody
-        );
+        const updatedTraining = await trainingService.update(id, updateType);
         dispatch(updateExistingTraining(updatedTraining));
     };
 };

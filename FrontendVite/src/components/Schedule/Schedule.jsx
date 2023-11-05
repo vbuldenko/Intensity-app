@@ -32,9 +32,9 @@ export default function Schedule() {
         end: endOfMonth(firstDayCurrentMonth),
     });
 
-    const selectedDayTrainings = trainings.filter((training) =>
-        isSameDay(parseISO(training.date), selectedDay)
-    );
+    const selectedDayTrainings = trainings
+        .filter((training) => isSameDay(parseISO(training.date), selectedDay))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
     function handleViewChange(event) {
         setScheduleView(event.target.value);

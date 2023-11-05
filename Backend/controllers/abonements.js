@@ -21,9 +21,9 @@ abonementRouter.get("/user", userExtractor, async (request, response, next) => {
                 .json({ error: "operation not permitted" });
         }
 
-        const abonnements = await Abonement.find({ user: user.id }).populate({
-            history,
-        });
+        const abonnements = await Abonement.find({ user: user.id }).populate(
+            "history"
+        );
         response.json(abonnements);
     } catch (error) {
         next(error);
@@ -76,9 +76,9 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
 });
 
 abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
-    const abonementToUpdateId = request.params.id;
+    const abonementId = request.params.id;
     const { body, user } = request;
-    const { actionType, abonementBody } = body;
+    const { updateType } = body;
 
     try {
         if (!user) {
@@ -87,42 +87,62 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
                 .json({ error: "operation not permitted" });
         }
 
-        if (actionType === "activation" && !abonementBody.activation_date) {
+        const abonement = await Abonement.findById(abonementId);
+        if (!abonement) {
+            return response.status(404).json({ error: "Abonement not found." });
+        }
+
+        if (updateType === "activation" && !abonement.activation_date) {
             const currentDate = new Date();
             // Calculate the expiration date by adding one month to the current date
             const expirationDate = new Date(currentDate);
             expirationDate.setMonth(currentDate.getMonth() + 1);
 
-            abonementBody.activation_date = currentDate;
-            abonementBody.expiration_date = expirationDate;
-        } else if (
-            actionType === "activation" &&
-            abonementBody.activation_date
-        ) {
+            abonement.activation_date = currentDate;
+            abonement.expiration_date = expirationDate;
+        } else if (updateType === "activation" && abonement.activation_date) {
             return response
                 .status(401)
                 .json({ error: "abonement already activated" });
         }
 
-        const update = {
-            $set: {
-                // Specify the new values
-                ...abonementBody,
-            },
-        };
+        if (new Date(abonement.expirationDate) > new Date()) {
+            return response
+                .status(401)
+                .json({ error: "abonement expired. Buy a new one!" });
+        }
 
-        const updatedAbonement = await Abonement.findByIdAndUpdate(
-            abonementToUpdateId,
-            update,
-            {
-                new: true,
-                runValidators: true,
-                context: "query",
-            }
-        );
+        if (updateType === "reservation") {
+            abonement.left -= 1; //deduct 1 training from active abonement
+            abonement.history.push(body.trainingId); //wy not _id?
+        } else if (updateType === "cancellation") {
+            abonement.left += 1; //return 1 training to active abonement
+            abonement.history = abonement.history.filter(
+                (id) => id.toString() !== body.trainingId
+            );
+        }
+
+        // const update = {
+        //     $set: {
+        //         // Specify the new values
+        //         ...abonementBody,
+        //     },
+        // };
+
+        // const updatedAbonement = await Abonement.findByIdAndUpdate(
+        //     abonementId,
+        //     update,
+        //     {
+        //         new: true,
+        //         runValidators: true,
+        //         context: "query",
+        //     }
+        // );
+        const savedAbonement = await abonement.save();
         const populatedAbonement = await Abonement.findById(
-            updatedAbonement._id
+            savedAbonement.id
         ).populate("history");
+        console.log(savedAbonement);
         response.json(populatedAbonement);
     } catch (error) {
         next(error);

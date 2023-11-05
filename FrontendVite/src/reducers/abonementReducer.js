@@ -50,12 +50,9 @@ export const initializeAbonements = () => {
 //     };
 // };
 
-export const updateAbonement = (id, newAbonementBody) => {
+export const updateAbonement = (id, updateBody) => {
     return async (dispatch) => {
-        const updatedAbonement = await abonementService.update(
-            id,
-            newAbonementBody
-        );
+        const updatedAbonement = await abonementService.update(id, updateBody);
         dispatch(updateExistingAbonement(updatedAbonement));
     };
 };

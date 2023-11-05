@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 export default function Abonements({ currentDate }) {
     const abonements = useSelector(({ abonements }) => abonements);
-    console.log(abonements);
+    console.log('Abonements component of the User');
     const [abonementView, setAbonementView] = useState('all');
 
     const filteredAbonements = filterAbonements(abonements, abonementView);

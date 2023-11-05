@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateTraining } from '../../reducers/trainingReducer';
+import { updateAbonement } from '../../reducers/abonementReducer';
 import {
     addReservation,
     removeReservation,
 } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
-import { useDispatch, useSelector } from 'react-redux';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);
@@ -22,30 +23,24 @@ export default function Training({ training }) {
     const dispatch = useDispatch();
 
     const isReserved = reservedTrainings.includes(training.id);
+    const currentTime = new Date();
+    const trainingTime = new Date(training.date);
+    const threeHoursBeforeTraining = new Date(trainingTime);
+    threeHoursBeforeTraining.setHours(trainingTime.getHours() - 3);
 
     // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
-        const currentTime = new Date();
-        const trainingTime = new Date(training.date);
-        const threeHoursBeforeTraining = new Date(trainingTime);
-        threeHoursBeforeTraining.setHours(trainingTime.getHours() - 3);
-        console.log('training time', trainingTime);
-
-        if (
-            (updateType === 'reservation' &&
-                currentTime >= threeHoursBeforeTraining) ||
-            (updateType === 'cancellation' &&
-                currentTime >= threeHoursBeforeTraining)
-        ) {
-            setError(true);
-            dispatch(
-                notifyWith('Prohibited less than 3 hours before training.')
-            );
-            setTimeout(() => {
-                setError(false);
-            }, 3000);
-            return;
-        }
+        // if (currentTime >= threeHoursBeforeTraining)
+        //  {
+        //     setError(true);
+        //     dispatch(
+        //         notifyWith('Prohibited less than 3 hours before training.')
+        //     );
+        //     setTimeout(() => {
+        //         setError(false);
+        //     }, 3000);
+        //     return;
+        // }
 
         // Think about indicating current status of reservation after page refresh
         if (updateType === 'reservation') {
@@ -55,12 +50,26 @@ export default function Training({ training }) {
         }
 
         try {
-            await dispatch(
-                updateTraining(training.id, {
-                    updateType,
-                    abonementId: activeAbonement.id,
-                })
-            );
+            await Promise.all([
+                dispatch(
+                    updateAbonement(activeAbonement.id, {
+                        updateType,
+                        trainingId: training.id,
+                    })
+                ),
+                dispatch(updateTraining(training.id, { updateType })),
+            ]);
+            // await dispatch(
+            //     updateAbonement(activeAbonement.id, {
+            //         updateType,
+            //         trainingId: training.id,
+            //     })
+            // );
+            // await dispatch(
+            //     updateTraining(training.id, {
+            //         updateType,
+            //     })
+            // );
         } catch (error) {
             console.log(error);
             setError(true);
@@ -87,9 +96,7 @@ export default function Training({ training }) {
             <div className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
                 <div className="flex-auto items-center">
                     <b className="text-gray-900">
-                        {training.time}
-                        {' - '}
-                        {training.type}
+                        {training.time}-{training.type}
                     </b>
                     <p className="mt-0.5">Duration: 50 min</p>
                     <p className="text-gray-900">
@@ -110,15 +117,29 @@ export default function Training({ training }) {
                             padding: '0.25em 1em',
                             borderRadius: '0.5em',
                             color: 'white',
-                            background: `${isReserved ? 'red' : 'green'}`,
+                            background:
+                                currentTime >= threeHoursBeforeTraining
+                                    ? 'gray'
+                                    : isReserved
+                                    ? 'red'
+                                    : 'green',
+                            cursor:
+                                currentTime >= threeHoursBeforeTraining
+                                    ? 'not-allowed'
+                                    : 'pointer',
                         }}
+                        disabled={currentTime >= threeHoursBeforeTraining}
                         onClick={() =>
                             handleAction(
                                 isReserved ? 'cancellation' : 'reservation'
                             )
                         }
                     >
-                        {isReserved ? 'Cancel' : 'Reserve'}
+                        {currentTime >= threeHoursBeforeTraining
+                            ? 'Reservation closed'
+                            : isReserved
+                            ? 'Cancel'
+                            : 'Reserve'}
                     </button>
                     <p>
                         Places left:{' '}

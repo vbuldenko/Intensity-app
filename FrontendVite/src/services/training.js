@@ -25,12 +25,8 @@ const getAll = async () => {
 //     return response.data;
 // };
 
-const update = async (id, updateTypeBody) => {
-    const response = await axios.put(
-        `${baseUrl}/${id}`,
-        updateTypeBody,
-        config
-    );
+const update = async (id, updateType) => {
+    const response = await axios.put(`${baseUrl}/${id}`, updateType, config);
     return response.data;
 };
 
