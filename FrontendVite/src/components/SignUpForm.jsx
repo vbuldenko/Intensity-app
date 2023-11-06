@@ -14,28 +14,29 @@ const SignUpForm = () => {
         email: '',
         phone: '',
         password: '',
+        role: '',
     };
 
     const [signUpData, setSignUpData] = useState(defaultUserData);
     const navigate = useNavigate();
     const notification = useSelector(({ notification }) => notification);
+    const dispatch = useDispatch();
 
     function handleChange(e) {
         const { name, value } = e.target;
+
         setSignUpData((prev) => ({
             ...prev,
             [name]: value,
         }));
     }
 
-    const dispatch = useDispatch();
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             await dispatch(createUser(signUpData));
             setSignUpData(defaultUserData);
-            navigate('/login', { replace: true });
+            navigate('/sign-in', { replace: true });
         } catch (error) {
             dispatch(notifyWith(error.response.data.error));
         }
@@ -51,7 +52,7 @@ const SignUpForm = () => {
                         id="username"
                         type="text"
                         value={signUpData.username}
-                        name="Username"
+                        name="username"
                         placeholder="username"
                         onChange={handleChange}
                     />
@@ -61,7 +62,7 @@ const SignUpForm = () => {
                         id="name"
                         type="text"
                         value={signUpData.name}
-                        name="Name"
+                        name="name"
                         placeholder="first name"
                         onChange={handleChange}
                     />
@@ -71,7 +72,7 @@ const SignUpForm = () => {
                         id="surname"
                         type="text"
                         value={signUpData.surname}
-                        name="Surname"
+                        name="surname"
                         placeholder="last name"
                         onChange={handleChange}
                     />
@@ -81,7 +82,7 @@ const SignUpForm = () => {
                         id="email"
                         type="text"
                         value={signUpData.email}
-                        name="Email"
+                        name="email"
                         placeholder="email"
                         onChange={handleChange}
                     />
@@ -91,7 +92,7 @@ const SignUpForm = () => {
                         id="phone"
                         type="text"
                         value={signUpData.phone}
-                        name="Phone"
+                        name="phone"
                         placeholder="phone number"
                         onChange={handleChange}
                     />
@@ -101,10 +102,33 @@ const SignUpForm = () => {
                         id="password"
                         type="password"
                         value={signUpData.password}
-                        name="Password"
+                        name="password"
                         placeholder="password"
                         onChange={handleChange}
                     />
+                </div>
+                <div>
+                    <label>Choose your role:</label>
+                    <label style={{ marginLeft: '10px' }}>
+                        <input
+                            type="radio"
+                            name="role"
+                            value="client"
+                            checked={signUpData.role === 'client'}
+                            onChange={handleChange}
+                        />
+                        Client
+                    </label>
+                    <label style={{ marginLeft: '10px' }}>
+                        <input
+                            type="radio"
+                            name="role"
+                            value="trainer"
+                            checked={signUpData.role === 'trainer'}
+                            onChange={handleChange}
+                        />
+                        Trainer
+                    </label>
                 </div>
                 <button id="login-button" type="submit">
                     Sign Up

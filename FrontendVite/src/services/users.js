@@ -30,8 +30,11 @@ const update = async (id, updatedUser) => {
 };
 
 const remove = (id) => {
-    // axios.delete(`${baseUrl}/${id}`, config);
-    axios.delete(`${baseUrl}/${id}`);
+    const user = storageService.loadUser();
+    if (user) {
+        config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    axios.delete(`${baseUrl}/${id}`, config);
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

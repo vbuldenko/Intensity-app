@@ -20,11 +20,8 @@ function IndividualAbonement({ amount, price }) {
     };
 
     const abonementStyle = {
-        border: '1px solid #ccc',
         borderRadius: '8px',
-        padding: '20px',
-        marginBottom: '20px',
-        backgroundColor: 'white',
+        padding: '1em',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
         display: 'flex',
         flexDirection: 'column',
@@ -87,10 +84,11 @@ export default function Purchases() {
 
             <div
                 style={{
+                    width: '100%',
                     display: 'flex',
+                    justifyContent: 'space-evenly',
                     flexWrap: 'wrap',
                     gap: '1em',
-                    justifyContent: 'center',
                 }}
             >
                 {abonementData.map(({ amount, price }) => (

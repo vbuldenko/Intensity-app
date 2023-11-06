@@ -27,10 +27,11 @@ export default function Purchases() {
     }
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        const { name, type, value, checked } = e.target;
+        const newValue = type === 'checkbox' ? checked : parseInt(value, 10);
 
         setAbonementData(() => ({
-            [name]: parseInt(value, 10),
+            [name]: newValue,
         }));
     }
 

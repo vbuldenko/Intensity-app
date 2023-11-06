@@ -1,7 +1,7 @@
-import './styles/user.css';
+import '../User/styles/user.css';
 import { NavLink, Outlet } from 'react-router-dom';
 
-export default function User() {
+export default function Trainer() {
     const activeStyles = {
         fontWeight: '800',
         textDecoration: 'underline',

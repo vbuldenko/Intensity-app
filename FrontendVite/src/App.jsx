@@ -1,10 +1,9 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
 
 import Home from './components/Home';
-import About from './components/About';
 import Services from './components/Services';
 import Schedule from './components/Schedule/Schedule';
 import Prices from './components/Prices';
@@ -13,8 +12,7 @@ import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
 import NotFound from './components/NotFound';
 
-import Admin from './components/Admin/Admin';
-import User from './components/User/User';
+import Account from './components/Account';
 import Overview from './components/Admin/Overview';
 import UserOverview from './components/User/UserOverview';
 import Purchases from './components/User/Purchases';
@@ -64,12 +62,7 @@ export default function App() {
                     <Route path="sign-in" element={<LoginForm />} />
                     <Route path="sign-up" element={<SignUpForm />} />
                     <Route element={<AuthProtected />}>
-                        <Route
-                            path="account"
-                            element={
-                                userRole === 'admin' ? <Admin /> : <User />
-                            }
-                        >
+                        <Route path="account" element={<Account />}>
                             <Route
                                 index
                                 element={
