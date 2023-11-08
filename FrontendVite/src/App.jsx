@@ -37,9 +37,9 @@ import { trainers } from './test_data/data';
 export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser();
-
-    console.log('App state');
+    // const user = useSelector(({ user }) => user);
     const userRole = '';
+    console.log('App user role:');
 
     useEffect(() => {
         console.log('App useEffect run');
