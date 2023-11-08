@@ -10,7 +10,7 @@ function IndividualAbonement({ amount, price }) {
     const handleSubmit = async () => {
         const abonementData = { amount };
         try {
-            dispatch(createAbonement({ amount }));
+            dispatch(createAbonement({ amount, price }));
             dispatch(
                 notifyWith(`Abonement for ${amount} trainings was purchased`)
             );

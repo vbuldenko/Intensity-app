@@ -5,7 +5,11 @@ const abonementSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  purchase_date: { type: Date },
+  price: {
+    type: Number,
+    required: true,
+  },
+  purchase_date: { type: Date, required: true },
   activation_date: { type: Date },
   expiration_date: { type: Date },
   paused: Boolean,

@@ -29,24 +29,31 @@ import storageService from './services/storage';
 
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
-import { initializeAbonements } from './reducers/abonementReducer';
+import {
+    initializeAllAbonements,
+    initializeUserAbonements,
+} from './reducers/abonementReducer';
 
 import { clients } from './test_data/data';
 import { trainers } from './test_data/data';
 
 export default function App() {
     const dispatch = useDispatch();
-    const isAuthenticated = storageService.loadUser();
-    // const user = useSelector(({ user }) => user);
-    const userRole = '';
+    const isAuthenticated = storageService.loadUser() ? true : false;
+    const user = useSelector(({ user }) => user);
     console.log('App user role:');
 
     useEffect(() => {
         console.log('App useEffect run');
         if (isAuthenticated) {
             dispatch(loadLoggedInUser());
-            dispatch(initializeAbonements());
             dispatch(initializeTrainings());
+            // user &&
+            //     (user.role === 'client'
+            //         ? dispatch(initializeUserAbonements())
+            //         : dispatch(initializeAllAbonements()));
+            // dispatch(initializeUserAbonements());
+            dispatch(initializeAllAbonements());
         }
     }, [isAuthenticated]);
 
@@ -66,7 +73,7 @@ export default function App() {
                             <Route
                                 index
                                 element={
-                                    userRole === 'admin' ? (
+                                    user && user.role === 'admin' ? (
                                         <Overview />
                                     ) : (
                                         <UserOverview />

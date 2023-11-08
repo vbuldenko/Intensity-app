@@ -1,22 +1,22 @@
 import '../styles/overview.css';
-import { useOutletContext } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { startOfToday, format } from 'date-fns';
 
 import { user, income, expenses, saleData } from '../../test_data/data';
 
 export default function Overview() {
-    const userData = useOutletContext();
-    if (!userData) {
+    const user = useSelector(({ user }) => user);
+    const soldAbonements = useSelector(({ abonements }) => abonements);
+    if (!user) {
         return null;
     }
-
-    const { name, surname, role } = userData;
+    const { name, surname, role } = user;
 
     let today = format(startOfToday(), 'dd-MMM-yyyy');
     return (
         <div className="overview">
             <div className="user">
-                <img className="user-img" src={user.img} />
+                {/* <img className="user-img" src={user.img} /> */}
                 <div>
                     <p className="user-name">
                         {name} {surname}
@@ -72,13 +72,17 @@ export default function Overview() {
                     <p className="sale-name">client</p>
                     <p className="sale-date">date</p>
                     <p className="sale-abonement">abonement</p>
-                    <p className="sale-price">amount</p>
+                    <p className="sale-price">price</p>
                 </div>
-                {saleData.map((sale, i) => (
-                    <div key={i} className="sale-data">
-                        <p className="sale-name">{sale.name}</p>
-                        <p className="sale-date">{sale.date}</p>
-                        <p className="sale-abonement">{sale.abonement}</p>
+                {soldAbonements.map((sale) => (
+                    <div key={sale.id} className="sale-data">
+                        <p className="sale-name">
+                            {sale.user.name} {sale.user.surname}
+                        </p>
+                        <p className="sale-date">
+                            {sale.purchase_date.slice(0, 10)}
+                        </p>
+                        <p className="sale-abonement">{sale.amount}</p>
                         <p className="sale-price">₴{sale.price}</p>
                     </div>
                 ))}

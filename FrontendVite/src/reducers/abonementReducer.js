@@ -32,9 +32,15 @@ export const {
     removeAbonement,
 } = abonementSlice.actions;
 
-export const initializeAbonements = () => {
+export const initializeUserAbonements = () => {
     return async (dispatch) => {
         const abonements = await abonementService.getAllByUserId();
+        dispatch(setAbonements(abonements));
+    };
+};
+export const initializeAllAbonements = () => {
+    return async (dispatch) => {
+        const abonements = await abonementService.getAll();
         dispatch(setAbonements(abonements));
     };
 };

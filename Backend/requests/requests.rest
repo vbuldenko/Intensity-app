@@ -14,10 +14,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
 ###
 POST http://localhost:3001/api/abonements/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NDcxODY5fQ.BHJkYA5UOfgUMHfF5FVGYv6nstER4IekVYML2Lk3Cg8
+
+{
+    "amount": 12,
+    "price": 2700
+}
+###
+POST http://localhost:3001/api/abonements/
+content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
 
 {
-    "amount": 4
+    "amount": 4,
+    "price": 1300
 }
 ###
 PUT http://localhost:3001/api/abonements/65423b39603900bc3c3fa22a/
@@ -88,6 +98,15 @@ content-type: application/json
 
 {
     "username": "walderhawk",
+    "password": "1111"
+}
+
+###
+POST http://localhost:3001/api/login/
+content-type: application/json
+
+{
+    "username": "bulbab",
     "password": "1111"
 }
 

@@ -5,8 +5,6 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 import { notifyWith } from '../reducers/notificationReducer';
 import { signUserIn } from '../reducers/loginReducer';
-import { initializeAbonements } from '../reducers/abonementReducer';
-import { initializeTrainings } from '../reducers/trainingReducer';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -22,8 +20,6 @@ const LoginForm = () => {
         event.preventDefault();
         try {
             await dispatch(signUserIn({ username, password }));
-            // dispatch(initializeAbonements());
-            // dispatch(initializeTrainings());
             setUsername('');
             setPassword('');
             navigate(path, { replace: true }); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack

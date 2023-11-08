@@ -1,7 +1,7 @@
 .admin-section {
     margin: 1em;
     display: grid;
-    grid-template-columns: 10% 1fr;
+    grid-template-columns: 20% 1fr;
     gap: 1em;
     padding: 1em;
     height: 80vh;
