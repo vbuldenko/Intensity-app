@@ -157,3 +157,7 @@ DELETE http://localhost:3001/api/training-sessions/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
 ###
+GET http://localhost:3001/api/sales/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+###
