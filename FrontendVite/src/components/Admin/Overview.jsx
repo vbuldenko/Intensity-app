@@ -7,6 +7,7 @@ import { user, income, expenses, saleData } from '../../test_data/data';
 export default function Overview() {
     const user = useSelector(({ user }) => user);
     const soldAbonements = useSelector(({ abonements }) => abonements);
+    const statistics = useSelector(({ statistics }) => statistics);
     if (!user) {
         return null;
     }
@@ -27,12 +28,22 @@ export default function Overview() {
             </div>
 
             <div className="income">
-                {income.map((el) => (
-                    <div key={el.id}>
-                        <p>{el.title}</p>
-                        <p>{el.amount}</p>
-                    </div>
-                ))}
+                <div>
+                    <p>Total income</p>
+                    <p>{statistics.totalIncome}</p>
+                </div>
+                <div>
+                    <p>Monthly income</p>
+                    <p>{statistics.monthlyIncome}</p>
+                </div>
+                <div>
+                    <p>Daily income</p>
+                    <p>{statistics.dailyIncome}</p>
+                </div>
+                <div>
+                    <p>Total number of abonements sold</p>
+                    <p>{statistics.totalAbonementSales}</p>
+                </div>
             </div>
 
             <div className="expenses">

@@ -33,6 +33,7 @@ import {
     initializeAllAbonements,
     initializeUserAbonements,
 } from './reducers/abonementReducer';
+import { getStatistics } from './reducers/statisticsReducer';
 
 import { clients } from './test_data/data';
 import { trainers } from './test_data/data';
@@ -54,6 +55,7 @@ export default function App() {
             //         : dispatch(initializeAllAbonements()));
             // dispatch(initializeUserAbonements());
             dispatch(initializeAllAbonements());
+            dispatch(getStatistics());
         }
     }, [isAuthenticated]);
 
