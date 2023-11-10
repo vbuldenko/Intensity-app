@@ -2,9 +2,9 @@ import '../styles/overview.css';
 import { useSelector } from 'react-redux';
 import { startOfToday, format } from 'date-fns';
 
-import { user, income, expenses, saleData } from '../../test_data/data';
+import { expenses } from '../../test_data/data';
 
-export default function Overview() {
+export default function AdminOverview() {
     const user = useSelector(({ user }) => user);
     const soldAbonements = useSelector(({ abonements }) => abonements);
     const statistics = useSelector(({ statistics }) => statistics);

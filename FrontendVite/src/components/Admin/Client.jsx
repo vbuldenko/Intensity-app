@@ -6,11 +6,21 @@ import {
 } from 'react-router-dom';
 import clientPhoto from '../../images/tkachuk.jpg';
 import './styles/client.css';
+import { useSelector } from 'react-redux';
+import abonement from '../../services/abonement';
 
-export default function Client({ list }) {
+export default function Client() {
+    const clients = useSelector(({ users }) => users);
     const { id } = useParams();
     const location = useLocation();
-    const client = list.find((el) => el.id.toString() === id.toString());
+    const client = clients.find((client) => client.id === id.toString());
+    const activeAbonement = client.abonements.find(
+        (abonement) => new Date(abonement.expiration_date) >= new Date()
+    );
+    console.log(activeAbonement);
+    // const client = clients.find(
+    //     (client) => client.id.toString() === id.toString()
+    // );
 
     const search = location.state?.search || '';
 
@@ -22,28 +32,26 @@ export default function Client({ list }) {
             <div className="client-info">
                 <div className="client-abonement-info">
                     <p>
-                        <b>Abonement holder:</b> {client.fullname}
+                        <b>Abonement holder:</b> {client.name} {client.surname}
                     </p>
-                    <p>
+                    {/* <p>
                         <b>Status:</b>
                         <span>{client.active ? 'active' : 'inactive'}</span>
+                    </p> */}
+                    <p>
+                        <b>From:</b> {activeAbonement.activation_date}
                     </p>
                     <p>
-                        <b>From:</b> {client.current_abonement.activation_date}
+                        <b>To:</b> {activeAbonement.expiration_date}
                     </p>
                     <p>
-                        <b>To:</b> {client.current_abonement.expiration_date}
+                        <b>Purchase date:</b> {activeAbonement.purchase_date}
                     </p>
                     <p>
-                        <b>Purchase date:</b>{' '}
-                        {client.current_abonement.purchase_date}
+                        <b>Amount of trainings:</b> {activeAbonement.amount}
                     </p>
                     <p>
-                        <b>Amount of trainings:</b>{' '}
-                        {client.current_abonement.amount}
-                    </p>
-                    <p>
-                        <b>Left trainings:</b> {client.current_abonement.left}
+                        <b>Left trainings:</b> {activeAbonement.left}
                     </p>
                     <div className="freeze-option">
                         <p>Freeze</p>
@@ -54,30 +62,30 @@ export default function Client({ list }) {
                     </div>
                 </div>
                 <div className="client-history">
-                    {client.current_abonement.history.map((element, i) => (
+                    {activeAbonement.history.map((training) => (
                         <div
-                            key={i}
+                            key={training.id}
                             className={`client-history-element ${
-                                element.deducted ? 'deducted' : ''
+                                training.deducted ? 'deducted' : ''
                             }`}
                         >
                             <p>
-                                <span>date:</span> {element.date}
+                                <span>date:</span> {training.date}
                             </p>
                             <p>
-                                <span>time:</span> {element.time}
+                                <span>time:</span> {training.time}
                             </p>
                             <p>
-                                <span>class:</span> {element.class}
+                                <span>class:</span> {training.type}
                             </p>
                             <p>
-                                <span>trainer:</span> {element.trainer}
+                                <span>trainer:</span> {training.instructor}
                             </p>
-                            {element.deducted ? (
+                            {/* {training.deducted ? (
                                 <p className="deduction-reason">
-                                    {element.deduction_reason}
+                                    {training.deduction_reason}
                                 </p>
-                            ) : null}
+                            ) : null} */}
                         </div>
                     ))}
                 </div>

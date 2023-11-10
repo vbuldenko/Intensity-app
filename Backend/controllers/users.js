@@ -5,7 +5,13 @@ const userExtractor = require("../utils/middleware").userExtractor;
 
 usersRouter.get("/", async (request, response) => {
     // should make visible only to owner
-    const users = await User.find({});
+    const users = await User.find({}).populate({
+        path: "abonements",
+        populate: {
+            path: "history",
+            model: "Training",
+        },
+    });
     response.json(users);
 });
 

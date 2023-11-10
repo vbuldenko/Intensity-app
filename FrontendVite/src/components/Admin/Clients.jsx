@@ -1,9 +1,10 @@
 import './styles/clients.css';
 import { useState } from 'react';
-import Client from './Client';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-export default function Clients({ clients }) {
+export default function Clients(props) {
+    const clients = useSelector(({ users }) => users);
     const [searchParams, setSearchParams] = useSearchParams();
     const viewMode = searchParams.get('view');
 
@@ -21,8 +22,8 @@ export default function Clients({ clients }) {
     // const [viewMode, setViewMode] = useState('list'); // 'list' or 'tiles'
     const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredClients = clients.list.filter((client) =>
-        client.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredClients = clients.filter((client) =>
+        client.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -30,9 +31,9 @@ export default function Clients({ clients }) {
             <div className="header">
                 <div className="header-info">
                     <p>All Clients: {clients.all}</p>
-                    <p className="active-clients">
+                    {/* <p className="active-clients">
                         Active Clients: {clients.active}
-                    </p>
+                    </p> */}
                 </div>
                 <div className="view-modes">
                     <button
@@ -65,18 +66,18 @@ export default function Clients({ clients }) {
             <div className={`clients-list ${viewMode}`}>
                 {filteredClients.map((client) => (
                     <Link
-                        to={`${client.id}`}
                         key={client.id}
+                        to={`${client.id}`}
                         className={`client ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
-                        <p className="client-name">{client.fullname}</p>
+                        <p className="client-name">
+                            {client.name} {client.surname}
+                        </p>
                         <p className="client-phone">{client.phone}</p>
                         <p className="client-email">{client.email}</p>
                         <p className="client-details">
-                            Abonement: {client.current_abonement.amount} | Left:{' '}
-                            {client.current_abonement.left} | Expiration Date:{' '}
-                            {client.current_abonement.expiration_date}
+                            Abonements: {client.abonements.length}
                         </p>
                     </Link>
                 ))}

@@ -56,10 +56,28 @@ const userExtractor = async (request, response, next) => {
     }
 };
 
+const checkAdmin = async (request, response, next) => {
+    try {
+        if (!request.user) {
+            return response.status(404).send({ message: "User not found" });
+        }
+        if (request.user.role !== "admin") {
+            return response
+                .status(500)
+                .send({ message: "User do not have permission" });
+        }
+        next();
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+};
+
 module.exports = {
     requestLogger,
     unknownEndpoint,
     errorHandler,
     tokenExtractor,
     userExtractor,
+    checkAdmin,
 };

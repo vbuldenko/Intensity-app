@@ -30,12 +30,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
     "price": 1300
 }
 ###
-PUT http://localhost:3001/api/abonements/65423b39603900bc3c3fa22a/
+PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
 
 {
     "updateType": "activation"
+}
+###
+PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
+
+{
+    "updateType": "reservation",
+    "trainingId": "6546e2c1596f234a4fcb773f"
 }
 ###
 GET http://localhost:3001/api/users/
@@ -121,26 +130,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
     "mode": "month"
 }
 ###
-POST http://localhost:3001/api/training-sessions/
+PUT http://localhost:3001/api/training-sessions/6546e2c1596f234a4fcb773f/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
-
-{
-    "time": "09:00",
-    "day": "Monday",
-    "instructor": "Anzhelika",
-    "maxCapacity": 8,
-    "registeredClients":[]
-}
-###
-PUT http://localhost:3001/api/training-sessions/65423a4f603900bc3c3fa1c8/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM 
 
 {
 
-    "updateType": "reservation",
-    "abonementId": "65423b39603900bc3c3fa22a"
+    "updateType": "reservation"
 }
 ###
 PUT http://localhost:3001/api/training-sessions/65423a4f603900bc3c3fa1c8/

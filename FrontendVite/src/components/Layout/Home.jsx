@@ -1,5 +1,5 @@
-import './styles/home.css';
-import background from '../images/home_background.jpg';
+import '../styles/home.css';
+import background from '../../images/home_background.jpg';
 
 function Home() {
     return (

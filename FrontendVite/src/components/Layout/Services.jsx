@@ -1,4 +1,4 @@
-import './styles/services.css';
+import '../styles/services.css';
 
 // Services component
 function Services() {

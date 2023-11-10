@@ -3,30 +3,30 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
 
-import Home from './components/Home';
-import Services from './components/Services';
+import Layout from './components/Layout/Layout';
+import Home from './components/Layout/Home';
+import Services from './components/Layout/Services';
 import Schedule from './components/Schedule/Schedule';
-import Prices from './components/Prices';
-import Contacts from './components/Contacts';
+import Prices from './components/Layout/Prices';
+import Contacts from './components/Layout/Contacts';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
-import NotFound from './components/NotFound';
+import NotFound from './components/Layout/NotFound';
 
+import AuthProtected from './components/AuthRequired';
 import Account from './components/Account';
-import Overview from './components/Admin/Overview';
-import UserOverview from './components/User/UserOverview';
+import Overview from './components/Overview';
 import Purchases from './components/User/Purchases';
 import AdminSchedule from './components/Admin/Schedule';
 import Clients from './components/Admin/Clients';
-import Settings from './components/Admin/Settings';
+import Client from './components/Admin/Client';
 import Team from './components/Admin/Team';
 import Trainer from './components/Admin/Trainer';
-import Layout from './components/Layout';
-import Client from './components/Admin/Client';
-import AuthProtected from './components/AuthRequired';
+import Settings from './components/Admin/Settings';
 
 import storageService from './services/storage';
 
+import { initializeUsers } from './reducers/usersReducer';
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
 import {
@@ -41,21 +41,18 @@ import { trainers } from './test_data/data';
 export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
-    const user = useSelector(({ user }) => user);
-    console.log('App user role:');
+    const users = useSelector(({ users }) => users);
+    console.log('App:', users);
 
     useEffect(() => {
         console.log('App useEffect run');
         if (isAuthenticated) {
             dispatch(loadLoggedInUser());
             dispatch(initializeTrainings());
-            // user &&
-            //     (user.role === 'client'
-            //         ? dispatch(initializeUserAbonements())
-            //         : dispatch(initializeAllAbonements()));
             // dispatch(initializeUserAbonements());
-            dispatch(initializeAllAbonements());
-            dispatch(getStatistics());
+            dispatch(initializeUsers()); // should be for admin
+            dispatch(initializeAllAbonements()); // should be for admin
+            dispatch(getStatistics()); // should be for admin
         }
     }, [isAuthenticated]);
 
@@ -72,25 +69,13 @@ export default function App() {
                     <Route path="sign-up" element={<SignUpForm />} />
                     <Route element={<AuthProtected />}>
                         <Route path="account" element={<Account />}>
-                            <Route
-                                index
-                                element={
-                                    user && user.role === 'admin' ? (
-                                        <Overview />
-                                    ) : (
-                                        <UserOverview />
-                                    )
-                                }
-                            />
+                            <Route index element={<Overview />} />
                             <Route path="purchases" element={<Purchases />} />
                             <Route
                                 path="schedule"
                                 element={<AdminSchedule />}
                             />
-                            <Route
-                                path="clients"
-                                element={<Clients clients={clients} />}
-                            />
+                            <Route path="clients" element={<Clients />} />
                             <Route
                                 path="clients/:id"
                                 element={<Client list={clients.list} />}

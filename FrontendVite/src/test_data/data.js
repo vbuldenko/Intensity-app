@@ -1,5 +1,3 @@
-import anzhphoto from '../images/anzhel.jpg';
-
 export const trainings = [
     {
         id: 1,
@@ -59,7 +57,8 @@ export const clients = {
     list: [
         {
             id: 1,
-            fullname: 'Alice Baber',
+            name: 'Alice',
+            surname: 'Baber',
             phone: '097-99-100-25',
             email: 'bubab@gmail.com',
             prev_abonements: [
@@ -91,22 +90,6 @@ export const clients = {
                         deduction_reason: null,
                     },
                     {
-                        date: '15.07.23',
-                        time: '12:00',
-                        class: 'Fly',
-                        trainer: 'Babiychuk',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
-                        date: '17.07.23',
-                        time: '9:00',
-                        class: 'Yoga',
-                        trainer: 'Morozova',
-                        deducted: false,
-                        deduction_reason: null,
-                    },
-                    {
                         date: '18.07.23',
                         time: '20:00',
                         class: 'Stretching',
@@ -128,7 +111,8 @@ export const clients = {
         },
         {
             id: 2,
-            fullname: 'Margo Sokur',
+            name: 'Margo',
+            surname: 'Sokur',
             phone: '097-99-100-25',
             email: 'bubab@gmail.com',
             prev_abonements: null,
@@ -229,19 +213,6 @@ export const trainers = [
         ],
     },
 ];
-
-export const user = {
-    img: anzhphoto,
-    name: 'Anzhelika Morozova',
-    type: 'owner',
-    date: '21 Aug 2023',
-};
-export const income = [
-    { id: 1, title: 'Total income', amount: 30000 },
-    { id: 2, title: 'Income of a day', amount: 1500 },
-    { id: 3, title: 'Total abonement sales', amount: 10 },
-    { id: 4, title: 'Profit', amount: 0 },
-];
 export const expenses = {
     rent: 30000,
     utilities: 1500,
@@ -252,35 +223,3 @@ export const expenses = {
         { id: 3, name: 'Nastya Tkachuk', amount: 1500 },
     ],
 };
-export const saleData = [
-    {
-        name: 'Vitaliy Klichko',
-        date: '24.08.23',
-        abonement: 8,
-        price: 2000,
-    },
-    {
-        name: 'Vitaliy Klichko',
-        date: '24.08.23',
-        abonement: 8,
-        price: 2000,
-    },
-    {
-        name: 'Vitaliy Klichko',
-        date: '24.08.23',
-        abonement: 8,
-        price: 2000,
-    },
-    {
-        name: 'Vitaliy Klichko',
-        date: '24.08.23',
-        abonement: 8,
-        price: 2000,
-    },
-    {
-        name: 'Vitaliy Klichko',
-        date: '24.08.23',
-        abonement: 8,
-        price: 2000,
-    },
-];

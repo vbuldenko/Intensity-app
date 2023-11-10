@@ -1,7 +1,7 @@
-import './styles/prices.css';
-import group from '../images/group.webp';
-import indiv from '../images/indiv.jpg';
-import kids from '../images/kids.webp';
+import '../styles/prices.css';
+import group from '../../images/group.webp';
+import indiv from '../../images/indiv.jpg';
+import kids from '../../images/kids.webp';
 
 function Prices() {
     return (
