@@ -76,10 +76,7 @@ export default function App() {
                                 element={<AdminSchedule />}
                             />
                             <Route path="clients" element={<Clients />} />
-                            <Route
-                                path="clients/:id"
-                                element={<Client list={clients.list} />}
-                            />
+                            <Route path="clients/:id" element={<Client />} />
                             <Route
                                 path="team"
                                 element={<Team trainers={trainers} />}

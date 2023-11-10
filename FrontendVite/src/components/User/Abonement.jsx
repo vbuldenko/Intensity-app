@@ -1,4 +1,9 @@
-export default function Abonement({ status, abonement }) {
+export default function Abonement({ abonement }) {
+    const status = !abonement.expiration_date
+        ? 'not activated'
+        : new Date(abonement.expiration_date) >= new Date()
+        ? 'active'
+        : 'expired';
     return (
         <div className="abonement">
             <div className="gen-abonement-info">
@@ -27,6 +32,13 @@ export default function Abonement({ status, abonement }) {
                 <div>
                     <b>Left trainings:</b>{' '}
                     <span className="left-training">{abonement.left}</span>
+                </div>
+                <div className="freeze-option">
+                    <p>Freeze</p>
+                    <input type="checkbox" id="freeze" />
+                    <label htmlFor="freeze" className="toggle-button">
+                        <div className="slider"></div>
+                    </label>
                 </div>
             </div>
             {/* Look at id property of training history */}

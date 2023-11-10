@@ -4,7 +4,9 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Clients(props) {
-    const clients = useSelector(({ users }) => users);
+    const clients = useSelector(({ users }) =>
+        users.filter((user) => user.role === 'client')
+    );
     const [searchParams, setSearchParams] = useSearchParams();
     const viewMode = searchParams.get('view');
 
@@ -30,7 +32,7 @@ export default function Clients(props) {
         <div className="clients-container">
             <div className="header">
                 <div className="header-info">
-                    <p>All Clients: {clients.all}</p>
+                    <p>All Clients: {clients.length}</p>
                     {/* <p className="active-clients">
                         Active Clients: {clients.active}
                     </p> */}
