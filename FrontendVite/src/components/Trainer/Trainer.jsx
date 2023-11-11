@@ -19,9 +19,6 @@ export default function Trainer() {
                 <NavLink to={'schedule'} style={styleChanger}>
                     Schedule
                 </NavLink>
-                <NavLink to={'purchases'} style={styleChanger}>
-                    Purchases
-                </NavLink>
                 <NavLink to={'settings'} style={styleChanger}>
                     Settings
                 </NavLink>
