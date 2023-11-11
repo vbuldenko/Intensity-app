@@ -4,13 +4,14 @@ import {
     Link,
     useLocation,
 } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './styles/trainer.css';
 
-export default function Trainer({ trainers }) {
-    const { trainerId } = useParams();
+export default function Trainer() {
+    const { id } = useParams();
     const location = useLocation();
-    const trainer = trainers.find(
-        (el) => el.id.toString() === trainerId.toString()
+    const trainer = useSelector(({ users }) =>
+        users.find((user) => user.id === id.toString())
     );
 
     const search = location.state?.search || '';
@@ -21,13 +22,15 @@ export default function Trainer({ trainers }) {
                 &larr; <span>Back to all trainers</span>
             </Link>
             <div className="trainer-info">
-                <p className="trainer-name">{trainer.fullname}</p>
-                <p className="trainer-phone">{trainer.phone}</p>
-                <p className="trainer-salary">Salary: {trainer.curr_salary}</p>
-                <p className="training-number">
-                    Number of trainings: {trainer.tr_history.length}
+                <p className="trainer-name">
+                    {trainer.name} {trainer.surname}
                 </p>
-                <div className="trainer-history">
+                <p className="trainer-phone">{trainer.phone}</p>
+                {/* <p className="trainer-salary">Salary: {trainer.curr_salary}</p> */}
+                {/* <p className="training-number">
+                    Number of trainings: {trainer.tr_history.length}
+                </p> */}
+                {/* <div className="trainer-history">
                     {trainer.tr_history.map((element, i) => (
                         <div key={i} className="trainer-history-element">
                             <p>
@@ -44,7 +47,7 @@ export default function Trainer({ trainers }) {
                             </p>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </div>
     );

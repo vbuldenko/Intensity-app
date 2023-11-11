@@ -4,9 +4,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Clients(props) {
-    const clients = useSelector(({ users }) =>
-        users.filter((user) => user.role === 'client')
-    );
+    const users = useSelector(({ users }) => users);
+    const clients = users.filter((user) => user.role === 'client');
     const [searchParams, setSearchParams] = useSearchParams();
     const viewMode = searchParams.get('view');
 

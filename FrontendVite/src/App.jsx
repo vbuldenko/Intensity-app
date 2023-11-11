@@ -35,9 +35,6 @@ import {
 } from './reducers/abonementReducer';
 import { getStatistics } from './reducers/statisticsReducer';
 
-import { clients } from './test_data/data';
-import { trainers } from './test_data/data';
-
 export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
@@ -77,14 +74,8 @@ export default function App() {
                             />
                             <Route path="clients" element={<Clients />} />
                             <Route path="clients/:id" element={<Client />} />
-                            <Route
-                                path="team"
-                                element={<Team trainers={trainers} />}
-                            />
-                            <Route
-                                path="team/:trainerId"
-                                element={<Trainer trainers={trainers} />}
-                            />
+                            <Route path="team" element={<Team />} />
+                            <Route path="team/:id" element={<Trainer />} />
                             <Route path="settings" element={<Settings />} />
                         </Route>
                     </Route>

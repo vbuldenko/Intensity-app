@@ -26,6 +26,7 @@ const usersSlice = createSlice({
 export const { setUsers, addUser, updateExistingUser, removeUser } =
     usersSlice.actions;
 
+// think about more complex state with different types of users: clients, trainers, admins
 export const initializeUsers = () => {
     return async (dispatch) => {
         const users = await usersService.getAll();

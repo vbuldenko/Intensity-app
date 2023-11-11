@@ -1,8 +1,12 @@
 import './styles/team.css';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 
-export default function Team({ trainers }) {
+export default function Team() {
+    const users = useSelector(({ users }) => users);
+    const trainers = users.filter((user) => user.role === 'trainer');
+
     const [searchParams, setSearchParams] = useSearchParams();
     const viewMode = searchParams.get('view');
 
@@ -21,7 +25,7 @@ export default function Team({ trainers }) {
     const [searchQuery, setSearchQuery] = useState('');
 
     const filteredTrainers = trainers.filter((trainer) =>
-        trainer.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+        trainer.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -66,7 +70,9 @@ export default function Team({ trainers }) {
                         className={`trainer ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
-                        <p className="trainer-name">{trainer.fullname}</p>
+                        <p className="trainer-name">
+                            {trainer.name} {trainer.surname}
+                        </p>
                     </Link>
                 ))}
             </div>
