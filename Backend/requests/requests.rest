@@ -53,19 +53,6 @@ POST http://localhost:3001/api/users/
 content-type: application/json
 
 {
-    "username": "walderhawk",
-    "name": "Walder",
-    "surname": "Hawk",
-    "email": "hawkwalder@gmail.com",
-    "phone": "0978612345",
-    "password": "1111",
-    "role": "admin"
-}
-###
-POST http://localhost:3001/api/users/
-content-type: application/json
-
-{
     "username": "amanzhelam",
     "name": "Anzhelika",
     "surname": "Buldenko",
@@ -80,26 +67,13 @@ POST http://localhost:3001/api/users/
 content-type: application/json
 
 {
-    "username": "babiychuk",
-    "name": "Anastasiia",
-    "surname": "Babiychuk",
-    "email": "abab@gmail.com",
-    "phone": "0978612347",
+    "username": "narozhna",
+    "name": "Valeriia",
+    "surname": "Narozhna",
+    "email": "narozhna@gmail.com",
+    "phone": "0978612350",
     "password": "password",
     "role": "trainer"
-}
-###
-POST http://localhost:3001/api/users/
-content-type: application/json
-
-{
-    "username": "katekuk",
-    "name": "Kate",
-    "surname": "Kuk",
-    "email": "kkuk@gmail.com",
-    "phone": "0978612349",
-    "password": "pass",
-    "role": "client"
 }
 ###
 POST http://localhost:3001/api/login/

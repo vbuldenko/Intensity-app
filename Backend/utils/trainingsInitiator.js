@@ -1,4 +1,5 @@
 const Training = require("../models/training");
+const User = require("../models/user");
 const predefinedSchedule = require("../utils/predefined_schedule");
 
 // Function to calculate dates for the current week or month
@@ -17,7 +18,6 @@ function getCurrentDates(mode) {
         }
         return dates;
     } else if (mode === "month") {
-        console.log("currentDate", currentDate);
         const currentYear = currentDate.getFullYear();
         const currentMonth = currentDate.getMonth(); //Zero based 0 jan 11 dec
         const dates = [];
@@ -30,7 +30,6 @@ function getCurrentDates(mode) {
                 dates.push(date);
             }
         }
-        console.log(dates[0].getDay());
         return dates;
     } else {
         throw new Error("Invalid mode. Use 'week' or 'month'.");
@@ -39,6 +38,21 @@ function getCurrentDates(mode) {
 
 async function initializeTrainingSessions(mode) {
     try {
+        //Obtaining trainers objects
+        const [babiychuk, tkachuk, narozhna, buldenko] = await Promise.all([
+            User.findOne({ surname: "Babiychuk" }),
+            User.findOne({ surname: "Tkachuk" }),
+            User.findOne({ surname: "Narozhna" }),
+            User.findOne({ surname: "Buldenko" }),
+        ]);
+
+        const mapInstructorToId = {
+            Anzhelika: buldenko.id,
+            Valeriya: narozhna.id,
+            AnastasiyaB: babiychuk.id,
+            AnastasiyaT: tkachuk.id,
+        };
+
         const dates = getCurrentDates(mode); // Get dates for the selected mode.
 
         const validDays = [
@@ -55,16 +69,18 @@ async function initializeTrainingSessions(mode) {
 
         predefinedSchedule.forEach((session) => {
             if (validDays.includes(session.day)) {
-                const { day, time } = session;
+                const { day, time, instructor } = session;
                 const hours = Number(time.slice(0, 2));
                 const index = validDays.indexOf(day);
+                const instructorId = mapInstructorToId[instructor];
 
                 // Create a Training document for each occurrence of the weekday in the current month.
                 dates.forEach((date) => {
                     if (date.getDay() === index) {
                         const sessionWithDate = new Training({
-                            date: new Date(date).setHours(hours, 0, 0, 0),
                             ...session,
+                            date: new Date(date).setHours(hours, 0, 0, 0),
+                            instructor: instructorId,
                         });
                         sessionPromises.push(sessionWithDate.save());
                     }

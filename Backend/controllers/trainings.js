@@ -5,7 +5,14 @@ const initializeTrainingSessions = require("../utils/trainingsInitiator");
 
 trainingRouter.get("/", async (request, response, next) => {
     try {
-        const trainingSessions = await Training.find({});
+        const trainingSessions = await Training.find({}).populate(
+            "instructor",
+            {
+                surname: 1,
+                name: 1,
+            }
+        );
+        console.log(trainingSessions.length);
         response.json(trainingSessions);
     } catch (error) {
         next(error);
@@ -114,7 +121,6 @@ trainingRouter.post("/", userExtractor, async (request, response, next) => {
         initializeTrainingSessions(body.mode);
         response.status(201);
     } catch (error) {
-        console.log(body);
         next(error);
     }
 });

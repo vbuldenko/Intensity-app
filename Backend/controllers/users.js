@@ -36,13 +36,13 @@ usersRouter.post("/", async (request, response, next) => {
     const { username, name, surname, email, phone, password, role } =
         request.body;
     if (
-        !password ||
         !username ||
+        !name ||
         !surname ||
         !email ||
-        !name ||
         !phone ||
-        role
+        !password ||
+        !role
     ) {
         return response
             .status(400)

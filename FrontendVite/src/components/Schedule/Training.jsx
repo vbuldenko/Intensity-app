@@ -100,7 +100,7 @@ export default function Training({ training }) {
                     </b>
                     <p className="mt-0.5">Duration: 50 min</p>
                     <p className="text-gray-900">
-                        Trainer: <b>{training.instructor}</b>
+                        Trainer: <b>{training.instructor.name}</b>
                     </p>
                 </div>
 
