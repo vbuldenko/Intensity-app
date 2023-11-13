@@ -8,6 +8,9 @@ export default function AdminOverview() {
     const user = useSelector(({ user }) => user);
     const soldAbonements = useSelector(({ abonements }) => abonements);
     const statistics = useSelector(({ statistics }) => statistics);
+
+    console.log('Admin overview');
+
     if (!user) {
         return null;
     }

@@ -26,23 +26,56 @@ import Settings from './components/Admin/Settings';
 
 import storageService from './services/storage';
 
+import { initializeUsers } from './reducers/usersReducer';
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
+import {
+    initializeAllAbonements,
+    initializeUserAbonements,
+} from './reducers/abonementReducer';
+import { getStatistics } from './reducers/statisticsReducer';
 
 export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
-    console.log('App:', isAuthenticated);
+    const user = useSelector(({ user }) => user);
+    console.log('App:', user);
 
     useEffect(() => {
-        console.log('App useEffect run');
-        if (isAuthenticated) {
-            dispatch(loadLoggedInUser());
-            dispatch(initializeTrainings());
-        } else {
-            console.log('not auth render');
-        }
-    }, [isAuthenticated]);
+        const fetchData = async () => {
+            console.log('App useEffect');
+
+            try {
+                if (isAuthenticated) {
+                    const actions = [
+                        dispatch(loadLoggedInUser()),
+                        dispatch(initializeTrainings()),
+                    ];
+
+                    const loggedInUser = storageService.loadUser();
+
+                    if (loggedInUser) {
+                        if (loggedInUser.role === 'client') {
+                            actions.push(dispatch(initializeUserAbonements()));
+                        } else if (loggedInUser.role === 'admin') {
+                            actions.push(
+                                dispatch(initializeUsers()),
+                                dispatch(initializeAllAbonements()),
+                                dispatch(getStatistics())
+                            );
+                        }
+                    }
+
+                    await Promise.all(actions);
+                }
+            } catch (error) {
+                // Handle errors here
+                console.error('Error in useEffect:', error);
+            }
+        };
+
+        fetchData();
+    }, [isAuthenticated, dispatch]);
 
     return (
         <div className="App">
@@ -56,7 +89,7 @@ export default function App() {
                     <Route path="sign-in" element={<LoginForm />} />
                     <Route path="sign-up" element={<SignUpForm />} />
                     <Route element={<AuthProtected />}>
-                        <Route path="account" element={<Account />}>
+                        <Route path="account" element={<Account user={user} />}>
                             <Route index element={<Overview />} />
                             <Route path="purchases" element={<Purchases />} />
                             <Route
