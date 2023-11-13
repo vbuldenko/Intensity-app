@@ -26,30 +26,21 @@ import Settings from './components/Admin/Settings';
 
 import storageService from './services/storage';
 
-import { initializeUsers } from './reducers/usersReducer';
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
-import {
-    initializeAllAbonements,
-    initializeUserAbonements,
-} from './reducers/abonementReducer';
-import { getStatistics } from './reducers/statisticsReducer';
 
 export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
-    const users = useSelector(({ users }) => users);
-    console.log('App:', users);
+    console.log('App:', isAuthenticated);
 
     useEffect(() => {
         console.log('App useEffect run');
         if (isAuthenticated) {
             dispatch(loadLoggedInUser());
             dispatch(initializeTrainings());
-            // dispatch(initializeUserAbonements());
-            dispatch(initializeUsers()); // should be for admin
-            dispatch(initializeAllAbonements()); // should be for admin
-            dispatch(getStatistics()); // should be for admin
+        } else {
+            console.log('not auth render');
         }
     }, [isAuthenticated]);
 
