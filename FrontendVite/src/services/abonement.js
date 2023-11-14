@@ -15,6 +15,12 @@ const getAll = async () => {
 };
 
 const getAllByUserId = async () => {
+    const token = storageService.loadUser()
+        ? `Bearer ${storageService.loadUser().token}`
+        : null;
+    const config = {
+        headers: { Authorization: token },
+    };
     const response = await axios.get(`${baseUrl}/user`, config);
     return response.data;
 };

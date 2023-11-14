@@ -1,9 +1,29 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateAbonement } from '../../reducers/abonementReducer';
+
 export default function Abonement({ abonement }) {
     const status = !abonement.expiration_date
         ? 'not activated'
         : new Date(abonement.expiration_date) >= new Date()
         ? 'active'
         : 'expired';
+    const dispatch = useDispatch();
+    const [freeze, setFreeze] = useState(abonement.paused);
+
+    function handleChange(e) {
+        const { name, checked } = e.target;
+        if (abonement.paused) {
+            console.log(
+                'You have paused your abonement already, other actions forbidden!'
+            );
+        } else {
+            setFreeze((prev) => !prev);
+            dispatch(updateAbonement(abonement.id, { updateType: 'freeze' }));
+            console.log(name, checked);
+        }
+    }
+
     return (
         <div className="abonement">
             <div className="gen-abonement-info">
@@ -35,7 +55,13 @@ export default function Abonement({ abonement }) {
                 </div>
                 <div className="freeze-option">
                     <p>Freeze</p>
-                    <input type="checkbox" id="freeze" />
+                    <input
+                        name="freeze-option"
+                        type="checkbox"
+                        id="freeze"
+                        checked={freeze}
+                        onChange={handleChange}
+                    />
                     <label htmlFor="freeze" className="toggle-button">
                         <div className="slider"></div>
                     </label>

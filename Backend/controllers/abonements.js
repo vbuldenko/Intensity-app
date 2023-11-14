@@ -110,10 +110,22 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
                 .json({ error: "abonement already activated" });
         }
 
-        if (new Date(abonement.expirationDate) > new Date()) {
+        if (new Date(abonement.expiration_date) < new Date()) {
             return response
                 .status(401)
                 .json({ error: "abonement expired. Buy a new one!" });
+        }
+
+        if (updateType === "freeze" && !abonement.paused) {
+            abonement.paused = true;
+            // Calculate new expiration date by adding one week
+            const newExpirationDate = new Date(abonement.expiration_date);
+            newExpirationDate.setDate(newExpirationDate.getDate() + 7);
+            abonement.expiration_date = newExpirationDate;
+        } else if (updateType === "freeze" && abonement.paused) {
+            return response
+                .status(400)
+                .json({ error: "abonement was already paused!" });
         }
 
         if (updateType === "reservation") {

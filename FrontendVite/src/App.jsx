@@ -39,7 +39,7 @@ export default function App() {
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
     const user = useSelector(({ user }) => user);
-    console.log('App:', user);
+    console.log('App: main');
 
     useEffect(() => {
         const fetchData = async () => {

@@ -7,7 +7,6 @@ export default function UserOverview() {
     if (!user) {
         return null;
     }
-
     const currentDate = new Date();
 
     return (
