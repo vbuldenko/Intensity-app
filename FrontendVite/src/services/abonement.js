@@ -2,13 +2,6 @@ import axios from 'axios';
 import storageService from './storage';
 const baseUrl = '/api/abonements';
 
-const token = storageService.loadUser()
-    ? `Bearer ${storageService.loadUser().token}`
-    : null;
-const config = {
-    headers: { Authorization: token },
-};
-
 const getAll = async () => {
     const response = await axios.get(baseUrl);
     return response.data;
@@ -22,10 +15,17 @@ const getAllByUserId = async () => {
         headers: { Authorization: token },
     };
     const response = await axios.get(`${baseUrl}/user`, config);
+    console.log(response.data);
     return response.data;
 };
 
 const create = async (newObject) => {
+    const token = storageService.loadUser()
+        ? `Bearer ${storageService.loadUser().token}`
+        : null;
+    const config = {
+        headers: { Authorization: token },
+    };
     const response = await axios.post(baseUrl, newObject, config);
     return response.data;
 };
@@ -37,6 +37,12 @@ const create = async (newObject) => {
 // };
 
 const update = async (id, body) => {
+    const token = storageService.loadUser()
+        ? `Bearer ${storageService.loadUser().token}`
+        : null;
+    const config = {
+        headers: { Authorization: token },
+    };
     const response = await axios.put(`${baseUrl}/${id}`, body, config);
     return response.data;
 };

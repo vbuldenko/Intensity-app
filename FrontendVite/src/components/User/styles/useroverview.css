@@ -96,11 +96,15 @@
 
 .abonement-training-history {
     display: flex;
+    flex-wrap: wrap;
     gap: 1em;
     padding: 1em;
 }
 
 .abonement-training-history-element {
+    flex: 1;
+    min-width: 165px;
+    /* max-width: 300px; */
     border-radius: 0.25em;
     padding: 0.25em 0.5em;
     box-shadow: 0 0 5px gray;

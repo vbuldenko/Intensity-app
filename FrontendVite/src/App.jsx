@@ -34,6 +34,7 @@ import {
     initializeUserAbonements,
 } from './reducers/abonementReducer';
 import { getStatistics } from './reducers/statisticsReducer';
+import TrainerOverview from './components/Trainer/TrainerOverview';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -95,6 +96,10 @@ export default function App() {
                             <Route
                                 path="schedule"
                                 element={<AdminSchedule />}
+                            />
+                            <Route
+                                path="trainings"
+                                element={<TrainerOverview />}
                             />
                             <Route path="clients" element={<Clients />} />
                             <Route path="clients/:id" element={<Client />} />

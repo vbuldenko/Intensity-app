@@ -8,7 +8,6 @@ function IndividualAbonement({ amount, price }) {
     const calculatePricePerTraining = () => price / amount;
 
     const handleSubmit = async () => {
-        const abonementData = { amount };
         try {
             dispatch(createAbonement({ amount, price }));
             dispatch(

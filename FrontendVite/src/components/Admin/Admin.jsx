@@ -20,6 +20,9 @@ function Admin() {
                 <NavLink to={'schedule'} style={styleChanger}>
                     Schedule
                 </NavLink>
+                <NavLink to={'trainings'} style={styleChanger}>
+                    Trainings
+                </NavLink>
                 <NavLink to={'clients'} style={styleChanger}>
                     Clients
                 </NavLink>

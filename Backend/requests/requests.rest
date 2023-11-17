@@ -67,13 +67,13 @@ POST http://localhost:3001/api/users/
 content-type: application/json
 
 {
-    "username": "narozhna",
+    "username": "kappab",
     "name": "Valeriia",
-    "surname": "Narozhna",
-    "email": "narozhna@gmail.com",
-    "phone": "0978612350",
-    "password": "password",
-    "role": "trainer"
+    "surname": "Buba",
+    "email": "nurobna@gmail.com",
+    "phone": "0978612352",
+    "password": "1111",
+    "role": "client"
 }
 ###
 POST http://localhost:3001/api/login/

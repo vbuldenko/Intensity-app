@@ -13,7 +13,9 @@ export default function Training({ training }) {
     const activeAbonement = useSelector(({ abonements }) =>
         abonements.find((abonement) => {
             const expirationDate = new Date(abonement.expiration_date);
-            return expirationDate >= new Date();
+            return abonement.expiration_date
+                ? expirationDate >= new Date()
+                : !abonement.expiration_date;
         })
     );
     const reservedTrainings = useSelector(
@@ -50,30 +52,21 @@ export default function Training({ training }) {
         }
 
         try {
-            await Promise.all([
-                dispatch(
-                    updateAbonement(activeAbonement.id, {
-                        updateType,
-                        trainingId: training.id,
-                    })
-                ),
-                dispatch(updateTraining(training.id, { updateType })),
-            ]);
-            // await dispatch(
-            //     updateAbonement(activeAbonement.id, {
-            //         updateType,
-            //         trainingId: training.id,
-            //     })
-            // );
-            // await dispatch(
-            //     updateTraining(training.id, {
-            //         updateType,
-            //     })
-            // );
+            await dispatch(
+                updateAbonement(activeAbonement.id, {
+                    updateType,
+                    trainingId: training.id,
+                })
+            );
+            await dispatch(updateTraining(training.id, { updateType }));
         } catch (error) {
             console.log(error);
             setError(true);
-            dispatch(notifyWith(error.response.data.error));
+            dispatch(
+                notifyWith(
+                    error.response ? error.response.data.error : 'error occured'
+                )
+            );
             setTimeout(() => {
                 setError(false);
             }, 3000);

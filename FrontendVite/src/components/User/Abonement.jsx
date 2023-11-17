@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateAbonement } from '../../reducers/abonementReducer';
 
 export default function Abonement({ abonement }) {
+    console.log(abonement);
     const status = !abonement.expiration_date
         ? 'not activated'
         : new Date(abonement.expiration_date) >= new Date()
@@ -69,7 +70,7 @@ export default function Abonement({ abonement }) {
             </div>
             {/* Look at id property of training history */}
             <div className="abonement-training-history">
-                {abonement.history
+                {abonement.history.length > 0
                     ? abonement.history.map((el) => {
                           return (
                               <div
@@ -79,7 +80,7 @@ export default function Abonement({ abonement }) {
                                   <p>date: {el.date.slice(0, 10)}</p>
                                   <p>time: {el.time}</p>
                                   <p>class: {el.type}</p>
-                                  <p>trainer: {el.instructor}</p>
+                                  <p>trainer: {el.instructor.surname}</p>
                                   {el.deducted ? (
                                       <p
                                           style={{
