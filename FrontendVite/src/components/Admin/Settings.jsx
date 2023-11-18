@@ -10,7 +10,8 @@ function Settings() {
     const navigate = useNavigate();
 
     const handleLogOut = () => {
-        dispatch(logUserOut());
+        storageService.removeUser();
+        dispatch({ type: 'RESET_STATE' });
         navigate('/sign-in'); //Maybe there no need for this?
     };
 

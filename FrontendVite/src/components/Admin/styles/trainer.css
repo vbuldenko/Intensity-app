@@ -8,10 +8,12 @@
 
 .trainer-history {
     display: flex;
+    flex-wrap: wrap;
     gap: 1em;
 }
 
 .trainer-history-element {
+    flex: 1;
     padding: 1em;
     box-shadow: 0 0 2px black;
 }

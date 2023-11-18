@@ -4,10 +4,11 @@ const userExtractor = require("../utils/middleware").userExtractor;
 
 abonementRouter.get("/", async (request, response, next) => {
   try {
-    const abonements = await Abonement.find({}).populate("user", {
-      surname: 1,
-      name: 1,
+    const abonements = await Abonement.find({}).populate({
+      path: "user",
+      select: "surname name",
     });
+
     response.json(abonements);
   } catch (error) {
     next(error);

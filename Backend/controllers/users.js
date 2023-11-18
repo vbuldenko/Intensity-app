@@ -9,7 +9,10 @@ usersRouter.get("/", async (request, response) => {
     path: "abonements",
     populate: {
       path: "history",
-      model: "Training",
+      populate: {
+        path: "instructor",
+        select: "surname",
+      },
     },
   });
   response.json(users);

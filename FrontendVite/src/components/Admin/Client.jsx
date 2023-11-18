@@ -11,10 +11,14 @@ import Abonement from '../User/Abonement';
 
 export default function Client() {
     const { id } = useParams();
+    const location = useLocation();
     const client = useSelector(({ users }) =>
         users.find((client) => client.id === id.toString())
     );
-    const location = useLocation();
+
+    if (!client) {
+        return null;
+    }
     const search = location.state?.search || '';
 
     return (
@@ -23,6 +27,9 @@ export default function Client() {
                 &larr; <span>Back to all clients</span>
             </Link>
             <div className="client-info">
+                <p className="client-name">
+                    Abonement holder: {client.name} {client.surname}
+                </p>
                 {client.abonements.map((abonement) => (
                     <Abonement key={abonement.id} abonement={abonement} />
                 ))}

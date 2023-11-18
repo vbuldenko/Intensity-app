@@ -6,8 +6,9 @@ function scheduleDailyJob() {
   // Set up a job to automatically check and return training if needed every day
   //*/5 * * * * - every 5min
   //0 0 * * * - every day
-  // 0 8-20 * * * - every day, every hour from 8 to 20 oclock
-  const dailyJob = schedule.scheduleJob("0 8-20 * * *", async () => {
+  // 0 8-18 * * * - every day, every hour from 8 to 20 oclock
+  // 0 8-20/4 * * * - every day, every 4 hours from 8 to 20 oclock
+  const dailyJob = schedule.scheduleJob("0 8-20/3 * * *", async () => {
     try {
       // Find all trainings scheduled for today
       const trainings = await Training.find({
@@ -29,15 +30,16 @@ function scheduleDailyJob() {
 async function checkAndReturnTraining(trainingId) {
   try {
     const training = await Training.findById(trainingId);
-    console.log(training);
 
     if (training) {
       const currentDate = new Date();
       const timeDifference = new Date(training.date) - currentDate;
 
       // Check 3 hours before the scheduled time
-      if (timeDifference <= 3 * 60 * 60 * 1000 && timeDifference > 0) {
+      //   if (timeDifference <= 3 * 60 * 60 * 1000 && timeDifference > 0) {
+      if (timeDifference <= 3 * 60 * 60 * 1000) {
         const attendees = training.registeredClients.length;
+        // console.log("attendes - ", attendees);
 
         if (attendees === 1) {
           // return training to the client's abonement
@@ -56,12 +58,19 @@ async function returnTrainingToAbonement(clientId, trainingId) {
   const activeAbonement = abonements.find(
     (abonement) => new Date(abonement.expiration_date) >= new Date()
   );
+
+  //   console.log(
+  //     `active abonement of user --- ${clientId} --- before`,
+  //     activeAbonement
+  //   );
+  // console.log(`a training - ${trainingId} was returned to active abonement - ${activeAbonement.id} of user -${clientId}.`);
   activeAbonement.left += 1; //return 1 training to active abonement
   activeAbonement.history = activeAbonement.history.filter(
-    (id) => id !== trainingId
+    (id) => id.toString() !== trainingId.toString()
   );
-
   const savedAbonement = await activeAbonement.save();
+  //   console.log("abonement after ---", savedAbonement);
+  //   console.log("*********************************************");
 }
 
 module.exports = { scheduleDailyJob };

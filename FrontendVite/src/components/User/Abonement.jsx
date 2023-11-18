@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateAbonement } from '../../reducers/abonementReducer';
+import storageService from '../../services/storage';
 
 export default function Abonement({ abonement }) {
-    console.log(abonement);
+    const { role: userRole } = storageService.loadUser();
+
     const status = !abonement.expiration_date
         ? 'not activated'
         : new Date(abonement.expiration_date) >= new Date()
         ? 'active'
         : 'expired';
     const dispatch = useDispatch();
+
     const [freeze, setFreeze] = useState(abonement.paused);
 
     function handleChange(e) {
@@ -54,19 +57,21 @@ export default function Abonement({ abonement }) {
                     <b>Left trainings:</b>{' '}
                     <span className="left-training">{abonement.left}</span>
                 </div>
-                <div className="freeze-option">
-                    <p>Freeze</p>
-                    <input
-                        name="freeze-option"
-                        type="checkbox"
-                        id="freeze"
-                        checked={freeze}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="freeze" className="toggle-button">
-                        <div className="slider"></div>
-                    </label>
-                </div>
+                {userRole === 'admin' && (
+                    <div className="freeze-option">
+                        <p>Freeze</p>
+                        <input
+                            name="freeze-option"
+                            type="checkbox"
+                            id="freeze"
+                            checked={freeze}
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="freeze" className="toggle-button">
+                            <div className="slider"></div>
+                        </label>
+                    </div>
+                )}
             </div>
             {/* Look at id property of training history */}
             <div className="abonement-training-history">

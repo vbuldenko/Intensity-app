@@ -32,17 +32,16 @@ export default function Training({ training }) {
 
     // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
-        // if (currentTime >= threeHoursBeforeTraining)
-        //  {
-        //     setError(true);
-        //     dispatch(
-        //         notifyWith('Prohibited less than 3 hours before training.')
-        //     );
-        //     setTimeout(() => {
-        //         setError(false);
-        //     }, 3000);
-        //     return;
-        // }
+        if (currentTime >= threeHoursBeforeTraining) {
+            setError(true);
+            dispatch(
+                notifyWith('Prohibited less than 3 hours before training.')
+            );
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
+            return;
+        }
 
         // Think about indicating current status of reservation after page refresh
         if (updateType === 'reservation') {

@@ -15,6 +15,10 @@ export default function Trainer() {
     );
 
     const trainings = useSelector(({ trainings }) => trainings);
+
+    if (!trainer) {
+        return null;
+    }
     const trainerTrainings = trainings
         .filter((training) => training.instructor.surname === trainer.surname)
         .filter((training) => new Date(training.date) <= new Date())
