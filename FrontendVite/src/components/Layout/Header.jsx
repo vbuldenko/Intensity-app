@@ -1,46 +1,82 @@
-import '../styles/Header.css';
+import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import '../styles/Header.css';
 
 export default function Header() {
     const user = useSelector(({ user }) => user);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-    const activeStyles = {
-        fontWeight: '800',
-        textDecoration: 'underline',
-        color: '#ffffff',
+    const toggleMobileMenu = () => {
+        setShowMobileMenu(!showMobileMenu);
     };
 
-    const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);
+    const closeMobileMenu = () => {
+        setShowMobileMenu(false);
+    };
 
     return (
         <header className="main-header">
             <Link className="logo" to="/">
                 Intensity
             </Link>
-            <nav className="main-navbar">
-                <NavLink to="/services" style={styleChanger}>
+            <div
+                className={`main-navbar ${showMobileMenu ? 'show-mobile' : ''}`}
+            >
+                <NavLink
+                    to="/services"
+                    activeClassName="active"
+                    onClick={closeMobileMenu}
+                >
                     Services
                 </NavLink>
-                <NavLink to="/schedule" style={styleChanger}>
+                <NavLink
+                    to="/schedule"
+                    activeClassName="active"
+                    onClick={closeMobileMenu}
+                >
                     Schedule
                 </NavLink>
-                <NavLink to="/prices" style={styleChanger}>
+                <NavLink
+                    to="/prices"
+                    activeClassName="active"
+                    onClick={closeMobileMenu}
+                >
                     Prices
                 </NavLink>
-                <NavLink to="/contacts" style={styleChanger}>
+                <NavLink
+                    to="/contacts"
+                    activeClassName="active"
+                    onClick={closeMobileMenu}
+                >
                     Contacts
                 </NavLink>
                 {user ? (
-                    <NavLink to="/account" style={styleChanger}>
+                    <NavLink
+                        to="/account"
+                        activeClassName="active"
+                        onClick={closeMobileMenu}
+                    >
                         My account
                     </NavLink>
                 ) : (
-                    <NavLink to="/sign-in" style={styleChanger}>
+                    <NavLink
+                        to="/sign-in"
+                        activeClassName="active"
+                        onClick={closeMobileMenu}
+                    >
                         Log In/Sign Up
                     </NavLink>
                 )}
-            </nav>
+            </div>
+            <div
+                className={`burger-icon ${showMobileMenu ? 'open' : ''}`}
+                onClick={toggleMobileMenu}
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </header>
     );
 }

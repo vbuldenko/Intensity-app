@@ -1,38 +1,140 @@
+/* Header.css */
+
 .main-header {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    padding: 0.5em 1em;
-}
-
-.main-header a {
-    text-decoration: none;
-    color: white;
 }
 
 .logo {
+    text-decoration: none;
     background: -webkit-linear-gradient(45deg, #817bff, #00ff95 90%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.5em;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
     font-weight: bold;
+    font-family: 'Arial', sans-serif;
 }
 
 .main-navbar {
-    background-color: #333;
-    color: #fff;
     display: flex;
-    gap: 1em;
-    justify-content: space-around;
-
-    width: max-content;
 }
 
 .main-navbar a {
-    width: 150px;
+    font-weight: bold;
+    margin-right: 20px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(
+        to right,
+        white,
+        gray
+    ); /* Apply gradient from white to gray */
+    background-clip: text; /* Clip the gradient to the text content */
+    color: transparent; /* Set text color to transparent to reveal the gradient */
+    -webkit-background-clip: text; /* For compatibility with older browsers */
+    transition: background-position 0.3s, color 0.3s;
+    overflow: hidden; /* Hide overflow to prevent visual glitches */
+}
+
+.main-navbar a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px; /* Adjust the thickness of the underline */
+    bottom: 0;
+    left: 0;
+    /* background-color: #fff; */
+    background: linear-gradient(to right, gray, white);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.main-navbar a:hover::after,
+.main-navbar a.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.main-navbar a:hover,
+.main-navbar a.active {
+    background-position: 100% 0;
+}
+
+.burger-icon {
+    display: none;
 }
 
 /* Responsive styles for tablets and mobile phones */
-@media (max-width: 768px) {
+@media only screen and (max-width: 600px) {
+    .main-navbar {
+        display: none; /* Hide the navigation links by default */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #000;
+    }
+
+    .main-navbar.show-mobile {
+        display: flex; /* Show the navigation links when the class is present */
+    }
+
+    .main-navbar a {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .burger-icon {
+        width: 35px;
+        height: 31px;
+        display: block;
+        cursor: pointer;
+        position: relative;
+        border: 1px solid #fff;
+        border-radius: 0.25em;
+        padding: 0 0.25em;
+        overflow: hidden; /* Hide overflow to prevent visual glitches */
+    }
+    /* -------------------------- */
+    /* -------------------------- */
+    .burger-icon span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #fff;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .burger-icon span:nth-child(1) {
+        transform-origin: 50% 50%;
+    }
+
+    .burger-icon span:nth-child(2) {
+        opacity: 1;
+        transform-origin: 50% 50%;
+    }
+
+    .burger-icon span:nth-child(3) {
+        transform-origin: 50% 50%;
+    }
+
+    .burger-icon.open span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .burger-icon.open span:nth-child(2) {
+        opacity: 0;
+        transform: rotate(0) translate(0, 0);
+    }
+
+    .burger-icon.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
 }
