@@ -25,18 +25,21 @@
 
 .main-navbar a {
     font-weight: bold;
+    font-size: 1.25rem;
     margin-right: 20px;
     text-align: center;
     position: relative;
-    background: linear-gradient(
+    color: rgba(255, 255, 255, 0);
+    -webkit-text-stroke: 0.5px white;
+    /* background: linear-gradient(
         to right,
         white,
         gray
-    ); /* Apply gradient from white to gray */
-    background-clip: text; /* Clip the gradient to the text content */
-    color: transparent; /* Set text color to transparent to reveal the gradient */
-    -webkit-background-clip: text; /* For compatibility with older browsers */
-    transition: background-position 0.3s, color 0.3s;
+    ); Apply gradient from white to gray */
+    /* background-clip: text; Clip the gradient to the text content */
+    /* color: transparent; Set text color to transparent to reveal the gradient */
+    /* -webkit-background-clip: text; For compatibility with older browsers */
+    transition: color 0.3s;
     overflow: hidden; /* Hide overflow to prevent visual glitches */
 }
 
@@ -45,11 +48,11 @@
     position: absolute;
     width: 100%;
     transform: scaleX(0);
-    height: 2px; /* Adjust the thickness of the underline */
+    height: 1px; /* Adjust the thickness of the underline */
     bottom: 0;
     left: 0;
-    /* background-color: #fff; */
-    background: linear-gradient(to right, gray, white);
+    background-color: #fff;
+    /* background: linear-gradient(to right, gray, white); */
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
 }
@@ -62,7 +65,7 @@
 
 .main-navbar a:hover,
 .main-navbar a.active {
-    background-position: 100% 0;
+    color: rgb(255, 255, 255);
 }
 
 .burger-icon {
@@ -70,19 +73,23 @@
 }
 
 /* Responsive styles for tablets and mobile phones */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .main-navbar {
-        display: none; /* Hide the navigation links by default */
+        display: flex; /* Hide the navigation links by default */
         flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50%; /* Set the width to 50% of the screen */
+        height: 100vh; /* Set the height to 100% of the viewport height */
         background-color: #000;
+        transform: translateX(100%); /* Start off-screen on the right */
+        transition: transform 0.3s ease-in-out;
     }
 
     .main-navbar.show-mobile {
-        display: flex; /* Show the navigation links when the class is present */
+        transform: translateX(0); /* Slide in from the right */
     }
 
     .main-navbar a {
@@ -101,8 +108,7 @@
         padding: 0 0.25em;
         overflow: hidden; /* Hide overflow to prevent visual glitches */
     }
-    /* -------------------------- */
-    /* -------------------------- */
+
     .burger-icon span {
         display: block;
         width: 25px;
