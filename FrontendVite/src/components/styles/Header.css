@@ -3,7 +3,7 @@
 .main-header {
     background-color: #000;
     color: #fff;
-    padding: 10px 20px;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,7 +14,7 @@
     background: -webkit-linear-gradient(45deg, #817bff, #00ff95 90%);
     background-clip: text;
     color: transparent;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     font-family: 'Arial', sans-serif;
 }
@@ -29,8 +29,7 @@
     margin-right: 20px;
     text-align: center;
     position: relative;
-    color: rgba(255, 255, 255, 0);
-    -webkit-text-stroke: 0.5px white;
+    color: #ffffff70;
     /* background: linear-gradient(
         to right,
         white,
@@ -39,7 +38,7 @@
     /* background-clip: text; Clip the gradient to the text content */
     /* color: transparent; Set text color to transparent to reveal the gradient */
     /* -webkit-background-clip: text; For compatibility with older browsers */
-    transition: color 0.3s;
+    transition: color 0.3s font-style 0.3s;
     overflow: hidden; /* Hide overflow to prevent visual glitches */
 }
 
@@ -65,7 +64,7 @@
 
 .main-navbar a:hover,
 .main-navbar a.active {
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .burger-icon {

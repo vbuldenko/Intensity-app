@@ -1,10 +1,10 @@
 import '../styles/home.css';
-import background from '../../images/home_background.jpg';
+// import background from '../../images/home_background.jpg';
 
 function Home() {
     return (
         <section
-            style={{ backgroundImage: `url(${background})` }}
+            // style={{ backgroundImage: `url(${background})` }}
             className="home-section"
         >
             <div className="intensity-hero">

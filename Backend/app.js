@@ -10,11 +10,11 @@ const salesRouter = require("./controllers/sales");
 
 const middleware = require("./utils/middleware");
 const { connectToDatabase } = require("./utils/db");
-const { scheduleDailyJob } = require("./utils/scheduledTrainingChecker");
+// const { scheduleDailyJob } = require("./utils/scheduledTrainingChecker");
 
 if (process.env.NODE_ENV === "test") {
-  const testingRouter = require("./controllers/testing");
-  app.use("/api/testing", testingRouter);
+    const testingRouter = require("./controllers/testing");
+    app.use("/api/testing", testingRouter);
 }
 // Connect to the database
 connectToDatabase();

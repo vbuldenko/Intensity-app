@@ -1,8 +1,15 @@
 .home-section {
     height: 85vh;
     text-align: center;
-    background: no-repeat center fixed;
+    /* background: no-repeat center fixed;
     background-size: cover;
+    background-image: linear-gradient(rgb(0, 255, 166), rgb(166, 255, 0)); */
+    background: linear-gradient(
+        157deg,
+        rgba(114, 255, 201, 0.9080882352941176) 0%,
+        rgba(255, 253, 191, 0.7316176470588236) 44%,
+        rgba(104, 249, 165, 0.4599089635854342) 89%
+    );
 }
 
 .intensity-hero {
