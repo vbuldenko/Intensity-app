@@ -1,8 +1,6 @@
 /* Header.css */
 
 .main-header {
-    background-color: #000;
-    color: #fff;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -11,12 +9,8 @@
 
 .logo {
     text-decoration: none;
-    background: -webkit-linear-gradient(45deg, #817bff, #00ff95 90%);
-    background-clip: text;
-    color: transparent;
     font-size: 2rem;
     font-weight: bold;
-    font-family: 'Arial', sans-serif;
 }
 
 .main-navbar {
@@ -29,7 +23,8 @@
     margin-right: 20px;
     text-align: center;
     position: relative;
-    color: #ffffff70;
+    /* color: rgba(255, 255, 255, 0.9); */
+    color: rgba(0, 0, 0, 0.9);
     /* background: linear-gradient(
         to right,
         white,
@@ -62,13 +57,14 @@
     transform-origin: bottom left;
 }
 
-.main-navbar a:hover,
+/* .main-navbar a:hover,
 .main-navbar a.active {
-    color: rgba(255, 255, 255, 0.9);
-}
+    color: rgba(255, 241, 156, 1);
+} */
 
 .burger-icon {
     display: none;
+    z-index: 1;
 }
 
 /* Responsive styles for tablets and mobile phones */
@@ -85,6 +81,7 @@
         background-color: #000;
         transform: translateX(100%); /* Start off-screen on the right */
         transition: transform 0.3s ease-in-out;
+        z-index: 1;
     }
 
     .main-navbar.show-mobile {

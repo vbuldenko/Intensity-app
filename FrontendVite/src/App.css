@@ -1,3 +1,18 @@
+.App {
+    font-family: Helvetica, sans-serif;
+    /* background: linear-gradient(
+        157deg,
+        rgba(114, 220, 255, 0.908) 0%,
+
+        rgba(72, 56, 171, 1) 95%
+    ); */
+    /* background: rgba(0, 0, 0, 0.4); */
+    /* background: rgb(1, 2, 11); */
+
+    background: no-repeat center fixed;
+    background-size: cover;
+    /* backdrop-filter: blur(10px); */
+}
 /* ---------------freeze button */
 
 .freeze-option {

@@ -1,21 +1,19 @@
 .ServicesSection {
-    background-color: #fff;
     padding: 20px;
     text-align: center;
-  }
-  
-  .ServicesSection h2 {
+}
+
+.ServicesSection h2 {
     font-size: 24px;
     margin: 0;
-  }
-  
-  .ServicesSection ul {
+}
+
+.ServicesSection ul {
     list-style-type: none;
     padding: 0;
-  }
-  
-  .ServicesSection li {
+}
+
+.ServicesSection li {
     font-size: 16px;
     margin-bottom: 5px;
-  }
-  
+}

@@ -1,4 +1,5 @@
 import './App.css';
+import background from './images/back.jpg';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
@@ -79,7 +80,12 @@ export default function App() {
     }, [isAuthenticated, dispatch]);
 
     return (
-        <div className="App">
+        <div
+            className="App"
+            // style={{
+            //     backgroundImage: `url(${background})`,
+            // }}
+        >
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
