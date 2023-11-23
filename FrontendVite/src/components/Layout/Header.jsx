@@ -18,7 +18,7 @@ export default function Header() {
     return (
         <header className="main-header">
             <Link className="logo" to="/">
-                Intensity
+                IN10
             </Link>
             <div
                 className={`main-navbar ${showMobileMenu ? 'show-mobile' : ''}`}

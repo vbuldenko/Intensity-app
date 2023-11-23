@@ -1,5 +1,6 @@
 .App {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     /* background: linear-gradient(
         157deg,
         rgba(114, 220, 255, 0.908) 0%,
@@ -8,9 +9,10 @@
     ); */
     /* background: rgba(0, 0, 0, 0.4); */
     /* background: rgb(1, 2, 11); */
+    background: #f1f0eb;
 
-    background: no-repeat center fixed;
-    background-size: cover;
+    /* background: no-repeat center fixed;
+    background-size: cover; */
     /* backdrop-filter: blur(10px); */
 }
 /* ---------------freeze button */
