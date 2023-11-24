@@ -1,4 +1,23 @@
-.intensity-hero {
+.home-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.home-section h1 {
+    background: -webkit-linear-gradient(45deg, #09009f, #00ff95 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 6em;
+    font-weight: 800;
+}
+.home-section h3 {
+    font-size: 80px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+.intensity-hero,
+.home-subsection {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: rgba(250, 250, 250, 0.3);
@@ -8,37 +27,24 @@
     display: flex;
     flex-direction: column;
 }
-
-/* .home-section p {
-    align-self: self-start;
-    font-size: 1.5em;
+.intensity-hero p,
+.home-subsection p {
+    font-size: 24px;
+    line-height: 1.3334133333;
     font-weight: 600;
-} */
-.home-section h1 {
-    background: -webkit-linear-gradient(45deg, #09009f, #00ff95 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 6em;
-    font-weight: 800;
-    align-self: flex-start;
-}
-.intensity-hero div {
-    align-self: self-end;
-    width: 40%;
-    margin-top: 2em;
-    font-size: 3em;
-    font-weight: 800;
-}
-.intensity-hero div button {
-    font-size: 0.75em;
-    background-color: rgba(3, 178, 3, 0.428);
-
-    border-radius: 2em;
-    padding: 0.5em 0.75em;
+    letter-spacing: 0.009em;
+    color: #86868b;
 }
 
-.home-section h3 {
-    font-size: 2em;
-    font-weight: 800;
-    align-self: flex-start;
+.home-values {
+    margin-top: 1em;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+.home-values div {
+    border: 1px solid rgb(92, 92, 92);
+    padding: 1em;
+    flex: 1;
+    min-width: 300px;
 }

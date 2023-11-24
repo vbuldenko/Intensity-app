@@ -1,19 +1,31 @@
-.ServicesSection {
-    padding: 20px;
-    text-align: center;
+.services-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
-.ServicesSection h2 {
+.services-section h2 {
+    font-size: 80px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+.services-subsection {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(250, 250, 250, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.services-subsection p {
     font-size: 24px;
-    margin: 0;
-}
-
-.ServicesSection ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.ServicesSection li {
-    font-size: 16px;
-    margin-bottom: 5px;
+    line-height: 1.3334133333;
+    font-weight: 600;
+    letter-spacing: 0.009em;
+    color: #86868b;
 }
