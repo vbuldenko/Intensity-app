@@ -29,3 +29,18 @@
     letter-spacing: 0.009em;
     color: #86868b;
 }
+
+.ss-trainings {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+.ss-trainings div {
+    padding: 1em;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    flex: 1;
+    min-width: 270px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
