@@ -1,20 +1,32 @@
 .home-section {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
 }
-.home-section h1 {
+.intensity-hero {
+    text-align: center;
+}
+.intensity-hero h1 {
     background: -webkit-linear-gradient(45deg, #09009f, #00ff95 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 6em;
     font-weight: 800;
 }
-.home-section h3 {
-    font-size: 80px;
+
+.home-section h2 {
+    text-align: center;
+    font-size: 60px;
     line-height: 1.05;
     font-weight: 700;
     letter-spacing: -0.015em;
+}
+.home-section h3 {
+    font-size: 20px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.5em;
 }
 .intensity-hero,
 .home-subsection {
@@ -43,8 +55,12 @@
     flex-wrap: wrap;
 }
 .home-values div {
-    border: 1px solid rgb(92, 92, 92);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1em;
     flex: 1;
-    min-width: 300px;
+    min-width: 250px;
 }
+/* --------------------------------------------- */
