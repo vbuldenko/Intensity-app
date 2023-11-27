@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../styles/home.css';
 
 function Home() {
-    const [values, setValues] = useState([
+    const values = [
         {
             value: 'Здоровʼя',
             description:
@@ -38,7 +38,16 @@ function Home() {
             description:
                 'Ми постійно слідкуємо за новими тенденціями, додаємо нові види занять, а тренери постійно підвищують свою кваліфікацію',
         },
-    ]);
+    ];
+    const rules = [
+        'Дотримуватися особистої та загальної гігієни',
+        'Ставитися з повагою до тренерів студії, та інших відвідувачів.',
+        'Використовувати змінні взуття та одяг. Одяг має бути чистим та охайним',
+        'Запис обов’язковий (відбувається на сайті через вхід в особистий кабінет)',
+        'Cкасувати реєстрацію на групове заняття можна не пізніше ніж за 3 години до його початку',
+        'При неявці на зарезервоване тренування, тренування списується з абонементу',
+        '',
+    ];
 
     return (
         <section className="home-section">
@@ -60,6 +69,16 @@ function Home() {
                         <div key={index}>
                             <h3>{value.value}</h3>
                             <p>{value.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div>
+                <h2>Правила студії</h2>
+                <div className="home-values">
+                    {rules.map((rule, index) => (
+                        <div key={index}>
+                            <h3>{rule}</h3>
                         </div>
                     ))}
                 </div>

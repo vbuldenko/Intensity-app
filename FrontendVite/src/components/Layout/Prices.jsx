@@ -2,89 +2,59 @@ import '../styles/prices.css';
 import group from '../../images/group.webp';
 import indiv from '../../images/indiv.jpg';
 import kids from '../../images/kids.webp';
+import { element } from 'prop-types';
 
 function Prices() {
+    const prices = [
+        {
+            category: 'Group',
+            img: group,
+            prices: [
+                { type: 'Test', price: '₴350' },
+                { type: '4 classes', price: '₴1300', discount: '225' },
+                { type: '6 classes', price: '₴1800', discount: '225' },
+                { type: '8 classes', price: '₴2200', discount: '225' },
+                { type: '10 classes', price: '₴2500', discount: '225' },
+                { type: '12 classes', price: '₴2700', discount: '225' },
+                { type: 'Unlimited', price: '₴4500' },
+            ],
+        },
+        {
+            category: 'Individual',
+            img: indiv,
+            prices: [
+                { type: '1 training', price: '₴600' },
+                { type: '5 trainings', price: '₴2700', discount: '225' },
+                { type: '10 trainings', price: '₴5500', discount: '225' },
+            ],
+        },
+        {
+            category: 'Children',
+            img: kids,
+            prices: [
+                { type: '1 training', price: '₴250' },
+                { type: '8 trainings', price: '₴1000', discount: '225' },
+                { type: '12 trainings', price: '₴1500', discount: '225' },
+            ],
+        },
+    ];
+
     return (
         <section className="prices-section">
-            <div className="prices-subsection">
-                <span>Group classes</span>
-                <img src={group} />
-                <div className="abonements-prices">
-                    <div>
-                        <p>Test</p>
-                        <p>₴350</p>
-                    </div>
-                    <div>
-                        <p>4 classes</p>
-                        <p>₴1300</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>6 classes</p>
-                        <p>₴1800</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>8 classes</p>
-                        <p>₴2200</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>10 classes</p>
-                        <p>₴2500</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>12 classes</p>
-                        <p>₴2700</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>Unlimited</p>
-                        <p>₴4500</p>
+            {prices.map((el) => (
+                <div className="prices-subsection">
+                    <span>{el.category}</span>
+                    <img src={el.img} />
+                    <div className="abonements-prices">
+                        {el.prices.map((el) => (
+                            <div>
+                                <p>{el.type}</p>
+                                <p>{el.price}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
-            </div>
-            <div className="prices-subsection">
-                <span>Individual trainings</span>
-                <img src={indiv} />
-                <div className="abonements-prices">
-                    <div>
-                        <p>1 training</p>
-                        <p>₴600</p>
-                    </div>
-                    <div>
-                        <p>5 trainings</p>
-                        <p>₴2700</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>10 trainings</p>
-                        <p>₴5500</p>
-                        <p>225</p>
-                    </div>
-                </div>
-            </div>
-            <div className="prices-subsection">
-                <span>Children groups</span>
-                <img src={kids} />
-                <div className="abonements-prices">
-                    <div>
-                        <p>1 training</p>
-                        <p>₴250</p>
-                    </div>
-                    <div>
-                        <p>8 trainings</p>
-                        <p>₴1000</p>
-                        <p>225</p>
-                    </div>
-                    <div>
-                        <p>12 trainings</p>
-                        <p>₴1500</p>
-                        <p>225</p>
-                    </div>
-                </div>
-            </div>
+            ))}
         </section>
     );
 }
