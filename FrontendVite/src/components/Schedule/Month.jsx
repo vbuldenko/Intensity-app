@@ -19,7 +19,7 @@ export default function MonthView({
     colStartClasses,
 }) {
     return (
-        <div className="grid grid-cols-7 mt-2 text-sm">
+        <div className="grid grid-cols-7 mt-2 text-sm ">
             {days.map((day, dayIdx) => (
                 <div
                     key={day.toString()}
@@ -63,7 +63,7 @@ export default function MonthView({
 
                     <div className="w-1 h-1 mx-auto mt-1">
                         {trainings.some((training) =>
-                            isSameDay(parseISO(training.startDatetime), day)
+                            isSameDay(parseISO(training.date), day)
                         ) && (
                             <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                         )}

@@ -68,7 +68,7 @@ export default function WeekView({
 
                     <div className="w-1 h-1 mx-auto mt-1">
                         {trainings.some((training) =>
-                            isSameDay(parseISO(training.startDatetime), day)
+                            isSameDay(parseISO(training.date), day)
                         ) && (
                             <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                         )}

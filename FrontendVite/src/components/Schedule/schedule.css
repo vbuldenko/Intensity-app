@@ -1,0 +1,86 @@
+.container {
+    max-width: 20rem; /* Equivalent to max-w-md */
+    padding-left: 1rem; /* Equivalent to px-4 */
+    padding-right: 1rem; /* Equivalent to px-4 */
+    margin-left: auto; /* Equivalent to mx-auto */
+    margin-right: auto; /* Equivalent to mx-auto */
+
+    @media (min-width: 640px) {
+        /* Equivalent to sm: */
+        padding-left: 1.75rem; /* Equivalent to sm:px-7 */
+        padding-right: 1.75rem; /* Equivalent to sm:px-7 */
+    }
+
+    @media (min-width: 768px) {
+        /* Equivalent to md: */
+        max-width: 64rem; /* Equivalent to md:max-w-4xl */
+        padding-left: 1.5rem; /* Equivalent to md:px-6 */
+        padding-right: 1.5rem; /* Equivalent to md:px-6 */
+    }
+}
+
+.grid-container {
+    @media (min-width: 768px) {
+        display: grid; /* Equivalent to md:grid */
+        grid-template-columns: repeat(
+            2,
+            minmax(0, 1fr)
+        ); /* Equivalent to md:grid-cols-2 */
+        gap: 1px; /* Equivalent to md:divide-x */
+        grid-auto-flow: dense; /* To avoid extra gaps caused by empty grid areas */
+        grid-auto-columns: minmax(
+            0,
+            1fr
+        ); /* Equivalent to md:divide-gray-200 */
+    }
+}
+.calendar {
+    padding-right: 3.5rem; /* Equivalent to md:pr-14 */
+}
+
+.calendar-navbar {
+    display: flex;
+    align-items: center;
+}
+
+.days-grid {
+    display: grid; /* Equivalent to grid */
+    grid-template-columns: repeat(
+        7,
+        minmax(0, 1fr)
+    ); /* Equivalent to grid-cols-7 */
+    margin-top: 2.5rem; /* Equivalent to mt-10 */
+    font-size: 0.75rem; /* Equivalent to text-xs */
+    line-height: 1.5; /* Equivalent to leading-6 */
+    text-align: center; /* Equivalent to text-center */
+    color: #718096; /* Equivalent to text-gray-500 */
+}
+
+.calendar-body {
+    display: grid; /* Equivalent to grid */
+    grid-template-columns: repeat(
+        7,
+        minmax(0, 1fr)
+    ); /* Equivalent to grid-cols-7 */
+    margin-top: 0.5rem; /* Equivalent to mt-2 */
+    font-size: 0.875rem; /* Equivalent to text-sm */
+}
+
+.trainings-section {
+    margin-top: 3rem; /* Equivalent to mt-12 */
+}
+
+@media (min-width: 768px) {
+    .trainings-section {
+        margin-top: 0; /* Equivalent to md:mt-0 */
+        padding-left: 3.5rem; /* Equivalent to md:pl-14 */
+    }
+}
+
+.trainings-list {
+    margin-top: 1rem; /* Equivalent to mt-4 */
+    margin-bottom: 0.25rem; /* Equivalent to space-y-1 */
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    line-height: 1.5rem; /* Equivalent to leading-6 */
+    color: #718096; /* Equivalent to text-gray-500 */
+}
