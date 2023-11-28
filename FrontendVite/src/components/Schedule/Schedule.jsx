@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import MonthView from './Month';
 import WeekView from './Week';
 import Training from './Training';
+import './schedule.css';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -64,32 +65,22 @@ export default function Schedule() {
         <div className="pt-16">
             <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
                 <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 ">
-                    <div className="md:pr-14">
-                        <div className="flex items-center">
+                    <div className="calendar">
+                        <div className="calendar-navbar">
                             <h2 className="flex-auto font-semibold text-gray-900">
                                 {format(firstDayCurrentMonth, 'MMMM yyyy')}
                             </h2>
                             <button
-                                type="button"
+                                className="calendar-navbar-button"
                                 onClick={previousMonth}
-                                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
                             >
-                                <span className="sr-only">Previous month</span>
-                                <ChevronLeftIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                />
+                                <ChevronLeftIcon className="w-4 h-4" />
                             </button>
                             <button
+                                className="calendar-navbar-button"
                                 onClick={nextMonth}
-                                type="button"
-                                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
                             >
-                                <span className="sr-only">Next month</span>
-                                <ChevronRightIcon
-                                    className="w-5 h-5"
-                                    aria-hidden="true"
-                                />
+                                <ChevronRightIcon className="w-4 h-4" />
                             </button>
                             <select
                                 id="view"
@@ -101,7 +92,7 @@ export default function Schedule() {
                                 <option value="week">Week</option>
                             </select>
                         </div>
-                        <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
+                        <div className="week-days-names">
                             <div>SUN</div>
                             <div>MON</div>
                             <div>TUE</div>
@@ -116,7 +107,6 @@ export default function Schedule() {
                                 firstDayCurrentMonth={firstDayCurrentMonth}
                                 selectedDay={selectedDay}
                                 setSelectedDay={setSelectedDay}
-                                selectedDayTrainings={selectedDayTrainings}
                                 classNames={classNames}
                                 trainings={trainings}
                                 colStartClasses={colStartClasses}
@@ -125,21 +115,20 @@ export default function Schedule() {
                             <WeekView
                                 selectedDay={selectedDay}
                                 setSelectedDay={setSelectedDay}
-                                selectedDayTrainings={selectedDayTrainings}
                                 classNames={classNames}
                                 trainings={trainings}
                                 colStartClasses={colStartClasses}
                             />
                         )}
                     </div>
-                    <section className="mt-12 md:mt-0 md:pl-14 ">
+                    <section className="trainings-section">
                         <h2 className="font-semibold text-gray-900">
                             Schedule for{' '}
                             <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
                                 {format(selectedDay, 'MMM dd, yyy')}
                             </time>
                         </h2>
-                        <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+                        <ol className="trainings-list">
                             {selectedDayTrainings.length > 0 ? (
                                 selectedDayTrainings.map((training) => (
                                     <Training

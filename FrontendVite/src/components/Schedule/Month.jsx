@@ -13,13 +13,12 @@ export default function MonthView({
     firstDayCurrentMonth,
     selectedDay,
     setSelectedDay,
-    selectedDayTrainings,
     classNames,
     trainings,
     colStartClasses,
 }) {
     return (
-        <div className="grid grid-cols-7 mt-2 text-sm ">
+        <div className="calendar-body">
             {days.map((day, dayIdx) => (
                 <div
                     key={day.toString()}

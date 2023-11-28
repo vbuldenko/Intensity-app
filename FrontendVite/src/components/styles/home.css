@@ -1,7 +1,7 @@
 .home-section {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 6em;
 }
 .intensity-hero {
     text-align: center;
@@ -20,6 +20,7 @@
     line-height: 1.05;
     font-weight: 700;
     letter-spacing: -0.015em;
+    margin-bottom: 0.5em;
 }
 .home-section h3 {
     font-size: 20px;
@@ -51,7 +52,7 @@
 .home-values {
     margin-top: 1em;
     display: flex;
-    gap: 1em;
+    gap: 2em;
     flex-wrap: wrap;
 }
 .home-values div {
