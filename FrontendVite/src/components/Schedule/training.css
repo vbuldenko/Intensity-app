@@ -1,0 +1,33 @@
+.scheduled-training {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px; /* Equivalent to rounded-xl */
+    min-width: 10rem;
+    flex: 1;
+}
+
+.scheduled-training-content {
+    display: flex; /* Equivalent to flex */
+    flex-direction: column;
+    align-items: center; /* Equivalent to items-center */
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0.75rem;
+    gap: 1rem; /* Equivalent to space-x-4 */
+    transition: background-color 0.3s ease; /* Smooth transition for hover and focus effects */
+}
+
+/* @media screen and (min-width: 790px) and (max-width: 800px) {
+    .scheduled-training {
+        min-width: 100%; 
+    }
+
+    .scheduled-training-content {
+        flex-direction: row;
+    }
+} */
+
+.scheduled-training-content:hover,
+.scheduled-training-content:focus-within {
+    background: rgba(151, 151, 151, 0.2);
+}

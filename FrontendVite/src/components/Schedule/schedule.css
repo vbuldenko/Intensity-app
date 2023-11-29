@@ -1,55 +1,47 @@
-.container {
-    max-width: 20rem; /* Equivalent to max-w-md */
-    padding-left: 1rem; /* Equivalent to px-4 */
-    padding-right: 1rem; /* Equivalent to px-4 */
-    margin-left: auto; /* Equivalent to mx-auto */
-    margin-right: auto; /* Equivalent to mx-auto */
-
-    @media (min-width: 640px) {
-        /* Equivalent to sm: */
-        padding-left: 1.75rem; /* Equivalent to sm:px-7 */
-        padding-right: 1.75rem; /* Equivalent to sm:px-7 */
-    }
-
-    @media (min-width: 768px) {
-        /* Equivalent to md: */
-        max-width: 64rem; /* Equivalent to md:max-w-4xl */
-        padding-left: 1.5rem; /* Equivalent to md:px-6 */
-        padding-right: 1.5rem; /* Equivalent to md:px-6 */
-    }
+.schedule-container {
+    display: grid; /* Equivalent to md:grid */
+    max-width: 30rem;
+    padding: 0 2rem; /* Equivalent to px-4 */
+    margin: 0 auto;
+    /* border: 1px solid red; */
 }
 
-.grid-container {
-    @media (min-width: 768px) {
-        display: grid; /* Equivalent to md:grid */
-        grid-template-columns: repeat(
+@media (min-width: 768px) {
+    .schedule-container {
+        max-width: 70rem;
+        /* grid-template-columns: repeat(
             2,
             minmax(0, 1fr)
-        ); /* Equivalent to md:grid-cols-2 */
-        gap: 1px; /* Equivalent to md:divide-x */
-        grid-auto-flow: dense; /* To avoid extra gaps caused by empty grid areas */
-        grid-auto-columns: minmax(
-            0,
-            1fr
-        ); /* Equivalent to md:divide-gray-200 */
+        );  */
+        grid-template-columns: 1fr 1.75fr;
+        gap: 2rem;
     }
 }
 
 .calendar {
-    padding-right: 3.5rem; /* Equivalent to md:pr-14 */
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    min-width: 22em;
+    margin-top: 2em;
 }
 
 .calendar-navbar {
     padding: 14px 16px;
-    border-radius: 10px;
     display: flex;
-    gap: 1em;
+    /* gap: 1em; */
     align-items: center;
-    border-radius: 10px;
+    justify-content: space-between;
+    border-radius: 10px 10px 0 0;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(128, 128, 128, 0.3);
-    /* background-blend-mode: luminosity; */
+    /* background: rgba(128, 128, 128, 0.1); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(50px);
+}
+
+.calendar-navbar-date {
+    font-weight: 600; /* Equivalent to font-semibold */
+    color: #1a202c; /* Equivalent to text-gray-900 */
 }
 
 .calendar-navbar-button {
@@ -57,11 +49,18 @@
     padding: 10px;
     justify-content: center;
     align-items: center;
-    color: rgba(255, 255, 255, 0.9); /* Equivalent to text-gray-400 */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(50px);
+    color: rgba(0, 0, 0, 0.25); /* Equivalent to text-gray-400 */
+    /* border: 1px solid rgba(0, 0, 0, 0.25); */
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.25); */
+    /* border-top: 1px solid rgba(0, 0, 0, 0.25); */
+    /* border-radius: 10px; */
+    /* background: linear-gradient(
+            0deg,
+            rgba(94, 94, 94, 0.18) 0%,
+            rgba(94, 94, 94, 0.18) 100%
+        ),
+        rgba(255, 255, 255, 0.06); */
+    /* backdrop-filter: blur(50px); */
 }
 
 .calendar-navbar-button:hover {
@@ -70,6 +69,7 @@
 
 #view {
     background: transparent;
+    margin-left: 3rem;
 }
 
 .week-days-names {
@@ -78,14 +78,15 @@
         7,
         minmax(0, 1fr)
     ); /* Equivalent to grid-cols-7 */
-    margin-top: 2rem; /* Equivalent to mt-10 */
+
     font-size: 0.75rem; /* Equivalent to text-xs */
     line-height: 1.5; /* Equivalent to leading-6 */
     text-align: center; /* Equivalent to text-center */
     color: #718096; /* Equivalent to text-gray-500 */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* ---------------*/
-    border-radius: 10px 10px 0 0; /* ---------------*/
-    background: rgba(128, 128, 128, 0.3); /* ---------------*/
+    /* background: rgba(128, 128, 128, 0.1); */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* border-radius: 0 0 10px 10px; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 1em; /* ---------------*/
 }
 
@@ -99,7 +100,8 @@
     font-size: 0.875rem; /* Equivalent to text-sm */
     border: 1px solid rgba(255, 255, 255, 0.4); /* ---------------*/
     border-radius: 0 0 10px 10px; /* ---------------*/
-    background: rgba(128, 128, 128, 0.084); /* ---------------*/
+    /* background: rgba(128, 128, 128, 0.1); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 1em; /* ---------------*/
 }
 
@@ -107,20 +109,23 @@
     margin-top: 3rem; /* Equivalent to mt-12 */
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.5em;
 }
 
 @media (min-width: 768px) {
     .trainings-section {
         margin-top: 0; /* Equivalent to md:mt-0 */
-        padding-left: 3.5rem; /* Equivalent to md:pl-14 */
     }
 }
 
 .trainings-list {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
     gap: 0.5em;
     font-size: 0.875rem; /* Equivalent to text-sm */
     color: #718096; /* Equivalent to text-gray-500 */
+    /* border: 1px solid blue; */
 }

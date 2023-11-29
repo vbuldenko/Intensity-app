@@ -7,6 +7,7 @@ import {
     removeReservation,
 } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
+import './training.css';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);
@@ -73,7 +74,7 @@ export default function Training({ training }) {
     };
 
     return (
-        <li className="bg-blue-100 rounded-xl">
+        <li className="scheduled-training ">
             {notification && error && (
                 <div
                     style={{
@@ -85,8 +86,8 @@ export default function Training({ training }) {
                     {notification}
                 </div>
             )}
-            <div className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-                <div className="flex-auto items-center">
+            <div className="scheduled-training-content">
+                <div>
                     <b className="text-gray-900">
                         {training.time}-{training.type}
                     </b>
@@ -99,6 +100,7 @@ export default function Training({ training }) {
                 <div
                     style={{
                         display: 'flex',
+                        alignItems: 'center',
                         flexDirection: 'column',
                         gap: '0.5em',
                     }}

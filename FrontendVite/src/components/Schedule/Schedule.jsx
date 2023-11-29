@@ -62,87 +62,80 @@ export default function Schedule() {
     ];
 
     return (
-        <div className="pt-16">
-            <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-                <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 ">
-                    <div className="calendar">
-                        <div className="calendar-navbar">
-                            <h2 className="flex-auto font-semibold text-gray-900">
-                                {format(firstDayCurrentMonth, 'MMMM yyyy')}
-                            </h2>
-                            <button
-                                className="calendar-navbar-button"
-                                onClick={previousMonth}
-                            >
-                                <ChevronLeftIcon className="w-4 h-4" />
-                            </button>
-                            <button
-                                className="calendar-navbar-button"
-                                onClick={nextMonth}
-                            >
-                                <ChevronRightIcon className="w-4 h-4" />
-                            </button>
-                            <select
-                                id="view"
-                                name="view"
-                                value={scheduleView}
-                                onChange={handleViewChange}
-                            >
-                                <option value="month">Month</option>
-                                <option value="week">Week</option>
-                            </select>
-                        </div>
-                        <div className="week-days-names">
-                            <div>SUN</div>
-                            <div>MON</div>
-                            <div>TUE</div>
-                            <div>WED</div>
-                            <div>THU</div>
-                            <div>FRI</div>
-                            <div>SAT</div>
-                        </div>
-                        {scheduleView === 'month' ? (
-                            <MonthView
-                                days={days}
-                                firstDayCurrentMonth={firstDayCurrentMonth}
-                                selectedDay={selectedDay}
-                                setSelectedDay={setSelectedDay}
-                                classNames={classNames}
-                                trainings={trainings}
-                                colStartClasses={colStartClasses}
-                            />
-                        ) : (
-                            <WeekView
-                                selectedDay={selectedDay}
-                                setSelectedDay={setSelectedDay}
-                                classNames={classNames}
-                                trainings={trainings}
-                                colStartClasses={colStartClasses}
-                            />
-                        )}
-                    </div>
-                    <section className="trainings-section">
-                        <h2 className="font-semibold text-gray-900">
-                            Schedule for{' '}
-                            <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                                {format(selectedDay, 'MMM dd, yyy')}
-                            </time>
-                        </h2>
-                        <ol className="trainings-list">
-                            {selectedDayTrainings.length > 0 ? (
-                                selectedDayTrainings.map((training) => (
-                                    <Training
-                                        training={training}
-                                        key={training.id}
-                                    />
-                                ))
-                            ) : (
-                                <p>No trainings for today.</p>
-                            )}
-                        </ol>
-                    </section>
+        <div className="schedule-container ">
+            <div className="calendar">
+                <div className="calendar-navbar">
+                    <button
+                        className="calendar-navbar-button"
+                        onClick={previousMonth}
+                    >
+                        <ChevronLeftIcon className="w-4 h-4" />
+                    </button>
+                    <h2 className="calendar-navbar-date">
+                        {format(firstDayCurrentMonth, 'MMMM yyyy')}
+                    </h2>
+                    <button
+                        className="calendar-navbar-button"
+                        onClick={nextMonth}
+                    >
+                        <ChevronRightIcon className="w-4 h-4" />
+                    </button>
+                    <select
+                        id="view"
+                        name="view"
+                        value={scheduleView}
+                        onChange={handleViewChange}
+                    >
+                        <option value="month">Month</option>
+                        <option value="week">Week</option>
+                    </select>
                 </div>
+                <div className="week-days-names">
+                    <div>SUN</div>
+                    <div>MON</div>
+                    <div>TUE</div>
+                    <div>WED</div>
+                    <div>THU</div>
+                    <div>FRI</div>
+                    <div>SAT</div>
+                </div>
+                {scheduleView === 'month' ? (
+                    <MonthView
+                        days={days}
+                        firstDayCurrentMonth={firstDayCurrentMonth}
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                        classNames={classNames}
+                        trainings={trainings}
+                        colStartClasses={colStartClasses}
+                    />
+                ) : (
+                    <WeekView
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                        classNames={classNames}
+                        trainings={trainings}
+                        colStartClasses={colStartClasses}
+                    />
+                )}
             </div>
+            <section className="trainings-section">
+                <h2 className="font-semibold text-gray-900">
+                    Schedule for{' '}
+                    <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
+                        {format(selectedDay, 'MMM dd, yyy')}
+                    </time>
+                </h2>
+                <ol className="trainings-list">
+                    {selectedDayTrainings.length > 0 ? (
+                        selectedDayTrainings.map((training) => (
+                            <Training training={training} key={training.id} />
+                        ))
+                    ) : (
+                        <p>No trainings for today.</p>
+                    )}
+                </ol>
+            </section>
         </div>
     );
 }

@@ -6,7 +6,7 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <main style={{ padding: '1em' }}>
+            <main style={{ padding: '2em 0' }}>
                 <Outlet />
             </main>
             <Footer />
