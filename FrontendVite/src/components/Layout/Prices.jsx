@@ -2,7 +2,6 @@ import '../styles/prices.css';
 import group from '../../images/group.webp';
 import indiv from '../../images/indiv.jpg';
 import kids from '../../images/kids.webp';
-import { element } from 'prop-types';
 
 function Prices() {
     const prices = [
@@ -10,46 +9,46 @@ function Prices() {
             category: 'Group',
             img: group,
             prices: [
-                { type: 'Test', price: '₴350' },
-                { type: '4 classes', price: '₴1300', discount: '225' },
-                { type: '6 classes', price: '₴1800', discount: '225' },
-                { type: '8 classes', price: '₴2200', discount: '225' },
-                { type: '10 classes', price: '₴2500', discount: '225' },
-                { type: '12 classes', price: '₴2700', discount: '225' },
-                { type: 'Unlimited', price: '₴4500' },
+                { amount: 1, price: 350 },
+                { amount: 4, price: 1300 },
+                { amount: 6, price: 1800 },
+                { amount: 8, price: 2200 },
+                { amount: 10, price: 2500 },
+                { amount: 12, price: 2700 },
             ],
         },
         {
             category: 'Individual',
             img: indiv,
             prices: [
-                { type: '1 training', price: '₴600' },
-                { type: '5 trainings', price: '₴2700', discount: '225' },
-                { type: '10 trainings', price: '₴5500', discount: '225' },
+                { amount: 1, price: 600 },
+                { amount: 5, price: 2700 },
+                { amount: 10, price: 5500 },
             ],
         },
         {
             category: 'Children',
             img: kids,
             prices: [
-                { type: '1 training', price: '₴250' },
-                { type: '8 trainings', price: '₴1000', discount: '225' },
-                { type: '12 trainings', price: '₴1500', discount: '225' },
+                { amount: 1, price: 250 },
+                { amount: 8, price: 1000 },
+                { amount: 12, price: 1500 },
             ],
         },
     ];
 
     return (
         <section className="prices-section">
-            {prices.map((el) => (
-                <div className="prices-subsection">
-                    <span>{el.category}</span>
+            {prices.map((el, i) => (
+                <div key={i} className="prices-subsection">
                     <img src={el.img} />
+                    <span>{el.category}</span>
                     <div className="abonements-prices">
-                        {el.prices.map((el) => (
-                            <div>
-                                <p>{el.type}</p>
-                                <p>{el.price}</p>
+                        {el.prices.map((el, i) => (
+                            <div key={i}>
+                                <p>{el.amount} trainings</p>
+                                <p>₴{el.price}</p>
+                                <p>{el.price / el.amount}</p>
                             </div>
                         ))}
                     </div>
