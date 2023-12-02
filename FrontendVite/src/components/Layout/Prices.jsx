@@ -27,6 +27,15 @@ function Prices() {
             ],
         },
         {
+            category: 'Split',
+            img: indiv,
+            prices: [
+                { amount: 1, price: 800 },
+                { amount: 5, price: 3800 },
+                { amount: 10, price: 7000 },
+            ],
+        },
+        {
             category: 'Children',
             img: kids,
             prices: [
@@ -41,14 +50,22 @@ function Prices() {
         <section className="prices-section">
             {prices.map((el, i) => (
                 <div key={i} className="prices-subsection">
-                    <img src={el.img} />
+                    {/* <img src={el.img} /> */}
                     <span>{el.category}</span>
                     <div className="abonements-prices">
+                        <div className="abonements-prices-header">
+                            <p>amount</p>
+                            <p>price</p>
+                            <p>unit price</p>
+                        </div>
                         {el.prices.map((el, i) => (
                             <div key={i}>
-                                <p>{el.amount} trainings</p>
-                                <p>₴{el.price}</p>
-                                <p>{el.price / el.amount}</p>
+                                <p>
+                                    {el.amount}{' '}
+                                    {el.amount === 1 ? 'training' : 'trainings'}
+                                </p>
+                                <p>₴ {el.price}</p>
+                                <p>₴ {el.price / el.amount}</p>
                             </div>
                         ))}
                     </div>
