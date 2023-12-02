@@ -81,10 +81,10 @@ export default function App() {
 
     return (
         <div
-            className="App"
-            // style={{
-            //     backgroundImage: `url(${background})`,
-            // }}
+        // className="App"
+        // style={{
+        //     backgroundImage: `url(${background})`,
+        // }}
         >
             <Routes>
                 <Route path="/" element={<Layout />}>

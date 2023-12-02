@@ -1,14 +1,50 @@
-.ContactSection {
-    padding: 20px;
-    text-align: center;
+.contact-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+    max-width: 50em;
+    margin: 0 auto;
+    padding: 1em;
+    /* border: 1px solid red; */
+}
+.contact-subsection {
+    min-width: 20em;
+    max-width: 35em;
+    flex: 1;
+    padding: 1em 0;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.ContactSection h2 {
-    font-size: 24px;
-    margin: 0;
+/* @media (max-width: 768px) {
+    .contact-section {
+    }
+} */
+
+.contact-subsection h2 {
+    align-self: self-start;
+    letter-spacing: 0.05em;
+    padding: 0.3em 0.75em 0.3em 1em;
+    border-radius: 0 0.5em 0.5em 0;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+    background: rgba(20, 87, 52, 0.8);
+    margin-bottom: 1em;
 }
 
-.ContactSection p {
+.contact-subsection div {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.contact-subsection div .content {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
     font-size: 16px;
-    margin: 10px 0;
 }
