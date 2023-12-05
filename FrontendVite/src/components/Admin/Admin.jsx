@@ -33,7 +33,9 @@ function Admin() {
                     Settings
                 </NavLink>
             </nav>
-            <Outlet />
+            <div className="admin-section-content">
+                <Outlet />
+            </div>
         </section>
     );
 }

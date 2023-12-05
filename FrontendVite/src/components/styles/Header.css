@@ -11,6 +11,7 @@
     text-decoration: none;
     font-size: 2rem;
     font-weight: bold;
+    color: rgb(105, 105, 105);
 }
 
 .main-navbar {
@@ -34,7 +35,7 @@
     height: 1px; /* Adjust the thickness of the underline */
     bottom: 0;
     left: 0;
-    background-color: #000000a1;
+    background-color: rgb(105, 105, 105);
     /* background: linear-gradient(to right, gray, white); */
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;

@@ -1,10 +1,10 @@
-import './styles/loginform.css';
+import '../styles/loginform.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
-import { notifyWith } from '../reducers/notificationReducer';
-import { signUserIn } from '../reducers/loginReducer';
+import { notifyWith } from '../../reducers/notificationReducer';
+import { signUserIn } from '../../reducers/loginReducer';
 
 const LoginForm = () => {
     const navigate = useNavigate();

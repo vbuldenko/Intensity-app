@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
-import storageService from '../services/storage';
+import storageService from '../../services/storage';
 
 export default function AuthProtected() {
     const isAuthenticated = storageService.loadUser();

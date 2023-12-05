@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import './styles/loginform.css';
+import '../styles/loginform.css';
 
-import { notifyWith } from '../reducers/notificationReducer';
-import { createUser } from '../reducers/usersReducer';
+import { notifyWith } from '../../reducers/notificationReducer';
+import { createUser } from '../../reducers/usersReducer';
 
 const SignUpForm = () => {
     const defaultUserData = {

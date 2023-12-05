@@ -19,7 +19,7 @@ export default function AdminOverview() {
     let today = format(startOfToday(), 'dd-MMM-yyyy');
     return (
         <div className="overview">
-            <div className="user">
+            <div className="admin-user">
                 {/* <img className="user-img" src={user.img} /> */}
                 <div>
                     <p className="user-name">

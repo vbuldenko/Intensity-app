@@ -10,13 +10,13 @@ import Services from './components/Layout/Services';
 import Schedule from './components/Schedule/Schedule';
 import Prices from './components/Layout/Prices';
 import Contacts from './components/Layout/Contacts';
-import LoginForm from './components/LoginForm';
-import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/Layout/LoginForm';
+import SignUpForm from './components/Layout/SignUpForm';
 import NotFound from './components/Layout/NotFound';
 
-import AuthProtected from './components/AuthRequired';
-import Account from './components/Account';
-import Overview from './components/Overview';
+import AuthProtected from './components/Layout/AuthRequired';
+import Account from './components/Layout/Account';
+import Overview from './components/Layout/Overview';
 import Purchases from './components/User/Purchases';
 import AdminSchedule from './components/Admin/Schedule';
 import Clients from './components/Admin/Clients';
