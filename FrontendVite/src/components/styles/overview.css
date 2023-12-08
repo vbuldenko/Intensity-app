@@ -1,8 +1,8 @@
-.overview {
+.admin-overview {
     display: grid;
     gap: 1em;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 10% 1fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
 }
 
 .overview * {
@@ -13,9 +13,7 @@
 .income,
 .expenses,
 .sales {
-    border-radius: 0.5em;
-    padding: 1em;
-    gap: 1em;
+    border-radius: 1em;
 }
 
 .admin-user {
@@ -24,67 +22,96 @@
     justify-content: space-between;
     grid-column: 1 / 3;
     grid-row: 1/2;
+    padding: 0.5em;
+    border-radius: 1em;
+    /* background: rgba(0, 0, 0, 0.15); */
+    /* background: rgba(0, 0, 0, 0.1); */
 }
+
 .user-img {
     width: 3em;
     border-radius: 50%;
 }
-.user div {
-    padding-right: 1em;
-    border-right: 1px solid grey;
-}
-.user div span {
-    font-size: 0.75em;
-    color: grey;
-}
-.user-date {
-    background-color: rgb(240, 240, 240);
+.admin-user div {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.75);
     padding: 0.5em 1em;
-    border-radius: 0.5em;
+    border-radius: 1em;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    background: rgba(130, 130, 130, 0.2);
+    /* background: rgba(0, 0, 0, 0.1); */
+    /* border: 0.75px solid rgba(255, 255, 255, 0.4); */
+    /* backdrop-filter: blur(50px); */
+}
+.admin-user div span {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.5);
+}
+.admin-user-date {
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    background: rgba(130, 130, 130, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); */
+    /* backdrop-filter: blur(50px); */
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .sales {
     grid-row: 2 / span 2;
     grid-column: 1 / 2;
-}
-.sales div {
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    background: rgba(130, 130, 130, 0.2);
+    /* padding: 0.75em 1em; */
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1em;
+    padding: 0.5em 1em;
 }
-.sales .title {
+
+.sales .sales-header p {
+    flex: none;
+}
+
+.sales-header,
+.sales .metrics,
+.sales .sale-data {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.5);
+    justify-content: space-around;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.5em;
+}
+.sales div p {
+    flex: 1; /* Distribute space evenly among the paragraphs */
+    text-align: center; /* Center the text */
+}
+.title,
+#view {
     font-weight: 700;
 }
 .sales div select {
     border: none;
-    text-decoration: underline;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: rgb(223, 164, 2);
 }
 .sales .metrics p {
     font-size: 0.75em;
     color: grey;
+    display: flex;
+    justify-content: space-around;
+    /* width: 100%; */
 }
-.metrics {
-    padding-bottom: 0.75em;
-    border-bottom: 1px solid rgb(238, 235, 235);
-}
-.sale-data {
-    padding-bottom: 1em;
-    border-bottom: 1px solid rgb(235, 235, 235);
-}
+
 .sale-name {
     font-weight: 500;
-    width: 30%;
 }
 .sale-data .sale-abonement {
-    width: 5%;
-    background-color: rgb(221, 230, 173);
+    /* background-color: rgb(221, 230, 173); */
     border-radius: 0.5em;
-    padding: 0.25em;
-    text-align: center;
 }
 
 .income {

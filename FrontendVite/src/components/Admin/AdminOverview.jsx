@@ -18,16 +18,16 @@ export default function AdminOverview() {
 
     let today = format(startOfToday(), 'dd-MMM-yyyy');
     return (
-        <div className="overview">
+        <div className="admin-overview">
             <div className="admin-user">
                 {/* <img className="user-img" src={user.img} /> */}
                 <div>
-                    <p className="user-name">
+                    <p className="admin-user-name">
                         {name} {surname}
                     </p>
                     <span>{role}</span>
                 </div>
-                <p className="user-date">{today}</p>
+                <p className="admin-user-date">{today}</p>
             </div>
 
             <div className="income">
@@ -73,7 +73,7 @@ export default function AdminOverview() {
             </div>
 
             <div className="sales">
-                <div>
+                <div className="sales-header">
                     <p className="title">Sales</p>
                     <select id="view" name="view">
                         <option value="all">View All</option>
