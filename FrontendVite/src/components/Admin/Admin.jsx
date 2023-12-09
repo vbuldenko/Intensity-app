@@ -5,8 +5,10 @@ import { Outlet } from 'react-router-dom';
 function Admin() {
     const activeStyles = {
         fontWeight: '800',
-        textDecoration: 'underline',
-        color: '#000000',
+        color: 'rgb(255, 255, 255, 0.5)',
+        background: 'rgba(130, 130, 130, 0.1)',
+        // borderBottom: '1px solid rgba(130, 130, 130, 0.2)',
+        // borderTop: '1px solid rgba(130, 130, 130, 0.2)',
     };
 
     const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);
@@ -14,7 +16,7 @@ function Admin() {
     return (
         <section className="admin-section">
             <nav className="admin-menu">
-                <NavLink to={'.'} end style={styleChanger}>
+                <NavLink to={'.'} end style={styleChanger} className="active">
                     Overview
                 </NavLink>
                 <NavLink to={'schedule'} style={styleChanger}>
