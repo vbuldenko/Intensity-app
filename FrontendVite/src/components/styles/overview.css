@@ -5,17 +5,6 @@
     grid-template-rows: auto 1fr 1fr;
 }
 
-.overview * {
-    margin: 0;
-}
-
-.user,
-.income,
-.expenses,
-.sales {
-    border-radius: 1em;
-}
-
 .admin-user {
     display: flex;
     align-items: center;
@@ -58,78 +47,70 @@
     /* backdrop-filter: blur(50px); */
     color: rgba(255, 255, 255, 0.75);
 }
-
+/* -------------------------------- */
 .sales {
     grid-row: 2 / span 2;
     grid-column: 1 / 2;
     /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    border-radius: 1em;
     background: rgba(130, 130, 130, 0.2);
-    /* padding: 0.75em 1em; */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 0.5em 1em;
-}
-
-.sales .sales-header p {
-    flex: none;
+    padding: 1em;
 }
 
 .sales-header,
-.sales .metrics,
-.sales .sale-data {
-    display: flex;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.5);
-    justify-content: space-around;
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 0.5em;
-}
-.sales div p {
-    flex: 1; /* Distribute space evenly among the paragraphs */
-    text-align: center; /* Center the text */
-}
-.title,
-#view {
-    font-weight: 700;
-}
-.sales div select {
-    border: none;
-}
-.sales .metrics p {
-    font-size: 0.75em;
-    color: grey;
+.metrics,
+.sale-data {
     display: flex;
     justify-content: space-around;
-    /* width: 100%; */
+    color: rgba(255, 255, 255, 0.4);
 }
 
-.sale-name {
-    font-weight: 500;
-}
-.sale-data .sale-abonement {
-    /* background-color: rgb(221, 230, 173); */
-    border-radius: 0.5em;
+.sales-header {
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
 
+.metrics,
+.sale-data {
+    padding: 0.5em 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metrics {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.metrics p,
+.sale-data p {
+    flex: 1;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.sales .sale-name {
+    flex: 2;
+    text-align: left;
+}
+/* --------------------------------------- */
 .income {
     grid-column: 2/3;
     grid-row: 2/3;
     display: grid;
-    gap: 1em;
+    gap: 0.5em;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
 }
 .income div {
     display: flex;
-    gap: 2em;
+    flex-direction: column;
+    gap: 1em;
     align-items: center;
-    box-shadow: 0 0 5px rgb(54, 100, 0);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 0.5em;
+    border-radius: 1em;
     padding: 0.5em 1em;
+    background: rgba(130, 130, 130, 0.2);
 }
+/* ----------------------------------------- */
 
 .expenses {
     grid-column: 2/3;
