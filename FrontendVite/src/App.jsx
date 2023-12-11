@@ -18,7 +18,6 @@ import AuthProtected from './components/Layout/AuthRequired';
 import Account from './components/Layout/Account';
 import Overview from './components/Layout/Overview';
 import Purchases from './components/User/Purchases';
-import AdminSchedule from './components/Admin/Schedule';
 import Clients from './components/Admin/Clients';
 import Client from './components/Admin/Client';
 import Team from './components/Admin/Team';
@@ -100,10 +99,7 @@ export default function App() {
                         <Route path="account" element={<Account user={user} />}>
                             <Route index element={<Overview />} />
                             <Route path="purchases" element={<Purchases />} />
-                            <Route
-                                path="schedule"
-                                element={<AdminSchedule />}
-                            />
+                            <Route path="schedule" element={<Schedule />} />
                             <Route
                                 path="trainings"
                                 element={<TrainerOverview />}

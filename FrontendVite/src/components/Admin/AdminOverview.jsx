@@ -2,12 +2,17 @@ import '../styles/overview.css';
 import { useSelector } from 'react-redux';
 import { startOfToday, format } from 'date-fns';
 
-import { expenses } from '../../test_data/data';
-
 export default function AdminOverview() {
     const user = useSelector(({ user }) => user);
     const soldAbonements = useSelector(({ abonements }) => abonements);
     const statistics = useSelector(({ statistics }) => statistics);
+
+    const expenses = {
+        rent: 30000,
+        utilities: 1500,
+        taxes: 1340,
+        salary: 2400,
+    };
 
     console.log('Admin overview');
 
@@ -29,49 +34,6 @@ export default function AdminOverview() {
                 </div>
                 <p className="admin-user-date">{today}</p>
             </div>
-
-            <div className="income">
-                <div>
-                    <p>Total income</p>
-                    <p>{statistics.totalIncome}</p>
-                </div>
-                <div>
-                    <p>Monthly income</p>
-                    <p>{statistics.monthlyIncome}</p>
-                </div>
-                <div>
-                    <p>Daily income</p>
-                    <p>{statistics.dailyIncome}</p>
-                </div>
-                <div>
-                    <p>Total number of abonements sold</p>
-                    <p>{statistics.totalAbonementSales}</p>
-                </div>
-            </div>
-
-            <div className="expenses">
-                <div>
-                    <p>Rent</p>
-                    <p> ₴{expenses.rent}</p>
-                </div>
-                <div>
-                    <p>Utilities</p>
-                    <p> ₴{expenses.utilities}</p>
-                </div>
-                <div>
-                    <p>Taxes</p>
-                    <p> ₴{expenses.taxes}</p>
-                </div>
-                <div className="t-salary">
-                    {expenses.salary.map((element) => (
-                        <div key={element.id}>
-                            <p>{element.name}</p>
-                            <p>₴{element.amount}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
             <div className="sales">
                 <div className="sales-header">
                     <p className="title">Sales</p>
@@ -100,6 +62,53 @@ export default function AdminOverview() {
                         <p className="sale-price">₴{sale.price}</p>
                     </div>
                 ))}
+            </div>
+            <div className="income">
+                <div className="income-header">
+                    <p className="title">Income</p>
+                </div>
+                <div className="metrics">
+                    <p className="income-total">Total</p>
+                    <p className="income-month">Monthly</p>
+                    <p className="income-day">Daily</p>
+                </div>
+
+                <div className="income-data">
+                    <p>{statistics.monthlyIncome}</p>
+                    <p>{statistics.monthlyIncome}</p>
+                    <p>{statistics.dailyIncome}</p>
+                </div>
+                <div className="income-additional">
+                    <p>Total number of abonements sold</p>
+                    <p>{statistics.totalAbonementSales}</p>
+                </div>
+            </div>
+            <div className="expenses">
+                <div className="expenses-header">
+                    <p className="title">Expenses</p>
+                </div>
+                <div className="metrics">
+                    <p className="expenses-rent">Rent</p>
+                    <p className="expenses-utilities">Utilities</p>
+                    <p className="expenses-taxes">Taxes</p>
+                    <p className="expenses-salary">Salary</p>
+                    <p className="expenses-total">Total</p>
+                </div>
+
+                <div className="expenses-data">
+                    <p> {expenses.rent}</p>
+                    <p> {expenses.utilities}</p>
+                    <p> {expenses.taxes}</p>
+                    <p> {expenses.salary}</p>
+                    <p>
+                        {' '}
+                        ₴
+                        {Object.values(expenses).reduce(
+                            (total, expense) => total + expense,
+                            0
+                        )}
+                    </p>
+                </div>
             </div>
         </div>
     );
