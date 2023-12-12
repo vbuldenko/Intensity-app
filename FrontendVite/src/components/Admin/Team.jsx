@@ -2,6 +2,12 @@ import './styles/team.css';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
+import {
+    ListBulletIcon,
+    QueueListIcon,
+    Squares2X2Icon,
+    MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 
 export default function Team() {
     const users = useSelector(({ users }) => users);
@@ -34,6 +40,15 @@ export default function Team() {
                 <div className="header-info">
                     <p>All: {trainers.length}</p>
                 </div>
+                <div className="search">
+                    <MagnifyingGlassIcon className="h-6 w-6 text-green-800" />
+                    <input
+                        type="text"
+                        placeholder="Search trainers..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </div>
                 <div className="view-modes">
                     <button
                         className={`view-button ${
@@ -41,7 +56,7 @@ export default function Team() {
                         }`}
                         onClick={() => handleViewChange('view', 'list')}
                     >
-                        <i className="material-icons">view_list</i>
+                        <ListBulletIcon className="h-6 w-6 text-green-800" />
                     </button>
                     <button
                         className={`view-button ${
@@ -49,17 +64,8 @@ export default function Team() {
                         }`}
                         onClick={() => handleViewChange('view', 'tiles')}
                     >
-                        <i className="material-icons">view_module</i>
+                        <Squares2X2Icon className="h-6 w-6 text-green-800" />
                     </button>
-                </div>
-                <div className="search">
-                    <i className="material-icons">search</i>
-                    <input
-                        type="text"
-                        placeholder="Search trainers..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
                 </div>
             </div>
             <div className={`trainers-list ${viewMode}`}>

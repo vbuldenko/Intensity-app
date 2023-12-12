@@ -1,5 +1,5 @@
 .admin-section {
-    max-width: 60em;
+    max-width: 70em;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 12em 1fr;

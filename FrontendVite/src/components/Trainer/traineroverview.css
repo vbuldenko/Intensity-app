@@ -1,0 +1,44 @@
+.trainer-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.trainer-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-column: span 2;
+    grid-row: 1/2;
+    border-radius: 1em;
+    /* background: rgba(0, 0, 0, 0.15); */
+    /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.trainer-user div {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    background: rgba(130, 130, 130, 0.2);
+    /* background: rgba(0, 0, 0, 0.1); */
+    /* border: 0.75px solid rgba(255, 255, 255, 0.4); */
+    /* backdrop-filter: blur(50px); */
+}
+.trainer-user div span {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.5);
+}
+.trainer-user-date {
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    background: rgba(130, 130, 130, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); */
+    /* backdrop-filter: blur(50px); */
+    color: rgba(255, 255, 255, 0.75);
+}

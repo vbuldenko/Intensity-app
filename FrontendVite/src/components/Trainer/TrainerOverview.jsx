@@ -1,4 +1,4 @@
-import '../User/styles/useroverview.css';
+import './traineroverview.css';
 import { useSelector } from 'react-redux';
 // import Abonements from './Abonements';
 
@@ -21,16 +21,16 @@ export default function TrainerOverview() {
         .filter((training) => training.registeredClients.length >= 2);
 
     return (
-        <div className="user-overview">
-            <div className="user">
+        <div className="trainer-overview">
+            <div className="trainer-user">
                 {/* <img className="user-img" src={userData.img} /> */}
                 <div>
-                    <p className="user-name">
+                    <p className="trainer-user-name">
                         {user.name} {user.surname}
                     </p>
-                    <span className="user-role">{user.role}</span>
+                    <span>{user.role}</span>
                 </div>
-                <p className="user-date">
+                <p className="trainer-user-date">
                     {currentDate.toString().slice(0, 16)}
                 </p>
             </div>
