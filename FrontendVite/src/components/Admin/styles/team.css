@@ -1,68 +1,59 @@
-.trainer-container * {
-    margin: 0;
-}
 .trainers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
 }
 
-.header-info {
-    display: flex;
-    gap: 1em;
-    font-weight: 600;
-    color: rgb(90, 90, 90);
-    background-color: white;
-    border-radius: 1em;
-    padding: 1em;
-}
-
+.all-metric,
 .view-modes {
-    background-color: white;
+    font-weight: 600;
+    background: rgba(130, 130, 130, 0.2);
+    color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
     border-radius: 1em;
-    padding: 0.5em;
-    display: flex;
-    align-items: center;
-    gap: 1em;
-}
-.view-modes .view-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    color: #555;
-    transition: color 0.3s ease;
+    padding: 0.4em 2em;
 }
 
+.view-modes .view-button {
+    color: rgba(255, 255, 255, 0.5);
+}
 .view-modes .view-button.active {
-    color: #007bff;
-    font-weight: bold;
+    color: #ffffff;
 }
 
 .search {
+    padding: 0 1em;
     display: flex;
     gap: 0.5em;
     align-items: center;
-    background-color: white;
     border-radius: 1em;
-    padding: 0.5em 1em;
+    color: rgba(255, 255, 255, 0.23);
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    box-shadow: 1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
+        1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
+        0px -0.5px 1px 0px rgba(255, 255, 255, 0.25) inset;
 }
 .search input {
     padding: 0.5em;
     border: none;
     width: 200px;
-    font-weight: 600;
+    background: transparent;
 }
 
 .trainers-list {
     display: flex;
     gap: 0.5em;
     flex-wrap: wrap;
-    padding: 0.5em 0;
 }
 .trainers-list.list {
     flex-direction: column;

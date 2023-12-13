@@ -2,6 +2,12 @@ import './styles/clients.css';
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {
+    ListBulletIcon,
+    QueueListIcon,
+    Squares2X2Icon,
+    MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 
 export default function Clients(props) {
     const users = useSelector(({ users }) => users);
@@ -30,11 +36,20 @@ export default function Clients(props) {
     return (
         <div className="clients-container">
             <div className="header">
-                <div className="header-info">
+                <div className="all-metric">
                     <p>All Clients: {clients.length}</p>
                     {/* <p className="active-clients">
                         Active Clients: {clients.active}
                     </p> */}
+                </div>
+                <div className="search">
+                    <MagnifyingGlassIcon className="h-6 w-6" />
+                    <input
+                        type="text"
+                        placeholder="Search clients..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
                 <div className="view-modes">
                     <button
@@ -43,7 +58,7 @@ export default function Clients(props) {
                         }`}
                         onClick={() => handleViewChange('view', 'list')}
                     >
-                        <i className="material-icons">view_list</i>
+                        <ListBulletIcon className="h-6 w-6" />
                     </button>
                     <button
                         className={`view-button ${
@@ -51,17 +66,8 @@ export default function Clients(props) {
                         }`}
                         onClick={() => handleViewChange('view', 'tiles')}
                     >
-                        <i className="material-icons">view_module</i>
+                        <Squares2X2Icon className="h-6 w-6" />
                     </button>
-                </div>
-                <div className="search">
-                    <i className="material-icons">search</i>
-                    <input
-                        type="text"
-                        placeholder="Search clients..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
                 </div>
             </div>
             <div className={`clients-list ${viewMode}`}>

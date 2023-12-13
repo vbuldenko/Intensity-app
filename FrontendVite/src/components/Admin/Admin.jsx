@@ -1,4 +1,4 @@
-import '../styles/admin.css';
+import './styles/admin.css';
 import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
@@ -7,8 +7,6 @@ function Admin() {
         fontWeight: '800',
         color: 'rgb(255, 255, 255, 0.5)',
         background: 'rgba(130, 130, 130, 0.1)',
-        // borderBottom: '1px solid rgba(130, 130, 130, 0.2)',
-        // borderTop: '1px solid rgba(130, 130, 130, 0.2)',
     };
 
     const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);

@@ -1,4 +1,4 @@
-import '../styles/overview.css';
+import './styles/overview.css';
 import { useSelector } from 'react-redux';
 import { startOfToday, format } from 'date-fns';
 

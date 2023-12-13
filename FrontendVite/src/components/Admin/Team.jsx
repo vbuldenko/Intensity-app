@@ -37,11 +37,11 @@ export default function Team() {
     return (
         <div className="trainers-container">
             <div className="header">
-                <div className="header-info">
+                <div className="all-metric">
                     <p>All: {trainers.length}</p>
                 </div>
                 <div className="search">
-                    <MagnifyingGlassIcon className="h-6 w-6 text-green-800" />
+                    <MagnifyingGlassIcon className="h-6 w-6" />
                     <input
                         type="text"
                         placeholder="Search trainers..."
@@ -56,7 +56,7 @@ export default function Team() {
                         }`}
                         onClick={() => handleViewChange('view', 'list')}
                     >
-                        <ListBulletIcon className="h-6 w-6 text-green-800" />
+                        <ListBulletIcon className="h-6 w-6" />
                     </button>
                     <button
                         className={`view-button ${
@@ -64,7 +64,7 @@ export default function Team() {
                         }`}
                         onClick={() => handleViewChange('view', 'tiles')}
                     >
-                        <Squares2X2Icon className="h-6 w-6 text-green-800" />
+                        <Squares2X2Icon className="h-6 w-6" />
                     </button>
                 </div>
             </div>
