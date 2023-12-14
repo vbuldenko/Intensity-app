@@ -1,12 +1,8 @@
-import './styles/overview.css';
 import { useSelector } from 'react-redux';
-import { startOfToday, format } from 'date-fns';
 
 export default function AdminOverview() {
-    const user = useSelector(({ user }) => user);
     const soldAbonements = useSelector(({ abonements }) => abonements);
     const statistics = useSelector(({ statistics }) => statistics);
-
     const expenses = {
         rent: 30000,
         utilities: 1500,
@@ -14,26 +10,8 @@ export default function AdminOverview() {
         salary: 2400,
     };
 
-    console.log('Admin overview');
-
-    if (!user) {
-        return null;
-    }
-    const { name, surname, role } = user;
-
-    let today = format(startOfToday(), 'dd-MMM-yyyy');
     return (
-        <div className="admin-overview">
-            <div className="admin-user">
-                {/* <img className="user-img" src={user.img} /> */}
-                <div>
-                    <p className="admin-user-name">
-                        {name} {surname}
-                    </p>
-                    <span>{role}</span>
-                </div>
-                <p className="admin-user-date">{today}</p>
-            </div>
+        <div className="admin-metrics-data">
             <div className="sales">
                 <div className="sales-header">
                     <p className="title">Sales</p>

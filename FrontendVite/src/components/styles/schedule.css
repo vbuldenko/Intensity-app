@@ -1,90 +1,98 @@
-.schedule-section * {
-    box-sizing: border-box;
-    margin: 0 1em;
+.schedule-container {
+    display: flex;
+    gap: 1em;
+    max-width: 60rem;
+    padding: 0 2rem;
+    margin: 0 auto;
+    align-items: flex-start;
 }
-.schedule-section {
+
+@media (max-width: 768px) {
+    .schedule-container {
+        max-width: 30rem;
+        flex-direction: column;
+        align-items: normal;
+    }
+}
+
+.calendar {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    margin: 2em 0;
-}
-
-.schedule-week {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1em;
-    margin: 0;
-}
-
-.schedule-day * {
-    margin: 0;
-}
-.schedule-day {
-    padding: 1em;
-}
-
-.schedule-day-abbrev {
-    font-size: 2.25em;
-    font-weight: 700;
-}
-
-.schedule-day.active {
-    color: rgb(100, 39, 212);
-    border-bottom: 2px solid black;
-}
-
-.schedule-info {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding-bottom: 2em;
-}
-
-.schedule-current-date {
-    background: rgb(145, 156, 204);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2em 2em;
-    margin: 0;
-}
-
-.schedule-current-date span {
-    background: white;
-    padding: 0.5em 2em;
-}
-
-.schedule-training {
-    display: flex;
-    gap: 4em;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin: 1em;
-    padding: 1em 2em;
+    min-width: 22em;
+    margin-top: 2em;
+    background: rgba(250, 250, 250, 0.25);
     border-radius: 1em;
+    backdrop-filter: blur(70px);
 }
 
-.schedule-training span {
-    font-size: 0.75em;
-}
-
-.schedule-training-details {
+.calendar-navbar {
+    padding: 14px 16px;
     display: flex;
-    width: 40%;
     align-items: center;
     justify-content: space-between;
 }
 
-.schedule-trainer {
-    width: 80px;
-    border-radius: 50%;
+.calendar-navbar-date {
+    font-weight: 600; /* Equivalent to font-semibold */
+    color: #1a202c; /* Equivalent to text-gray-900 */
 }
 
-.schedule-training button {
+.calendar-navbar-button {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.25); /* Equivalent to text-gray-400 */
+}
+
+.calendar-navbar-button:hover {
+    color: #4a5568; /* Equivalent to hover:text-gray-500 */
+}
+
+#view {
+    background: transparent;
+    margin-left: 3rem;
+}
+
+.week-days-names {
+    display: grid; /* Equivalent to grid */
+    grid-template-columns: repeat(
+        7,
+        minmax(0, 1fr)
+    ); /* Equivalent to grid-cols-7 */
+    font-size: 0.75rem; /* Equivalent to text-xs */
+    line-height: 1.5; /* Equivalent to leading-6 */
+    text-align: center; /* Equivalent to text-center */
+    color: rgba(255, 255, 255, 0.75);
     padding: 1em;
-    font-weight: bold;
-    width: 15%;
-    border: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-body {
+    display: grid; /* Equivalent to grid */
+    grid-template-columns: repeat(
+        7,
+        minmax(0, 1fr)
+    ); /* Equivalent to grid-cols-7 */
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    padding: 1em; /* ---------------*/
+}
+
+.trainings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    /* border: 1px solid red; */
+    flex: 1;
+}
+
+.trainings-list {
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    gap: 0.5em;
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    color: #718096; /* Equivalent to text-gray-500 */
+    /* border: 1px solid blue; */
 }

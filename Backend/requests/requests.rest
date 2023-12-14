@@ -92,7 +92,7 @@ content-type: application/json
     "username": "bulbab",
     "password": "1111"
 }
-
+ 
 ###
 GET http://localhost:3001/api/training-sessions/
 ###

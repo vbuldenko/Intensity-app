@@ -5,7 +5,6 @@ import {
     useLocation,
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import './styles/trainer.css';
 
 export default function Trainer() {
     const { id } = useParams();

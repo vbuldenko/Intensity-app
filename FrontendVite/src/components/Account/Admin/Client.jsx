@@ -5,9 +5,8 @@ import {
     useLocation,
 } from 'react-router-dom';
 // import clientPhoto from '../../images/tkachuk.jpg';
-import './styles/client.css';
 import { useSelector } from 'react-redux';
-import Abonement from '../User/Abonement';
+import Abonement from '../Abonement';
 
 export default function Client() {
     const { id } = useParams();

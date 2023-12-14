@@ -7,7 +7,7 @@ import {
     removeReservation,
 } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
-import './training.css';
+import '../styles/training.css';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);

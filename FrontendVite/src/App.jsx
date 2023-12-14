@@ -15,17 +15,17 @@ import SignUpForm from './components/Layout/SignUpForm';
 import NotFound from './components/Layout/NotFound';
 
 import AuthProtected from './components/Layout/AuthRequired';
-import Account from './components/Layout/Account';
-import Overview from './components/Layout/Overview';
-import Purchases from './components/User/Purchases';
-import Clients from './components/Admin/Clients';
-import Client from './components/Admin/Client';
-import Team from './components/Admin/Team';
-import Trainer from './components/Admin/Trainer';
-import Settings from './components/Admin/Settings';
+import Account from './components/Account/Account';
+import Overview from './components/Account/Overview';
+import TrainerOverview from './components/Account/TrainerOverview';
+import Purchases from './components/Account/Purchases';
+import Clients from './components/Account/Admin/Clients';
+import Client from './components/Account/Admin/Client';
+import Team from './components/Account/Admin/Team';
+import Trainer from './components/Account/Admin/Trainer';
+import Settings from './components/Account/Settings';
 
 import storageService from './services/storage';
-
 import { initializeUsers } from './reducers/usersReducer';
 import { loadLoggedInUser } from './reducers/loginReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
@@ -34,7 +34,6 @@ import {
     initializeUserAbonements,
 } from './reducers/abonementReducer';
 import { getStatistics } from './reducers/statisticsReducer';
-import TrainerOverview from './components/Trainer/TrainerOverview';
 
 export default function App() {
     const dispatch = useDispatch();

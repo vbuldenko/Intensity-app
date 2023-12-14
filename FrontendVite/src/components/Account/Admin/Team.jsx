@@ -1,4 +1,3 @@
-import './styles/team.css';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
