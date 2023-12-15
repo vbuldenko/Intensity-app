@@ -1,4 +1,4 @@
-import '../styles/loginform.css';
+import '../styles/form.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
@@ -29,8 +29,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="login-wrapper">
-            <form className="login-form" onSubmit={handleLogin}>
+        <div className="form-wrapper">
+            <form className="auth-form" onSubmit={handleLogin}>
                 <h1>Log in to application</h1>
                 {notification ? <h1>{notification}</h1> : null}
                 <div>
@@ -53,20 +53,17 @@ const LoginForm = () => {
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
-                <button id="login-button" type="submit">
-                    Log In
-                </button>
+                <button type="submit">Log In</button>
             </form>
             <div className="signup-subsection">
                 <div>
-                    New here?{' '}
-                    <Link className="logo" to="/sign-up">
+                    <p>New here?</p>
+                    <Link className="signup-link" to="/sign-up">
                         Sign Up
                     </Link>
                 </div>
-                <div>
-                    <button>Forgot password?</button>
-                </div>
+
+                <button>Forgot password?</button>
             </div>
         </div>
     );

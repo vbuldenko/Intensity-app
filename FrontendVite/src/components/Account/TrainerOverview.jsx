@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 // import Abonements from './Abonements';
 
 export default function TrainerOverview() {
+    const currentDate = new Date();
     const user = useSelector(({ user }) => user);
     const trainings = useSelector(({ trainings }) => trainings);
 
@@ -15,33 +16,14 @@ export default function TrainerOverview() {
 
     return (
         <div className="trainer-info">
-            <p className="trainer-salary">
-                Salary: {trainerTrainings.length * 250}
-            </p>
-            <p className="training-number">
-                Number of trainings: {trainerTrainings.length}
-            </p>
-            <div className="trainer-history">
-                {trainerTrainings.map((training) => (
-                    <div key={training.id} className="trainer-history-element">
-                        <p>
-                            <span>date:</span> {training.date}
-                        </p>
-                        <p>
-                            <span>time:</span> {training.time}
-                        </p>
-                        <p>
-                            <span>class:</span> {training.type}
-                        </p>
-                        <p>
-                            <span>people:</span>{' '}
-                            {training.registeredClients.length}
-                        </p>
-                    </div>
-                ))}
+            <div className="trainer-results">
+                <p>Salary: ₴ {trainerTrainings.length * 300}</p>
+                <p>Today salary: ₴ {trainerTrainings.length * 300}</p>
+                <p>All trainings: {trainerTrainings.length}</p>
+                <p>Today trainings: {trainerTrainings.length}</p>
             </div>
-            <div>
-                <p>Today's trainings</p>
+            <div className="today-trainings-list">
+                <p className="trainer-info-header">Today's trainings</p>
                 {trainerTrainings
                     .filter(
                         (training) =>
@@ -54,7 +36,7 @@ export default function TrainerOverview() {
                             className="trainer-history-element"
                         >
                             <p>
-                                <span>date:</span> {training.date}
+                                <span>date:</span> {training.date.slice(0, 10)}
                             </p>
                             <p>
                                 <span>time:</span> {training.time}
@@ -68,6 +50,26 @@ export default function TrainerOverview() {
                             </p>
                         </div>
                     ))}
+            </div>
+            <div className="trainer-history">
+                <p className="trainer-info-header">History</p>
+                {trainerTrainings.map((training) => (
+                    <div key={training.id} className="trainer-history-element">
+                        <p>
+                            <span>date:</span> {training.date.slice(0, 10)}
+                        </p>
+                        <p>
+                            <span>time:</span> {training.time}
+                        </p>
+                        <p>
+                            <span>class:</span> {training.type}
+                        </p>
+                        <p>
+                            <span>people:</span>{' '}
+                            {training.registeredClients.length}
+                        </p>
+                    </div>
+                ))}
             </div>
         </div>
     );

@@ -47,10 +47,18 @@ export default function Abonements({ currentDate }) {
                     )}
                 </select>
             </div>
-
-            {filteredAbonements.sort(sortByPurchaseDate).map((abonement) => {
-                return <Abonement key={abonement.id} abonement={abonement} />;
-            })}
+            <div>
+                {filteredAbonements
+                    .sort(sortByPurchaseDate)
+                    .map((abonement) => {
+                        return (
+                            <Abonement
+                                key={abonement.id}
+                                abonement={abonement}
+                            />
+                        );
+                    })}
+            </div>
         </div>
     );
 }

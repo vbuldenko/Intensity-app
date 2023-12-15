@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import '../styles/loginform.css';
+import '../styles/form.css';
 
 import { notifyWith } from '../../reducers/notificationReducer';
 import { createUser } from '../../reducers/usersReducer';
@@ -43,8 +43,8 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className="login-wrapper">
-            <form className="login-form" onSubmit={handleSubmit}>
+        <div className="form-wrapper">
+            <form className="auth-form" onSubmit={handleSubmit}>
                 <h1>Create an account</h1>
                 {notification && <h1>{notification}</h1>}
                 <div>

@@ -13,7 +13,6 @@ export default function Overview() {
 
     let today = format(startOfToday(), 'dd-MMM-yyyy');
     const currentDate = new Date();
-    console.log(user);
     const { name, surname, role } = user;
 
     return (
