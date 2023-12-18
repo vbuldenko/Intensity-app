@@ -1,12 +1,12 @@
 .account-section {
-    max-width: 70em;
+    max-width: 60em;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 12em 1fr;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 1em;
     background: rgba(130, 130, 130, 0.15);
-    backdrop-filter: blur(70px);
+    backdrop-filter: blur(60px);
 }
 
 .account-menu {
@@ -20,10 +20,10 @@
 .account-menu a {
     border-radius: 2em;
     padding: 0.5em;
-    color: rgb(255, 255, 255, 0.25);
     text-decoration: none;
     text-align: center;
     transition: all 0.2s ease-in-out;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .account-menu a:hover {

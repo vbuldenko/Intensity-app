@@ -1,5 +1,5 @@
 import './App.css';
-import background from './images/back.jpg';
+import { useTheme } from './context/ThemeContext';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
@@ -36,6 +36,7 @@ import {
 import { getStatistics } from './reducers/statisticsReducer';
 
 export default function App() {
+    const { theme } = useTheme();
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
     const user = useSelector(({ user }) => user);
@@ -77,13 +78,7 @@ export default function App() {
     }, [isAuthenticated, dispatch]);
 
     return (
-        <div
-            className="App"
-            style={{
-                backgroundImage: `url(${background})`,
-                // background: 'black',
-            }}
-        >
+        <div className={`App ${theme === 'light' ? 'light' : 'dark'}`}>
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />

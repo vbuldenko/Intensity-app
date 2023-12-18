@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import ThemeToggle from './ThemeToggle';
 import '../styles/Header.css';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
     const user = useSelector(({ user }) => user);
@@ -18,7 +20,7 @@ export default function Header() {
     return (
         <header className="main-header">
             <Link className="logo" to="/">
-                IN10
+                intensity
             </Link>
             <div
                 className={`main-navbar ${showMobileMenu ? 'show-mobile' : ''}`}
@@ -51,23 +53,33 @@ export default function Header() {
                 >
                     Contacts
                 </NavLink>
-                {user ? (
-                    <NavLink
-                        to="/account"
-                        activeClassName="active"
-                        onClick={closeMobileMenu}
-                    >
-                        My account
-                    </NavLink>
-                ) : (
-                    <NavLink
-                        to="/sign-in"
-                        activeClassName="active"
-                        onClick={closeMobileMenu}
-                    >
-                        Log In/Sign Up
-                    </NavLink>
-                )}
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1em',
+                    }}
+                >
+                    {user ? (
+                        <NavLink
+                            to="/account"
+                            activeClassName="active"
+                            onClick={closeMobileMenu}
+                        >
+                            <UserCircleIcon className="h-6 w-6 text-green-800" />
+                        </NavLink>
+                    ) : (
+                        <NavLink
+                            to="/sign-in"
+                            activeClassName="active"
+                            onClick={closeMobileMenu}
+                        >
+                            Log In/Sign Up
+                        </NavLink>
+                    )}
+                    <ThemeToggle />
+                </div>
             </div>
             <div
                 className={`burger-icon ${showMobileMenu ? 'open' : ''}`}

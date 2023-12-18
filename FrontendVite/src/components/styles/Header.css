@@ -18,6 +18,10 @@
     display: flex;
     gap: 1em;
 }
+.main-navbar {
+    display: flex;
+    gap: 1em;
+}
 
 .main-navbar a {
     color: rgb(105, 105, 105);

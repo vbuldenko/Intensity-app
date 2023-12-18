@@ -1,22 +1,69 @@
 .App {
     /* font-family: 'Inter', sans-serif; */
     /* font-family: 'Manrope', sans-serif; */
-    font-family: 'Roboto', sans-serif;
-    /* background: linear-gradient(
-        157deg,
-        rgba(114, 220, 255, 0.908) 0%,
-
-        rgba(72, 56, 171, 1) 95%
-    ); */
-    /* background: rgba(0, 0, 0, 0.4); */
-    /* background: rgb(1, 2, 11); */
-    /* background: #f1f0eb; */
-    background: #f5f5f7;
-
-    background: no-repeat center fixed;
-    background-size: cover;
-    /* backdrop-filter: blur(10px); */
+    /* font-family: 'Roboto', sans-serif; */
+    transition: background-color 0.5s ease;
 }
+
+.App.light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.App.dark {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* a {
+    color: rgb(255, 255, 255, 0.25);
+} */
+
+/* a:hover {
+    background: rgba(130, 130, 130, 0.1);
+    color: rgb(255, 255, 255, 0.5);
+} */
+
+/* ------------------------------------THEME BUTTON */
+
+.switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.switch-label {
+    margin-right: 10px;
+}
+
+.switch-button {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.switch-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 1px; /* Adjust as needed */
+    transition: transform 0.3s ease;
+}
+
+.switch-button.active .switch-slider {
+    transform: translateX(20px);
+    background-color: #121212;
+}
+
+/* ----------------------------------- */
+
 /* ---------------freeze button */
 
 .freeze-option {

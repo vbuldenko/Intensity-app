@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 export default function Menu({ role }) {
     const activeStyles = {
         fontWeight: '800',
-        color: 'rgb(255, 255, 255, 0.5)',
         background: 'rgba(130, 130, 130, 0.1)',
     };
 

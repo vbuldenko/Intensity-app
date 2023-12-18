@@ -5,6 +5,8 @@ export default function TrainerOverview() {
     const currentDate = new Date();
     const user = useSelector(({ user }) => user);
     const trainings = useSelector(({ trainings }) => trainings);
+    console.log(trainings);
+    console.log(user);
 
     const trainerTrainings = trainings
         .filter((training) => training.instructor.id === user.id)
