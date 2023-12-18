@@ -1,5 +1,5 @@
 .account-section {
-    max-width: 60em;
+    max-width: 65em;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 12em 1fr;
@@ -10,10 +10,10 @@
 }
 
 .account-menu {
-    padding: 1.5em 1em;
+    padding: 2em 1em;
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 1em;
     border-radius: 1em 0 0 1em;
 }
 
@@ -23,23 +23,21 @@
     text-decoration: none;
     text-align: center;
     transition: all 0.2s ease-in-out;
-    color: rgba(255, 255, 255, 0.5);
 }
 
 .account-menu a:hover {
     background: rgba(130, 130, 130, 0.1);
-    color: rgb(255, 255, 255, 0.5);
 }
 
 .account-content {
-    background: rgba(130, 130, 130, 0.2);
+    background: rgba(130, 130, 130, 0.1);
     border-radius: 0 1em 1em 0;
-    padding: 1.5em 1em;
+    padding: 2em;
 }
 /* ----------------------------------------------------OVERVIEW */
 .overview {
     display: flex;
-    gap: 1em;
+    gap: 2em;
     flex-direction: column;
 }
 
@@ -50,7 +48,7 @@
     grid-column: span 2;
     grid-row: 1/2;
     border-radius: 1em;
-    /* background: rgba(0, 0, 0, 0.15); */
+    /* padding: 0.3em; */
     /* background: rgba(0, 0, 0, 0.1); */
 }
 
@@ -62,10 +60,8 @@
     display: flex;
     gap: 1em;
     align-items: center;
-    color: rgba(255, 255, 255, 0.75);
     padding: 0.5em 1em;
-    border-radius: 1em;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75em;
     background: rgba(130, 130, 130, 0.2);
 }
 .user div span {
@@ -74,15 +70,13 @@
 }
 .user-date {
     padding: 0.5em 1em;
-    border-radius: 1em;
+    border-radius: 0.75em;
     background: rgba(130, 130, 130, 0.2);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-    color: rgba(255, 255, 255, 0.75);
 }
 /* -------------------------------- */
 .admin-metrics-data {
     display: grid;
-    gap: 1em;
+    gap: 1.5em;
 }
 
 .sales {
@@ -101,7 +95,6 @@
 .sale-data {
     display: flex;
     justify-content: space-around;
-    color: rgba(255, 255, 255, 0.4);
 }
 
 .sales-header {
@@ -111,12 +104,13 @@
 
 .metrics,
 .sale-data {
-    padding: 0.5em 0;
+    padding: 1em 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .metrics {
-    color: rgba(255, 255, 255, 0.2);
+    padding: 0.75em 0;
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .metrics p,
@@ -141,7 +135,6 @@
 }
 
 .income .income-header {
-    color: rgba(255, 255, 255, 0.75);
     font-weight: bold;
     padding: 0;
 }
@@ -152,23 +145,18 @@
 .income-data p {
     flex: 1;
     text-align: center;
-    color: rgba(255, 255, 255, 1);
-}
-
-.income-additional {
-    color: rgba(255, 255, 255, 0.75);
 }
 
 .income-data,
 .income-additional {
     font-size: 0.8em;
+    padding: 1em 0;
 }
 
 .income div {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0.5em 0;
 }
 /* ----------------------------------------- */
 
@@ -182,13 +170,13 @@
 }
 
 .expenses .expenses-header {
-    color: rgba(255, 255, 255, 0.75);
     font-weight: bold;
     padding: 0;
 }
 
 .expenses-data {
     font-size: 0.8em;
+    padding: 1em 0;
 }
 .expenses-data p {
     flex: 1;
@@ -199,7 +187,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0.5em 0;
 }
 
 @media (max-width: 768px) {
@@ -376,7 +363,7 @@
 
 .trainers-list {
     display: flex;
-    gap: 0.5em;
+    gap: 1.5em;
     flex-wrap: wrap;
 }
 .trainers-list.list {
@@ -384,11 +371,10 @@
 }
 
 .trainer {
-    background-color: #fff;
     padding: 1em;
-    border: 1px solid #ccc;
     border-radius: 0.5em;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .trainer.list {
@@ -445,6 +431,7 @@
     padding: 1em;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 1em;
+    min-width: max-content;
 }
 /* ----------------------------------------CLIENT */
 .abonements {

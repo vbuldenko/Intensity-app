@@ -88,11 +88,9 @@ export default function Training({ training }) {
             )}
             <div className="scheduled-training-content">
                 <div>
-                    <b className="text-gray-900">
-                        {training.type.toUpperCase()}
-                    </b>
+                    <b>{training.type.toUpperCase()}</b>
                     <p className="mt-0.5 font-bold">{training.time}</p>
-                    <p className="text-gray-900">
+                    <p>
                         Trainer: <b>{training.instructor.name}</b>
                     </p>
                 </div>

@@ -37,10 +37,6 @@ export default function MonthView({
                                 'text-red-500',
                             !isEqual(day, selectedDay) &&
                                 !isToday(day) &&
-                                isSameMonth(day, firstDayCurrentMonth) &&
-                                'text-gray-900',
-                            !isEqual(day, selectedDay) &&
-                                !isToday(day) &&
                                 !isSameMonth(day, firstDayCurrentMonth) &&
                                 'text-gray-400',
                             isEqual(day, selectedDay) &&

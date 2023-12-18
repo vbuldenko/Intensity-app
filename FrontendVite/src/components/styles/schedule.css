@@ -15,12 +15,13 @@
 }
 
 .calendar {
-    flex: 1;
+    flex: 1.25;
     display: flex;
     flex-direction: column;
     min-width: 22em;
     margin-top: 2em;
-    background: rgba(250, 250, 250, 0.25);
+    background: rgba(250, 250, 250, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 1em;
     backdrop-filter: blur(70px);
 }
@@ -34,7 +35,6 @@
 
 .calendar-navbar-date {
     font-weight: 600; /* Equivalent to font-semibold */
-    color: #1a202c; /* Equivalent to text-gray-900 */
 }
 
 .calendar-navbar-button {
@@ -42,7 +42,6 @@
     padding: 10px;
     justify-content: center;
     align-items: center;
-    color: rgba(0, 0, 0, 0.25); /* Equivalent to text-gray-400 */
 }
 
 .calendar-navbar-button:hover {
@@ -63,7 +62,6 @@
     font-size: 0.75rem; /* Equivalent to text-xs */
     line-height: 1.5; /* Equivalent to leading-6 */
     text-align: center; /* Equivalent to text-center */
-    color: rgba(255, 255, 255, 0.75);
     padding: 1em;
 }
 

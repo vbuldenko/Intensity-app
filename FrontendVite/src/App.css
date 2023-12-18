@@ -6,21 +6,26 @@
 }
 
 .App.light {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 1);
     color: #000000;
 }
+/* .App.light a {
+    color: #000000;
+} */
 
 .App.dark {
     background-color: #121212;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.8);
 }
+/* .App.dark a {
+    color: rgba(255, 255, 255, 0.6);
+} */
 
 /* a {
     color: rgb(255, 255, 255, 0.25);
-} */
+}
 
-/* a:hover {
-    background: rgba(130, 130, 130, 0.1);
+a:hover {
     color: rgb(255, 255, 255, 0.5);
 } */
 
