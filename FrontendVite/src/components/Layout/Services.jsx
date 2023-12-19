@@ -1,6 +1,3 @@
-import '../styles/services.css';
-
-// Services component
 function Services() {
     const classes = [
         {
@@ -75,34 +72,28 @@ function Services() {
     ];
 
     return (
-        <section className="services-section">
-            <h1>Наші послуги</h1>
-            <div className="ss-trainings">
-                {trainingData.map((el, i) => (
-                    <div key={i}>
-                        <h2>{el.title}</h2>
-                        <p>{el.description}</p>
-                    </div>
-                ))}
-            </div>
-
-            <h1>Напрямки тренувань</h1>
-            <div className="services-subsection">
-                <div>
-                    <p>
-                        Всі напрямки та вправи до них сформовані у відповідності
-                        з протоколами та техніками здорових тренувань. Кожне
-                        тренування триває 50 хвилин.
-                    </p>
+        <section className="main-section">
+            <div className="main-subsection">
+                <h1>Наші послуги</h1>
+                <div className="info">
+                    {trainingData.map((el, i) => (
+                        <div key={i}>
+                            <h2>{el.title}</h2>
+                            <p>{el.description}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className="ss-trainings">
-                {classes.map((el, i) => (
-                    <div key={i}>
-                        <h2>{el.title}</h2>
-                        <p>{el.description}</p>
-                    </div>
-                ))}
+            <div className="main-subsection">
+                <h1>Напрямки тренувань</h1>
+                <div className="info">
+                    {classes.map((el, i) => (
+                        <div key={i}>
+                            <h2>{el.title}</h2>
+                            <p>{el.description}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
     );

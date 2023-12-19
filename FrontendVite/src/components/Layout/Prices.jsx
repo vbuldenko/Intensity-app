@@ -1,13 +1,7 @@
-import '../styles/prices.css';
-import group from '../../images/group.webp';
-import indiv from '../../images/indiv.jpg';
-import kids from '../../images/kids.webp';
-
-function Prices() {
+export default function Prices() {
     const prices = [
         {
             category: 'Group',
-            img: group,
             prices: [
                 { amount: 1, price: 350 },
                 { amount: 4, price: 1300 },
@@ -19,7 +13,6 @@ function Prices() {
         },
         {
             category: 'Individual',
-            img: indiv,
             prices: [
                 { amount: 1, price: 600 },
                 { amount: 5, price: 2700 },
@@ -28,7 +21,6 @@ function Prices() {
         },
         {
             category: 'Split',
-            img: indiv,
             prices: [
                 { amount: 1, price: 800 },
                 { amount: 5, price: 3800 },
@@ -37,7 +29,6 @@ function Prices() {
         },
         {
             category: 'Children',
-            img: kids,
             prices: [
                 { amount: 1, price: 250 },
                 { amount: 8, price: 1000 },
@@ -47,32 +38,34 @@ function Prices() {
     ];
 
     return (
-        <section className="prices-section">
-            {prices.map((el, i) => (
-                <div key={i} className="prices-subsection">
-                    {/* <img src={el.img} /> */}
-                    <span>{el.category}</span>
-                    <div className="abonements-prices">
-                        <div className="abonements-prices-header">
-                            <p>amount</p>
-                            <p>price</p>
-                            <p>unit price</p>
-                        </div>
-                        {el.prices.map((el, i) => (
-                            <div key={i}>
-                                <p>
-                                    {el.amount}{' '}
-                                    {el.amount === 1 ? 'training' : 'trainings'}
-                                </p>
-                                <p>₴ {el.price}</p>
-                                <p>₴ {el.price / el.amount}</p>
+        <>
+            <h1>Абонементи</h1>
+            <div className="prices">
+                {prices.map((el, i) => (
+                    <div key={i} className="prices-subsection">
+                        <span>{el.category}</span>
+                        <div className="abonements-prices">
+                            <div className="abonements-prices-header">
+                                <p>amount</p>
+                                <p>price</p>
+                                <p>unit price</p>
                             </div>
-                        ))}
+                            {el.prices.map((el, i) => (
+                                <div key={i}>
+                                    <p>
+                                        {el.amount}{' '}
+                                        {el.amount === 1
+                                            ? 'training'
+                                            : 'trainings'}
+                                    </p>
+                                    <p>₴ {el.price}</p>
+                                    <p>₴ {el.price / el.amount}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
-        </section>
+                ))}
+            </div>
+        </>
     );
 }
-
-export default Prices;

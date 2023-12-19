@@ -1,3 +1,7 @@
+.App * {
+    box-sizing: border-box;
+}
+
 .App {
     /* font-family: 'Inter', sans-serif; */
     /* font-family: 'Manrope', sans-serif; */
@@ -5,21 +9,49 @@
     transition: background-color 0.5s ease;
 }
 
+.App a {
+    font-size: 1.1rem;
+}
+
 .App.light {
     background-color: rgba(255, 255, 255, 1);
-    color: #000000;
+    color: rgba(0, 0, 0, 0.75);
 }
-/* .App.light a {
-    color: #000000;
-} */
 
 .App.dark {
     background-color: #121212;
     color: rgba(255, 255, 255, 0.8);
 }
-/* .App.dark a {
-    color: rgba(255, 255, 255, 0.6);
-} */
+
+.App h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.App h2 {
+    text-align: center;
+    font-size: 2rem;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.5em;
+}
+
+.App h3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+.App p {
+    font-size: 1rem;
+    line-height: 1.3334133333;
+    font-weight: 600;
+    letter-spacing: 0.009em;
+    color: #86868b;
+}
 
 /* a {
     color: rgb(255, 255, 255, 0.25);
@@ -66,8 +98,6 @@ a:hover {
     transform: translateX(20px);
     background-color: #121212;
 }
-
-/* ----------------------------------- */
 
 /* ---------------freeze button */
 

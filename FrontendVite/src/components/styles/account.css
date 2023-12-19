@@ -473,3 +473,46 @@
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 1em;
 }
+
+/* -----------------------------------SETTINGS */
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.settings h1 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.personal-info {
+    border-radius: 1em;
+    background: rgba(130, 130, 130, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.personal-info-el {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.personal-info :last-child {
+    border: none;
+}
+
+.personal-info-el div {
+    display: flex;
+    gap: 1em;
+}

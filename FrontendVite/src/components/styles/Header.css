@@ -1,37 +1,28 @@
-/* Header.css */
-
-.main-header {
-    padding: 0 1em;
+.header {
+    /* color: rgb(105, 105, 105); */
+    padding: 1em 2em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo {
-    text-decoration: none;
-    font-size: 2rem;
+    /* font-size: 1.25rem; */
     font-weight: bold;
-    color: rgb(105, 105, 105);
 }
 
-.main-navbar {
-    display: flex;
-    gap: 1em;
+.header .logo {
+    font-size: 1.5rem;
+    text-transform: uppercase;
 }
-.main-navbar {
+
+.header-navbar {
     display: flex;
     gap: 1em;
 }
 
-.main-navbar a {
-    color: rgb(105, 105, 105);
-    font-weight: bold;
-    font-size: 1.25rem;
-    text-align: center;
+.header-navbar a {
     position: relative;
 }
 
-.main-navbar a::after {
+.header-navbar a::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -40,21 +31,15 @@
     bottom: 0;
     left: 0;
     background-color: rgb(105, 105, 105);
-    /* background: linear-gradient(to right, gray, white); */
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
 }
 
-.main-navbar a:hover::after,
-.main-navbar a.active::after {
+.header-navbar a:hover::after,
+.header-navbar a.active::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
-
-/* .main-navbar a:hover,
-.main-navbar a.active {
-    color: rgba(255, 241, 156, 1);
-} */
 
 .burger-icon {
     display: none;
@@ -63,29 +48,33 @@
 
 /* Responsive styles for tablets and mobile phones */
 @media only screen and (max-width: 767px) {
-    .main-navbar {
-        display: flex; /* Hide the navigation links by default */
+    /* .App.dark .header-navbar {
+        color: rgb(0, 0, 0);
+    } */
+
+    .header-navbar {
         flex-direction: column;
+        gap: 1.5em;
+        padding-top: 2.75em;
         align-items: center;
         position: fixed;
-        background: #f1f0ebde;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        /* background: #ffffff; */
+        backdrop-filter: blur(60px);
         top: 0;
         right: 0;
-        width: 50%; /* Set the width to 50% of the screen */
+        width: 60%; /* Set the width to 50% of the screen */
         height: 100vh; /* Set the height to 100% of the viewport height */
         transform: translateX(100%); /* Start off-screen on the right */
         transition: transform 0.3s ease-in-out;
         z-index: 1;
     }
 
-    .main-navbar.show-mobile {
+    .header-navbar.mobile {
         transform: translateX(0); /* Slide in from the right */
     }
 
-    .main-navbar a {
-        margin: 10px 0;
+    .header-navbar a {
+        padding: 0.25em;
         text-align: center;
     }
 
@@ -93,7 +82,7 @@
         display: block;
         cursor: pointer;
         position: relative;
-        border: 2px solid rgb(105, 105, 105);
+        /* border: 2px solid rgb(105, 105, 105); */
         border-radius: 0.25em;
         padding: 0 0.25em;
         overflow: hidden; /* Hide overflow to prevent visual glitches */
@@ -132,33 +121,5 @@
 
     .burger-icon.open span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
-    }
-}
-
-@media only screen and (max-width: 568px) {
-    .main-navbar {
-        display: flex; /* Hide the navigation links by default */
-        flex-direction: column;
-        align-items: center;
-        position: fixed;
-        background: #f1f0ebde;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        top: 0;
-        right: 0;
-        width: 50%; /* Set the width to 50% of the screen */
-        height: 100vh; /* Set the height to 100% of the viewport height */
-        transform: translateX(100%); /* Start off-screen on the right */
-        transition: transform 0.3s ease-in-out;
-        z-index: 1;
-    }
-
-    .main-navbar.show-mobile {
-        transform: translateX(0); /* Slide in from the right */
-    }
-
-    .main-navbar a {
-        margin: 10px 0;
-        text-align: center;
     }
 }

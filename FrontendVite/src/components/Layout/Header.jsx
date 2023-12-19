@@ -2,29 +2,29 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ThemeToggle from './ThemeToggle';
-import '../styles/Header.css';
+import '../styles/header.css';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
+import BurgerButton from './BurgerButton';
 
 export default function Header() {
     const user = useSelector(({ user }) => user);
-    const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+    const [visible, setVisible] = useState(false);
 
     const toggleMobileMenu = () => {
-        setShowMobileMenu(!showMobileMenu);
+        setVisible(!visible);
     };
 
     const closeMobileMenu = () => {
-        setShowMobileMenu(false);
+        setVisible(false);
     };
 
     return (
-        <header className="main-header">
+        <header className="header">
             <Link className="logo" to="/">
-                intensity
+                Intensity
             </Link>
-            <div
-                className={`main-navbar ${showMobileMenu ? 'show-mobile' : ''}`}
-            >
+            <div className={`header-navbar ${visible ? 'mobile' : ''}`}>
                 <NavLink
                     to="/services"
                     activeClassName="active"
@@ -67,7 +67,7 @@ export default function Header() {
                             activeClassName="active"
                             onClick={closeMobileMenu}
                         >
-                            <UserCircleIcon className="h-6 w-6 text-green-800" />
+                            <UserCircleIcon className="h-6 w-6" />
                         </NavLink>
                     ) : (
                         <NavLink
@@ -81,14 +81,7 @@ export default function Header() {
                     <ThemeToggle />
                 </div>
             </div>
-            <div
-                className={`burger-icon ${showMobileMenu ? 'open' : ''}`}
-                onClick={toggleMobileMenu}
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <BurgerButton visible={visible} toggleMenu={toggleMobileMenu} />
         </header>
     );
 }

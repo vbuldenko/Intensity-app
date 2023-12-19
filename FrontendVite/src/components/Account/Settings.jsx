@@ -1,11 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logUserOut } from '../../reducers/loginReducer';
 import { deleteUser } from '../../reducers/usersReducer';
 import storageService from '../../services/storage';
 
+import {
+    PhoneIcon,
+    AtSymbolIcon,
+    KeyIcon,
+    IdentificationIcon,
+    PencilSquareIcon,
+    UserMinusIcon,
+    ArrowRightOnRectangleIcon,
+} from '@heroicons/react/24/outline';
+
 function Settings() {
     const user = storageService.loadUser();
+    const { name, email, phone } = useSelector(({ user }) => user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -28,34 +39,93 @@ function Settings() {
         navigate('/sign-in'); //Maybe there no need for this?
     };
     return (
-        <div>
-            <div>
-                Log yourself out of the application:{' '}
-                <button
-                    style={{
-                        background: 'green',
-                        padding: '0.5em 1em',
-                        borderRadius: '0.5em',
-                        color: 'white',
-                    }}
-                    onClick={handleLogOut}
-                >
-                    Log Out
-                </button>
+        <div className="settings">
+            <div className="profile">
+                <h1>Personal information</h1>
+                <div className="personal-info">
+                    <div className="personal-info-el">
+                        <div>
+                            <IdentificationIcon className="h-6 w-6" />
+                            <p>Name</p>
+                            <p>{name}</p>
+                        </div>
+
+                        <button>
+                            <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                    <div className="personal-info-el">
+                        <div>
+                            <AtSymbolIcon className="h-6 w-6" />
+                            <p>Email</p>
+                            <p>{email}</p>
+                        </div>
+                        <button>
+                            <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                    <div className="personal-info-el">
+                        <div>
+                            <PhoneIcon className="h-6 w-6" />
+                            <p>Phone</p>
+                            <p>{phone}</p>
+                        </div>
+                        <button>
+                            <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                    <div className="personal-info-el">
+                        <div>
+                            <KeyIcon className="h-6 w-6" />
+                            <p>Password</p>
+                        </div>
+                        <button>
+                            <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div>
-                Delete your account:{' '}
-                <button
-                    style={{
-                        background: 'red',
-                        padding: '0.5em 1em',
-                        borderRadius: '0.5em',
-                        color: 'white',
-                    }}
-                    onClick={handleDelete}
-                >
-                    Delete
-                </button>
+            <div className="profile">
+                <h1>Account actions</h1>
+                <div className="personal-info">
+                    <div className="personal-info-el">
+                        <div>
+                            <ArrowRightOnRectangleIcon className="h-6 w-6" />
+                            <p>Log yourself out:</p>
+                        </div>
+
+                        <button
+                            style={{
+                                background: 'rgb(7, 168, 101)',
+                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
+                                padding: '0.5em 1.5em',
+                                borderRadius: '2em',
+                                color: 'white',
+                            }}
+                            onClick={handleLogOut}
+                        >
+                            Log Out
+                        </button>
+                    </div>
+                    <div className="personal-info-el">
+                        <div>
+                            <UserMinusIcon className="h-6 w-6" />
+                            <p>Delete your account:</p>
+                        </div>
+                        <button
+                            style={{
+                                background: 'rgba(255, 1, 1, 0.75)',
+                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
+                                padding: '0.5em 1.5em',
+                                borderRadius: '2em',
+                                color: 'white',
+                            }}
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

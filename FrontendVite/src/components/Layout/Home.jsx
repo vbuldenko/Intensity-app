@@ -1,6 +1,4 @@
-import '../styles/home.css';
-
-function Home() {
+export default function Home() {
     const values = [
         {
             value: 'Здоровʼя',
@@ -42,7 +40,7 @@ function Home() {
     ];
 
     return (
-        <section className="home-section">
+        <section className="main-section">
             <div className="intensity-hero">
                 {/* <p>welcome to</p> */}
                 <h1>INTENSITY</h1>
@@ -54,23 +52,23 @@ function Home() {
                 </p>
                 {/* <button>Look for details</button> */}
             </div>
-            <div>
-                <h2>Наші цінності</h2>
-                <div className="home-values">
+            <div className="main-subsection">
+                <h1>Наші цінності</h1>
+                <div className="info">
                     {values.map((value, index) => (
                         <div key={index}>
-                            <h3>{value.value}</h3>
+                            <h2>{value.value}</h2>
                             <p>{value.description}</p>
                         </div>
                     ))}
                 </div>
             </div>
-            <div>
-                <h2>Правила студії</h2>
-                <div className="home-values">
+            <div className="main-subsection">
+                <h1>Правила студії</h1>
+                <div className="info">
                     {rules.map((rule, index) => (
                         <div key={index}>
-                            <h3>{rule}</h3>
+                            <p>{rule}</p>
                         </div>
                     ))}
                 </div>
@@ -78,5 +76,3 @@ function Home() {
         </section>
     );
 }
-
-export default Home;

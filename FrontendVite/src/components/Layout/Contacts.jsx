@@ -1,4 +1,3 @@
-import '../styles/Contact.css';
 import {
     PhoneIcon,
     EnvelopeIcon,
@@ -10,7 +9,7 @@ export default function Contacts() {
     return (
         <section className="contact-section">
             <div className="contact-subsection">
-                <h2>Наші контакти</h2>
+                <span>Наші контакти</span>
                 <div>
                     <div className="content">
                         <PhoneIcon className="h-6 w-6 text-green-800" />
@@ -27,7 +26,7 @@ export default function Contacts() {
                 </div>
             </div>
             <div className="contact-subsection">
-                <h2>Графік роботи</h2>
+                <span>Графік роботи</span>
                 <div>
                     <div className="content">
                         <ClockIcon className="h-6 w-6 text-green-800" />
