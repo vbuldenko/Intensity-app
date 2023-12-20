@@ -19,28 +19,34 @@ function IndividualAbonement({ amount, price }) {
     };
 
     const abonementStyle = {
-        borderRadius: '8px',
+        borderRadius: '1em',
         padding: '1em',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+        boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
         display: 'flex',
         flexDirection: 'column',
+        gap: '0.5em',
+        minWidth: '250px',
+        alignItems: 'center',
+        border: '1px solid rgba(255, 255, 255, 0.4)',
+        background: 'rgba(250, 250, 250, 0.1)',
     };
 
     const buttonStyle = {
-        backgroundColor: 'blue',
+        backgroundColor: 'rgba(0, 173, 23, 0.6)',
         color: 'white',
         padding: '10px 20px',
         border: 'none',
-        borderRadius: '4px',
+        borderRadius: '2em',
         cursor: 'pointer',
-        marginTop: '10px',
+        marginTop: '0.5em',
+        width: '100%',
     };
 
     return (
         <div style={abonementStyle}>
-            <h2>Abonement for {amount} Trainings</h2>
+            <h3 style={{ fontSize: '1.25rem' }}>{amount} trainings</h3>
             <p>Price: ${price}</p>
-            <p>Price per 1 Training: ${calculatePricePerTraining()}</p>
+            <p>1 training: ${calculatePricePerTraining()}</p>
             <button style={buttonStyle} onClick={handleSubmit}>
                 Purchase
             </button>
@@ -66,9 +72,9 @@ export default function Purchases() {
                 alignItems: 'center',
             }}
         >
-            <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '1em' }}>
                 Choose your Abonement
-            </h1>
+            </h2>
             {notification && (
                 <div
                     style={{

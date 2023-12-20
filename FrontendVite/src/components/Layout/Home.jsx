@@ -42,9 +42,8 @@ export default function Home() {
     return (
         <section className="main-section">
             <div className="intensity-hero">
-                {/* <p>welcome to</p> */}
-                <h1>INTENSITY</h1>
-                <h3>Fitness & Danse Studio</h3>
+                <h1 className="intensity-hero-name">INTENSITY</h1>
+                <h1>Fitness & Danse Studio</h1>
                 <h2>Health·Strength·Energy</h2>
                 <p>
                     Наша місія – покращувати якість життя, без шкоди для

@@ -15,11 +15,11 @@
 
 .App.light {
     background-color: rgba(255, 255, 255, 1);
-    color: rgba(0, 0, 0, 0.75);
+    color: rgba(0, 0, 0, 0.8);
 }
 
 .App.dark {
-    background-color: #121212;
+    background-color: rgb(18, 18, 18);
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -35,7 +35,6 @@
     line-height: 1.05;
     font-weight: 700;
     letter-spacing: -0.015em;
-    margin-bottom: 0.5em;
 }
 
 .App h3 {
@@ -48,9 +47,18 @@
 .App p {
     font-size: 1rem;
     line-height: 1.3334133333;
-    font-weight: 600;
-    letter-spacing: 0.009em;
+    /* font-weight: 600; */
+    letter-spacing: 0.01em;
     color: #86868b;
+}
+
+@media (max-width: 768px) {
+    .App h1 {
+        font-size: 2rem;
+    }
+    .App h2 {
+        font-size: 1.5rem;
+    }
 }
 
 /* a {
