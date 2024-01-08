@@ -5,11 +5,12 @@
     grid-template-columns: 12em 1fr;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 1em;
-    background: rgba(130, 130, 130, 0.15);
+    background: var(--account-background);
     backdrop-filter: blur(60px);
 }
 
 .account-menu {
+    background: var(--account-menu-background);
     padding: 2em 1em;
     display: flex;
     flex-direction: column;
@@ -26,30 +27,33 @@
 }
 
 .account-menu a:hover {
-    background: rgba(130, 130, 130, 0.1);
+    background: var(--selected-tab-background);
 }
 
 .account-content {
-    background: rgba(130, 130, 130, 0.1);
     border-radius: 0 1em 1em 0;
-    padding: 2em;
+    padding: 0 1em 1em;
 }
 /* ----------------------------------------------------OVERVIEW */
 .overview {
     display: flex;
-    gap: 2em;
+    gap: 1.5em;
     flex-direction: column;
+    /* border: 1px solid red; */
 }
 
 .user {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    grid-column: span 2;
-    grid-row: 1/2;
-    border-radius: 1em;
-    /* padding: 0.3em; */
-    /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.user-name {
+    color: var(--green-element);
+}
+
+.user-role {
+    font-weight: 500;
 }
 
 .user-img {
@@ -60,18 +64,14 @@
     display: flex;
     gap: 1em;
     align-items: center;
-    padding: 0.5em 1em;
     border-radius: 0.75em;
-    background: rgba(130, 130, 130, 0.2);
 }
-.user div span {
-    font-size: 0.75em;
-    color: rgba(255, 255, 255, 0.5);
-}
+
 .user-date {
-    padding: 0.5em 1em;
-    border-radius: 0.75em;
-    background: rgba(130, 130, 130, 0.2);
+    align-self: center;
+    padding: 0.25em 1em;
+    border-radius: var(--green-element-br);
+    background: var(--green-element);
 }
 /* -------------------------------- */
 .admin-metrics-data {
@@ -84,10 +84,44 @@
     grid-column: 1 / 2;
     /* border: 1px solid rgba(255, 255, 255, 0.25); */
     border-radius: 1em;
-    background: rgba(130, 130, 130, 0.2);
+    background: var(--account-background);
     display: flex;
     flex-direction: column;
+    gap: 0.5em;
     padding: 1em;
+    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
+}
+
+.title {
+    background: var(--green-element);
+    padding: 0.25em 1em;
+    border-radius: 5em;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sales-selector {
+    display: flex;
+    gap: 1em;
+    background: var(--account-background);
+    padding: 0.25em 1em;
+    border-radius: 5em;
+    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
+        -5px -5px 20px 0px #fff;
+}
+
+.sales-selector button {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.divider {
+}
+
+.sale-data {
+    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
+        -5px -5px 20px 0px #fff;
+    border-radius: 1em;
 }
 
 .sales-header,
@@ -95,11 +129,6 @@
 .sale-data {
     display: flex;
     justify-content: space-around;
-}
-
-.sales-header {
-    font-weight: 800;
-    letter-spacing: 0.02em;
 }
 
 .metrics,
@@ -110,7 +139,7 @@
 
 .metrics {
     padding: 0.75em 0;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(120, 130, 135, 1);
 }
 
 .metrics p,

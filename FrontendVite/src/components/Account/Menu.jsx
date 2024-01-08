@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 export default function Menu({ role }) {
     const activeStyles = {
         fontWeight: '800',
-        background: 'rgba(130, 130, 130, 0.1)',
+        background: 'var(--selected-tab-background)',
     };
 
     const styleChanger = ({ isActive }) => (isActive ? activeStyles : null);

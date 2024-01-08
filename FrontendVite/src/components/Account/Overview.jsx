@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { startOfToday, format } from 'date-fns';
 import Admin from './Admin/Admin';
 import TrainerOverview from './TrainerOverview';
 import Abonements from './Abonements';
@@ -11,23 +10,20 @@ export default function Overview() {
         return null;
     }
 
-    let today = format(startOfToday(), 'dd-MMM-yyyy');
     const currentDate = new Date();
-    const { name, surname, role } = user;
+    const { name, role } = user;
 
     return (
         <div className="overview">
+            <div className="user-date">
+                {currentDate.toString().slice(0, 16)}
+            </div>
             <div className="user">
                 {/* <img className="user-img" src={userData.img} /> */}
                 <div>
-                    <p className="user-name">
-                        {name} {surname}
-                    </p>
-                    <span className="user-role">{role}</span>
+                    <p className="user-name">Welcome back, {name}</p>
                 </div>
-                <p className="user-date">
-                    {currentDate.toString().slice(0, 16)}
-                </p>
+                <span className="user-role">{role}</span>
             </div>
 
             {user.role === 'admin' ? (

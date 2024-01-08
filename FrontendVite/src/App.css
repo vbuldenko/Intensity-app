@@ -1,3 +1,15 @@
+:root {
+    --light-background-color: rgba(255, 255, 255, 1);
+    --dark-background-color: rgb(18, 18, 18);
+    --light-text-color: rgba(0, 0, 0, 0.8);
+    --dark-text-color: rgba(255, 255, 255, 0.8);
+    --account-background: rgba(242, 242, 247, 1);
+    --account-menu-background: rgba(230, 230, 240, 0.75);
+    --selected-tab-background: rgba(255, 255, 255, 0.5);
+    --green-element: rgba(0, 169, 145, 1);
+    --green-element-br: 0 0 0.75em 0.75em;
+}
+
 .App * {
     box-sizing: border-box;
 }
@@ -14,13 +26,13 @@
 }
 
 .App.light {
-    background-color: rgba(255, 255, 255, 1);
-    color: rgba(0, 0, 0, 0.8);
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
 }
 
 .App.dark {
-    background-color: rgb(18, 18, 18);
-    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--dark-background-color);
+    color: var(--dark-text-color);
 }
 
 .App h1 {
@@ -49,7 +61,7 @@
     line-height: 1.3334133333;
     /* font-weight: 600; */
     letter-spacing: 0.01em;
-    color: #86868b;
+    /* color: #86868b; */
 }
 
 @media (max-width: 768px) {

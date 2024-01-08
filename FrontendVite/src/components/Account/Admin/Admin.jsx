@@ -1,5 +1,10 @@
 import { useSelector } from 'react-redux';
 
+import {
+    RectangleStackIcon,
+    CalendarDaysIcon,
+} from '@heroicons/react/24/outline';
+
 export default function AdminOverview() {
     const soldAbonements = useSelector(({ abonements }) => abonements);
     const statistics = useSelector(({ statistics }) => statistics);
@@ -14,13 +19,18 @@ export default function AdminOverview() {
         <div className="admin-metrics-data">
             <div className="sales">
                 <div className="sales-header">
-                    <p className="title">Sales</p>
-                    <select id="view" name="view">
-                        <option value="all">View All</option>
-                        <option value="today">Today</option>
-                        <option value="week">Week</option>
-                        <option value="month">Month</option>
-                    </select>
+                    <div className="title">Sales</div>
+                    <div className="sales-selector">
+                        <button>
+                            <RectangleStackIcon className="h-4 w-4" />
+                            All
+                        </button>
+                        <div className="divider"></div>
+                        <button>
+                            <CalendarDaysIcon className="h-4 w-4" />
+                            Today
+                        </button>
+                    </div>
                 </div>
                 <div className="metrics">
                     <p className="sale-name">client</p>
