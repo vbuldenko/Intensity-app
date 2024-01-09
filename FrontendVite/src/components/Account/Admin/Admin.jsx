@@ -33,7 +33,7 @@ export default function AdminOverview() {
                     </div>
                 </div>
                 <div className="metrics">
-                    <p>client</p>
+                    <p style={{ textAlign: 'left' }}>client</p>
                     <p>date</p>
                     <p>abonement</p>
                     <p>price</p>
@@ -41,14 +41,22 @@ export default function AdminOverview() {
                 <div className="sale-data-list">
                     {soldAbonements.map((sale) => (
                         <div key={sale.id} className="sale-data">
-                            <p className="sale-name">
-                                {sale.user.name} {sale.user.surname}
-                            </p>
-                            <p className="sale-date">
-                                {sale.purchase_date.slice(0, 10)}
-                            </p>
-                            <p className="sale-abonement">{sale.amount}</p>
-                            <p className="sale-price">₴{sale.price}</p>
+                            <div>
+                                <p className="sale-name">
+                                    {sale.user.name} {sale.user.surname}
+                                </p>
+                            </div>
+                            <div>
+                                <p className="sale-date">
+                                    {sale.purchase_date.slice(0, 10)}
+                                </p>
+                            </div>
+                            <div className="sale-abonement-container">
+                                <p className="sale-abonement">{sale.amount}</p>
+                            </div>
+                            <div>
+                                <p className="sale-price">₴{sale.price}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

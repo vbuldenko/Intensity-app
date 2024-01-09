@@ -159,17 +159,16 @@
 
 .metrics {
     display: flex;
-
     font-size: var(--metrics-fontsize);
     color: var(--button-text-color);
     padding: 1em 1.5em;
-    /* border: 1px solid red; */
+    border: 1px solid red;
 }
 
 .metrics p {
     flex: 1;
     text-align: center;
-    /* border: 1px solid red; */
+    border: 1px solid red;
 }
 
 .sale-data-list {
@@ -180,18 +179,19 @@
 
 .sale-data {
     display: flex;
-    gap: 1em;
     align-items: center;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
         -5px -5px 20px 0px #fff;
     border-radius: 1em;
     font-size: var(--content-text-fontsize);
     padding: 0.5em 1.5em;
+    border: 1px solid red;
 }
 
-.sale-data p {
+.sale-data div {
     flex: 1;
-    /* border: 1px solid red; */
+    text-align: center;
+    border: 1px solid red;
 }
 
 .sale-name {
@@ -199,24 +199,26 @@
     text-align: left;
 }
 
+.sale-abonement-container {
+    display: flex;
+    justify-content: center;
+}
 .sale-abonement {
     color: var(--green-element);
     border: 1px solid var(--green-element);
-    width: 40px;
     padding: 0.5em 0;
+    width: 3em;
     border-radius: var(--small-element-br);
-    text-align: center;
 }
 
 .sale-date {
-    text-align: center;
-    width: max-content;
+    /* text-align: center; */
+    /* width: max-content; */
 }
 .sale-price {
-    text-align: center;
+    /* text-align: center; */
     color: var(--green-element);
     font-weight: 600;
-    width: max-content;
 }
 
 /* --------------------------------------- */
