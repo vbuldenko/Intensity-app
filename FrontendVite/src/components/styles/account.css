@@ -87,75 +87,141 @@
     background: var(--account-background);
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
-    padding: 1em;
+    gap: 1em;
+    padding: 0 1.5em 1em;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
+    min-width: 380px;
+}
+
+.sales-header {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
+    width: 100px;
+    text-align: center;
+    align-self: flex-start;
     background: var(--green-element);
-    padding: 0.25em 1em;
-    border-radius: 5em;
+    padding: 0.2em 1em;
+    border-radius: var(--green-element-br);
     box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+    color: var(--title-color);
 }
+/* --------------------------- */
 
 .sales-selector {
+    align-self: flex-end;
     display: flex;
-    gap: 1em;
+
+    gap: 0.75em;
     background: var(--account-background);
-    padding: 0.25em 1em;
+    padding: 0 1em;
     border-radius: 5em;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
         -5px -5px 20px 0px #fff;
+    color: var(--button-text-color);
 }
 
 .sales-selector button {
     display: flex;
     align-items: center;
     gap: 0.3em;
+    /* border: 1px solid red; */
+    padding: 0.5em;
+    font-size: var(--metrics-fontsize);
 }
 
-.divider {
+.button-divider {
+    width: 3px;
+    position: relative;
+}
+
+.button-divider::before,
+.button-divider::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+}
+
+.button-divider::before {
+    left: 0;
+    background-color: rgba(195, 201, 205, 1);
+}
+
+.button-divider::after {
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+/* ---------------------------- */
+
+.metrics {
+    display: flex;
+
+    font-size: var(--metrics-fontsize);
+    color: var(--button-text-color);
+    padding: 1em 1.5em;
+    /* border: 1px solid red; */
+}
+
+.metrics p {
+    flex: 1;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.sale-data-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .sale-data {
+    display: flex;
+    gap: 1em;
+    align-items: center;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
         -5px -5px 20px 0px #fff;
     border-radius: 1em;
+    font-size: var(--content-text-fontsize);
+    padding: 0.5em 1.5em;
 }
 
-.sales-header,
-.metrics,
-.sale-data {
-    display: flex;
-    justify-content: space-around;
-}
-
-.metrics,
-.sale-data {
-    padding: 1em 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.metrics {
-    padding: 0.75em 0;
-    color: rgba(120, 130, 135, 1);
-}
-
-.metrics p,
 .sale-data p {
     flex: 1;
-    text-align: center;
-    font-size: 0.8em;
+    /* border: 1px solid red; */
 }
 
-.sales .sale-name {
-    flex: 2;
+.sale-name {
+    width: min-content;
     text-align: left;
 }
+
+.sale-abonement {
+    color: var(--green-element);
+    border: 1px solid var(--green-element);
+    width: 40px;
+    padding: 0.5em 0;
+    border-radius: var(--small-element-br);
+    text-align: center;
+}
+
+.sale-date {
+    text-align: center;
+    width: max-content;
+}
+.sale-price {
+    text-align: center;
+    color: var(--green-element);
+    font-weight: 600;
+    width: max-content;
+}
+
 /* --------------------------------------- */
 .income {
-    grid-column: 2/3;
+    grid-column: 2/4;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
@@ -190,7 +256,7 @@
 /* ----------------------------------------- */
 
 .expenses {
-    grid-column: 2/3;
+    grid-column: 2/4;
     display: flex;
     flex-direction: column;
     border-radius: 1em;
