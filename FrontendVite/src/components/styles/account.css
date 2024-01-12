@@ -123,6 +123,9 @@
     box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
     color: var(--title-color);
 }
+.title.expired {
+    background: var(--red-element);
+}
 /* --------------------------- */
 
 .sales-selector {
@@ -467,7 +470,7 @@
     overflow: hidden;
 }
 
-.client-history h4 {
+/* .client-history h4 {
     margin-top: 15px;
 }
 
@@ -481,15 +484,13 @@
     margin-top: 5px;
     font-size: 14px;
     color: #555;
-}
+} */
 
 .client-info {
-    background-color: rgb(236, 255, 236);
     display: flex;
     flex-direction: column;
     gap: 1em;
     border-radius: 0.5em;
-    padding: 1em;
     margin-top: 1em;
 }
 /* --------------------------------------------- TEAM */
@@ -585,31 +586,56 @@
 
 .abonement {
     display: flex;
+    flex-direction: column;
     gap: 1em;
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow);
+    border-radius: var(--element-br);
+    padding: 0 1rem 1rem;
 }
 
 .gen-abonement-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     min-width: max-content;
-    background: rgba(130, 130, 130, 0.2);
-    padding: 1em;
-    border-radius: 1em;
+    /* background: rgba(130, 130, 130, 0.2); */
+    /* padding: 0 1rem 1rem; */
+    /* border-radius: 1em; */
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color4);
+}
+.abonement-info-main,
+.abonement-info-from-to {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .abonement-training-history {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    background: rgba(130, 130, 130, 0.2);
-    padding: 1em;
+    /* background: rgba(130, 130, 130, 0.2); */
+
     border-radius: 1em;
 }
 
 .abonement-training-history-element {
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow);
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     min-width: max-content;
     padding: 0.5em;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 1em;
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    border-radius: 0.5rem;
+}
+.abonement-training-history-element div {
+    display: flex;
+    gap: 0.5rem;
 }
 
 /* -----------------------------------SETTINGS */

@@ -31,47 +31,56 @@ export default function Abonement({ abonement }) {
     return (
         <div className="abonement">
             <div className="gen-abonement-info">
-                <div>
-                    <b>Status:</b>
-                    <span className={status}>{status}</span>
-                </div>
-                <div>
-                    <b>From:</b>{' '}
-                    {abonement.activation_date
-                        ? abonement.activation_date.slice(0, 16)
-                        : null}
-                </div>
-                <div>
-                    <b>To:</b>{' '}
-                    {abonement.expiration_date
-                        ? abonement.expiration_date.slice(0, 16)
-                        : null}
-                </div>
-                <div>
-                    <b>Purchase date:</b> {abonement.purchase_date.slice(0, 16)}
-                </div>
-                <div>
-                    <b>Amount of trainings:</b> {abonement.amount}
-                </div>
-                <div>
-                    <b>Left trainings:</b>{' '}
-                    <span className="left-training">{abonement.left}</span>
-                </div>
-                {userRole === 'admin' && (
-                    <div className="freeze-option">
-                        <p>Freeze</p>
-                        <input
-                            name="freeze-option"
-                            type="checkbox"
-                            id="freeze"
-                            checked={freeze}
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="freeze" className="toggle-button">
-                            <div className="slider"></div>
-                        </label>
+                <div className={`title ${status}`}>{status}</div>
+                <div className="abonement-info-main">
+                    <div>
+                        <b>Amount of trainings:</b> {abonement.amount}
                     </div>
-                )}
+                    <div>
+                        <div>
+                            <b>Left trainings:</b>{' '}
+                            <span className="left-training">
+                                {abonement.left}
+                            </span>
+                        </div>
+                        {userRole === 'admin' && (
+                            <div className="freeze-option">
+                                <p>Freeze</p>
+                                <input
+                                    name="freeze-option"
+                                    type="checkbox"
+                                    id="freeze"
+                                    checked={freeze}
+                                    onChange={handleChange}
+                                />
+                                <label
+                                    htmlFor="freeze"
+                                    className="toggle-button"
+                                >
+                                    <div className="slider"></div>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="abonement-info-from-to">
+                    <div>
+                        <b>Purchase date:</b>{' '}
+                        {abonement.purchase_date.slice(0, 16)}
+                    </div>
+                    <div>
+                        <b>From:</b>{' '}
+                        {abonement.activation_date
+                            ? abonement.activation_date.slice(0, 16)
+                            : null}
+                    </div>
+                    <div>
+                        <b>To:</b>{' '}
+                        {abonement.expiration_date
+                            ? abonement.expiration_date.slice(0, 16)
+                            : null}
+                    </div>
+                </div>
             </div>
             {/* Look at id property of training history */}
             <div className="abonement-training-history">
@@ -82,21 +91,37 @@ export default function Abonement({ abonement }) {
                                   key={el.id}
                                   className="abonement-training-history-element"
                               >
-                                  <p>date: {el.date.slice(0, 10)}</p>
-                                  <p>time: {el.time}</p>
-                                  <p>class: {el.type}</p>
-                                  <p>trainer: {el.instructor.surname}</p>
+                                  <div>
+                                      <p>Date</p>
+                                      <p>{el.date.slice(0, 10)}</p>
+                                  </div>
+                                  <div>
+                                      <p>Time</p>
+                                      <p>{el.time}</p>
+                                  </div>
+
+                                  <div>
+                                      <p>Class</p>
+                                      <p>{el.type}</p>
+                                  </div>
+                                  <div>
+                                      <p>Trainer</p>
+                                      <p>{el.instructor.surname}</p>
+                                  </div>
+
                                   {el.deducted ? (
-                                      <p
-                                          style={{
-                                              color: 'red',
-                                              border: '1px solid red',
-                                              borderRadius: '0.5em',
-                                              padding: '0.25em',
-                                          }}
-                                      >
-                                          deducted: {el.deduction_reason}
-                                      </p>
+                                      <div>
+                                          <p
+                                              style={{
+                                                  color: 'red',
+                                                  border: '1px solid red',
+                                                  borderRadius: '0.5em',
+                                                  padding: '0.25em',
+                                              }}
+                                          >
+                                              deducted: {el.deduction_reason}
+                                          </p>
+                                      </div>
                                   ) : null}
                               </div>
                           );

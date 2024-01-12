@@ -26,7 +26,7 @@ export default function Client() {
                 &larr; <span>Back to all clients</span>
             </Link>
             <div className="client-info">
-                <p className="client-name">
+                <p>
                     Abonement holder: {client.name} {client.surname}
                 </p>
                 {client.abonements.map((abonement) => (

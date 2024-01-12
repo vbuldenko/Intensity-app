@@ -8,6 +8,7 @@
     --account-menu-background: rgba(230, 230, 240, 0.75);
     --selected-tab-background: rgba(255, 255, 255, 0.5);
     --green-element: rgba(0, 169, 145, 1);
+    --red-element: rgba(255, 89, 97, 1);
     --title-color: rgb(255, 255, 255, 1);
     --button-text-color: rgba(103, 114, 120, 1);
     --border-color4: rgba(199, 199, 204, 1);
@@ -20,7 +21,7 @@
         -5.781px -5.781px 23.125px 0px #fff;
 
     --green-element-br: 0 0 0.75em 0.75em;
-    --element-br: 1em;
+    --element-br: 1rem;
     --small-element-br: 0.5em;
 
     --navbar-fontsize: 20px;
