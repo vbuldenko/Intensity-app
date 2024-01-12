@@ -1,6 +1,6 @@
 .account-section {
     max-width: 70rem;
-    height: 40rem;
+    min-height: 40rem;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 12rem 1fr;
@@ -202,9 +202,10 @@
     align-items: center;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
         -5px -5px 20px 0px #fff;
-    border-radius: 1em;
+    border-radius: 0.5rem;
     font-size: var(--content-text-fontsize);
     padding: 0.5rem 1.5rem;
+    background: var(--account-background);
     /* border: 1px solid red; */
 }
 
@@ -336,35 +337,39 @@
 .clients-container {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 3rem;
 }
 
-.header {
+.sub-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.header-info {
+.selector {
+    height: 2rem;
     display: flex;
-    gap: 1em;
-    font-weight: 600;
-    border-radius: 1em;
+    gap: 0.75em;
+    background: var(--account-background);
+    padding: 0 1.5rem;
+    border-radius: 5em;
+    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
+        -5px -5px 20px 0px #fff;
+    color: var(--button-text-color);
 }
 
-.header-info .active-clients {
-    color: green;
+.clients-all {
+    display: flex;
+    align-items: center;
 }
 
 .view-modes {
-    border-radius: 1em;
     display: flex;
     align-items: center;
     gap: 1em;
 }
 .view-modes .view-button {
     border: none;
-    background-color: transparent;
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -375,17 +380,30 @@
 
 .search {
     display: flex;
-    gap: 0.5em;
+    gap: 3rem;
     align-items: center;
-    border-radius: 1em;
+    border-radius: 2rem;
+    box-shadow: 1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
+        1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
+        0px -0.5px 1px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -0.5px 1px 0px rgba(255, 255, 255, 0.3) inset;
+    background: var(--search-color);
+    padding: 0.5rem 1rem;
+    color: var(--light-background-color);
 }
 .search input {
     border: none;
     width: 200px;
+    background: inherit;
+}
+.search input::placeholder {
+    color: inherit;
+    font-size: var(--content-text-fontsize);
 }
 
 .clients-list {
     display: flex;
+    justify-content: space-between;
     gap: 1em;
     flex-wrap: wrap;
 }
@@ -394,25 +412,60 @@
 }
 
 .client {
-    background: rgba(130, 130, 130, 0.2);
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 1.5rem;
+    background: var(--card-color);
+    box-shadow: var(--card-element-shadow2);
     padding: 1em;
-    border-radius: 1em;
+    border-radius: 0.75rem;
+    width: 250px;
 }
 
 .client.list {
-    display: flex;
     justify-content: space-between;
 }
 
-.client-name {
-    font-size: 18px;
-    font-weight: bold;
+.client-title,
+.client-data,
+.client-data div {
+    display: flex;
 }
 
-.client-details {
-    font-size: 14px;
-    color: #888;
-    margin-top: 5px;
+.client-title {
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.client-name {
+    font-size: var(--title-fontsize);
+    font-weight: 500;
+    color: var(--gray1-text-color);
+}
+
+.client-status {
+    color: var(--green-element);
+    border: 1px solid var(--green-element);
+    border-radius: 0.25rem;
+    padding: 0.1rem 0.5rem;
+    font-size: var(--small-text-fontsize);
+}
+
+.client-data {
+    flex-direction: column;
+    font-size: var(--small-text-fontsize);
+}
+.client-data div p {
+    flex: 1;
+    text-align: left;
+    /* border: 1px solid red; */
+}
+.client-data div :first-child {
+    flex: 0.75;
+    text-align: left;
+    /* border: 1px solid red; */
 }
 
 .client-history h4 {
@@ -445,52 +498,6 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.all-metric,
-.view-modes {
-    font-weight: 600;
-    background: rgba(130, 130, 130, 0.2);
-    color: rgba(255, 255, 255, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 1em;
-    padding: 0.4em 2em;
-}
-
-.view-modes .view-button {
-    color: rgba(255, 255, 255, 0.5);
-}
-.view-modes .view-button.active {
-    color: #ffffff;
-}
-
-.search {
-    padding: 0 1em;
-    display: flex;
-    gap: 0.5em;
-    align-items: center;
-    border-radius: 1em;
-    color: rgba(255, 255, 255, 0.23);
-    background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1) 0%,
-        rgba(0, 0, 0, 0.1) 100%
-    );
-    box-shadow: 1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
-        1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
-        0px -0.5px 1px 0px rgba(255, 255, 255, 0.25) inset;
-}
-.search input {
-    padding: 0.5em;
-    border: none;
-    width: 200px;
-    background: transparent;
 }
 
 .trainers-list {

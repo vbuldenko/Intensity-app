@@ -2,6 +2,7 @@
     --light-background-color: rgba(255, 255, 255, 1);
     --dark-background-color: rgb(18, 18, 18);
     --light-text-color: rgba(0, 0, 0, 0.8);
+    --gray1-text-color: rgba(96, 96, 96, 1);
     --dark-text-color: rgba(255, 255, 255, 0.8);
     --account-background: rgba(242, 242, 247, 1);
     --account-menu-background: rgba(230, 230, 240, 0.75);
@@ -10,8 +11,13 @@
     --title-color: rgb(255, 255, 255, 1);
     --button-text-color: rgba(103, 114, 120, 1);
     --border-color4: rgba(199, 199, 204, 1);
+    --search-color: rgba(216, 216, 222, 1);
+    --card-color: rgba(240, 240, 243, 1);
 
     --card-element-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
+    --card-element-shadow2: 5.781px 5.781px 23.125px 0px
+            rgba(174, 174, 192, 0.5),
+        -5.781px -5.781px 23.125px 0px #fff;
 
     --green-element-br: 0 0 0.75em 0.75em;
     --element-br: 1em;
@@ -22,6 +28,7 @@
     --title-fontsize: 20px;
     --metrics-fontsize: 12px;
     --content-text-fontsize: 13px;
+    --small-text-fontsize: 11px;
 }
 
 .App * {
