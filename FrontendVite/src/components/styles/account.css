@@ -419,7 +419,7 @@
     background: var(--card-color);
     box-shadow: var(--card-element-shadow2);
     padding: 1em;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     width: 250px;
 }
 
@@ -456,16 +456,15 @@
 .client-data {
     flex-direction: column;
     font-size: var(--small-text-fontsize);
+    color: var(--gray1-text-color);
+    gap: 0.3rem;
+    /* border: 1px solid red; */
 }
 .client-data div p {
     flex: 1;
     text-align: left;
     /* border: 1px solid red; */
-}
-.client-data div :first-child {
-    flex: 0.75;
-    text-align: left;
-    /* border: 1px solid red; */
+    overflow: hidden;
 }
 
 .client-history h4 {
