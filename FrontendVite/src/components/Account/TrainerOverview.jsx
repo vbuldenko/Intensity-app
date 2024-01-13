@@ -19,10 +19,19 @@ export default function TrainerOverview() {
     return (
         <div className="trainer-info">
             <div className="trainer-results">
-                <p>Salary: ₴ {trainerTrainings.length * 300}</p>
-                <p>Today salary: ₴ {trainerTrainings.length * 300}</p>
-                <p>All trainings: {trainerTrainings.length}</p>
-                <p>Today trainings: {trainerTrainings.length}</p>
+                <div className="title trainer-results-title">Salary</div>
+                <div className="trainer-results-element">
+                    <p>Current total </p>
+                    <span>₴ {trainerTrainings.length * 300}</span>
+                </div>
+                <div className="trainer-results-element">
+                    <p>Today</p>
+                    <span>₴ {trainerTrainings.length * 300}</span>
+                </div>
+                <div className="trainer-results-element">
+                    <p>Number of trainings</p>
+                    <span>{trainerTrainings.length}</span>
+                </div>
             </div>
             <div className="today-trainings-list">
                 <p className="trainer-info-header">Today's trainings</p>
