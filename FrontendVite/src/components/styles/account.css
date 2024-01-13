@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: 12rem 1fr;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1em;
+    border-radius: var(--big-element-br);
     background: var(--account-background);
     backdrop-filter: blur(60px);
 }
@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    border-radius: 1em 0 0 1em;
+    border-radius: 1rem 0 0 1rem;
 }
 
 .account-menu a {
@@ -39,9 +39,8 @@
 /* ----------------------------------------------------OVERVIEW */
 .overview {
     display: flex;
-    gap: 1.5em;
+    gap: 1.5rem;
     flex-direction: column;
-    /* border: 1px solid red; */
 }
 
 .user {
@@ -58,10 +57,7 @@
     padding: 0.25rem 2rem;
     border-radius: 1rem;
     color: var(--green-element);
-    box-shadow: 1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
-        1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
-        0px -0.5px 1px 0px rgba(255, 255, 255, 0.25) inset,
-        0px -0.5px 1px 0px rgba(255, 255, 255, 0.3) inset;
+    border: 1px solid var(--green-element);
     font-weight: 500;
 }
 
@@ -114,7 +110,7 @@
 }
 
 .title {
-    width: 100px;
+    width: max-content;
     text-align: center;
     align-self: flex-start;
     background: var(--green-element);
@@ -350,20 +346,26 @@
 }
 
 .selector {
-    height: 2rem;
+    height: 2.5rem;
     display: flex;
-    gap: 0.75em;
+    gap: 0.75rem;
     background: var(--account-background);
     padding: 0 1.5rem;
     border-radius: 5em;
     box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
         -5px -5px 20px 0px #fff;
     color: var(--button-text-color);
+    width: max-content;
 }
 
-.clients-all {
+.selector-element {
     display: flex;
+    gap: 0.5rem;
     align-items: center;
+}
+
+.selector-element.active {
+    color: var(--green-element);
 }
 
 .view-modes {
@@ -526,76 +528,120 @@
     font-weight: bold;
 }
 
-.trainer-info {
+.trainer-overview {
     display: grid;
     grid-template-columns: 0.75fr 1fr;
     gap: 1.5rem;
 }
 
-.trainer-results,
-.trainer-history,
-.today-trainings-list {
-    padding: 1rem;
-    border-radius: 1em;
+.results-section {
+    padding: var(--big-element-padding);
+    grid-column: 1/3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5rem;
+    border-radius: var(--big-element-br);
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow);
+}
+
+.trainings-section,
+.history-section {
+    display: flex;
+    padding: var(--big-element-padding);
+    border-radius: var(--big-element-br);
     background: var(--account-background);
     box-shadow: var(--card-element-shadow);
     color: var(--gray1-text-color);
 }
 
-.trainer-results {
-    position: relative;
-    grid-column: 1/3;
-    display: flex;
-    justify-content: space-between;
-}
-
-.trainer-results-title {
-    position: absolute;
-    top: 0;
-}
-
-.trainer-results-element {
+.result-el {
     display: flex;
     gap: 0.75rem;
     align-items: center;
     font-size: var(--small-text-fontsize);
 }
-.trainer-results-element span {
+.result-el span {
     font-size: var(--title-fontsize);
-    font-weight: 800;
+    font-weight: 500;
 }
 
-.today-trainings-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
+.trainings-section {
     grid-column: 1/2;
+    flex-direction: column;
+    gap: 1.5rem;
 }
-
-.trainer-history {
-    grid-column: 2/3;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-}
-
-.trainer-info-header {
+.section-title {
+    color: var(--dark-background-color);
+    font-weight: 500;
+    font-size: var(--small-title-fontsize);
     text-align: center;
-    width: 100%;
 }
 
-.trainer-history-element {
-    flex: 1;
-    padding: 1em;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 1em;
-    min-width: max-content;
-}
-/* ----------------------------------------CLIENT */
-.abonements {
+.trainings-section-list {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1rem;
+}
+.training-element {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.check-icon {
+    color: var(--green-element);
+}
+
+.training-card {
+    flex: 1;
+    box-shadow: var(--card-element-shadow);
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem;
+    border-radius: var(--element-br);
+}
+.training-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.training-type {
+    font-size: var(--small-title-fontsize);
+    font-weight: 500;
+    line-height: 100%;
+}
+
+.visitors {
+    font-size: var(--small-text-fontsize);
+    line-height: 150%;
+}
+
+.training-card div span {
+    font-size: var(--small-text-fontsize);
+    border: 1px solid var(--gray1-text-color);
+    padding: 0.1rem 0.25rem;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+.history-section {
+    grid-column: 2/3;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ----------------------------------------CLIENT */
+.abonements,
+.client-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.align-right {
+    align-self: flex-end;
 }
 
 .abonements-title {
@@ -610,7 +656,7 @@
     background: var(--account-background);
     box-shadow: var(--card-element-shadow);
     border-radius: var(--element-br);
-    padding: 0 2rem 1rem;
+    padding: 0 2rem 2rem;
 }
 
 .gen-abonement-info {
@@ -631,16 +677,13 @@
     align-items: center;
 }
 
-.abonement-training-history {
+.history {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    /* background: rgba(130, 130, 130, 0.2); */
-
-    border-radius: 1em;
 }
 
-.abonement-training-history-element {
+.history-element {
     background: var(--account-background);
     box-shadow: var(--card-element-shadow);
     flex: 1;
@@ -650,22 +693,74 @@
     min-width: 125px;
     padding: 0.5rem 0.8rem;
     /* border: 1px solid rgba(255, 255, 255, 0.25); */
-    border-radius: 0.5rem;
+    border-radius: var(--element-br);
 }
-.abonement-training-history-element div {
+.history-element div {
     display: flex;
     gap: 0.5rem;
     font-size: var(--small-text-fontsize);
 }
-.abonement-training-history-element div :first-child {
+.history-element div :first-child {
     flex: 0.5;
 }
-.abonement-training-history-element div :last-child {
+.history-element div :last-child {
     font-weight: 600;
     color: var(--green-element);
 }
-.abonement-training-history-element div p {
+.history-element div p {
     flex: 1;
+}
+
+/* Abonement Styles */
+.abonement-container {
+    border-radius: var(--big-element-br);
+    box-shadow: var(--card-element-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: var(--account-background);
+    padding-bottom: 1rem;
+}
+
+.amount-info {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    align-items: center;
+}
+
+.amount-badge {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--green-element);
+    color: white;
+    border-radius: 1rem 0 1rem 0;
+    width: 60px;
+}
+
+.price-info {
+    align-self: center;
+    text-align: center;
+}
+
+/* Button Styles */
+.purchase-button {
+    font-size: var(--small-title-fontsize);
+    font-weight: 500;
+    background-color: var(--account-background);
+    color: var(--gray1-text-color);
+    padding: 0.75rem 4rem;
+    border: 2px solid var(--account-background);
+    border-radius: var(--big-element-br);
+    align-self: center;
+    box-shadow: 5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+        0px 0px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
+        -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
 }
 
 /* -----------------------------------SETTINGS */

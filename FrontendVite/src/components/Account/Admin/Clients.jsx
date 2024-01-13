@@ -36,7 +36,7 @@ export default function Clients(props) {
         <div className="clients-container">
             <div className="sub-header">
                 <div className="selector">
-                    <div className="clients-all">
+                    <div className="selector-element">
                         <p>All: {clients.length}</p>
                         {/* <p className="active-clients">
                         Active Clients: {clients.active}

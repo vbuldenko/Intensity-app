@@ -20,13 +20,17 @@
             rgba(174, 174, 192, 0.5),
         -5.781px -5.781px 23.125px 0px #fff;
 
+    --big-element-padding: 1.5rem;
+
     --green-element-br: 0 0 0.75em 0.75em;
-    --element-br: 1rem;
+    --big-element-br: 1rem;
+    --element-br: 0.5rem;
     --small-element-br: 0.5em;
 
     --navbar-fontsize: 20px;
     --account-menu-fontsize: 20px;
     --title-fontsize: 20px;
+    --small-title-fontsize: 18px;
     --metrics-fontsize: 12px;
     --content-text-fontsize: 13px;
     --small-text-fontsize: 11px;
@@ -175,4 +179,19 @@ a:hover {
 #freeze:checked + .toggle-button {
     justify-content: end;
     background-color: rgb(101, 170, 255);
+}
+
+/* --------additional */
+
+.red {
+    border: 1px solid red;
+}
+.content-wrapper {
+    width: 100%;
+}
+
+.flex-row-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
 }

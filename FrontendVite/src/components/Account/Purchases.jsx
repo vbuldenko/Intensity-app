@@ -18,37 +18,18 @@ function IndividualAbonement({ amount, price }) {
         }
     };
 
-    const abonementStyle = {
-        borderRadius: '1em',
-        padding: '1em',
-        boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5em',
-        minWidth: '250px',
-        alignItems: 'center',
-        border: '1px solid rgba(255, 255, 255, 0.4)',
-        background: 'rgba(250, 250, 250, 0.1)',
-    };
-
-    const buttonStyle = {
-        backgroundColor: 'rgba(0, 173, 23, 0.6)',
-        color: 'white',
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '2em',
-        cursor: 'pointer',
-        marginTop: '0.5em',
-        width: '100%',
-    };
-
     return (
-        <div style={abonementStyle}>
-            <h3 style={{ fontSize: '1.25rem' }}>{amount} trainings</h3>
-            <p>Price: ${price}</p>
-            <p>1 training: ${calculatePricePerTraining()}</p>
-            <button style={buttonStyle} onClick={handleSubmit}>
-                Purchase
+        <div className="abonement-container">
+            <div className="amount-info">
+                <div className="amount-badge">{amount}</div>
+                <div>TRAININGS</div>
+            </div>
+            <div className="price-info">
+                <p>Price: ${price}</p>
+                <p>1 training: ${calculatePricePerTraining()}</p>
+            </div>
+            <button className="purchase-button" onClick={handleSubmit}>
+                Buy
             </button>
         </div>
     );
@@ -93,7 +74,7 @@ export default function Purchases() {
                     display: 'flex',
                     justifyContent: 'space-evenly',
                     flexWrap: 'wrap',
-                    gap: '1em',
+                    gap: '2rem',
                 }}
             >
                 {abonementData.map(({ amount, price }) => (

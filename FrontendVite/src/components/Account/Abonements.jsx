@@ -1,6 +1,12 @@
 import Abonement from './Abonement';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import {
+    Square3Stack3DIcon,
+    CheckIcon,
+    ExclamationTriangleIcon,
+    BellSnoozeIcon,
+} from '@heroicons/react/24/outline';
 
 export default function Abonements({ currentDate }) {
     const abonements = useSelector(({ abonements }) => abonements);
@@ -13,7 +19,7 @@ export default function Abonements({ currentDate }) {
             if (viewOption === 'active') {
                 return expirationDate >= currentDate;
             }
-            if (viewOption === 'ended') {
+            if (viewOption === 'expired') {
                 return expirationDate < currentDate;
             }
             if (viewOption === 'not activated') {
@@ -28,26 +34,58 @@ export default function Abonements({ currentDate }) {
     function handleChange(event) {
         setAbonementView(event.target.value);
     }
+    const handleClick = (value) => {
+        console.log(value);
+        setAbonementView(value);
+    };
 
     const sortByPurchaseDate = (a, b) =>
         new Date(a.purchase_date) - new Date(b.purchase_date);
 
     return (
-        <div className="abonements">
-            <div className="abonements-title">
-                <p className="title">Abonements</p>
-                <select id="view" name="view" onChange={handleChange}>
-                    {['all', 'active', 'not activated', 'ended'].map(
-                        (option) => (
-                            <option key={option} value={option}>
-                                {option.charAt(0).toUpperCase() +
-                                    option.slice(1)}
-                            </option>
-                        )
-                    )}
-                </select>
+        <div className="client-overview">
+            <div className="selector align-right">
+                <button
+                    className={`selector-element ${
+                        abonementView === 'all' ? 'active' : ''
+                    }`}
+                    onClick={() => handleClick('all')}
+                >
+                    <Square3Stack3DIcon className="h-4 w-4" />
+                    <p>All</p>
+                </button>
+                <div className="button-divider"></div>
+                <button
+                    className={`selector-element ${
+                        abonementView === 'active' ? 'active' : ''
+                    }`}
+                    onClick={() => handleClick('active')}
+                >
+                    <CheckIcon className="h-4 w-4" />
+                    <p>Active</p>
+                </button>
+                <div className="button-divider"></div>
+                <button
+                    className={`selector-element ${
+                        abonementView === 'expired' ? 'active' : ''
+                    }`}
+                    onClick={() => handleClick('expired')}
+                >
+                    <ExclamationTriangleIcon className="h-4 w-4" />
+                    <p>Expired</p>
+                </button>
+                <div className="button-divider"></div>
+                <button
+                    className={`selector-element ${
+                        abonementView === 'not activated' ? 'active' : ''
+                    }`}
+                    onClick={() => handleClick('not activated')}
+                >
+                    <BellSnoozeIcon className="h-4 w-4" />
+                    <p>Not activated</p>
+                </button>
             </div>
-            <div>
+            <div className="abonements">
                 {filteredAbonements
                     .sort(sortByPurchaseDate)
                     .map((abonement) => {

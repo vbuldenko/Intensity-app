@@ -119,7 +119,7 @@ export default function Schedule() {
                     />
                 )}
             </div>
-            <section className="trainings-section">
+            <section className="trainings">
                 <h3 className="font-semibold">
                     Schedule for{' '}
                     <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>

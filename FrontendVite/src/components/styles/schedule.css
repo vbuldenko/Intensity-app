@@ -76,7 +76,7 @@
     padding: 1em; /* ---------------*/
 }
 
-.trainings-section {
+.trainings {
     display: flex;
     flex-direction: column;
     gap: 0.5em;

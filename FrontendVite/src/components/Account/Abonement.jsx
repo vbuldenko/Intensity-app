@@ -83,14 +83,11 @@ export default function Abonement({ abonement }) {
                 </div>
             </div>
             {/* Look at id property of training history */}
-            <div className="abonement-training-history">
+            <div className="history">
                 {abonement.history.length > 0
                     ? abonement.history.map((el) => {
                           return (
-                              <div
-                                  key={el.id}
-                                  className="abonement-training-history-element"
-                              >
+                              <div key={el.id} className="history-element">
                                   <div>
                                       <p>Date</p>
                                       <p>{el.date.slice(0, 10)}</p>
