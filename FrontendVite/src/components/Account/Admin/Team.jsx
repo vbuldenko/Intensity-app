@@ -35,36 +35,40 @@ export default function Team() {
 
     return (
         <div className="trainers-container">
-            <div className="header">
-                <div className="all-metric">
-                    <p>All: {trainers.length}</p>
+            <div className="flex-row-container">
+                <div className="selector">
+                    <div className="flex-row-container">
+                        <p>All: {trainers.length}</p>
+                    </div>
+                    <div className="button-divider"></div>
+                    <div className="flex-row-container">
+                        <button
+                            className={`view-button ${
+                                viewMode === 'tiles' ? 'active' : ''
+                            }`}
+                            onClick={() => handleViewChange('view', 'tiles')}
+                        >
+                            <Squares2X2Icon className="h-4 w-4" />
+                        </button>
+                        <button
+                            className={`view-button ${
+                                viewMode === 'list' ? 'active' : ''
+                            }`}
+                            onClick={() => handleViewChange('view', 'list')}
+                        >
+                            <ListBulletIcon className="h-4 w-4" />
+                        </button>
+                    </div>
                 </div>
+
                 <div className="search">
-                    <MagnifyingGlassIcon className="h-6 w-6" />
+                    <MagnifyingGlassIcon className="h-4 w-4" />
                     <input
                         type="text"
                         placeholder="Search trainers..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                </div>
-                <div className="view-modes">
-                    <button
-                        className={`view-button ${
-                            viewMode === 'list' ? 'active' : ''
-                        }`}
-                        onClick={() => handleViewChange('view', 'list')}
-                    >
-                        <ListBulletIcon className="h-6 w-6" />
-                    </button>
-                    <button
-                        className={`view-button ${
-                            viewMode === 'tiles' ? 'active' : ''
-                        }`}
-                        onClick={() => handleViewChange('view', 'tiles')}
-                    >
-                        <Squares2X2Icon className="h-6 w-6" />
-                    </button>
                 </div>
             </div>
             <div className={`trainers-list ${viewMode}`}>
@@ -78,6 +82,7 @@ export default function Team() {
                         <p className="trainer-name">
                             {trainer.name} {trainer.surname}
                         </p>
+                        <p className="trainer-phone">{trainer.phone}</p>
                     </Link>
                 ))}
             </div>

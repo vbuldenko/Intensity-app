@@ -339,21 +339,13 @@
     gap: 3rem;
 }
 
-.sub-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .selector {
     height: 2.5rem;
     display: flex;
-    gap: 0.75rem;
-    background: var(--account-background);
+    gap: 1rem;
     padding: 0 1.5rem;
-    border-radius: 5em;
-    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
-        -5px -5px 20px 0px #fff;
+    border-radius: 5rem;
+    box-shadow: var(--card-element-shadow);
     color: var(--button-text-color);
     width: max-content;
 }
@@ -368,19 +360,12 @@
     color: var(--green-element);
 }
 
-.view-modes {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-}
-.view-modes .view-button {
-    border: none;
-    cursor: pointer;
+.view-button {
     transition: color 0.3s ease;
 }
 
-.view-modes .view-button.active {
-    font-weight: bold;
+.view-button.active {
+    color: var(--green-element);
 }
 
 .search {
@@ -499,7 +484,7 @@
 .trainers-container {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2rem;
 }
 
 .trainers-list {
@@ -512,10 +497,9 @@
 }
 
 .trainer {
-    padding: 1em;
-    border-radius: 0.5em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: var(--small-element-br);
+    box-shadow: var(--card-element-shadow);
 }
 
 .trainer.list {

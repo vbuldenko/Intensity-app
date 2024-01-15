@@ -34,16 +34,13 @@ export default function Clients(props) {
 
     return (
         <div className="clients-container">
-            <div className="sub-header">
+            <div className="flex-row-container">
                 <div className="selector">
-                    <div className="selector-element">
+                    <div className="flex-row-container">
                         <p>All: {clients.length}</p>
-                        {/* <p className="active-clients">
-                        Active Clients: {clients.active}
-                    </p> */}
                     </div>
                     <div className="button-divider"></div>
-                    <div className="view-modes">
+                    <div className="flex-row-container">
                         <button
                             className={`view-button ${
                                 viewMode === 'tiles' ? 'active' : ''
@@ -63,7 +60,6 @@ export default function Clients(props) {
                     </div>
                 </div>
 
-                {/* <div className="all-metric"></div> */}
                 <div className="search">
                     <MagnifyingGlassIcon className="h-4 w-4" />
                     <input

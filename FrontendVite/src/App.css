@@ -194,4 +194,12 @@ a:hover {
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+    align-items: center;
+}
+.flex-column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
 }
