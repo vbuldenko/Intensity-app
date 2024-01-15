@@ -26,7 +26,6 @@ export default function Team() {
         });
     }
 
-    // const [viewMode, setViewMode] = useState('list'); // 'list' or 'tiles'
     const [searchQuery, setSearchQuery] = useState('');
 
     const filteredTrainers = trainers.filter((trainer) =>
@@ -79,10 +78,13 @@ export default function Team() {
                         className={`trainer ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
-                        <p className="trainer-name">
+                        <p className="section-title">
                             {trainer.name} {trainer.surname}
                         </p>
-                        <p className="trainer-phone">{trainer.phone}</p>
+                        <div className="flex-row-container small-text">
+                            <p>Phone</p>
+                            <p>{trainer.phone}</p>
+                        </div>
                     </Link>
                 ))}
             </div>

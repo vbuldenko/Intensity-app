@@ -96,7 +96,7 @@ function Settings() {
 
                         <button
                             style={{
-                                background: 'rgb(7, 168, 101)',
+                                background: 'var(--green-color)',
                                 boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
                                 padding: '0.5em 1.5em',
                                 borderRadius: '2em',
@@ -114,7 +114,7 @@ function Settings() {
                         </div>
                         <button
                             style={{
-                                background: 'rgba(255, 1, 1, 0.75)',
+                                background: 'var(--red-color)',
                                 boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
                                 padding: '0.5em 1.5em',
                                 borderRadius: '2em',

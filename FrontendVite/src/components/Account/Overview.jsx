@@ -15,24 +15,26 @@ export default function Overview() {
 
     return (
         <div className="overview">
-            <div className="user-date">
+            <div className="title top-zero align-center">
                 {currentDate.toString().slice(0, 16)}
             </div>
             <div className="user">
                 {/* <img className="user-img" src={userData.img} /> */}
                 <div>
-                    <p className="user-name">Welcome back, {name}</p>
+                    <p>Welcome back, {name}</p>
                 </div>
                 <span className="user-role">{role}</span>
             </div>
 
-            {user.role === 'admin' ? (
-                <Admin />
-            ) : user.role === 'trainer' ? (
-                <TrainerOverview />
-            ) : (
-                <Abonements currentDate={currentDate} />
-            )}
+            <div>
+                {user.role === 'admin' ? (
+                    <Admin />
+                ) : user.role === 'trainer' ? (
+                    <TrainerOverview />
+                ) : (
+                    <Abonements currentDate={currentDate} />
+                )}
+            </div>
         </div>
     );
 }

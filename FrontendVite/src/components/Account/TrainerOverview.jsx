@@ -37,7 +37,7 @@ export default function TrainerOverview() {
                 </div>
             </div>
             <div className="trainings-section">
-                <div className="section-title">Today trainings</div>
+                <div className="title top-zero">Today trainings</div>
                 <div className="trainings-section-list">
                     {trainerTrainings
                         .filter(
@@ -69,7 +69,7 @@ export default function TrainerOverview() {
                 </div>
             </div>
             <div className="history-section">
-                <div className="section-title">History</div>
+                <div className="title top-zero">History</div>
                 <div className="history">
                     {trainerTrainings.map((training) => (
                         <div className="history-element" key={training.id}>

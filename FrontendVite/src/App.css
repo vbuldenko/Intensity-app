@@ -1,19 +1,20 @@
 :root {
     --light-background-color: rgba(255, 255, 255, 1);
     --dark-background-color: rgb(18, 18, 18);
-    --light-text-color: rgba(0, 0, 0, 0.8);
-    --gray1-text-color: rgba(96, 96, 96, 1);
-    --dark-text-color: rgba(255, 255, 255, 0.8);
+    --light-theme-color: rgba(0, 0, 0, 0.8);
+    --dark-theme-color: rgba(255, 255, 255, 0.8);
     --account-background: rgba(242, 242, 247, 1);
     --account-menu-background: rgba(230, 230, 240, 0.75);
     --selected-tab-background: rgba(255, 255, 255, 0.5);
-    --green-element: rgba(0, 169, 145, 1);
-    --red-element: rgba(255, 89, 97, 1);
-    --title-color: rgb(255, 255, 255, 1);
-    --button-text-color: rgba(103, 114, 120, 1);
+    --search-background-color: rgba(216, 216, 222, 1);
+    /* --card-background-color: rgb(66, 66, 188); */
+    /* --card-background-color: rgba(240, 240, 243, 1); */
+    --green-color: rgba(0, 169, 145, 1);
+    --red-color: rgba(255, 89, 97, 1);
+    --white-color: rgb(255, 255, 255, 1);
+    /* --gray1-text-color: rgba(96, 96, 96, 1); */
+    /* --button-text-color: rgba(103, 114, 120, 1); */
     --border-color4: rgba(199, 199, 204, 1);
-    --search-color: rgba(216, 216, 222, 1);
-    --card-color: rgba(240, 240, 243, 1);
 
     --card-element-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
     --card-element-shadow2: 5.781px 5.781px 23.125px 0px
@@ -22,18 +23,19 @@
 
     --big-element-padding: 1.5rem;
 
-    --green-element-br: 0 0 0.75em 0.75em;
+    --title-br: 0 0 0.75em 0.75em;
     --big-element-br: 1rem;
     --element-br: 0.5rem;
     --small-element-br: 0.5em;
 
     --navbar-fontsize: 20px;
-    --account-menu-fontsize: 20px;
-    --title-fontsize: 20px;
-    --small-title-fontsize: 18px;
+    --account-menu-fontsize: 18px;
+    --title-fontsize: 18px;
+    --smaller-title-fontsize: 16px;
     --metrics-fontsize: 12px;
-    --content-text-fontsize: 13px;
-    --small-text-fontsize: 11px;
+    --small-button-fontsize: 12px;
+    --content-text-fontsize: 14px;
+    --small-text-fontsize: 10px;
 }
 
 .App * {
@@ -47,18 +49,14 @@
     transition: background-color 0.5s ease;
 }
 
-.App a {
-    font-size: 1.1rem;
-}
-
 .App.light {
     background-color: var(--light-background-color);
-    color: var(--light-text-color);
+    color: var(--light-theme-color);
 }
 
 .App.dark {
     background-color: var(--dark-background-color);
-    color: var(--dark-text-color);
+    color: var(--dark-theme-color);
 }
 
 .App h1 {
@@ -190,6 +188,8 @@ a:hover {
     width: 100%;
 }
 
+/* -----------------------------------------------GENERAL */
+
 .flex-row-container {
     display: flex;
     gap: 1rem;
@@ -202,4 +202,37 @@ a:hover {
     gap: 2rem;
     justify-content: space-between;
     align-items: center;
+}
+
+.small-text {
+    font-size: var(--small-text-fontsize);
+}
+
+.section-title {
+    color: var(--dark-background-color);
+    font-weight: 500;
+    font-size: var(--smaller-title-fontsize);
+    text-align: center;
+}
+
+.title {
+    width: max-content;
+    text-align: center;
+    background: var(--green-color);
+    padding: 0.2em 1em;
+    border-radius: var(--title-br);
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+    color: var(--white-color);
+}
+.title.expired {
+    background: var(--red-color);
+}
+
+.top-zero {
+    position: absolute;
+    top: 0;
+}
+
+.align-center {
+    align-self: center;
 }
