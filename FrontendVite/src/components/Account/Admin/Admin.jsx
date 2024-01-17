@@ -16,21 +16,19 @@ export default function AdminOverview() {
     };
 
     return (
-        <div className="admin-metrics-data">
+        <div className="admin-overview">
             <div className="sales">
-                <div className="sales-header">
-                    <div className="title">Sales</div>
-                    <div className="sales-selector">
-                        <button>
-                            <RectangleStackIcon className="h-3 w-3" />
-                            All
-                        </button>
-                        <div className="button-divider"></div>
-                        <button>
-                            <CalendarDaysIcon className="h-3 w-3" />
-                            Today
-                        </button>
-                    </div>
+                <div className="title top-zero">Sales</div>
+                <div className="selector align-right">
+                    <button className="selector-element">
+                        <RectangleStackIcon className="h-4 w-4" />
+                        All
+                    </button>
+                    <div className="button-divider"></div>
+                    <button className="selector-element">
+                        <CalendarDaysIcon className="h-4 w-4" />
+                        Today
+                    </button>
                 </div>
                 <div className="metrics">
                     <p>client</p>
@@ -61,26 +59,26 @@ export default function AdminOverview() {
                     ))}
                 </div>
             </div>
-            <div className="income">
-                <div className="income-main">
-                    <p className="title">Income</p>
-                    <div className="income-metrics">
-                        <p className="income-month">Month</p>
-                        <p className="income-day">Today</p>
+            <div className="inout">
+                <div className="inout-main">
+                    <p className="title top-zero">Income</p>
+                    <div className="inout-metrics">
+                        <p>Month</p>
+                        <p>Today</p>
                         <p>Abonements</p>
                     </div>
-                    <div className="income-data">
+                    <div className="inout-data">
                         <p>{statistics.monthlyIncome}</p>
                         <p>{statistics.dailyIncome}</p>
                         <p>{statistics.totalAbonementSales}</p>
                     </div>
                 </div>
 
-                <div className="income-additional">
+                <div className="inout-additional">
                     <div>
-                        <p className="income-profit">Profit</p>
+                        <p className="inout-profit">Profit</p>
                     </div>
-                    <div className="income-profit-data">
+                    <div className="inout-profit-data">
                         <p>{statistics.monthlyIncome}</p>
                     </div>
                     <div>
@@ -101,24 +99,24 @@ export default function AdminOverview() {
                     </div>
                 </div>
             </div>
-            <div className="income">
-                <div className="income-main">
-                    <p className="title">Expenses</p>
-                    <div className="income-metrics">
-                        <p className="income-month">Trainer</p>
-                        <p className="income-day">Salary</p>
+            <div className="inout">
+                <div className="inout-main">
+                    <p className="title top-zero">Expenses</p>
+                    <div className="inout-metrics">
+                        <p className="inout-month">Trainer</p>
+                        <p className="inout-day">Salary</p>
                     </div>
-                    <div className="income-data">
+                    <div className="inout-data">
                         <p>{statistics.monthlyIncome}</p>
                         <p>{statistics.dailyIncome}</p>
                     </div>
                 </div>
 
-                <div className="income-additional">
+                <div className="inout-additional">
                     <div>
-                        <p className="income-profit">Total</p>
+                        <p className="inout-profit">Total</p>
                     </div>
-                    <div className="income-profit-data">
+                    <div className="inout-profit-data">
                         <p>{statistics.monthlyIncome}</p>
                     </div>
                     <div>

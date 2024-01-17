@@ -12,9 +12,19 @@
     --green-color: rgba(0, 169, 145, 1);
     --red-color: rgba(255, 89, 97, 1);
     --white-color: rgb(255, 255, 255, 1);
-    /* --gray1-text-color: rgba(96, 96, 96, 1); */
+    --gray-color-1: rgba(96, 96, 96, 1);
+    --gray-color-2: rgba(108, 108, 112, 1);
+    --gray-color-3: rgba(142, 142, 147, 1);
+    --gray-color-4: rgba(163, 173, 178, 1);
+    --gray-color-5: rgba(174, 174, 178, 1);
+    --gray-color-6: rgba(199, 199, 204, 1);
+    --gray-color-7: rgba(209, 209, 214, 1);
+    --gray-color-8: rgba(229, 229, 234, 1);
+    --gray-color-9: rgba(245, 242, 247, 1);
+
+    --dark-text-color: rgba(41, 46, 48, 1);
+    --selector-button-text-color: rgba(103, 114, 120, 1);
     /* --button-text-color: rgba(103, 114, 120, 1); */
-    --border-color4: rgba(199, 199, 204, 1);
 
     --card-element-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
     --card-element-shadow2: 5.781px 5.781px 23.125px 0px
@@ -27,13 +37,15 @@
     --big-element-br: 1rem;
     --element-br: 0.5rem;
     --small-element-br: 0.5em;
+    --black-border: 1px solid black;
 
     --navbar-fontsize: 20px;
     --account-menu-fontsize: 18px;
-    --title-fontsize: 18px;
-    --smaller-title-fontsize: 16px;
+    --title-fontsize: 16px;
+    --smaller-title-fontsize: 25px;
     --metrics-fontsize: 12px;
     --small-button-fontsize: 12px;
+    --button-fontsize: 14px;
     --content-text-fontsize: 14px;
     --small-text-fontsize: 10px;
 }
@@ -209,13 +221,14 @@ a:hover {
 }
 
 .section-title {
-    color: var(--dark-background-color);
+    color: var(--dark-text-color);
     font-weight: 500;
-    font-size: var(--smaller-title-fontsize);
+    font-size: var(--title-fontsize);
     text-align: center;
 }
 
 .title {
+    font-size: var(--title-fontsize);
     width: max-content;
     text-align: center;
     background: var(--green-color);
@@ -235,4 +248,11 @@ a:hover {
 
 .align-center {
     align-self: center;
+}
+.align-right {
+    align-self: flex-end;
+}
+
+.border {
+    border: var(--black-border);
 }

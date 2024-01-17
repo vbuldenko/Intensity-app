@@ -36,26 +36,28 @@ export default function Clients(props) {
         <div className="clients-container">
             <div className="flex-row-container">
                 <div className="selector">
-                    <div className="flex-row-container">
-                        <p>All: {clients.length}</p>
+                    <div className="selector-element">
+                        <p>All:</p> <p>{clients.length}</p>
                     </div>
                     <div className="button-divider"></div>
-                    <div className="flex-row-container">
+                    <div className="selector-element">
                         <button
                             className={`view-button ${
                                 viewMode === 'tiles' ? 'active' : ''
                             }`}
                             onClick={() => handleViewChange('view', 'tiles')}
                         >
-                            <Squares2X2Icon className="h-4 w-4" />
+                            <Squares2X2Icon className="h-5 w-5" />
                         </button>
+                    </div>
+                    <div className="selector-element">
                         <button
                             className={`view-button ${
                                 viewMode === 'list' ? 'active' : ''
                             }`}
                             onClick={() => handleViewChange('view', 'list')}
                         >
-                            <ListBulletIcon className="h-4 w-4" />
+                            <ListBulletIcon className="h-5 w-5" />
                         </button>
                     </div>
                 </div>

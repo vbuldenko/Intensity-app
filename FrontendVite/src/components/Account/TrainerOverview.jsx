@@ -51,10 +51,12 @@ export default function TrainerOverview() {
                                 <CheckCircleIcon className="h-6 w-6 check-icon" />
                                 <div className="training-card">
                                     <div>
-                                        <p className="training-type">
+                                        <p className="section-title">
                                             {training.type}
                                         </p>
-                                        <span>Group Class</span>
+                                        <span className="gray-status">
+                                            Group Class
+                                        </span>
                                     </div>
                                     <div>
                                         <p className="visitors">

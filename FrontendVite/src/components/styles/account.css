@@ -64,97 +64,35 @@
 }
 
 /* -------------------------------- */
-.admin-metrics-data {
+.admin-overview {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 1.5em;
-    /* border: 1px solid red; */
 }
 
 .sales {
+    position: relative;
     grid-row: 1 / span 3;
     grid-column: 1 / 2;
-    border-radius: 1em;
+    border-radius: var(--big-element-br);
     background: var(--card-background-color);
     display: flex;
     flex-direction: column;
-    gap: 1em;
-    padding: 0 1.5em 1em;
+    gap: 1rem;
+    padding: 1.5rem;
     box-shadow: var(--card-element-shadow);
     min-width: 380px;
 }
 
-.sales-header {
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
-}
-
-/* --------------------------- */
-
-.sales-selector {
-    align-self: flex-end;
-    display: flex;
-
-    gap: 0.75em;
-    background: var(--account-background);
-    padding: 0 1em;
-    border-radius: 5em;
-    box-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5),
-        -5px -5px 20px 0px #fff;
-    color: var(--button-text-color);
-}
-
-.sales-selector button {
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-    /* border: 1px solid red; */
-    padding: 0.5em;
-    font-size: var(--small-button-fontsize);
-}
-
-.button-divider {
-    width: 3px;
-    position: relative;
-}
-
-.button-divider::before,
-.button-divider::after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 100%;
-}
-
-.button-divider::before {
-    left: 0;
-    background-color: rgba(195, 201, 205, 1);
-}
-
-.button-divider::after {
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-/* ---------------------------- */
-
 .metrics {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-columns: repeat(4, 1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
     font-size: var(--metrics-fontsize);
-    color: var(--button-text-color);
+    color: var(--gray-color-3);
     padding: 0.5rem 1.5rem;
-    /* border: 1px solid red; */
-}
-
-.metrics p {
+    gap: 1rem;
     text-align: center;
-    /* border: 1px solid red; */
-}
-.metrics :first-child {
-    min-width: 6rem;
-    /* text-align: left; */
-    /* border: 1px solid red; */
 }
 
 .sale-data-list {
@@ -173,14 +111,12 @@
     font-size: var(--content-text-fontsize);
     padding: 0.5rem 1.5rem;
     background: var(--card-background-color);
-    /* border: 1px solid red; */
 }
 
 .sale-data div {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid red; */
 }
 .sale-data :first-child {
     justify-content: left;
@@ -203,58 +139,54 @@
     width: max-content;
 }
 .sale-price {
-    /* text-align: center; */
     color: var(--green-color);
     font-weight: 600;
 }
 
 /* --------------------------------------- */
-.income {
+.inout {
+    position: relative;
     grid-column: 2/4;
     display: flex;
-    border-radius: 1em;
-    padding: 0;
+    justify-content: space-between;
+    border-radius: var(--big-element-br);
+    padding: 1.5rem;
     background: var(--card-background-color);
     box-shadow: var(--card-element-shadow);
 }
 
-.income-main {
-    border-right: 1px solid var(--border-color4);
+.inout-main {
+    flex: 1;
+    border-right: 1px solid var(--gray-color-6);
 }
 
-.income-main,
-.income-additional {
+.inout-main,
+.inout-additional {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    /* border: 1px solid red; */
-    padding: 0 1.5rem;
+    padding: 1rem;
     text-align: center;
 }
 
-.income-additional {
-    padding: 1.5rem;
+.inout-additional {
     align-items: center;
 }
-
-.income-metrics,
-.income-data {
+.inout-metrics,
+.inout-data {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    justify-content: center;
 }
 
-.income-metrics,
-.income-profit {
-    color: var(--button-text-color);
+.inout-metrics,
+.inout-profit {
+    color: var(--gray-color-3);
     font-size: var(--metrics-fontsize);
-    /* border: 1px solid red; */
 }
-.income-data p,
-.income-profit-data {
+.inout-data p,
+.inout-profit-data {
     font-size: var(--content-fontsize);
     color: var(--green-color);
-    /* border: 1px solid red; */
 }
 
 /* ----------------------------------------- */
@@ -303,11 +235,11 @@
 .clients-container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .selector {
-    height: 2.5rem;
+    height: 2.25rem;
     display: flex;
     gap: 1rem;
     padding: 0 1.5rem;
@@ -321,10 +253,37 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    justify-content: space-between;
+    color: var(--gray-color-1);
+    font-size: var(--button-fontsize);
+    font-weight: 500;
 }
 
 .selector-element.active {
     color: var(--green-color);
+}
+
+.button-divider {
+    width: 3px;
+    position: relative;
+}
+
+.button-divider::before,
+.button-divider::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+}
+
+.button-divider::before {
+    left: 0;
+    background-color: rgba(195, 201, 205, 1);
+}
+
+.button-divider::after {
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .view-button {
@@ -399,7 +358,7 @@
 .client-name {
     font-size: var(--title-fontsize);
     font-weight: 500;
-    color: var(--gray1-text-color);
+    color: var(--dark-text-color);
 }
 
 .client-status {
@@ -424,22 +383,6 @@
     overflow: hidden;
 }
 
-/* .client-history h4 {
-    margin-top: 15px;
-}
-
-.client-history ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.client-history li {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #555;
-} */
-
 .client-info {
     display: flex;
     flex-direction: column;
@@ -456,6 +399,7 @@
 
 .trainers-list {
     display: flex;
+    /* justify-content: space-between; */
     gap: 1.5em;
     flex-wrap: wrap;
 }
@@ -477,10 +421,6 @@
 .trainer.list {
     display: flex;
     justify-content: space-between;
-}
-
-.trainer-name {
-    font-size: var(--title-fontsize);
 }
 
 .trainer-overview {
@@ -517,7 +457,7 @@
     display: flex;
     gap: 0.75rem;
     align-items: center;
-    font-size: var(--small-text-fontsize);
+    font-size: var(--metrics-fontsize);
 }
 .result-el span {
     font-size: var(--title-fontsize);
@@ -557,12 +497,8 @@
 .training-card div {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
-}
-.training-type {
-    font-size: var(--smaller-title-fontsize);
-    font-weight: 500;
-    line-height: 100%;
 }
 
 .visitors {
@@ -570,12 +506,15 @@
     line-height: 150%;
 }
 
-.training-card div span {
+.gray-status {
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--small-text-fontsize);
-    border: 1px solid var(--gray1-text-color);
-    padding: 0.1rem 0.25rem;
+    border: 1px solid var(--gray-color-3);
+    padding: 0.3rem 0.5rem;
     border-radius: 0.25rem;
-    text-align: center;
 }
 
 .history-section {
@@ -643,13 +582,13 @@
     flex-direction: column;
     gap: 0.5rem;
     min-width: 125px;
-    padding: 0.5rem 0.8rem;
+    padding: 0.8rem;
     /* border: 1px solid rgba(255, 255, 255, 0.25); */
     border-radius: var(--element-br);
 }
 .history-element div {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     font-size: var(--small-text-fontsize);
 }
 .history-element div :first-child {
@@ -669,7 +608,7 @@
     box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     width: 200px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: var(--account-background);
@@ -736,7 +675,8 @@
 
 .personal-info {
     border-radius: 1em;
-    background: rgba(130, 130, 130, 0.1);
+    /* background: rgba(130, 130, 130, 0.1); */
+    box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
 }
@@ -746,7 +686,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid var(--gray-color-8);
 }
 
 .personal-info :last-child {

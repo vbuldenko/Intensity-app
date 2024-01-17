@@ -1,16 +1,17 @@
 .header {
-    /* color: rgb(105, 105, 105); */
     padding: 1em 2em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* font-size: 1.25rem; */
     font-weight: bold;
+    font-size: var(--navbar-fontsize);
 }
 
-.header .logo {
-    font-size: 1.5rem;
+.logo {
     text-transform: uppercase;
+    /* border: var(--black-border);
+    padding: 0.5rem 1rem;
+    border-radius: var(--element-br); */
 }
 
 .header-navbar {
@@ -20,7 +21,6 @@
 
 .header-navbar a {
     position: relative;
-    font-size: var(--navbar-fontsize);
 }
 
 .header-navbar a::after {
