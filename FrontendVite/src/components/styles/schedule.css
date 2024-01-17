@@ -20,9 +20,9 @@
     display: flex;
     flex-direction: column;
     min-width: 22em;
-    margin-top: 2em;
+
     background: rgba(250, 250, 250, 0.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-element-shadow3);
     border-radius: 1em;
     backdrop-filter: blur(70px);
 }
@@ -79,9 +79,18 @@
 .trainings {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 1rem;
     /* border: 1px solid red; */
     flex: 1;
+}
+
+.trainings h3 {
+    width: 100%;
+    border-radius: var(--element-br);
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid var(--gray-color-7);
+    padding: 0.5rem;
 }
 
 .trainings-list {
@@ -89,8 +98,35 @@
     justify-content: center;
     /* flex-wrap: wrap; */
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.75rem;
     font-size: 0.875rem; /* Equivalent to text-sm */
-    color: #718096; /* Equivalent to text-gray-500 */
     /* border: 1px solid blue; */
+}
+
+.scheduled-training {
+    box-shadow: var(--card-element-shadow3);
+    border-radius: 10px; /* Equivalent to rounded-xl */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.scheduled-training-content {
+    position: relative;
+    border-radius: var(--element-br);
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s ease; /* Smooth transition for hover and focus effects */
+}
+
+/* @media screen and (min-width: 790px) and (max-width: 800px) {
+    .scheduled-training {
+        min-width: 100%; 
+    }
+
+    .scheduled-training-content {
+        flex-direction: row;
+    }
+} */
+
+.scheduled-training-content:hover,
+.scheduled-training-content:focus-within {
+    background: var(--green-color2);
 }

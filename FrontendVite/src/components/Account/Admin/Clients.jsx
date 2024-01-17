@@ -81,10 +81,10 @@ export default function Clients(props) {
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <div className="client-title">
-                            <p className="client-name">
+                            <p className="section-title">
                                 {client.name} {client.surname}
                             </p>
-                            <p className="client-status">Active</p>
+                            <p className="status">Active</p>
                         </div>
                         <div className="client-data">
                             <div>

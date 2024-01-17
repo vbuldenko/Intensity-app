@@ -10,6 +10,8 @@
     /* --card-background-color: rgb(66, 66, 188); */
     /* --card-background-color: rgba(240, 240, 243, 1); */
     --green-color: rgba(0, 169, 145, 1);
+    --green-color3: rgba(0, 169, 144, 0.8);
+    --green-color2: rgba(0, 169, 144, 0.05);
     --red-color: rgba(255, 89, 97, 1);
     --white-color: rgb(255, 255, 255, 1);
     --gray-color-1: rgba(96, 96, 96, 1);
@@ -23,20 +25,18 @@
     --gray-color-9: rgba(245, 242, 247, 1);
 
     --dark-text-color: rgba(41, 46, 48, 1);
-    --selector-button-text-color: rgba(103, 114, 120, 1);
-    /* --button-text-color: rgba(103, 114, 120, 1); */
 
     --card-element-shadow: 5px 5px 20px 0px rgba(174, 174, 192, 0.5);
     --card-element-shadow2: 5.781px 5.781px 23.125px 0px
             rgba(174, 174, 192, 0.5),
         -5.781px -5.781px 23.125px 0px #fff;
-
+    --card-element-shadow3: 0 0 5px rgba(0, 0, 0, 0.1);
     --big-element-padding: 1.5rem;
 
     --title-br: 0 0 0.75em 0.75em;
     --big-element-br: 1rem;
     --element-br: 0.5rem;
-    --small-element-br: 0.5em;
+    --small-element-br: 0.25rem;
     --black-border: 1px solid black;
 
     --navbar-fontsize: 20px;
@@ -48,6 +48,7 @@
     --button-fontsize: 14px;
     --content-text-fontsize: 14px;
     --small-text-fontsize: 10px;
+    --sm-text-fontsize: 12px;
 }
 
 .App * {
@@ -71,13 +72,13 @@
     color: var(--dark-theme-color);
 }
 
-.App h1 {
+h1 {
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
 }
 
-.App h2 {
+h2 {
     text-align: center;
     font-size: 2rem;
     line-height: 1.05;
@@ -85,7 +86,7 @@
     letter-spacing: -0.015em;
 }
 
-.App h3 {
+h3 {
     font-size: 1.5rem;
     line-height: 1.05;
     font-weight: 700;
@@ -219,9 +220,15 @@ a:hover {
 .small-text {
     font-size: var(--small-text-fontsize);
 }
+.s-text {
+    font-size: var(--small-text-fontsize);
+}
+.m-text {
+    font-size: var(--sm-text-fontsize);
+}
 
 .section-title {
-    color: var(--dark-text-color);
+    /* color: var(--dark-text-color); */
     font-weight: 500;
     font-size: var(--title-fontsize);
     text-align: center;
@@ -237,6 +244,15 @@ a:hover {
     box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
     color: var(--white-color);
 }
+.st-title {
+    font-size: 12px;
+    width: max-content;
+    text-align: center;
+    background: var(--green-color3);
+    padding: 0.15rem 1rem;
+    border-radius: 0.5rem 0 0.5rem 0;
+    color: var(--white-color);
+}
 .title.expired {
     background: var(--red-color);
 }
@@ -244,6 +260,10 @@ a:hover {
 .top-zero {
     position: absolute;
     top: 0;
+}
+.left-zero {
+    position: absolute;
+    left: 0;
 }
 
 .align-center {
@@ -255,4 +275,16 @@ a:hover {
 
 .border {
     border: var(--black-border);
+}
+
+.status {
+    color: var(--green-color);
+    border: 1px solid var(--green-color);
+    border-radius: var(--small-element-br);
+    padding: 0.1rem 0.5rem;
+    font-size: var(--small-text-fontsize);
+}
+
+.bold {
+    font-weight: 700;
 }

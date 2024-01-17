@@ -7,7 +7,6 @@ import {
     removeReservation,
 } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
-import '../styles/training.css';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);
@@ -87,34 +86,40 @@ export default function Training({ training }) {
                 </div>
             )}
             <div className="scheduled-training-content">
-                <div>
-                    <b>{training.type.toUpperCase()}</b>
-                    <p className="mt-0.5 font-bold">{training.time}</p>
-                    <p>
-                        Trainer: <b>{training.instructor.name}</b>
-                    </p>
+                <div className="flex-row-container st-title top-zero left-zero">
+                    <p>{training.time}</p>
+                    <p className="bold">{training.type.toUpperCase()}</p>
                 </div>
 
                 <div
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        flexDirection: 'column',
-                        gap: '0.5em',
+                        justifyContent: 'space-between',
+                        gap: '1rem',
+                        paddingTop: '1rem',
                     }}
+                    // className="red"
                 >
+                    <p className="status">
+                        Trainer: <b>{training.instructor.name}</b>
+                    </p>
+                    <p className="m-text">
+                        Places left:{' '}
+                        {training.maxCapacity -
+                            training.registeredClients.length}
+                    </p>
                     <button
                         style={{
-                            border: `1px solid ${isReserved ? 'red' : 'green'}`,
                             padding: '0.25em 1em',
                             borderRadius: '0.5em',
                             color: 'white',
                             background:
                                 currentTime >= threeHoursBeforeTraining
-                                    ? 'gray'
+                                    ? 'var(--gray-color-4)'
                                     : isReserved
-                                    ? 'red'
-                                    : 'green',
+                                    ? 'var(--red-color)'
+                                    : 'var(--green-color)',
                             cursor:
                                 currentTime >= threeHoursBeforeTraining
                                     ? 'not-allowed'
@@ -128,16 +133,11 @@ export default function Training({ training }) {
                         }
                     >
                         {currentTime >= threeHoursBeforeTraining
-                            ? 'Reservation closed'
+                            ? 'Closed'
                             : isReserved
                             ? 'Cancel'
                             : 'Reserve'}
                     </button>
-                    <p>
-                        Places left:{' '}
-                        {training.maxCapacity -
-                            training.registeredClients.length}
-                    </p>
                 </div>
             </div>
         </li>

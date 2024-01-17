@@ -62,7 +62,7 @@ export default function Schedule() {
     ];
 
     return (
-        <div className="schedule-container ">
+        <div className="schedule-container">
             <div className="calendar">
                 <div className="calendar-navbar">
                     <button
@@ -71,7 +71,7 @@ export default function Schedule() {
                     >
                         <ChevronLeftIcon className="w-4 h-4" />
                     </button>
-                    <h3 className="calendar-navbar-date">
+                    <h3 className="section-title bold">
                         {format(firstDayCurrentMonth, 'MMMM yyyy')}
                     </h3>
                     <button
@@ -120,12 +120,7 @@ export default function Schedule() {
                 )}
             </div>
             <section className="trainings">
-                <h3 className="font-semibold">
-                    Schedule for{' '}
-                    <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                        {format(selectedDay, 'MMM dd, yyy')}
-                    </time>
-                </h3>
+                <h3>Schedule for {format(selectedDay, 'MMM dd, yyy')}</h3>
                 <ol className="trainings-list">
                     {selectedDayTrainings.length > 0 ? (
                         selectedDayTrainings.map((training) => (
