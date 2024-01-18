@@ -63,7 +63,7 @@ export default function Schedule() {
 
     return (
         <div className="schedule-container">
-            <div className="calendar">
+            <div className="calendar card-el-bg">
                 <div className="calendar-navbar">
                     <button
                         className="calendar-navbar-button"
@@ -120,7 +120,7 @@ export default function Schedule() {
                 )}
             </div>
             <section className="trainings">
-                <h3>Schedule for {format(selectedDay, 'MMM dd, yyy')}</h3>
+                {/* <h3>Schedule for {format(selectedDay, 'MMM dd, yyy')}</h3> */}
                 <ol className="trainings-list">
                     {selectedDayTrainings.length > 0 ? (
                         selectedDayTrainings.map((training) => (

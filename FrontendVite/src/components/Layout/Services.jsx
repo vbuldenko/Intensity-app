@@ -77,7 +77,7 @@ function Services() {
                 <h1>Наші послуги</h1>
                 <div className="info">
                     {trainingData.map((el, i) => (
-                        <div key={i}>
+                        <div key={i} className="card-el-bg">
                             <h2>{el.title}</h2>
                             <p>{el.description}</p>
                         </div>
@@ -88,7 +88,7 @@ function Services() {
                 <h1>Напрямки тренувань</h1>
                 <div className="info">
                     {classes.map((el, i) => (
-                        <div key={i}>
+                        <div key={i} className="card-el-bg">
                             <h2>{el.title}</h2>
                             <p>{el.description}</p>
                         </div>

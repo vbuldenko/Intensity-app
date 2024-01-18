@@ -41,7 +41,7 @@ export default function Home() {
 
     return (
         <section className="main-section">
-            <div className="intensity-hero">
+            <div className="intensity-hero card-el-bg">
                 <h1 className="intensity-hero-name">INTENSITY</h1>
                 <h1>Fitness & Danse Studio</h1>
                 <h2>Health·Strength·Energy</h2>
@@ -55,7 +55,7 @@ export default function Home() {
                 <h1>Наші цінності</h1>
                 <div className="info">
                     {values.map((value, index) => (
-                        <div key={index}>
+                        <div key={index} className="card-el-bg flex-column">
                             <h2>{value.value}</h2>
                             <p>{value.description}</p>
                         </div>
@@ -66,7 +66,7 @@ export default function Home() {
                 <h1>Правила студії</h1>
                 <div className="info">
                     {rules.map((rule, index) => (
-                        <div key={index}>
+                        <div key={index} className="card-el-bg flex-column">
                             <p>{rule}</p>
                         </div>
                     ))}

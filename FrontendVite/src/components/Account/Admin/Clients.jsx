@@ -33,7 +33,7 @@ export default function Clients(props) {
     );
 
     return (
-        <div className="clients-container">
+        <div className="flex-column">
             <div className="flex-row-container">
                 <div className="selector">
                     <div className="selector-element">

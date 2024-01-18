@@ -84,17 +84,6 @@
     min-width: 380px;
 }
 
-.metrics {
-    display: grid;
-    /* grid-template-columns: repeat(4, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
-    font-size: var(--metrics-fontsize);
-    color: var(--gray-color-3);
-    padding: 0.5rem 1.5rem;
-    gap: 1rem;
-    text-align: center;
-}
-
 .sale-data-list {
     display: flex;
     flex-direction: column;
@@ -229,14 +218,6 @@
 }
 
 /* -------------------------------------- CLIENTS */
-.clients-container * {
-    margin: 0;
-}
-.clients-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
 
 .selector {
     height: 2.25rem;
@@ -377,11 +358,6 @@
     margin-top: 1em;
 }
 /* --------------------------------------------- TEAM */
-.trainers-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
 
 .trainers-list {
     display: flex;
@@ -595,7 +571,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    width: 200px;
+    width: 185px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: var(--account-background);
     padding-bottom: 1rem;
@@ -603,8 +579,7 @@
 
 .amount-info {
     display: flex;
-    gap: 0.5rem;
-    font-size: 1.25rem;
+    gap: 1rem;
     align-items: center;
 }
 
@@ -620,14 +595,9 @@
     width: 60px;
 }
 
-.price-info {
-    align-self: center;
-    text-align: center;
-}
-
 /* Button Styles */
 .purchase-button {
-    font-size: var(--smaller-title-fontsize);
+    font-size: var(--title-fontsize);
     font-weight: 500;
     background-color: var(--account-background);
     color: var(--gray1-text-color);

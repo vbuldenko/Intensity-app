@@ -20,11 +20,11 @@ function IndividualAbonement({ amount, price }) {
 
     return (
         <div className="abonement-container">
-            <div className="amount-info">
+            <div className="amount-info l-text">
                 <div className="amount-badge">{amount}</div>
                 <div>TRAININGS</div>
             </div>
-            <div className="price-info">
+            <div className="align-center m-text">
                 <p>Price: ${price}</p>
                 <p>1 training: ${calculatePricePerTraining()}</p>
             </div>
@@ -46,16 +46,8 @@ export default function Purchases() {
     ];
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-        >
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1em' }}>
-                Choose your Abonement
-            </h2>
+        <div className="flex-column">
+            <h2 className="l-text bold">Choose your Abonement</h2>
             {notification && (
                 <div
                     style={{
@@ -70,23 +62,14 @@ export default function Purchases() {
 
             <div
                 style={{
-                    width: '100%',
                     display: 'flex',
-                    justifyContent: 'space-evenly',
                     flexWrap: 'wrap',
-                    gap: '2rem',
+                    justifyContent: 'center',
+                    gap: '2.5rem',
                 }}
             >
                 {abonementData.map(({ amount, price }) => (
-                    <div
-                        key={amount}
-                        style={{
-                            flex: '1',
-                            maxWidth: '300px',
-                        }}
-                    >
-                        <IndividualAbonement amount={amount} price={price} />
-                    </div>
+                    <IndividualAbonement amount={amount} price={price} />
                 ))}
             </div>
         </div>

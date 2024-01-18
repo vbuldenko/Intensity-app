@@ -33,7 +33,7 @@ export default function Team() {
     );
 
     return (
-        <div className="trainers-container">
+        <div className="flex-column">
             <div className="flex-row-container">
                 <div className="selector">
                     <div className="selector-element">
@@ -83,7 +83,7 @@ export default function Team() {
                         <p className="section-title">
                             {trainer.name} {trainer.surname}
                         </p>
-                        <div className="flex-row-container small-text">
+                        <div className="flex-row-container s-text">
                             <p>Phone</p>
                             <p>{trainer.phone}</p>
                         </div>
