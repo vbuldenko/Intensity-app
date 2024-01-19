@@ -42,31 +42,32 @@ export default function Home() {
     return (
         <section className="main-section">
             <div className="hero card-el-bg">
-                <h1 className="hero-name">INTENSITY</h1>
-                <h1 className="l-font">Fitness & Danse Studio</h1>
-                <h2 className="m-font">Health·Strength·Energy</h2>
-                <p className="s-font">
-                    Наша місія – покращувати якість життя, без шкоди для
-                    здоров'я!
+                <h1 className="l-font align-left">Fitness Studio</h1>
+                <p className="hero-name">INTENSITY</p>
+                <h2 className="m-font align-right">Health·Strength·Energy</h2>
+                <p className="s-font align-center">
+                    Покращуємо якість життя, без шкоди для здоров'я!
                 </p>
                 {/* <button>Look for details</button> */}
             </div>
-            <div className="main-subsection">
+            <div className="flex-column">
                 <h1 className="l-font ">Наші цінності</h1>
                 <div className="info">
                     {values.map((value, index) => (
-                        <div key={index} className="card-el-bg flex-column">
+                        <div key={index} className="card-el-bg flex-col">
                             <h2 className="m-font">{value.value}</h2>
-                            <p className="s-font">{value.description}</p>
+                            <p className="s-font gray-clr">
+                                {value.description}
+                            </p>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="main-subsection">
+            <div className="flex-column">
                 <h1 className="l-font ">Правила студії</h1>
                 <div className="info">
                     {rules.map((rule, index) => (
-                        <div key={index} className="card-el-bg flex-column">
+                        <div key={index} className="card-el-bg flex-col">
                             <p className="s-font">{rule}</p>
                         </div>
                     ))}

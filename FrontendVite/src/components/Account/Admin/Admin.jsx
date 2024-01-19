@@ -62,7 +62,7 @@ export default function AdminOverview() {
             <div className="inout">
                 <div className="inout-main">
                     <p className="title top-zero">Income</p>
-                    <div className="inout-metrics">
+                    <div className="inout-metrics xs-font">
                         <p>Month</p>
                         <p>Today</p>
                         <p>Abonements</p>
@@ -102,7 +102,7 @@ export default function AdminOverview() {
             <div className="inout">
                 <div className="inout-main">
                     <p className="title top-zero">Expenses</p>
-                    <div className="inout-metrics">
+                    <div className="inout-metrics xs-font">
                         <p className="inout-month">Trainer</p>
                         <p className="inout-day">Salary</p>
                     </div>

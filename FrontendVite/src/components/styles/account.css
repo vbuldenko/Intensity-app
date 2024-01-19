@@ -167,11 +167,6 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.inout-metrics,
-.inout-profit {
-    color: var(--gray-color-3);
-    font-size: var(--metrics-fontsize);
-}
 .inout-data p,
 .inout-profit-data {
     font-size: var(--content-fontsize);
@@ -339,7 +334,6 @@
 .client-data {
     flex-direction: column;
     font-size: var(--small-text-fontsize);
-    color: var(--gray1-text-color);
     gap: 0.3rem;
     /* border: 1px solid red; */
 }

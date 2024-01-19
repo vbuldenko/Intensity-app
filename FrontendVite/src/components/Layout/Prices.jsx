@@ -40,13 +40,13 @@ export default function Prices() {
     return (
         <>
             {/* <div className="flex-column red"> */}
-            <h1>Абонементи</h1>
+            <h1 className="s-font">Абонементи</h1>
             <div className="prices">
                 {prices.map((el, i) => (
                     <div key={i} className="prices-subsection card-el-bg">
                         <span className="status2">{el.category}</span>
                         <div className="abonements-prices">
-                            <div className="metrics">
+                            <div className="metrics gray-clr">
                                 <p>amount</p>
                                 <p>price</p>
                                 <p>unit price</p>
