@@ -41,33 +41,33 @@ export default function Home() {
 
     return (
         <section className="main-section">
-            <div className="intensity-hero card-el-bg">
-                <h1 className="intensity-hero-name">INTENSITY</h1>
-                <h1>Fitness & Danse Studio</h1>
-                <h2>Health·Strength·Energy</h2>
-                <p>
+            <div className="hero card-el-bg">
+                <h1 className="hero-name">INTENSITY</h1>
+                <h1 className="l-font">Fitness & Danse Studio</h1>
+                <h2 className="m-font">Health·Strength·Energy</h2>
+                <p className="s-font">
                     Наша місія – покращувати якість життя, без шкоди для
                     здоров'я!
                 </p>
                 {/* <button>Look for details</button> */}
             </div>
             <div className="main-subsection">
-                <h1>Наші цінності</h1>
+                <h1 className="l-font ">Наші цінності</h1>
                 <div className="info">
                     {values.map((value, index) => (
                         <div key={index} className="card-el-bg flex-column">
-                            <h2>{value.value}</h2>
-                            <p>{value.description}</p>
+                            <h2 className="m-font">{value.value}</h2>
+                            <p className="s-font">{value.description}</p>
                         </div>
                     ))}
                 </div>
             </div>
             <div className="main-subsection">
-                <h1>Правила студії</h1>
+                <h1 className="l-font ">Правила студії</h1>
                 <div className="info">
                     {rules.map((rule, index) => (
                         <div key={index} className="card-el-bg flex-column">
-                            <p>{rule}</p>
+                            <p className="s-font">{rule}</p>
                         </div>
                     ))}
                 </div>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ThemeToggle from './ThemeToggle';
-import '../styles/header.css';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import BurgerButton from './BurgerButton';
 

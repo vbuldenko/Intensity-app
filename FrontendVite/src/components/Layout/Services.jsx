@@ -74,23 +74,23 @@ function Services() {
     return (
         <section className="main-section">
             <div className="main-subsection">
-                <h1>Наші послуги</h1>
+                <h1 className="l-font">Наші послуги</h1>
                 <div className="info">
                     {trainingData.map((el, i) => (
-                        <div key={i} className="card-el-bg">
-                            <h2>{el.title}</h2>
-                            <p>{el.description}</p>
+                        <div key={i} className="card-el-bg flex-col">
+                            <h2 className="m-font">{el.title}</h2>
+                            <p className="s-font">{el.description}</p>
                         </div>
                     ))}
                 </div>
             </div>
             <div className="main-subsection">
-                <h1>Напрямки тренувань</h1>
+                <h1 className="l-font">Напрямки тренувань</h1>
                 <div className="info">
                     {classes.map((el, i) => (
-                        <div key={i} className="card-el-bg">
-                            <h2>{el.title}</h2>
-                            <p>{el.description}</p>
+                        <div key={i} className="card-el-bg flex-col">
+                            <h2 className="m-font">{el.title}</h2>
+                            <p className="s-font">{el.description}</p>
                         </div>
                     ))}
                 </div>
