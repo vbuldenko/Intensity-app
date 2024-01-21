@@ -21,11 +21,11 @@ export default function Client() {
     const search = location.state?.search || '';
 
     return (
-        <div>
+        <div className="flex-column">
             <Link to={`..${search}`} relative="path" className="back-button">
                 &larr; <span>Back to all clients</span>
             </Link>
-            <div className="client-info">
+            <div className="flex-column">
                 <p>
                     Abonement holder: {client.name} {client.surname}
                 </p>

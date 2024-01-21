@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import SearchInput from '../../Elements/Search';
 import {
     ListBulletIcon,
     QueueListIcon,
     Squares2X2Icon,
-    MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 
 export default function Clients(props) {
@@ -61,23 +61,14 @@ export default function Clients(props) {
                         </button>
                     </div>
                 </div>
-
-                <div className="search">
-                    <MagnifyingGlassIcon className="h-4 w-4" />
-                    <input
-                        type="text"
-                        placeholder="Search clients..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
+                <SearchInput value={searchQuery} onChange={setSearchQuery} />
             </div>
-            <div className={`clients-list ${viewMode}`}>
+            <div className={`persons ${viewMode}`}>
                 {filteredClients.map((client) => (
                     <Link
                         key={client.id}
                         to={`${client.id}`}
-                        className={`client ${viewMode}`}
+                        className={`person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <div className="client-title">
@@ -86,7 +77,7 @@ export default function Clients(props) {
                             </p>
                             <p className="status">Active</p>
                         </div>
-                        <div className="client-data">
+                        <div className="person-data xs-font">
                             <div>
                                 <p>Phone</p>
                                 <p className="client-phone">{client.phone}</p>

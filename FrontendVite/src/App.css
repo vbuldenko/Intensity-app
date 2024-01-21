@@ -54,6 +54,9 @@
 .gray-clr {
     color: var(--gray-color-3);
 }
+.green-clr {
+    color: var(--green-color);
+}
 
 .App * {
     box-sizing: border-box;
@@ -311,6 +314,12 @@ a:hover {
     letter-spacing: 0.05rem;
     align-self: self-start;
 }
+.status3 {
+    padding: 0.1rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--green-color);
+    color: var(--green-color);
+}
 
 .bold {
     font-weight: 700;
@@ -323,13 +332,23 @@ a:hover {
     backdrop-filter: blur(70px);
     border: 1px solid rgba(255, 255, 255, 0.4);
 }
+.acc-card-el-bg {
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow);
+    border-radius: var(--big-element-br);
+}
+.acc-card-el-bg2 {
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow);
+    border-radius: var(--element-br);
+}
 
 .metrics {
     display: grid;
     /* grid-template-columns: repeat(4, 1fr); */
     grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
     font-size: var(--metrics-fontsize);
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem;
     gap: 1rem;
     text-align: center;
     width: 100%;
@@ -345,4 +364,9 @@ a:hover {
     text-align: center;
     width: 100%;
     /* border-bottom: 1px solid rgba(0, 0, 0, 0.15); */
+}
+
+.search input::placeholder {
+    color: inherit;
+    font-size: var(--content-text-fontsize);
 }

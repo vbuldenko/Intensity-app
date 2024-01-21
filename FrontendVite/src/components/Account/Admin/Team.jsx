@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
-import {
-    ListBulletIcon,
-    QueueListIcon,
-    Squares2X2Icon,
-    MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
+import SearchInput from '../../Elements/Search';
+import { ListBulletIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 
 export default function Team() {
     const users = useSelector(({ users }) => users);
@@ -62,28 +58,20 @@ export default function Team() {
                     </div>
                 </div>
 
-                <div className="search">
-                    <MagnifyingGlassIcon className="h-4 w-4" />
-                    <input
-                        type="text"
-                        placeholder="Search trainers..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
+                <SearchInput value={searchQuery} onChange={setSearchQuery} />
             </div>
-            <div className={`trainers-list ${viewMode}`}>
+            <div className={`persons ${viewMode}`}>
                 {filteredTrainers.map((trainer) => (
                     <Link
-                        to={`${trainer.id}`}
                         key={trainer.id}
-                        className={`trainer ${viewMode}`}
+                        to={`${trainer.id}`}
+                        className={`person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <p className="section-title">
                             {trainer.name} {trainer.surname}
                         </p>
-                        <div className="flex-row-container s-text">
+                        <div className="flex-row-container xs-font">
                             <p>Phone</p>
                             <p>{trainer.phone}</p>
                         </div>

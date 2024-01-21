@@ -43,7 +43,7 @@ export default function Abonements({ currentDate }) {
         new Date(a.purchase_date) - new Date(b.purchase_date);
 
     return (
-        <div className="client-overview">
+        <div className="flex-column">
             <div className="selector align-right">
                 <button
                     className={`selector-element ${
@@ -85,7 +85,7 @@ export default function Abonements({ currentDate }) {
                     <p>Not activated</p>
                 </button>
             </div>
-            <div className="abonements">
+            <div className="flex-column">
                 {filteredAbonements
                     .sort(sortByPurchaseDate)
                     .map((abonement) => {

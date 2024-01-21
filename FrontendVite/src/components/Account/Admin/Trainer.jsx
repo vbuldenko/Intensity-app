@@ -5,6 +5,7 @@ import {
     useLocation,
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import HistoryElement from '../../Elements/HistoryElement';
 
 export default function Trainer() {
     const currentDate = new Date();
@@ -23,6 +24,8 @@ export default function Trainer() {
         .filter((training) => training.instructor.surname === trainer.surname)
         .filter((training) => new Date(training.date) <= new Date())
         .filter((training) => training.registeredClients.length >= 2);
+
+    console.log(trainerTrainings);
 
     const search = location.state?.search || '';
 
@@ -71,10 +74,12 @@ export default function Trainer() {
                                             <p className="training-type">
                                                 {training.type}
                                             </p>
-                                            <span>Group Class</span>
+                                            <span className="gray-status">
+                                                Group Class
+                                            </span>
                                         </div>
                                         <div>
-                                            <p className="visitors">
+                                            <p className="xs-font">
                                                 Visitors:{' '}
                                                 {
                                                     training.registeredClients
@@ -92,25 +97,11 @@ export default function Trainer() {
                     <div className="title top-zero">History</div>
                     <div className="history">
                         {trainerTrainings.map((training) => (
-                            <div className="history-element" key={training.id}>
-                                <div>
-                                    <p>Date</p>
-                                    <p>{training.date.slice(0, 10)}</p>
-                                </div>
-                                <div>
-                                    <p>Time</p>
-                                    <p>{training.time}</p>
-                                </div>
-
-                                <div>
-                                    <p>Class</p>
-                                    <p>{training.type}</p>
-                                </div>
-                                <div>
-                                    <p>Visitors</p>
-                                    <p>{training.registeredClients.length}</p>
-                                </div>
-                            </div>
+                            <HistoryElement
+                                key={training.id}
+                                data={training}
+                                trainer={true}
+                            />
                         ))}
                     </div>
                 </div>

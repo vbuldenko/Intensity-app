@@ -17,7 +17,7 @@ export default function AdminOverview() {
 
     return (
         <div className="admin-overview">
-            <div className="sales">
+            <div className="sales acc-card-el-bg">
                 <div className="title top-zero">Sales</div>
                 <div className="selector align-right">
                     <button className="selector-element">
@@ -31,27 +31,30 @@ export default function AdminOverview() {
                     </button>
                 </div>
                 <div className="metrics">
-                    <p>client</p>
+                    <p> client</p>
                     <p>abonement</p>
                     <p>price</p>
                     <p>date</p>
                 </div>
-                <div className="sale-data-list">
+                <div className="sale-list">
                     {soldAbonements.map((sale) => (
-                        <div key={sale.id} className="sale-data">
+                        <div
+                            key={sale.id}
+                            className="sale-data acc-card-el-bg2"
+                        >
                             <div>
                                 <p className="sale-name">
                                     {sale.user.name} {sale.user.surname}
                                 </p>
                             </div>
                             <div>
-                                <p className="sale-abonement">{sale.amount}</p>
+                                <p className="green-clr">{sale.amount}</p>
                             </div>
                             <div>
-                                <p className="sale-price">₴{sale.price}</p>
+                                <p>₴{sale.price}</p>
                             </div>
                             <div>
-                                <p className="sale-date">
+                                <p className="green-clr">
                                     {sale.purchase_date.slice(0, 10)}
                                 </p>
                             </div>
@@ -59,26 +62,30 @@ export default function AdminOverview() {
                     ))}
                 </div>
             </div>
-            <div className="inout">
-                <div className="inout-main">
-                    <p className="title top-zero">Income</p>
-                    <div className="inout-metrics xs-font">
-                        <p>Month</p>
-                        <p>Today</p>
-                        <p>Abonements</p>
+            <div className="inout acc-card-el-bg">
+                <p className="title top-zero">Income</p>
+                <div className="inout-el flex-row-container">
+                    <div className="flex-col">
+                        <p className="xs-font">Month</p>
+                        <p className="green-clr">{statistics.monthlyIncome}</p>
                     </div>
-                    <div className="inout-data">
-                        <p>{statistics.monthlyIncome}</p>
-                        <p>{statistics.dailyIncome}</p>
-                        <p>{statistics.totalAbonementSales}</p>
+                    <div className="flex-col">
+                        <p className="xs-font">Today</p>
+                        <p className="green-clr">{statistics.dailyIncome}</p>
+                    </div>
+                    <div className="flex-col">
+                        <p className="xs-font">Abonements</p>
+                        <p className="green-clr">
+                            {statistics.totalAbonementSales}
+                        </p>
                     </div>
                 </div>
 
-                <div className="inout-additional">
+                <div className="flex-row">
                     <div>
-                        <p className="inout-profit">Profit</p>
+                        <p className="bold">Profit</p>
                     </div>
-                    <div className="inout-profit-data">
+                    <div className="green-clr">
                         <p>{statistics.monthlyIncome}</p>
                     </div>
                     <div>
@@ -99,24 +106,25 @@ export default function AdminOverview() {
                     </div>
                 </div>
             </div>
-            <div className="inout">
-                <div className="inout-main">
-                    <p className="title top-zero">Expenses</p>
-                    <div className="inout-metrics xs-font">
-                        <p className="inout-month">Trainer</p>
-                        <p className="inout-day">Salary</p>
+
+            <div className="inout acc-card-el-bg">
+                <p className="title top-zero">Expenses</p>
+                <div className="inout-el flex-row-container">
+                    <div className="flex-col">
+                        <p className="xs-font">Trainer</p>
+                        <p className="green-clr">{statistics.monthlyIncome}</p>
                     </div>
-                    <div className="inout-data">
-                        <p>{statistics.monthlyIncome}</p>
-                        <p>{statistics.dailyIncome}</p>
+                    <div className="flex-col">
+                        <p className="xs-font">Salary</p>
+                        <p className="green-clr">{statistics.dailyIncome}</p>
                     </div>
                 </div>
 
-                <div className="inout-additional">
+                <div className="flex-row">
                     <div>
-                        <p className="inout-profit">Total</p>
+                        <p className="bold">Total</p>
                     </div>
-                    <div className="inout-profit-data">
+                    <div className="green-clr">
                         <p>{statistics.monthlyIncome}</p>
                     </div>
                     <div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateAbonement } from '../../reducers/abonementReducer';
 import storageService from '../../services/storage';
+import HistoryElement from '../Elements/HistoryElement';
 
 export default function Abonement({ abonement }) {
     const { role: userRole } = storageService.loadUser();
@@ -29,10 +30,10 @@ export default function Abonement({ abonement }) {
     }
 
     return (
-        <div className="abonement">
+        <div className="abonement acc-card-el-bg">
             <div className="gen-abonement-info">
-                <div className={`title ${status}`}>{status}</div>
-                <div className="abonement-info-main">
+                <div className={`top-zero title ${status}`}>{status}</div>
+                <div className="flex-row-container">
                     <div>
                         <b>Amount of trainings:</b> {abonement.amount}
                     </div>
@@ -63,7 +64,7 @@ export default function Abonement({ abonement }) {
                         )}
                     </div>
                 </div>
-                <div className="abonement-info-from-to">
+                <div className="flex-row-container">
                     <div>
                         <b>Purchase date:</b>{' '}
                         {abonement.purchase_date.slice(0, 16)}
@@ -82,47 +83,15 @@ export default function Abonement({ abonement }) {
                     </div>
                 </div>
             </div>
-            {/* Look at id property of training history */}
             <div className="history">
                 {abonement.history.length > 0
-                    ? abonement.history.map((el) => {
-                          return (
-                              <div key={el.id} className="history-element">
-                                  <div>
-                                      <p>Date</p>
-                                      <p>{el.date.slice(0, 10)}</p>
-                                  </div>
-                                  <div>
-                                      <p>Time</p>
-                                      <p>{el.time}</p>
-                                  </div>
-
-                                  <div>
-                                      <p>Class</p>
-                                      <p>{el.type}</p>
-                                  </div>
-                                  <div>
-                                      <p>Trainer</p>
-                                      <p>{el.instructor.surname}</p>
-                                  </div>
-
-                                  {el.deducted ? (
-                                      <div>
-                                          <p
-                                              style={{
-                                                  color: 'red',
-                                                  border: '1px solid red',
-                                                  borderRadius: '0.5em',
-                                                  padding: '0.25em',
-                                              }}
-                                          >
-                                              deducted: {el.deduction_reason}
-                                          </p>
-                                      </div>
-                                  ) : null}
-                              </div>
-                          );
-                      })
+                    ? abonement.history.map((el) => (
+                          <HistoryElement
+                              key={el.id}
+                              data={el}
+                              trainer={false}
+                          />
+                      ))
                     : null}
             </div>
         </div>

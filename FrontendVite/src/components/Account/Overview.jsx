@@ -14,16 +14,15 @@ export default function Overview() {
     const { name, role } = user;
 
     return (
-        <div className="overview">
+        <div className="flex-column">
             <div className="title top-zero align-center">
                 {currentDate.toString().slice(0, 16)}
             </div>
-            <div className="user">
-                {/* <img className="user-img" src={userData.img} /> */}
+            <div className="flex-row-container green-clr">
                 <div>
                     <p>Welcome back, {name}</p>
                 </div>
-                <span className="user-role">{role}</span>
+                <span className="status3">{role}</span>
             </div>
 
             <div>

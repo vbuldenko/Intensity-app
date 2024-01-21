@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
-// import Abonements from './Abonements';
+import HistoryElement from '../Elements/HistoryElement';
 
 export default function TrainerOverview() {
     const currentDate = new Date();
@@ -74,25 +74,11 @@ export default function TrainerOverview() {
                 <div className="title top-zero">History</div>
                 <div className="history">
                     {trainerTrainings.map((training) => (
-                        <div className="history-element" key={training.id}>
-                            <div>
-                                <p>Date</p>
-                                <p>{training.date.slice(0, 10)}</p>
-                            </div>
-                            <div>
-                                <p>Time</p>
-                                <p>{training.time}</p>
-                            </div>
-
-                            <div>
-                                <p>Class</p>
-                                <p>{training.type}</p>
-                            </div>
-                            <div>
-                                <p>Visitors</p>
-                                <p>{training.registeredClients.length}</p>
-                            </div>
-                        </div>
+                        <HistoryElement
+                            key={training.id}
+                            data={training}
+                            trainer={true}
+                        />
                     ))}
                 </div>
             </div>
