@@ -2,6 +2,7 @@
 
 .account-section {
     max-width: 70rem;
+    min-width: min-content;
     min-height: 40rem;
     margin: 0 auto;
     display: grid;
@@ -13,7 +14,7 @@
 
 .account-menu {
     background: var(--account-menu-background);
-    padding: 2em 1em;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -22,11 +23,12 @@
 
 .account-menu a {
     border-radius: 2em;
-    padding: 0.5em;
+    padding: 0.75rem 1.5rem;
     text-decoration: none;
-    text-align: center;
+    text-align: left;
     transition: all 0.2s ease-in-out;
     font-size: var(--account-menu-fontsize);
+    line-height: 1;
 }
 
 .account-menu a:hover {
@@ -34,10 +36,29 @@
 }
 
 .account-content {
-    border-radius: 0 1em 1em 0;
+    border-radius: 0 1rem 1rem 0;
     padding: 2rem;
     position: relative;
 }
+
+@media (max-width: 450px) {
+    .account-section {
+        grid-template-columns: 1fr;
+        grid-template-rows: max-content;
+    }
+
+    .account-content {
+        padding: 3rem 1rem;
+    }
+
+    .account-menu {
+        border-radius: 1rem 1rem 0 0;
+        padding: 1.5rem 1rem;
+        flex-direction: row;
+        overflow-x: scroll;
+    }
+}
+
 /* ----------------------------------------------------OVERVIEW */
 
 .admin-overview {
@@ -61,8 +82,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1.5rem;
-    min-width: 400px;
+    padding: var(--big-element-padding);
     /* max-width: 400px; */
     /* max-height: 600px; //for overflow */
 }
@@ -78,7 +98,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    font-size: var(--content-text-fontsize);
     padding: 1rem 0.5rem;
 }
 
@@ -96,7 +115,7 @@
 .inout {
     position: relative;
     grid-column: 2/3;
-    padding: 1.5rem;
+    padding: var(--big-element-padding);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -126,7 +145,7 @@
     align-items: center;
     justify-content: space-between;
     color: var(--gray-color-1);
-    font-size: var(--button-fontsize);
+    font-size: var(--s-fontsize);
     font-weight: 500;
 }
 
@@ -157,6 +176,19 @@
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+@media (max-width: 768px) {
+    .f-container {
+        flex-direction: column;
+    }
+    .selector {
+        gap: 0.75rem;
+        padding: 0 1.25rem;
+    }
+    .selector-element {
+        font-size: var(--xs-fontsize);
+    }
+}
+
 .view-button {
     transition: color 0.3s ease;
 }
@@ -175,18 +207,16 @@
 }
 
 .person {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background: var(--card-background-color);
-    box-shadow: var(--card-element-shadow2);
-    border-radius: var(--element-br);
     padding: 1rem 2rem;
-    width: 250px;
+    min-width: 250px;
 }
 
 .person.list {
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .client-title,
@@ -215,17 +245,27 @@
     grid-template-columns: 0.75fr 1fr;
     gap: 1.5rem;
 }
+@media (max-width: 768px) {
+    .trainer-overview {
+        display: flex;
+        flex-direction: column;
+        /* align-items: normal; */
+    }
+
+    .results-section {
+        flex-direction: column;
+    }
+}
 
 .results-section {
     padding: var(--big-element-padding);
+    padding-top: 2.5rem;
     grid-column: 1/3;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 5rem;
-    border-radius: var(--big-element-br);
-    background: var(--account-background);
-    box-shadow: var(--card-element-shadow);
+    gap: 1rem;
+    position: relative;
 }
 
 .trainings-section,
@@ -234,21 +274,12 @@
     display: flex;
     padding: var(--big-element-padding);
     padding-top: 3rem;
-    border-radius: var(--big-element-br);
-    background: var(--account-background);
-    box-shadow: var(--card-element-shadow);
-    color: var(--gray1-text-color);
 }
 
 .result-el {
     display: flex;
     gap: 0.75rem;
     align-items: center;
-    font-size: var(--metrics-fontsize);
-}
-.result-el span {
-    font-size: var(--title-fontsize);
-    font-weight: 500;
 }
 
 .trainings-section {
@@ -273,30 +304,16 @@
 
 .training-card {
     flex: 1;
-    background: var(--card-background-color);
-    box-shadow: var(--card-element-shadow);
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
     padding: 1rem;
-    border-radius: var(--element-br);
 }
 .training-card div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-}
-
-.gray-status {
-    line-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--small-text-fontsize);
-    border: 1px solid var(--gray-color-3);
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.25rem;
 }
 
 .history-section {
@@ -319,7 +336,6 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    min-width: max-content;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--gray-color-7);
 }
@@ -341,7 +357,7 @@
 .history-element div {
     display: flex;
     gap: 0.75rem;
-    font-size: var(--small-text-fontsize);
+    font-size: var(--xs-fontsize);
 }
 .history-element div :first-child {
     flex: 0.5;
@@ -441,5 +457,13 @@
 
 .personal-info-el div {
     display: flex;
-    gap: 1em;
+    align-items: center;
+    gap: 0.75rem;
+}
+.personal-info-el div :nth-child(2) {
+    min-width: 5em;
+    text-align: left;
+}
+.personal-info-el div :nth-child(3) {
+    color: var(--green-color);
 }

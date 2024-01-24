@@ -45,7 +45,7 @@ export default function Home() {
                 <h1 className="l-font align-left">Fitness Studio</h1>
                 <p className="hero-name">INTENSITY</p>
                 <h2 className="m-font align-right">Health·Strength·Energy</h2>
-                <p className="s-font align-center">
+                <p className="n-font align-center">
                     Покращуємо якість життя, без шкоди для здоров'я!
                 </p>
                 {/* <button>Look for details</button> */}
@@ -56,7 +56,7 @@ export default function Home() {
                     {values.map((value, index) => (
                         <div key={index} className="card-el-bg flex-col">
                             <h2 className="m-font">{value.value}</h2>
-                            <p className="s-font gray-clr">
+                            <p className="n-font gray-clr">
                                 {value.description}
                             </p>
                         </div>
@@ -68,7 +68,7 @@ export default function Home() {
                 <div className="info">
                     {rules.map((rule, index) => (
                         <div key={index} className="card-el-bg flex-col">
-                            <p className="s-font">{rule}</p>
+                            <p className="n-font">{rule}</p>
                         </div>
                     ))}
                 </div>

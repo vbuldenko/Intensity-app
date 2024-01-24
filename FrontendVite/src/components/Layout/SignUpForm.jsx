@@ -43,7 +43,7 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className="form-wrapper">
+        <div className="form-wrapper card-el-bg ">
             <form className="auth-form" onSubmit={handleSubmit}>
                 <h1>Create an account</h1>
                 {notification && <h1>{notification}</h1>}
@@ -107,36 +107,38 @@ const SignUpForm = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
+                <div className="role-input">
                     <label>Choose your role:</label>
-                    <label style={{ marginLeft: '10px' }}>
-                        <input
-                            type="radio"
-                            name="role"
-                            value="client"
-                            checked={signUpData.role === 'client'}
-                            onChange={handleChange}
-                        />
-                        Client
-                    </label>
-                    <label style={{ marginLeft: '10px' }}>
-                        <input
-                            type="radio"
-                            name="role"
-                            value="trainer"
-                            checked={signUpData.role === 'trainer'}
-                            onChange={handleChange}
-                        />
-                        Trainer
-                    </label>
+                    <div className="flex-row">
+                        <label className="label">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="client"
+                                checked={signUpData.role === 'client'}
+                                onChange={handleChange}
+                            />
+                            <span>Client</span>
+                        </label>
+                        <label className="label">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="trainer"
+                                checked={signUpData.role === 'trainer'}
+                                onChange={handleChange}
+                            />
+                            <span>Trainer</span>
+                        </label>
+                    </div>
                 </div>
-                <button id="login-button" type="submit">
+                <button id="login-button" type="submit" className="bold l-font">
                     Sign Up
                 </button>
             </form>
             <div className="signup-subsection">
                 <div>
-                    <Link className="logo" to="/sign-in">
+                    <Link className="l-font" to="/sign-in">
                         Log In
                     </Link>
                 </div>

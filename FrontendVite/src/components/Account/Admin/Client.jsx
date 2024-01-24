@@ -1,12 +1,6 @@
-import {
-    useParams,
-    useOutletContext,
-    Link,
-    useLocation,
-} from 'react-router-dom';
-// import clientPhoto from '../../images/tkachuk.jpg';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Abonement from '../Abonement';
+import Abonement from '../Client/Abonement';
 
 export default function Client() {
     const { id } = useParams();

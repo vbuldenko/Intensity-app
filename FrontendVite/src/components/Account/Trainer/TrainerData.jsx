@@ -1,13 +1,12 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
-import HistoryElement from '../Elements/HistoryElement';
+import HistoryElement from '../../Elements/HistoryElement';
 
-export default function TrainerOverview() {
+const TrainerData = ({ user }) => {
     const currentDate = new Date();
-    const user = useSelector(({ user }) => user);
+
     const trainings = useSelector(({ trainings }) => trainings);
-    console.log(trainings);
-    console.log(user);
 
     const trainerTrainings = trainings
         .filter((training) => training.instructor.id === user.id)
@@ -19,24 +18,30 @@ export default function TrainerOverview() {
 
     return (
         <div className="trainer-overview">
-            <div className="results-section">
-                <div className="section-title">Salary</div>
-                <div className="content-wrapper flex-row-container">
-                    <div className="result-el">
-                        <p>Current total (₴)</p>
-                        <span> {trainerTrainings.length * 300}</span>
-                    </div>
-                    <div className="result-el">
-                        <p>Today (₴)</p>
-                        <span>{trainerTrainings.length * 300}</span>
-                    </div>
-                    <div className="result-el">
-                        <p>Number of trainings</p>
-                        <span>{trainerTrainings.length}</span>
-                    </div>
+            <div className="results-section acc-card-el-bg ">
+                <div className="title top-zero align-left">Salary</div>
+
+                <div className="result-el">
+                    <p className="s-font">Current total (₴)</p>
+                    <span className="bold green-clr">
+                        {' '}
+                        {trainerTrainings.length * 300}
+                    </span>
+                </div>
+                <div className="result-el">
+                    <p className="s-font">Today (₴)</p>
+                    <span className="bold green-clr">
+                        {trainerTrainings.length * 300}
+                    </span>
+                </div>
+                <div className="result-el">
+                    <p className="s-font">Number of trainings</p>
+                    <span className="bold green-clr">
+                        {trainerTrainings.length}
+                    </span>
                 </div>
             </div>
-            <div className="trainings-section">
+            <div className="trainings-section acc-card-el-bg">
                 <div className="title top-zero">Today trainings</div>
                 <div className="trainings-section-list">
                     {trainerTrainings
@@ -49,12 +54,12 @@ export default function TrainerOverview() {
                             <div key={training.id} className="training-element">
                                 <p>{training.time}</p>
                                 <CheckCircleIcon className="h-6 w-6 check-icon" />
-                                <div className="training-card">
+                                <div className="training-card acc-card-el-bg2">
                                     <div>
                                         <p className="section-title">
                                             {training.type}
                                         </p>
-                                        <span className="gray-status">
+                                        <span className="status4 xs-font">
                                             Group Class
                                         </span>
                                     </div>
@@ -70,7 +75,7 @@ export default function TrainerOverview() {
                         ))}
                 </div>
             </div>
-            <div className="history-section">
+            <div className="history-section acc-card-el-bg">
                 <div className="title top-zero">History</div>
                 <div className="history">
                     {trainerTrainings.map((training) => (
@@ -84,4 +89,6 @@ export default function TrainerOverview() {
             </div>
         </div>
     );
-}
+};
+
+export default TrainerData;

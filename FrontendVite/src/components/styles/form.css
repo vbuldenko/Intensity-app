@@ -1,10 +1,6 @@
 .form-wrapper {
     margin: 2em auto;
     width: 350px;
-    border-radius: 1em;
-    background: rgba(130, 130, 130, 0.15);
-    backdrop-filter: blur(70px);
-    color: rgba(255, 255, 255, 0.6);
 }
 
 .auth-form {
@@ -24,19 +20,18 @@
     padding: 0.75em;
     border-radius: 0.5em;
     width: 100%;
-    color: rgba(130, 130, 130, 0.8);
+    border: 1px solid var(--gray-color-7);
 }
 
 .auth-form button {
-    padding: 0.75em;
-    background-color: #4caf50;
+    padding: 0.5em;
+    background-color: var(--green-color3);
     color: rgba(255, 255, 255, 1);
-    border-radius: 0.5em;
-    cursor: pointer;
+    border-radius: 0.5rem;
 }
 
 .auth-form button:hover {
-    background-color: #45a049;
+    background-color: var(--green-color);
 }
 
 .signup-subsection {
@@ -52,7 +47,15 @@
     gap: 0.5em;
 }
 
-.signup-link {
-    font-size: 1.5em;
-    font-weight: 600;
+.role-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }

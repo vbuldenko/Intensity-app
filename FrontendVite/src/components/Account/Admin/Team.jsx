@@ -30,7 +30,7 @@ export default function Team() {
 
     return (
         <div className="flex-column">
-            <div className="flex-row-container">
+            <div className="f-container">
                 <div className="selector">
                     <div className="selector-element">
                         <p>All:</p> <p> {trainers.length}</p>
@@ -65,7 +65,7 @@ export default function Team() {
                     <Link
                         key={trainer.id}
                         to={`${trainer.id}`}
-                        className={`person ${viewMode}`}
+                        className={`acc-card-el-bg2 person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <p className="section-title">

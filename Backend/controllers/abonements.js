@@ -108,7 +108,7 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
     if (user.role !== "client") {
       return response
         .status(401)
-        .json({ error: "Unauthorized: You are not in client role!" });
+        .json({ error: "Unauthorized: You are not in client role! (1)" });
     }
 
     const abonement = await Abonement.findById(abonementId);

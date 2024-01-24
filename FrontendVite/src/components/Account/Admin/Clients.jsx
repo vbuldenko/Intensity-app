@@ -34,7 +34,7 @@ export default function Clients(props) {
 
     return (
         <div className="flex-column">
-            <div className="flex-row-container">
+            <div className="f-container">
                 <div className="selector">
                     <div className="selector-element">
                         <p>All:</p> <p>{clients.length}</p>
@@ -68,7 +68,7 @@ export default function Clients(props) {
                     <Link
                         key={client.id}
                         to={`${client.id}`}
-                        className={`person ${viewMode}`}
+                        className={`acc-card-el-bg2 person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <div className="client-title">

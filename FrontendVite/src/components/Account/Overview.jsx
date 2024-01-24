@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import Admin from './Admin/Admin';
-import TrainerOverview from './TrainerOverview';
-import Abonements from './Abonements';
+import TrainerOverview from './Trainer/TrainerOverview';
+import ClientOverview from './Client/ClientOverview';
 
 export default function Overview() {
     const user = useSelector(({ user }) => user);
@@ -31,7 +31,7 @@ export default function Overview() {
                 ) : user.role === 'trainer' ? (
                     <TrainerOverview />
                 ) : (
-                    <Abonements currentDate={currentDate} />
+                    <ClientOverview currentDate={currentDate} />
                 )}
             </div>
         </div>

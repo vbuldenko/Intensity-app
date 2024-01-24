@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from '../Elements/ThemeToggle';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import BurgerButton from './BurgerButton';
+import BurgerButton from '../Elements/BurgerButton';
 
 export default function Header() {
     const user = useSelector(({ user }) => user);
@@ -19,11 +19,11 @@ export default function Header() {
     };
 
     return (
-        <header className="header">
+        <header className="header m-font">
             <Link className="logo" to="/">
                 Intensity
             </Link>
-            <div className={`header-navbar ${visible ? 'mobile' : ''}`}>
+            <nav className={`header-navbar ${visible ? 'mobile' : ''}`}>
                 <NavLink
                     to="/services"
                     activeClassName="active"
@@ -79,7 +79,7 @@ export default function Header() {
                     )}
                     <ThemeToggle />
                 </div>
-            </div>
+            </nav>
             <BurgerButton visible={visible} toggleMenu={toggleMobileMenu} />
         </header>
     );

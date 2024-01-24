@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { notifyWith } from '../../reducers/notificationReducer';
-import { createAbonement } from '../../reducers/abonementReducer';
+import { notifyWith } from '../../../reducers/notificationReducer';
+import { createAbonement } from '../../../reducers/abonementReducer';
 
 function IndividualAbonement({ amount, price }) {
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ export default function Purchases() {
 
     return (
         <div className="flex-column">
-            <h2 className="l-text bold">Choose your Abonement</h2>
+            <h2 className="l-text bold align-center">Choose your Abonement</h2>
             {notification && (
                 <div
                     style={{

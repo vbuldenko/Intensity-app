@@ -1,17 +1,13 @@
 .header {
-    padding: 1em 2em;
+    padding: 1rem 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
-    font-size: var(--navbar-fontsize);
 }
 
 .logo {
     text-transform: uppercase;
-    /* border: var(--black-border);
-    padding: 0.5rem 1rem;
-    border-radius: var(--element-br); */
 }
 
 .header-navbar {
@@ -59,7 +55,6 @@
         padding-top: 2.75em;
         align-items: center;
         position: fixed;
-        /* background: #ffffff; */
         backdrop-filter: blur(60px);
         top: 0;
         right: 0;
@@ -85,7 +80,7 @@
         position: relative;
         /* border: 2px solid rgb(105, 105, 105); */
         border-radius: 0.25em;
-        padding: 0 0.25em;
+        padding: 0;
         overflow: hidden; /* Hide overflow to prevent visual glitches */
     }
 
@@ -173,14 +168,12 @@
     max-width: 60rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 @media (max-width: 768px) {
     .prices {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
     }
 }
 
@@ -195,23 +188,17 @@
 .abonements-prices {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 0.5rem;
     padding: 0 1rem;
-}
-
-.abonements-prices div:last-child {
-    border-bottom: none;
 }
 
 /* -----------------------------------------CONTACTS */
 .contact-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 1em;
-    justify-content: center;
-    max-width: 50em;
+    gap: 1rem;
+    max-width: 60rem;
     margin: 0 auto;
-    padding: 1em;
 }
 .contact-subsection {
     flex: 1;

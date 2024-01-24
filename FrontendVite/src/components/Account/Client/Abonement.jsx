@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateAbonement } from '../../reducers/abonementReducer';
-import storageService from '../../services/storage';
-import HistoryElement from '../Elements/HistoryElement';
+import { updateAbonement } from '../../../reducers/abonementReducer';
+import storageService from '../../../services/storage';
+import HistoryElement from '../../Elements/HistoryElement';
+import Toggle from '../../Elements/Toggle';
 
 export default function Abonement({ abonement }) {
     const { role: userRole } = storageService.loadUser();
@@ -16,16 +17,14 @@ export default function Abonement({ abonement }) {
 
     const [freeze, setFreeze] = useState(abonement.paused);
 
-    function handleChange(e) {
-        const { name, checked } = e.target;
+    function handleClick() {
         if (abonement.paused) {
             console.log(
-                'You have paused your abonement already, other actions forbidden!'
+                'Abonement was frozen already, other actions forbidden!'
             );
         } else {
             setFreeze((prev) => !prev);
             dispatch(updateAbonement(abonement.id, { updateType: 'freeze' }));
-            console.log(name, checked);
         }
     }
 
@@ -33,7 +32,7 @@ export default function Abonement({ abonement }) {
         <div className="abonement acc-card-el-bg">
             <div className="gen-abonement-info">
                 <div className={`top-zero title ${status}`}>{status}</div>
-                <div className="flex-row-container">
+                <div className="f-container">
                     <div>
                         <b>Amount of trainings:</b> {abonement.amount}
                     </div>
@@ -45,41 +44,32 @@ export default function Abonement({ abonement }) {
                             </span>
                         </div>
                         {userRole === 'admin' && (
-                            <div className="freeze-option">
-                                <p>Freeze</p>
-                                <input
-                                    name="freeze-option"
-                                    type="checkbox"
-                                    id="freeze"
-                                    checked={freeze}
-                                    onChange={handleChange}
+                            <div className="flex-row-container">
+                                Freeze
+                                <Toggle
+                                    state={freeze}
+                                    handleClick={handleClick}
                                 />
-                                <label
-                                    htmlFor="freeze"
-                                    className="toggle-button"
-                                >
-                                    <div className="slider"></div>
-                                </label>
                             </div>
                         )}
                     </div>
                 </div>
-                <div className="flex-row-container">
-                    <div>
-                        <b>Purchase date:</b>{' '}
-                        {abonement.purchase_date.slice(0, 16)}
-                    </div>
+                <div className="f-container">
                     <div>
                         <b>From:</b>{' '}
                         {abonement.activation_date
-                            ? abonement.activation_date.slice(0, 16)
+                            ? abonement.activation_date.slice(0, 10)
                             : null}
                     </div>
                     <div>
                         <b>To:</b>{' '}
                         {abonement.expiration_date
-                            ? abonement.expiration_date.slice(0, 16)
+                            ? abonement.expiration_date.slice(0, 10)
                             : null}
+                    </div>
+                    <div>
+                        <b>Purchase date:</b>{' '}
+                        {abonement.purchase_date.slice(0, 10)}
                     </div>
                 </div>
             </div>

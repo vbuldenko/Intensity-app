@@ -79,7 +79,7 @@ function Services() {
                     {trainingData.map((el, i) => (
                         <div key={i} className="card-el-bg flex-col">
                             <h2 className="m-font">{el.title}</h2>
-                            <p className="s-font">{el.description}</p>
+                            <p className="n-font">{el.description}</p>
                         </div>
                     ))}
                 </div>
@@ -90,7 +90,7 @@ function Services() {
                     {classes.map((el, i) => (
                         <div key={i} className="card-el-bg flex-col">
                             <h2 className="m-font">{el.title}</h2>
-                            <p className="s-font gray-clr">{el.description}</p>
+                            <p className="n-font gray-clr">{el.description}</p>
                         </div>
                     ))}
                 </div>

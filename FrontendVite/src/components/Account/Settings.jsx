@@ -46,8 +46,8 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <IdentificationIcon className="h-6 w-6" />
-                            <p>Name</p>
-                            <p>{name}</p>
+                            <p className="s-font">Name</p>
+                            <p className="red">{name}</p>
                         </div>
 
                         <button>
@@ -57,7 +57,7 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <AtSymbolIcon className="h-6 w-6" />
-                            <p>Email</p>
+                            <p className="s-font">Email</p>
                             <p>{email}</p>
                         </div>
                         <button>
@@ -67,7 +67,7 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <PhoneIcon className="h-6 w-6" />
-                            <p>Phone</p>
+                            <p className="s-font">Phone</p>
                             <p>{phone}</p>
                         </div>
                         <button>
@@ -77,7 +77,7 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <KeyIcon className="h-6 w-6" />
-                            <p>Password</p>
+                            <p className="s-font">Password</p>
                         </div>
                         <button>
                             <PencilSquareIcon className="h-6 w-6" />
@@ -91,7 +91,7 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <ArrowRightOnRectangleIcon className="h-6 w-6" />
-                            <p>Log yourself out:</p>
+                            <p className="s-font">Log yourself out:</p>
                         </div>
 
                         <button
@@ -110,7 +110,7 @@ function Settings() {
                     <div className="personal-info-el">
                         <div>
                             <UserMinusIcon className="h-6 w-6" />
-                            <p>Delete your account:</p>
+                            <p className="s-font">Delete your account:</p>
                         </div>
                         <button
                             style={{

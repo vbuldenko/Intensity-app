@@ -30,7 +30,7 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
     if (user.role !== "client") {
       return response
         .status(401)
-        .json({ error: "Unauthorized: You are not in client role!" });
+        .json({ error: "Unauthorized: You are not in client role! (2)" });
     }
     if (updateType !== "reservation" && updateType !== "cancellation") {
       return response.status(400).json({ error: "Invalid updateType." });

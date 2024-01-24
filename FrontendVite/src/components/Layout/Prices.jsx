@@ -39,35 +39,37 @@ export default function Prices() {
 
     return (
         <>
-            {/* <div className="flex-column red"> */}
-            <h1 className="s-font">Абонементи</h1>
-            <div className="prices">
-                {prices.map((el, i) => (
-                    <div key={i} className="prices-subsection card-el-bg">
-                        <span className="status2">{el.category}</span>
-                        <div className="abonements-prices">
-                            <div className="metrics gray-clr">
-                                <p>amount</p>
-                                <p>price</p>
-                                <p>unit price</p>
-                            </div>
-                            {el.prices.map((el, i) => (
-                                <div key={i} className="metrics-data">
-                                    <p>
-                                        {el.amount}{' '}
-                                        {el.amount === 1
-                                            ? 'training'
-                                            : 'trainings'}
-                                    </p>
-                                    <p>₴ {el.price}</p>
-                                    <p>₴ {el.price / el.amount}</p>
+            <div className="">
+                <h1 className="m-font">Абонементи</h1>
+                <div className="prices">
+                    {prices.map((el, i) => (
+                        <div key={i} className="prices-subsection card-el-bg">
+                            <span className="status2">{el.category}</span>
+                            <div className="abonements-prices">
+                                <div className="metrics">
+                                    <p>amount</p>
+                                    <p>price</p>
+                                    <p>unit price</p>
                                 </div>
-                            ))}
+                                <div>
+                                    {el.prices.map((el, i) => (
+                                        <div key={i} className="abon-data">
+                                            <p>
+                                                {el.amount}{' '}
+                                                {el.amount === 1
+                                                    ? 'training'
+                                                    : 'trainings'}
+                                            </p>
+                                            <p>₴ {el.price}</p>
+                                            <p>₴ {el.price / el.amount}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-            {/* </div> */}
         </>
     );
 }

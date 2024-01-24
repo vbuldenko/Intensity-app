@@ -8,9 +8,9 @@ import {
     BellSnoozeIcon,
 } from '@heroicons/react/24/outline';
 
-export default function Abonements({ currentDate }) {
+export default function ClientOverview({ currentDate }) {
     const abonements = useSelector(({ abonements }) => abonements);
-    const [abonementView, setAbonementView] = useState('all');
+    const [abonementView, setAbonementView] = useState('active');
     const filteredAbonements = filterAbonements(abonements, abonementView);
 
     function filterAbonements(abonements, viewOption) {
@@ -45,7 +45,7 @@ export default function Abonements({ currentDate }) {
     return (
         <div className="flex-column">
             <div className="selector align-right">
-                <button
+                {/* <button
                     className={`selector-element ${
                         abonementView === 'all' ? 'active' : ''
                     }`}
@@ -54,7 +54,7 @@ export default function Abonements({ currentDate }) {
                     <Square3Stack3DIcon className="h-4 w-4" />
                     <p>All</p>
                 </button>
-                <div className="button-divider"></div>
+                <div className="button-divider"></div> */}
                 <button
                     className={`selector-element ${
                         abonementView === 'active' ? 'active' : ''

@@ -40,7 +40,7 @@ export default function AdminOverview() {
                     {soldAbonements.map((sale) => (
                         <div
                             key={sale.id}
-                            className="sale-data acc-card-el-bg2"
+                            className="sale-data acc-card-el-bg2 s-font"
                         >
                             <div>
                                 <p className="sale-name">

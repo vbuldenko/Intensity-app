@@ -2,13 +2,6 @@ import axios from 'axios';
 import storageService from './storage';
 const baseUrl = '/api/training-sessions';
 
-const token = storageService.loadUser()
-    ? `Bearer ${storageService.loadUser().token}`
-    : null;
-const config = {
-    headers: { Authorization: token },
-};
-
 const getAll = async () => {
     const response = await axios.get(baseUrl);
     return response.data;
@@ -26,6 +19,12 @@ const getAll = async () => {
 // };
 
 const update = async (id, updateType) => {
+    const token = storageService.loadUser()
+        ? `Bearer ${storageService.loadUser().token}`
+        : null;
+    const config = {
+        headers: { Authorization: token },
+    };
     const response = await axios.put(`${baseUrl}/${id}`, updateType, config);
     return response.data;
 };

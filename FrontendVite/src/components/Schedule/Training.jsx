@@ -10,14 +10,17 @@ import { notifyWith } from '../../reducers/notificationReducer';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);
+
     const activeAbonement = useSelector(({ abonements }) =>
         abonements.find((abonement) => {
+            // -----------------------------------------------------look for active or not activated abonement
             const expirationDate = new Date(abonement.expiration_date);
             return abonement.expiration_date
                 ? expirationDate >= new Date()
                 : !abonement.expiration_date;
         })
     );
+
     const reservedTrainings = useSelector(
         ({ reservedTrainings }) => reservedTrainings
     );
@@ -37,6 +40,14 @@ export default function Training({ training }) {
             dispatch(
                 notifyWith('Prohibited less than 3 hours before training.')
             );
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
+            return;
+        }
+        if (!activeAbonement) {
+            setError(true);
+            dispatch(notifyWith('No abonement, buy one to proceed!'));
             setTimeout(() => {
                 setError(false);
             }, 3000);

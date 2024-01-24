@@ -29,7 +29,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="form-wrapper">
+        <div className="form-wrapper card-el-bg ">
             <form className="auth-form" onSubmit={handleLogin}>
                 <h1>Log in to application</h1>
                 {notification ? <h1>{notification}</h1> : null}
@@ -53,12 +53,14 @@ const LoginForm = () => {
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
-                <button type="submit">Log In</button>
+                <button type="submit" className="bold l-font">
+                    Log In
+                </button>
             </form>
             <div className="signup-subsection">
                 <div>
                     <p>New here?</p>
-                    <Link className="signup-link" to="/sign-up">
+                    <Link className="l-font" to="/sign-up">
                         Sign Up
                     </Link>
                 </div>
