@@ -31,13 +31,14 @@ async function checkAndReturnTraining(trainingId) {
   try {
     const training = await Training.findById(trainingId);
 
-    if (training) {
+    // if (training) {
+    if (training && !training.processed) {
       const currentDate = new Date();
       const timeDifference = new Date(training.date) - currentDate;
 
       // Check 3 hours before the scheduled time
-      //   if (timeDifference <= 3 * 60 * 60 * 1000 && timeDifference > 0) {
-      if (timeDifference <= 3 * 60 * 60 * 1000) {
+      if (timeDifference <= 3 * 60 * 60 * 1000 && timeDifference > 0) {
+        //   if (timeDifference <= 3 * 60 * 60 * 1000) {
         const attendees = training.registeredClients.length;
         // console.log("attendes - ", attendees);
 
@@ -47,6 +48,9 @@ async function checkAndReturnTraining(trainingId) {
           await returnTrainingToAbonement(clientId, trainingId);
         }
       }
+      // To ensure the avoidance of repetition upon restart of the app
+      training.processed = true; // Should modify Schema to include this parameter
+      await training.save();
     }
   } catch (error) {
     console.error("Error checking and returning training:", error.message);

@@ -1,3 +1,8 @@
+main {
+    padding: 1.25rem;
+    min-height: 100vh;
+}
+
 .header {
     padding: 1rem 1.25rem;
     display: flex;
@@ -45,9 +50,18 @@
 
 /* Responsive styles for tablets and mobile phones */
 @media only screen and (max-width: 767px) {
-    /* .App.dark .header-navbar {
-        color: rgb(0, 0, 0);
-    } */
+    main {
+        padding-top: 5rem;
+    }
+
+    .header {
+        background-color: var(--account-background);
+        /* padding: 0.5rem 1.25rem; */
+        z-index: 1;
+        position: fixed;
+        width: 100%;
+        box-shadow: var(--card-element-shadow3);
+    }
 
     .header-navbar {
         flex-direction: column;

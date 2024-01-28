@@ -61,6 +61,8 @@ export default function Schedule() {
         'col-start-7',
     ];
 
+    console.log(selectedDayTrainings);
+
     return (
         <div className="schedule-container">
             <div className="calendar card-el-bg">

@@ -45,6 +45,14 @@ export default function Training({ training }) {
             }, 3000);
             return;
         }
+        if (activeAbonement.left === 0) {
+            setError(true);
+            dispatch(notifyWith('No trainings left, buy new abonement!'));
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
+            return;
+        }
         if (!activeAbonement) {
             setError(true);
             dispatch(notifyWith('No abonement, buy one to proceed!'));
