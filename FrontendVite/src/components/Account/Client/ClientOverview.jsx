@@ -17,13 +17,15 @@ export default function ClientOverview({ currentDate }) {
         const expirationDateFilter = (abonement) => {
             const expirationDate = new Date(abonement.expiration_date);
             if (viewOption === 'active') {
-                return expirationDate >= currentDate;
+                return abonement.status === 'active';
             }
             if (viewOption === 'expired') {
-                return expirationDate < currentDate;
+                return (
+                    expirationDate < currentDate || abonement.status === 'ended'
+                );
             }
             if (viewOption === 'not activated') {
-                return !abonement.activation_date;
+                return abonement.status === 'non-active';
             }
             return true; // 'all' option
         };
@@ -35,7 +37,6 @@ export default function ClientOverview({ currentDate }) {
         setAbonementView(event.target.value);
     }
     const handleClick = (value) => {
-        console.log(value);
         setAbonementView(value);
     };
 

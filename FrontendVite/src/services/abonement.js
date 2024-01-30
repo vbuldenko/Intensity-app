@@ -15,7 +15,7 @@ const getAllByUserId = async () => {
         headers: { Authorization: token },
     };
     const response = await axios.get(`${baseUrl}/user`, config);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
 };
 

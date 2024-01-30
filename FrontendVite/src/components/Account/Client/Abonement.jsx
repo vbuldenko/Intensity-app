@@ -8,11 +8,11 @@ import Toggle from '../../Elements/Toggle';
 export default function Abonement({ abonement }) {
     const { role: userRole } = storageService.loadUser();
 
-    const status = !abonement.expiration_date
-        ? 'not activated'
-        : new Date(abonement.expiration_date) >= new Date()
-        ? 'active'
-        : 'expired';
+    const status =
+        new Date(abonement.expiration_date) < new Date()
+            ? 'expired'
+            : abonement.status;
+
     const dispatch = useDispatch();
 
     const [freeze, setFreeze] = useState(abonement.paused);

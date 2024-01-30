@@ -2,32 +2,47 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTraining } from '../../reducers/trainingReducer';
 import { updateAbonement } from '../../reducers/abonementReducer';
-import {
-    addReservation,
-    removeReservation,
-} from '../../reducers/reservationsReducer';
+// import {
+//     addReservation,
+//     removeReservation,
+// } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
 
 export default function Training({ training }) {
     const notification = useSelector(({ notification }) => notification);
 
-    const activeAbonement = useSelector(({ abonements }) =>
-        abonements.find((abonement) => {
-            // -----------------------------------------------------look for active or not activated abonement
-            const expirationDate = new Date(abonement.expiration_date);
-            return abonement.expiration_date
-                ? expirationDate >= new Date()
-                : !abonement.expiration_date;
-        })
-    );
+    const abonements = useSelector(({ abonements }) => abonements);
 
-    const reservedTrainings = useSelector(
-        ({ reservedTrainings }) => reservedTrainings
-    );
+    const mostRecentAbonement = abonements.reduce((mostRecent, abonement) => {
+        const currentDate = new Date(abonement.activation_date);
+        const currentMaxDate = mostRecent
+            ? new Date(mostRecent.activation_date)
+            : null;
+
+        if (!currentMaxDate || currentDate > currentMaxDate) {
+            return abonement;
+        } else {
+            return mostRecent;
+        }
+    }, null);
+
+    // ---------------------------------look for active or not activated or current ended abonement
+    const activeAbonement =
+        abonements.find(
+            (abonement) =>
+                abonement.status === 'active' ||
+                abonement.status === 'non-active'
+        ) || mostRecentAbonement;
+
+    // const reservedTrainings = useSelector(
+    //     ({ reservedTrainings }) => reservedTrainings
+    // );
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
 
-    const isReserved = reservedTrainings.includes(training.id);
+    const isReserved = activeAbonement.history.some(
+        (hTraining) => hTraining.id === training.id
+    );
     const currentTime = new Date();
     const trainingTime = new Date(training.date);
     const threeHoursBeforeTraining = new Date(trainingTime);
@@ -45,7 +60,7 @@ export default function Training({ training }) {
             }, 3000);
             return;
         }
-        if (activeAbonement.left === 0) {
+        if (updateType === 'reservation' && activeAbonement.left === 0) {
             setError(true);
             dispatch(notifyWith('No trainings left, buy new abonement!'));
             setTimeout(() => {
@@ -63,11 +78,11 @@ export default function Training({ training }) {
         }
 
         // Think about indicating current status of reservation after page refresh
-        if (updateType === 'reservation') {
-            dispatch(addReservation(training.id));
-        } else if (updateType === 'cancellation') {
-            dispatch(removeReservation(training.id));
-        }
+        // if (updateType === 'reservation') {
+        //     dispatch(addReservation(training.id));
+        // } else if (updateType === 'cancellation') {
+        //     dispatch(removeReservation(training.id));
+        // }
 
         try {
             await dispatch(

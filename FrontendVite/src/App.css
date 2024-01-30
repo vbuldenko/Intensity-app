@@ -211,8 +211,12 @@
     border-radius: 0.5rem 0 0.5rem 0;
     color: var(--white-color);
 }
-.title.expired {
+.title.expired,
+.title.ended {
     background: var(--red-color);
+}
+.title.non-active {
+    background: var(--gray-color-3);
 }
 
 .top-zero {
