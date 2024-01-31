@@ -34,9 +34,6 @@ export default function Training({ training }) {
                 abonement.status === 'non-active'
         ) || mostRecentAbonement;
 
-    // const reservedTrainings = useSelector(
-    //     ({ reservedTrainings }) => reservedTrainings
-    // );
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
 
@@ -45,8 +42,17 @@ export default function Training({ training }) {
     );
     const currentTime = new Date();
     const trainingTime = new Date(training.date);
+    const isToday = currentTime.toDateString() === trainingTime.toDateString();
     const threeHoursBeforeTraining = new Date(trainingTime);
     threeHoursBeforeTraining.setHours(trainingTime.getHours() - 3);
+
+    const reserved = training.registeredClients.length;
+    const permission = currentTime >= threeHoursBeforeTraining && reserved < 2;
+    // const permission =
+    //     currentTime >= threeHoursBeforeTraining && reserved < 2 && isToday
+    //         ? true
+    //         : false;
+    // console.log(isToday);
 
     // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
@@ -148,25 +154,21 @@ export default function Training({ training }) {
                             padding: '0.25em 1em',
                             borderRadius: '0.5em',
                             color: 'white',
-                            background:
-                                currentTime >= threeHoursBeforeTraining
-                                    ? 'var(--gray-color-4)'
-                                    : isReserved
-                                    ? 'var(--red-color)'
-                                    : 'var(--green-color)',
-                            cursor:
-                                currentTime >= threeHoursBeforeTraining
-                                    ? 'not-allowed'
-                                    : 'pointer',
+                            background: permission
+                                ? 'var(--gray-color-4)'
+                                : isReserved
+                                ? 'var(--red-color)'
+                                : 'var(--green-color)',
+                            cursor: permission ? 'not-allowed' : 'pointer',
                         }}
-                        disabled={currentTime >= threeHoursBeforeTraining}
+                        disabled={permission}
                         onClick={() =>
                             handleAction(
                                 isReserved ? 'cancellation' : 'reservation'
                             )
                         }
                     >
-                        {currentTime >= threeHoursBeforeTraining
+                        {permission
                             ? 'Closed'
                             : isReserved
                             ? 'Cancel'

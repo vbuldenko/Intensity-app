@@ -28,6 +28,7 @@
             rgba(174, 174, 192, 0.5),
         -5.781px -5.781px 23.125px 0px #fff;
     --card-element-shadow3: 0 0 5px rgba(0, 0, 0, 0.1);
+    --card-element-shadow4: 0 0 2px var(--green-color);
     --big-element-padding: 1.5rem;
 
     --big-element-br: 1rem;
@@ -300,6 +301,11 @@
     background: var(--account-background);
     box-shadow: var(--card-element-shadow);
     /* box-shadow: var(--card-element-shadow2); */
+    border-radius: var(--element-br);
+}
+.acc-card-el-bg3 {
+    background: var(--account-background);
+    box-shadow: var(--card-element-shadow4);
     border-radius: var(--element-br);
 }
 

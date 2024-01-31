@@ -84,14 +84,21 @@
     gap: 1rem;
     padding: var(--big-element-padding);
     /* max-width: 400px; */
-    /* max-height: 600px; //for overflow */
+    max-height: 600px; /*for overflow*/
 }
 
 .sale-list {
+    padding: 0.3rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+.sale-list::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .sale-data {

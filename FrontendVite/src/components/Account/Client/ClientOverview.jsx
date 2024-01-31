@@ -33,9 +33,6 @@ export default function ClientOverview({ currentDate }) {
         return abonements.filter(expirationDateFilter);
     }
 
-    function handleChange(event) {
-        setAbonementView(event.target.value);
-    }
     const handleClick = (value) => {
         setAbonementView(value);
     };
