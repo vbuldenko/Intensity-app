@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MonthView from './Month';
 import WeekView from './Week';
-import Training from './Training';
+import SelectedTrainings from './SelectedTrainings';
 import '../styles/schedule.css';
 
 function classNames(...classes) {
@@ -119,18 +119,7 @@ export default function Schedule() {
                     />
                 )}
             </div>
-            <section className="trainings">
-                {/* <h3>Schedule for {format(selectedDay, 'MMM dd, yyy')}</h3> */}
-                <ol className="trainings-list">
-                    {selectedDayTrainings.length > 0 ? (
-                        selectedDayTrainings.map((training) => (
-                            <Training training={training} key={training.id} />
-                        ))
-                    ) : (
-                        <p>No trainings for today.</p>
-                    )}
-                </ol>
-            </section>
+            <SelectedTrainings trainings={selectedDayTrainings} />
         </div>
     );
 }

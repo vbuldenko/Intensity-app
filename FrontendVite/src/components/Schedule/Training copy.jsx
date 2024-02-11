@@ -1,15 +1,24 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTraining } from '../../reducers/trainingReducer';
 import { updateAbonement } from '../../reducers/abonementReducer';
 import reservationAccess from '../../utils';
-import { isTomorrow } from '../../utils';
+import { findMostRecentAbonement, isTomorrow } from '../../utils';
+// import {
+//     addReservation,
+//     removeReservation,
+// } from '../../reducers/reservationsReducer';
 import { notifyWith } from '../../reducers/notificationReducer';
 
-export default function Training({ training, activeAbonement }) {
+export default function Training({ training }) {
     const dispatch = useDispatch();
     const [error, setError] = useState(false);
     const notification = useSelector(({ notification }) => notification);
+
+    //either active-ended or non-active
+    const activeAbonement = useSelector(({ abonements }) =>
+        findMostRecentAbonement(abonements)
+    );
 
     const isReserved = activeAbonement
         ? activeAbonement.history.some(
@@ -20,7 +29,7 @@ export default function Training({ training, activeAbonement }) {
     const currentTime = new Date();
     const trainingTime = new Date(training.date);
     const reservedPlaces = training.registeredClients.length;
-    const hoursDiff = (trainingTime - currentTime) / (1000 * 60 * 60);
+    const hoursDiff = (trainingTime - currentTime) / (1000 * 60 * 60); // Calculating hours difference
     const currentHour = currentTime.getHours();
 
     const access = reservationAccess(
@@ -30,34 +39,37 @@ export default function Training({ training, activeAbonement }) {
         hoursDiff
     );
 
-    const handleNotification = (message) => {
-        setError(true);
-        dispatch(notifyWith(message));
-        setTimeout(() => {
-            setError(false);
-        }, 3000);
-    };
-
+    // Combined handler for reservation and cancellation.
     const handleAction = async (updateType) => {
         if (!activeAbonement) {
-            handleNotification('No abonement, buy one to proceed!');
+            setError(true);
+            dispatch(notifyWith('No abonement, buy one to proceed!'));
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
             return;
         }
         if (updateType === 'reservation' && activeAbonement.left === 0) {
-            handleNotification('No trainings left, buy a new abonement!');
+            setError(true);
+            dispatch(notifyWith('No trainings left, buy a new abonement!'));
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
             return;
         }
+        // if there are already two places reserved and less than three hours before training cancellation forbidden
         if (
             (updateType === 'cancellation' && hoursDiff < 3) ||
             (updateType === 'cancellation' &&
                 isTomorrow(currentTime, trainingTime) &&
                 [9, 10, 11].includes(trainingTime.getHours()) &&
-                currentHour >= 21) ||
-            (!isTomorrow(currentTime, trainingTime) && currentHour < 8)
+                currentHour >= 21)
         ) {
-            handleNotification(
-                'You cannot cancel morning trainings scheduled for tomorrow after 9p.m or any training 3 hours before its begining!'
-            );
+            setError(true);
+            dispatch(notifyWith('You cannot cancel 3 hours before training!'));
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
             return;
         }
 
@@ -71,9 +83,15 @@ export default function Training({ training, activeAbonement }) {
             await dispatch(updateTraining(training.id, { updateType }));
         } catch (error) {
             console.log(error);
-            handleNotification(
-                error.response ? error.response.data.error : 'error occurred'
+            setError(true);
+            dispatch(
+                notifyWith(
+                    error.response ? error.response.data.error : 'error occured'
+                )
             );
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
         }
     };
 

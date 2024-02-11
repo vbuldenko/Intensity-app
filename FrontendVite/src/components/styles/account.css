@@ -83,6 +83,7 @@
     flex-direction: column;
     gap: 1rem;
     padding: var(--big-element-padding);
+    padding-top: 2.5rem;
     /* max-width: 400px; */
     max-height: 600px; /*for overflow*/
 }
@@ -136,7 +137,7 @@
 /* -------------------------------------- CLIENTS */
 
 .selector {
-    height: 2.25rem;
+    height: 4rem;
     display: flex;
     gap: 1rem;
     padding: 0 1.5rem;

@@ -258,10 +258,11 @@
     align-self: self-start;
 }
 .status3 {
-    padding: 0.1rem 1.5rem;
+    padding: 0 1.25rem;
     border-radius: 1rem;
     border: 1px solid var(--green-color);
     color: var(--green-color);
+    line-height: 150%;
 }
 
 .status4 {

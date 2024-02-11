@@ -22,18 +22,10 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
   const { updateType } = request.body;
 
   try {
-    if (!user) {
-      return response
-        .status(401)
-        .json({ error: "Unauthorized: User not authenticated!" });
-    }
-    if (user.role !== "client") {
-      return response
-        .status(401)
-        .json({ error: "Unauthorized: You are not in client role! (2)" });
-    }
-    if (updateType !== "reservation" && updateType !== "cancellation") {
-      return response.status(400).json({ error: "Invalid updateType." });
+    if (!user || user.role !== "client") {
+      return response.status(401).json({
+        error: "Unauthorized: User not authenticated or not in client role.",
+      });
     }
 
     const training = await Training.findById(trainingId);
@@ -41,22 +33,26 @@ trainingRouter.put("/:id", userExtractor, async (request, response, next) => {
       return response.status(404).json({ error: "Training not found." });
     }
 
-    if (updateType === "reservation") {
-      if (training.registeredClients.includes(user.id)) {
-        return response.status(400).json({
-          error: "Already reserved: You have already reserved your place!",
-        });
-      }
-      training.registeredClients.push(user.id); //add user id to list of registered clients
-    } else if (updateType === "cancellation") {
-      if (!training.registeredClients.includes(user.id)) {
-        return response.status(400).json({
-          error: "Not reserved: You have not reserved a place!",
-        });
-      }
-      training.registeredClients = training.registeredClients.filter(
-        (clientId) => clientId.toString() !== user.id
-      ); // delete user id from list of registered clients
+    switch (updateType) {
+      case "reservation":
+        if (training.registeredClients.includes(user.id)) {
+          return response.status(400).json({
+            error: "Already reserved: You have already reserved your place!",
+          });
+        }
+        training.registeredClients.push(user.id);
+        break;
+      case "cancellation":
+        const index = training.registeredClients.indexOf(user.id);
+        if (index === -1) {
+          return response
+            .status(400)
+            .json({ error: "Not reserved: You have not reserved a place!" });
+        }
+        training.registeredClients.splice(index, 1);
+        break;
+      default:
+        return response.status(400).json({ error: "Invalid updateType." });
     }
 
     const savedTraining = await training.save();
