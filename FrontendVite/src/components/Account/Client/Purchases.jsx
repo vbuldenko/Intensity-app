@@ -14,7 +14,9 @@ function IndividualAbonement({ data, client }) {
         // Think about admin adding abonements
         try {
             if (user.role === 'admin' && client) {
-                await dispatch(createAbonement(selectedAbonement));
+                await dispatch(
+                    createAbonement({ ...selectedAbonement, clientId: client })
+                );
                 dispatch(
                     notifyWith(
                         `Abonement for ${selectedAbonement.amount} trainings was purchased`

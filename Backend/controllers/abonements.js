@@ -1,6 +1,7 @@
 const abonementRouter = require("express").Router();
 const Abonement = require("../models/abonement");
 const userExtractor = require("../utils/middleware").userExtractor;
+const User = require("../models/user");
 
 abonementRouter.get("/", async (request, response, next) => {
   try {
@@ -136,43 +137,114 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
   }
 });
 
+// abonementRouter.post("/", userExtractor, async (request, response, next) => {
+//   const { body, user } = request;
+//   const client = await User.findById(body.clientId);
+//   const newAbon = { amount: body.amount, price: body.price };
+
+//   try {
+//     if (!user) {
+//       return response.status(401).json({ error: "operation not permitted" });
+//     }
+//     if (user.role === "admin" && !client) {
+//       return response.status(401).json({ error: "cannot find client" });
+//     }
+
+//     const abonements = await Abonement.find({
+//       user: user.role === "admin" ? client.id : user.id,
+//     });
+//     const isAvailableForUse = abonements.find(
+//       (abonement) =>
+//         abonement.status === "active" || abonement.status === "non-active"
+//     );
+
+//     if (isAvailableForUse) {
+//       return response.status(400).json({ error: "already have an abonement" });
+//     }
+//     //responds with status 400 if there no title or url properties in the request
+//     if (!body.amount || body.amount === 0) {
+//       return response
+//         .status(400)
+//         .json({ error: "Amount of days in abonement is not choosed" });
+//     }
+
+//     //Adding properties not declared in the first place
+//     newAbon.purchase_date = new Date();
+//     newAbon.paused = false;
+//     newAbon.left = newAbon.amount;
+//     newAbon.status = "non-active";
+
+//     const abonement = new Abonement({
+//       ...newAbon,
+//       user: user.role === "admin" ? client.id : user.id,
+//     }); //Why here user.id and not user._id? Why there no error? Lookup later for better understanding!!!
+//     const savedAbonement = await abonement.save();
+//     console.log(savedAbonement);
+//     user.role === "admin"
+//       ? (client.abonements = client.abonements.concat(savedAbonement._id))
+//       : (user.abonements = user.abonements.concat(savedAbonement._id));
+
+//     user.role === "admin" ? await client.save() : await user.save();
+//     response.status(201).json(savedAbonement);
+//   } catch (error) {
+//     console.log(error);
+//     next(error);
+//   }
+// });
+
 abonementRouter.post("/", userExtractor, async (request, response, next) => {
   const { body, user } = request;
+  const { role } = user;
 
   try {
     if (!user) {
-      return response.status(401).json({ error: "operation not permitted" });
+      return response.status(401).json({ error: "Operation not permitted" });
     }
 
-    const abonements = await Abonement.find({ user: user.id });
-    const isAvailableForUse = abonements.find(
-      (abonement) =>
-        abonement.status === "active" || abonement.status === "non-active"
-    );
-
-    if (isAvailableForUse) {
-      return response
-        .status(400)
-        .json({ error: "You already have an abonement" });
+    const client = await User.findByIdOrFail(body.clientId);
+    if (role === "admin" && !client) {
+      return response.status(401).json({ error: "Cannot find client" });
     }
-    //responds with status 400 if there no title or url properties in the request
+
+    const abonements = await Abonement.find({
+      user: role === "admin" ? client.id : user.id,
+    });
+
+    if (
+      abonements.some(
+        (abonement) =>
+          abonement.status === "active" || abonement.status === "non-active"
+      )
+    ) {
+      return response.status(400).json({ error: "Already have an abonement" });
+    }
+
     if (!body.amount || body.amount === 0) {
       return response
         .status(400)
-        .json({ error: "Amount of days in abonement is not choosed" });
+        .json({ error: "Amount of days in abonement is not chosen" });
     }
 
-    //Adding properties not declared in the first place
-    body.purchase_date = new Date();
-    body.paused = false;
-    body.left = body.amount;
-    body.status = "non-active";
+    const newAbonement = new Abonement({
+      amount: body.amount,
+      price: body.price,
+      purchase_date: new Date(),
+      paused: false,
+      left: body.amount,
+      status: "non-active",
+      user: role === "admin" ? client.id : user.id,
+    });
 
-    const abonement = new Abonement({ ...body, user: user.id }); //Why here user.id and not user._id? Why there no error? Lookup later for better understanding!!!
-    const savedAbonement = await abonement.save();
-    console.log(savedAbonement);
-    user.abonements = user.abonements.concat(savedAbonement._id);
-    await user.save();
+    const savedAbonement = await newAbonement.save();
+
+    const updateQuery =
+      role === "admin" ? { _id: client.id } : { _id: user.id };
+    const updateField = role === "admin" ? "client" : "user";
+
+    await User.findOneAndUpdate(updateQuery, {
+      $push: { [`${updateField}.abonements`]: savedAbonement._id },
+    });
+
     response.status(201).json(savedAbonement);
   } catch (error) {
     console.log(error);
