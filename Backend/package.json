@@ -29,7 +29,9 @@
         "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
         "start:test": "cross-env NODE_ENV=test node index.js",
         "build:ui": "rm -rf dist && cd ../Frontend && npm run build && cp -r dist ../Backend",
-        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+        "buildw:ui": "rmdir /s /q dist && mkdir dist && cd ../Frontend && npm run build && xcopy /S /I dist ../Backend",
+        "deployw:full": "npm run buildw:ui && git add . && git commit -m uibuild && git push"
     },
     "jest": {
         "testEnvironment": "node"
