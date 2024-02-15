@@ -246,6 +246,33 @@
     flex: 1;
     text-align: left;
 }
+
+.cfa-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.add-abonement-btn {
+    position: absolute;
+    left: 0;
+    top: 3.125rem;
+}
+
+.modal {
+    z-index: 1;
+    position: absolute;
+    background-color: var(--account-background);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.5rem;
+    box-shadow: var(--card-element-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 /* --------------------------------------------- TEAM */
 
 .trainer-overview {
@@ -254,6 +281,10 @@
     gap: 1.5rem;
 }
 @media (max-width: 768px) {
+    .add-abonement-btn {
+        position: static;
+    }
+
     .trainer-overview {
         display: flex;
         flex-direction: column;
@@ -443,6 +474,13 @@
         -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
         -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
     transition: box-shadow 0.3s ease;
+}
+.close-button {
+    background-color: var(--red-color);
+    border-radius: 0 0.5rem;
+    color: white;
+    width: 3rem;
+    height: 3rem;
 }
 
 .purchase-button:active,

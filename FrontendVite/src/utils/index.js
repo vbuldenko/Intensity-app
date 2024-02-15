@@ -73,3 +73,25 @@ export function findMostRecentAbonement(abonements) {
 
     return mostRecentAbonement;
 }
+
+export function filterAbonements(abonements, viewOption) {
+    const currentDate = new Date();
+    const expirationDateFilter = (abonement) => {
+        const expirationDate = new Date(abonement.expiration_date);
+        if (viewOption === 'active') {
+            return abonement.status === 'active';
+        }
+        if (viewOption === 'expired') {
+            return expirationDate < currentDate || abonement.status === 'ended';
+        }
+        if (viewOption === 'not activated') {
+            return abonement.status === 'non-active';
+        }
+        return true; // 'all' option
+    };
+
+    return abonements.filter(expirationDateFilter);
+}
+
+export const sortByPurchaseDate = (a, b) =>
+    new Date(a.purchase_date) - new Date(b.purchase_date);

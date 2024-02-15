@@ -1,6 +1,8 @@
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Abonement from '../Client/Abonement';
+import ClientOverview from '../Client/ClientOverview';
+import ModalComponent from '../../Elements/ModalComponent';
+import Purchases from '../Client/Purchases';
 
 export default function Client() {
     const { id } = useParams();
@@ -14,18 +16,42 @@ export default function Client() {
     }
     const search = location.state?.search || '';
 
+    function handleClick() {
+        console.log('add abonement');
+    }
+
     return (
-        <div className="flex-column">
+        <div className="cfa-container">
             <Link to={`..${search}`} relative="path" className="back-button">
-                &larr; <span>Back to all clients</span>
+                <div className="flex-row-container">
+                    <p>
+                        &larr; <span>Back to all</span>
+                    </p>
+
+                    <p className="status3">
+                        {client.name} {client.surname}
+                    </p>
+                </div>
             </Link>
             <div className="flex-column">
-                <p>
-                    Abonement holder: {client.name} {client.surname}
-                </p>
-                {client.abonements.map((abonement) => (
-                    <Abonement key={abonement.id} abonement={abonement} />
-                ))}
+                {/* <button
+                    className="purchase-button add-abonement-btn"
+                    onClick={handleClick}
+                >
+                    Add new Abonement
+                </button> */}
+                <ModalComponent
+                    btnName={'Add new Abonement'}
+                    data={<Purchases clientId={client.id} />}
+                />
+                {/* <Link
+                    to={'/account/purchases'}
+                    className="purchase-button add-abonement-btn"
+                    onClick={handleClick}
+                >
+                    Add new Abonement
+                </Link> */}
+                <ClientOverview abonements={client.abonements} />
             </div>
         </div>
     );

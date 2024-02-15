@@ -3,12 +3,14 @@ import Admin from './Admin/Admin';
 import TrainerOverview from './Trainer/TrainerOverview';
 import ClientOverview from './Client/ClientOverview';
 
-export default function Overview() {
-    const user = useSelector(({ user }) => user);
-
+export default function Overview({ user }) {
     if (!user) {
         return null;
     }
+    const abonements =
+        user.role === 'client'
+            ? useSelector(({ abonements }) => abonements)
+            : null;
 
     const currentDate = new Date();
     const { name, role } = user;
@@ -26,12 +28,12 @@ export default function Overview() {
             </div>
 
             <div>
-                {user.role === 'admin' ? (
+                {role === 'admin' ? (
                     <Admin />
-                ) : user.role === 'trainer' ? (
+                ) : role === 'trainer' ? (
                     <TrainerOverview />
                 ) : (
-                    <ClientOverview currentDate={currentDate} />
+                    <ClientOverview abonements={abonements} />
                 )}
             </div>
         </div>

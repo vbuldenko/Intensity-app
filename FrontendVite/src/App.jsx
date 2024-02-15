@@ -90,7 +90,7 @@ export default function App() {
                     <Route path="sign-up" element={<SignUpForm />} />
                     <Route element={<AuthProtected />}>
                         <Route path="account" element={<Account user={user} />}>
-                            <Route index element={<Overview />} />
+                            <Route index element={<Overview user={user} />} />
                             <Route path="purchases" element={<Purchases />} />
                             <Route path="schedule" element={<Schedule />} />
                             <Route

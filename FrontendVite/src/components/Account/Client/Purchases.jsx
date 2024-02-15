@@ -3,15 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notifyWith } from '../../../reducers/notificationReducer';
 import { createAbonement } from '../../../reducers/abonementReducer';
 
-function IndividualAbonement({ data }) {
+function IndividualAbonement({ data, client }) {
+    const user = useSelector(({ user }) => user);
     const dispatch = useDispatch();
     const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
 
     const selectedAbonement = data[selectedAmountIndex];
 
     const handleSubmit = async () => {
+        // Think about admin adding abonements
         try {
-            if (selectedAbonement) {
+            if (user.role === 'admin' && client) {
+                await dispatch(createAbonement(selectedAbonement));
+                dispatch(
+                    notifyWith(
+                        `Abonement for ${selectedAbonement.amount} trainings was purchased`
+                    )
+                );
+            } else if (selectedAbonement) {
                 await dispatch(createAbonement(selectedAbonement));
                 dispatch(
                     notifyWith(
@@ -74,7 +83,7 @@ function IndividualAbonement({ data }) {
     );
 }
 
-export default function Purchases() {
+export default function Purchases({ clientId }) {
     const notification = useSelector(({ notification }) => notification);
     const groupAbonements = [
         { amount: 1, price: 350 },
@@ -117,7 +126,10 @@ export default function Purchases() {
             <div className="f-wrap">
                 <div className="flex-col">
                     <h2 className="l-text bold align-center">Group training</h2>
-                    <IndividualAbonement data={groupAbonements} />
+                    <IndividualAbonement
+                        data={groupAbonements}
+                        client={clientId ? clientId : null}
+                    />
                 </div>
                 {/* <div className="flex-col">
                     <h2 className="l-text bold align-center">
