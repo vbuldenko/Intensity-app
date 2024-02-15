@@ -4,6 +4,7 @@
     --light-theme-color: rgba(0, 0, 0, 0.8);
     --dark-theme-color: rgba(255, 255, 255, 0.8);
     --account-background: rgba(242, 242, 247, 1);
+    --account-background2: rgba(242, 242, 247, 0.5);
     --account-menu-background: rgba(230, 230, 240, 0.75);
     --selected-tab-background: rgba(255, 255, 255, 0.5);
     --search-background-color: rgba(216, 216, 222, 1);
@@ -28,7 +29,7 @@
             rgba(174, 174, 192, 0.5),
         -5.781px -5.781px 23.125px 0px #fff;
     --card-element-shadow3: 0 0 5px rgba(0, 0, 0, 0.1);
-    --card-element-shadow4: 0 0 2px var(--green-color);
+    --card-element-shadow4: 0 0 5px rgba(0, 0, 0, 0.2);
     --big-element-padding: 1.5rem;
 
     --big-element-br: 1rem;
@@ -284,6 +285,15 @@
     border: 1px solid var(--gray-color-3);
     padding: 0.3rem 0.5rem;
     border-radius: 0.25rem;
+}
+.status5 {
+    line-height: 1.5;
+    text-align: center;
+    color: var(--gray-color-1);
+    font-weight: 600;
+    border-bottom: 1px solid var(--green-color3);
+    padding-top: 0.25rem;
+    /* border-radius: 0.25rem; */
 }
 
 .bold {

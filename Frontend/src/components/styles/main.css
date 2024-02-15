@@ -51,13 +51,14 @@ main {
 /* Responsive styles for tablets and mobile phones */
 @media only screen and (max-width: 767px) {
     main {
-        padding-top: 5rem;
+        padding-top: 4.5rem;
+        background: var(--account-background2);
     }
 
     .header {
         background-color: var(--account-background);
         /* padding: 0.5rem 1.25rem; */
-        z-index: 1;
+        z-index: 2;
         position: fixed;
         width: 100%;
         box-shadow: var(--card-element-shadow3);
@@ -76,7 +77,7 @@ main {
         height: 100vh; /* Set the height to 100% of the viewport height */
         transform: translateX(100%); /* Start off-screen on the right */
         transition: transform 0.3s ease-in-out;
-        z-index: 1;
+        box-shadow: var(--card-element-shadow3);
     }
 
     .header-navbar.mobile {

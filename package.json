@@ -1,0 +1,13 @@
+{
+    "name": "intensity-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "../Backend/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "bdev": "cd Backend && npm run dev",
+        "fdev": "cd Frontend && npm run dev"
+    },
+    "author": "",
+    "license": "ISC"
+}

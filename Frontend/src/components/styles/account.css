@@ -9,7 +9,7 @@
     grid-template-columns: 12rem 1fr;
     border-radius: var(--big-element-br);
     background: var(--account-background);
-    backdrop-filter: blur(60px);
+    /* backdrop-filter: blur(60px); */
 }
 
 .account-menu {
@@ -32,7 +32,8 @@
 }
 
 .account-menu a:hover {
-    background: var(--selected-tab-background);
+    /* background: var(--selected-tab-background); */
+    background: white;
 }
 
 .account-content {
@@ -43,8 +44,13 @@
 
 @media (max-width: 450px) {
     .account-section {
-        grid-template-columns: 1fr;
-        grid-template-rows: max-content;
+        /* grid-template-columns: 1fr;
+        grid-template-rows: max-content; */
+        display: flex;
+        flex-direction: column;
+        min-width: 300px;
+        background: none;
+        position: relative;
     }
 
     .account-content {
@@ -52,10 +58,22 @@
     }
 
     .account-menu {
-        border-radius: 1rem 1rem 0 0;
-        padding: 1.5rem 1rem;
+        z-index: 1;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        box-shadow: var(--card-element-shadow3);
+        /* border-radius: 1rem 1rem 0 0; */
+        padding: 1rem;
         flex-direction: row;
+        background: var(--account-background);
         overflow-x: scroll;
+        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+    .account-menu::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari and Opera */
     }
 }
 
