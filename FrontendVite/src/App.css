@@ -95,6 +95,10 @@
     font-size: var(--xs-fontsize);
     line-height: 1.5;
 }
+.sx-font {
+    font-size: var(--sx-fontsize);
+    line-height: 1.5;
+}
 
 @media (max-width: 768px) {
     /* .h1-font {
@@ -154,6 +158,13 @@
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.f-wrap {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }

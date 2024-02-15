@@ -22,12 +22,12 @@ export default function AdminOverview() {
                 <div className="selector align-right">
                     <button className="selector-element">
                         <RectangleStackIcon className="h-4 w-4" />
-                        All
+                        <p>All</p>
                     </button>
                     <div className="button-divider"></div>
                     <button className="selector-element">
                         <CalendarDaysIcon className="h-4 w-4" />
-                        Today
+                        <p>Today</p>
                     </button>
                 </div>
                 <div className="metrics">

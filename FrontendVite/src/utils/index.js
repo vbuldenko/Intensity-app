@@ -39,6 +39,15 @@ export default function reservationAccess(
         }
     }
 
+    if (
+        currentDateTime.getDate() === scheduledTime.getDate() &&
+        currentHour < 8 &&
+        [9, 10, 11].includes(scheduledTime.getHours()) &&
+        reservedPlaces <= 1
+    ) {
+        return false; // Not allowed to reserve morning trainings if there are less than two places reserved
+    }
+
     // If none of the above conditions are met, reservation is allowed
     return true;
 }

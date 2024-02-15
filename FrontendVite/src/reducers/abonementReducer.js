@@ -51,7 +51,8 @@ export const createAbonement = (abonement) => {
             const newAbonement = await abonementService.create(abonement);
             dispatch(addAbonement(newAbonement));
         } catch (error) {
-            console.log('Error occured');
+            console.log(error.response.data.error);
+            throw error; // Rethrow the error
         }
     };
 };

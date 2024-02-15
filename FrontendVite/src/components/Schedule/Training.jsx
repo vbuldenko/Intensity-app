@@ -39,6 +39,15 @@ export default function Training({ training, activeAbonement }) {
     };
 
     const handleAction = async (updateType) => {
+        const cancellationForbidden =
+            updateType === 'cancellation' &&
+            (hoursDiff < 3 ||
+                (isTomorrow(currentTime, trainingTime) &&
+                    [9, 10, 11].includes(trainingTime.getHours()) &&
+                    currentHour >= 21) ||
+                ([9, 10, 11].includes(trainingTime.getHours()) &&
+                    currentHour < 8));
+
         if (!activeAbonement) {
             handleNotification('No abonement, buy one to proceed!');
             return;
@@ -47,14 +56,7 @@ export default function Training({ training, activeAbonement }) {
             handleNotification('No trainings left, buy a new abonement!');
             return;
         }
-        if (
-            (updateType === 'cancellation' && hoursDiff < 3) ||
-            (updateType === 'cancellation' &&
-                isTomorrow(currentTime, trainingTime) &&
-                [9, 10, 11].includes(trainingTime.getHours()) &&
-                currentHour >= 21) ||
-            (!isTomorrow(currentTime, trainingTime) && currentHour < 8)
-        ) {
+        if (cancellationForbidden) {
             handleNotification(
                 'You cannot cancel morning trainings scheduled for tomorrow after 9p.m or any training 3 hours before its begining!'
             );

@@ -137,7 +137,6 @@
 /* -------------------------------------- CLIENTS */
 
 .selector {
-    height: 4rem;
     display: flex;
     gap: 1rem;
     padding: 0 1.5rem;
@@ -148,6 +147,7 @@
 }
 
 .selector-element {
+    padding: 0.3rem;
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -385,7 +385,7 @@
     box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     width: 185px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: var(--account-background);
@@ -411,18 +411,105 @@
 }
 
 /* Button Styles */
+.button-group {
+    display: flex;
+    gap: 3rem;
+}
+
+.increment-button,
+.decrement-button {
+    font-weight: 500;
+    width: 3rem;
+    height: 3rem;
+    color: var(--gray-color-2);
+    border: 2px solid var(--account-background);
+    border-radius: 2rem;
+    box-shadow: 5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+        -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
+        -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
+    transition: box-shadow 0.3s ease;
+}
+
 .purchase-button {
     font-size: var(--title-fontsize);
     font-weight: 500;
     background-color: var(--account-background);
-    color: var(--gray1-text-color);
+    color: var(--green-color);
     padding: 0.75rem 4rem;
     border: 2px solid var(--account-background);
     border-radius: var(--big-element-br);
     align-self: center;
     box-shadow: 5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-        0px 0px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
+        -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
         -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
+    transition: box-shadow 0.3s ease;
+}
+
+.purchase-button:active,
+.increment-button:active,
+.decrement-button:active {
+    box-shadow: inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+}
+
+/* -----CAROUSEL */
+.carousel {
+    position: relative;
+}
+
+.carousel-items {
+    display: flex;
+    overflow: hidden;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item.active {
+    transform: translateX(0);
+}
+
+.carousel-item:not(.active) {
+    transform: translateX(100%);
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #333;
 }
 
 /* -----------------------------------SETTINGS */
