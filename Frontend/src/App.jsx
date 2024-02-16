@@ -10,9 +10,12 @@ import Services from './components/Layout/Services';
 import Schedule from './components/Schedule/Schedule';
 import Prices from './components/Layout/Prices';
 import Contacts from './components/Layout/Contacts';
-import LoginForm from './components/Layout/LoginForm';
-import SignUpForm from './components/Layout/SignUpForm';
 import NotFound from './components/Layout/NotFound';
+
+import LoginForm from './components/Forms/LoginForm';
+import SignUpForm from './components/Forms/SignUpForm';
+import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
+import ResetPasswordForm from './components/Forms/ResetPasswordForm';
 
 import AuthProtected from './components/Layout/AuthRequired';
 import Account from './components/Account/Account';
@@ -88,6 +91,14 @@ export default function App() {
                     <Route path="contacts" element={<Contacts />} />
                     <Route path="sign-in" element={<LoginForm />} />
                     <Route path="sign-up" element={<SignUpForm />} />
+                    <Route
+                        path="forgot-password"
+                        element={<ForgotPasswordForm />}
+                    />
+                    <Route
+                        path="reset-password/:resetToken"
+                        element={<ResetPasswordForm />}
+                    />
                     <Route element={<AuthProtected />}>
                         <Route path="account" element={<Account user={user} />}>
                             <Route index element={<Overview user={user} />} />

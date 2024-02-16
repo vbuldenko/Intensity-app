@@ -37,5 +37,26 @@ const remove = (id) => {
     axios.delete(`${baseUrl}/${id}`, config);
 };
 
+const forgotPassword = async (email) => {
+    const response = await axios.post('/api/auth/forgot-password', { email });
+    return response.data;
+};
+const resetPassword = async (body) => {
+    const user = storageService.loadUser();
+    if (user) {
+        config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    const response = await axios.post('/api/auth/reset-password', body, config);
+    return response.data;
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, getUserById, create, update, remove };
+export default {
+    getAll,
+    getUserById,
+    create,
+    update,
+    remove,
+    forgotPassword,
+    resetPassword,
+};
