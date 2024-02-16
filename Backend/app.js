@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const cors = require("cors");
 
@@ -33,6 +34,10 @@ app.use("/api/users", usersRouter);
 app.use("/api/abonements", abonementRouter);
 app.use("/api/sales", salesRouter);
 app.use("/api/training-sessions", trainingRouter);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
