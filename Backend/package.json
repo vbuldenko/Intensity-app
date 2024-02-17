@@ -1,40 +1,38 @@
 {
-    "name": "intensity-backend",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "author": "Vlad Buldenko",
-    "license": "ISC",
-    "dependencies": {
-        "bcrypt": "^5.1.0",
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.3",
-        "express": "^4.18.2",
-        "jsonwebtoken": "^9.0.0",
-        "mongoose": "^7.6.8",
-        "mongoose-unique-validator": "^4.0.0",
-        "node-schedule": "^2.1.1",
-        "nodemailer": "^6.9.9"
-    },
-    "devDependencies": {
-        "cross-env": "^7.0.3",
-        "eslint": "^8.41.0",
-        "jest": "^29.5.0",
-        "nodemon": "^2.0.20",
-        "supertest": "^6.3.3"
-    },
-    "scripts": {
-        "start": "cross-env NODE_ENV=production node index.js",
-        "dev": "cross-env NODE_ENV=development nodemon index.js",
-        "lint": "eslint .",
-        "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-        "start:test": "cross-env NODE_ENV=test node index.js",
-        "build:ui": "rm -rf dist && cd ../Frontend && npm run build && cp -r dist ../Backend",
-        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
-        "buildw:ui": "rmdir /s /q dist && mkdir dist && cd ../Frontend && npm run build && xcopy /S /I dist ../Backend",
-        "deployw:full": "npm run buildw:ui && git add . && git commit -m uibuild && git push"
-    },
-    "jest": {
-        "testEnvironment": "node"
-    }
+  "name": "intensity-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Vlad Buldenko",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.6.8",
+    "mongoose-unique-validator": "^4.0.0",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.9"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.41.0",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "lint": "eslint .",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "start:test": "cross-env NODE_ENV=test node index.js",
+    "build:ui": "rm -rf dist && cd ../Frontend && npm run build && cp -r dist ../Backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
