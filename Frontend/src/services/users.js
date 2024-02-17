@@ -42,11 +42,7 @@ const forgotPassword = async (email) => {
     return response.data;
 };
 const resetPassword = async (body) => {
-    const user = storageService.loadUser();
-    if (user) {
-        config.headers.Authorization = `Bearer ${user.token}`;
-    }
-    const response = await axios.post('/api/auth/reset-password', body, config);
+    const response = await axios.post('/api/auth/reset-password', body);
     return response.data;
 };
 

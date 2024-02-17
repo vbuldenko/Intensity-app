@@ -4,25 +4,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { notifyWith } from '../../reducers/notificationReducer';
-import { forgotPassword } from '../../services/users';
+import usersService from '../../services/users';
 
 const ForgotPasswordForm = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const notification = useSelector(({ notification }) => notification);
+    const [notification, setNotification] = useState(null);
+    // const notification = useSelector(({ notification }) => notification);
 
     const dispatch = useDispatch();
-    const path = '/reset-password';
+    // const path = '/reset-password';
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const message = await forgotPassword(email);
+            const { message } = await usersService.forgotPassword(email);
             setEmail('');
-            dispatch(notifyWith(message));
-            setTimeout(() => navigate(path, { replace: true }), 5000); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack
+            // dispatch(notifyWith(message));
+            setNotification(message);
+
+            // setTimeout(() => navigate(path, { replace: true }), 5000); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack
         } catch (error) {
-            dispatch(notifyWith(error.response.data.error));
+            // dispatch(notifyWith(error.response.data.error));
+            setNotification(error.response.data.error || 'error occured');
         }
     };
 
@@ -30,7 +34,9 @@ const ForgotPasswordForm = () => {
         <div className="form-wrapper card-el-bg ">
             <form className="auth-form" onSubmit={handleSubmit}>
                 <h1>Forgot Password</h1>
-                {notification ? <h1>{notification}</h1> : null}
+                {notification ? (
+                    <p className="green-clr s-font">{notification}</p>
+                ) : null}
                 <div>
                     <input
                         id="email"
