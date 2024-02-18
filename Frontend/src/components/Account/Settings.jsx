@@ -45,42 +45,42 @@ function Settings() {
                 <div className="personal-info">
                     <div className="personal-info-el">
                         <div>
-                            <IdentificationIcon className="h-6 w-6" />
+                            <IdentificationIcon className="h-4 w-4" />
                             <p className="s-font">Name</p>
                             <p className="red">{name}</p>
                         </div>
 
                         <button>
-                            <PencilSquareIcon className="h-6 w-6" />
+                            <PencilSquareIcon className="h-4 w-4" />
                         </button>
                     </div>
                     <div className="personal-info-el">
                         <div>
-                            <AtSymbolIcon className="h-6 w-6" />
+                            <AtSymbolIcon className="h-4 w-4" />
                             <p className="s-font">Email</p>
-                            <p style={{ overflow: 'hidden' }}>{email}</p>
+                            <p style={{ width: '150px' }}>{email}</p>
                         </div>
                         <button>
-                            <PencilSquareIcon className="h-6 w-6" />
+                            <PencilSquareIcon className="h-4 w-4" />
                         </button>
                     </div>
                     <div className="personal-info-el">
                         <div>
-                            <PhoneIcon className="h-6 w-6" />
+                            <PhoneIcon className="h-4 w-4" />
                             <p className="s-font">Phone</p>
                             <p>{phone}</p>
                         </div>
                         <button>
-                            <PencilSquareIcon className="h-6 w-6" />
+                            <PencilSquareIcon className="h-4 w-4" />
                         </button>
                     </div>
                     <div className="personal-info-el">
                         <div>
-                            <KeyIcon className="h-6 w-6" />
+                            <KeyIcon className="h-4 w-4" />
                             <p className="s-font">Password</p>
                         </div>
                         <button>
-                            <PencilSquareIcon className="h-6 w-6" />
+                            <PencilSquareIcon className="h-4 w-4" />
                         </button>
                     </div>
                 </div>
@@ -90,7 +90,7 @@ function Settings() {
                 <div className="personal-info">
                     <div className="personal-info-el">
                         <div>
-                            <ArrowRightOnRectangleIcon className="h-6 w-6" />
+                            <ArrowRightOnRectangleIcon className="h-4 w-4" />
                             <p className="s-font">Log yourself out:</p>
                         </div>
 
@@ -109,7 +109,7 @@ function Settings() {
                     </div>
                     <div className="personal-info-el">
                         <div>
-                            <UserMinusIcon className="h-6 w-6" />
+                            <UserMinusIcon className="h-4 w-4" />
                             <p className="s-font">Delete your account:</p>
                         </div>
                         <button

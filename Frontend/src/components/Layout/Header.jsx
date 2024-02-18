@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ThemeToggle from '../Elements/ThemeToggle';
@@ -17,6 +17,23 @@ export default function Header() {
     const closeMobileMenu = () => {
         setVisible(false);
     };
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // Check if the click target is outside of the header
+            if (!event.target.closest('.header')) {
+                setVisible(false); // Close the mobile menu
+            }
+        };
+
+        // Add event listener to handle clicks outside of the header navbar
+        document.body.addEventListener('click', handleOutsideClick);
+
+        // Cleanup: remove event listener when component unmounts
+        return () => {
+            document.body.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
 
     return (
         <header className="header m-font">
