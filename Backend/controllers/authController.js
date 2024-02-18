@@ -151,6 +151,11 @@ authRouter.post("/reset-password", async (req, res, next) => {
   try {
     // Find user
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    
+    if (!decodedToken.id) {
+      return response.status(401).json({ error: 'token invalid' })
+    }
+    
     const user = await User.findById(decodedToken.id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
