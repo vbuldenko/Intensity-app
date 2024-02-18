@@ -58,7 +58,7 @@ function Settings() {
                         <div>
                             <AtSymbolIcon className="h-6 w-6" />
                             <p className="s-font">Email</p>
-                            <p>{email}</p>
+                            <p style={{ overflow: 'hidden' }}>{email}</p>
                         </div>
                         <button>
                             <PencilSquareIcon className="h-6 w-6" />
