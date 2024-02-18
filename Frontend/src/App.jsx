@@ -1,4 +1,8 @@
-import './App.css';
+import './styles/App.css';
+import './styles/form.css';
+import './styles/main.css';
+import './styles/schedule.css';
+import './styles/account.css';
 import { useTheme } from './context/ThemeContext';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

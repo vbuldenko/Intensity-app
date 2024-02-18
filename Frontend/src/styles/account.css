@@ -38,7 +38,7 @@
 
 .account-content {
     border-radius: 0 1rem 1rem 0;
-    padding: 2rem;
+    padding: 2rem 5rem;
     position: relative;
 }
 
@@ -161,19 +161,19 @@
 /* -------------------------------------- CLIENTS */
 
 .selector {
+    align-self: flex-end;
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     padding: 0 1.5rem;
     border-radius: 5rem;
     box-shadow: var(--card-element-shadow);
     color: var(--button-text-color);
-    width: max-content;
 }
 
 .selector-element {
     padding: 0.75rem 0.3rem;
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
     align-items: center;
     justify-content: space-between;
     color: var(--gray-color-1);
@@ -211,6 +211,10 @@
 @media (max-width: 768px) {
     .f-container {
         flex-direction: column;
+    }
+
+    .selector {
+        align-self: center;
     }
 }
 
@@ -273,7 +277,7 @@
 .add-abonement-btn {
     position: absolute;
     left: 0;
-    top: 3.125rem;
+    top: 3.4rem;
 }
 
 .modal {
@@ -288,7 +292,6 @@
     box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
 }
 /* --------------------------------------------- TEAM */
 
@@ -298,6 +301,13 @@
     gap: 1.5rem;
 }
 @media (max-width: 768px) {
+    .modal {
+        position: fixed;
+        top: 6rem;
+        left: 1rem;
+        right: 1rem;
+        bottom: 6rem;
+    }
     .add-abonement-btn {
         position: static;
     }
@@ -433,8 +443,8 @@
     box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    width: 185px;
+    gap: 2rem;
+    width: 250px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: var(--account-background);
     padding-bottom: 1rem;
@@ -455,7 +465,7 @@
     background: var(--green-color);
     color: white;
     border-radius: 1rem 0 1rem 0;
-    width: 60px;
+    width: 80px;
 }
 
 /* Button Styles */

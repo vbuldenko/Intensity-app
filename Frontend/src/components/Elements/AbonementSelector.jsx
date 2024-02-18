@@ -7,7 +7,7 @@ import {
 
 export default function AbonementSelector({ abonementView, handleClick }) {
     return (
-        <div className="selector align-right">
+        <div className="selector ">
             <button
                 className={`selector-element ${
                     abonementView === 'active' ? 'active' : ''
@@ -35,7 +35,7 @@ export default function AbonementSelector({ abonementView, handleClick }) {
                 onClick={() => handleClick('not activated')}
             >
                 <BellSnoozeIcon className="h-4 w-4" />
-                <p>Not activated</p>
+                <p>Nonactivated</p>
             </button>
         </div>
     );

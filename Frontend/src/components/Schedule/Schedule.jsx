@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 import MonthView from './Month';
 import WeekView from './Week';
 import SelectedTrainings from './SelectedTrainings';
-import '../styles/schedule.css';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');

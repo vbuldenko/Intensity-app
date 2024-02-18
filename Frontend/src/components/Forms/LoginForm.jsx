@@ -1,4 +1,3 @@
-import '../styles/form.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
