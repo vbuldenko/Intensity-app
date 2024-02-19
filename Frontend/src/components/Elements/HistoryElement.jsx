@@ -1,6 +1,6 @@
 export default function HistoryElement({ data, trainer }) {
     return (
-        <div className="history-element acc-card-el-bg2">
+        <div className="history-element card-el-bg">
             <div>
                 <p>Date</p>
                 <p>{data.date.slice(0, 10)}</p>

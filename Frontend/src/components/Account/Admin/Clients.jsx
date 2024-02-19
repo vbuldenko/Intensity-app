@@ -68,7 +68,7 @@ export default function Clients(props) {
                     <Link
                         key={client.id}
                         to={`${client.id}`}
-                        className={`acc-card-el-bg2 person ${viewMode}`}
+                        className={`card-el-bg person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <div className="client-title">

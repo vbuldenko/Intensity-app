@@ -48,7 +48,7 @@ function IndividualAbonement({ data, client }) {
     };
 
     return (
-        <div className="abonement-container">
+        <div className="abonement-container card-el-bg">
             <div className="amount-info l-text">
                 <div className="amount-badge">{selectedAbonement.amount}</div>
                 <div>TRAININGS</div>

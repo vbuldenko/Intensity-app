@@ -52,7 +52,6 @@ main {
 @media only screen and (max-width: 767px) {
     main {
         padding-top: 4.5rem;
-        background: var(--account-background2);
     }
 
     .header {

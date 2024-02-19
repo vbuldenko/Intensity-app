@@ -18,7 +18,7 @@ const TrainerData = ({ user }) => {
 
     return (
         <div className="trainer-overview">
-            <div className="results-section acc-card-el-bg ">
+            <div className="results-section card-el-bg ">
                 <div className="title top-zero align-left">Salary</div>
 
                 <div className="result-el">
@@ -41,7 +41,7 @@ const TrainerData = ({ user }) => {
                     </span>
                 </div>
             </div>
-            <div className="trainings-section acc-card-el-bg">
+            <div className="trainings-section card-el-bg">
                 <div className="title top-zero">Today trainings</div>
                 <div className="trainings-section-list">
                     {trainerTrainings
@@ -75,7 +75,7 @@ const TrainerData = ({ user }) => {
                         ))}
                 </div>
             </div>
-            <div className="history-section acc-card-el-bg">
+            <div className="history-section card-el-bg">
                 <div className="title top-zero">History</div>
                 <div className="history">
                     {trainerTrainings.map((training) => (

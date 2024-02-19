@@ -67,7 +67,6 @@
         border-radius: 0;
         padding: 1rem;
         flex-direction: row;
-        /* background: var(--green-color4); */
         background: var(--account-background);
         overflow-x: scroll;
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
@@ -439,14 +438,10 @@
 
 /* Purchases Styles */
 .abonement-container {
-    border-radius: var(--big-element-br);
-    box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
     gap: 2rem;
     width: 250px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: var(--account-background);
     padding-bottom: 1rem;
 }
 
@@ -483,8 +478,8 @@
     border: 2px solid var(--account-background);
     border-radius: 2rem;
     box-shadow: 5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-        -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
-        -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
+        /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+            4px 0px rgba(0, 0, 0, 0.1) inset;
     transition: box-shadow 0.3s ease;
 }
 
@@ -498,8 +493,8 @@
     border-radius: var(--big-element-br);
     align-self: center;
     box-shadow: 5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-        -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset,
-        -2px -2px 4px 0px rgba(0, 0, 0, 0.1) inset;
+        /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+            4px 0px rgba(0, 0, 0, 0.1) inset;
     transition: box-shadow 0.3s ease;
 }
 .close-button {
@@ -597,9 +592,6 @@
 }
 
 .personal-info {
-    border-radius: 1em;
-    /* background: rgba(130, 130, 130, 0.1); */
-    box-shadow: var(--card-element-shadow);
     display: flex;
     flex-direction: column;
 }

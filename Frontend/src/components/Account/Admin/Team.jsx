@@ -65,7 +65,7 @@ export default function Team() {
                     <Link
                         key={trainer.id}
                         to={`${trainer.id}`}
-                        className={`acc-card-el-bg2 person ${viewMode}`}
+                        className={`card-el-bg person ${viewMode}`}
                         state={{ search: `?${searchParams.toString()}` }}
                     >
                         <p className="section-title">

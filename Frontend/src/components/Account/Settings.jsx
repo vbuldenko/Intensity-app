@@ -42,7 +42,7 @@ function Settings() {
         <div className="settings">
             <div className="profile">
                 <h1>Personal information</h1>
-                <div className="personal-info">
+                <div className="personal-info card-el-bg">
                     <div className="personal-info-el">
                         <div>
                             <IdentificationIcon className="h-4 w-4" />
@@ -87,7 +87,7 @@ function Settings() {
             </div>
             <div className="profile">
                 <h1>Account actions</h1>
-                <div className="personal-info">
+                <div className="personal-info card-el-bg">
                     <div className="personal-info-el">
                         <div>
                             <ArrowRightOnRectangleIcon className="h-4 w-4" />

@@ -29,7 +29,7 @@ export default function Abonement({ abonement }) {
     }
 
     return (
-        <div className="abonement acc-card-el-bg">
+        <div className="abonement card-el-bg">
             <div className="gen-abonement-info">
                 <div className={`top-zero title ${status}`}>{status}</div>
                 <div className="f-container">

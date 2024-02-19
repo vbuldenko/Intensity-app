@@ -17,7 +17,7 @@ export default function AdminOverview() {
 
     return (
         <div className="admin-overview">
-            <div className="sales acc-card-el-bg">
+            <div className="sales card-el-bg">
                 <div className="title top-zero">Sales</div>
                 <div className="selector align-right">
                     <button className="selector-element">
@@ -40,7 +40,7 @@ export default function AdminOverview() {
                     {soldAbonements.map((sale) => (
                         <div
                             key={sale.id}
-                            className="sale-data acc-card-el-bg3 s-font"
+                            className="sale-data card-el-bg s-font"
                         >
                             <div>
                                 <p className="sale-name">
@@ -62,7 +62,7 @@ export default function AdminOverview() {
                     ))}
                 </div>
             </div>
-            <div className="inout acc-card-el-bg">
+            <div className="inout card-el-bg">
                 <p className="title top-zero">Income</p>
                 <div className="inout-el flex-row-container">
                     <div className="flex-col">
@@ -107,7 +107,7 @@ export default function AdminOverview() {
                 </div>
             </div>
 
-            <div className="inout acc-card-el-bg">
+            <div className="inout card-el-bg">
                 <p className="title top-zero">Expenses</p>
                 <div className="inout-el flex-row-container">
                     <div className="flex-col">
