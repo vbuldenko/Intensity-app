@@ -52,10 +52,21 @@
         background: none;
         position: relative;
     }
+    .account-section.dark {
+        background: none;
+    }
+    .account-menu.dark,
+    .header.dark {
+        background-color: var(--dark-background-color);
+        box-shadow: var(--card-element-shadow5);
+    }
 
     .account-content {
-        padding: 3rem 0;
+        padding: 1rem 0;
     }
+    /* .account-content {
+        padding: 3rem 0;
+    } */
 
     .account-menu {
         z-index: 1;
@@ -442,7 +453,7 @@
     flex-direction: column;
     gap: 2rem;
     min-width: 250px;
-    padding-bottom: 1rem;
+    padding: 2rem 0;
 }
 
 .amount-info {
@@ -515,7 +526,8 @@
 }
 
 .type-buttons {
-    background: var(--gray-color-7);
+    /* border: 1px solid rgba(255, 255, 255, 0.4); */
+    /* background: var(--gray-color-7); */
     line-height: 1;
     padding: 0.2rem;
     border-radius: 1rem;
@@ -530,11 +542,14 @@
     min-width: 75px;
     width: 100px;
     text-align: center;
+    /* transition: transform 0.3s, background-color 0.3s, color 0.3s; */
 }
 
 .type-buttons button.selected {
-    background-color: white;
-    border-radius: 1rem;
+    background: var(--green-color);
+    color: white;
+    border-radius: 0.75rem;
+    /* transform: translateX(10%); */
 }
 
 /* -----CAROUSEL */

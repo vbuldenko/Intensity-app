@@ -1,6 +1,6 @@
 function TypeSelector({ selectedType, handleTypeChange }) {
     return (
-        <div className="type-buttons s-font">
+        <div className="type-buttons card-el-bg s-font">
             <button
                 className={selectedType === 'group' ? 'selected' : ''}
                 onClick={() => handleTypeChange('group')}

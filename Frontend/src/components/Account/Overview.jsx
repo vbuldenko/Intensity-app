@@ -17,9 +17,9 @@ export default function Overview({ user }) {
 
     return (
         <div className="flex-column">
-            <div className="status5 top-zero align-center">
+            {/* <div className="status5 top-zero align-center">
                 {currentDate.toString().slice(0, 16)}
-            </div>
+            </div> */}
             <div className="flex-row-container green-clr">
                 <div>
                     <p>Welcome back, {name}</p>

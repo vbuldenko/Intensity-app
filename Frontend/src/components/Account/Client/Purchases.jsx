@@ -102,12 +102,11 @@ export default function Purchases({ clientId }) {
                 Оберіть тип занять та кількість тренувань
             </h2>
 
+            <TypeSelector
+                selectedType={selectedType}
+                handleTypeChange={handleTypeChange}
+            />
             <div className="abonement-container card-el-bg">
-                <TypeSelector
-                    selectedType={selectedType}
-                    handleTypeChange={handleTypeChange}
-                />
-
                 <div className="align-center m-text">
                     {selectedAbonement && (
                         <>

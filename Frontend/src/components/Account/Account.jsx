@@ -9,7 +9,11 @@ export default function Account({ user }) {
     }
 
     return (
-        <section className="account-section">
+        <section
+            className={`account-section ${
+                theme === 'light' ? 'light' : 'dark'
+            }`}
+        >
             <nav
                 className={`account-menu ${
                     theme === 'light' ? 'light' : 'dark'
