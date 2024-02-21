@@ -193,20 +193,18 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
 //   }
 // });
 
-abonementRouter.post("/", userExtractor, async (request, response, next) => {
-    const { body, user } = request;
+abonementRouter.post("/", userExtractor, async (req, res, next) => {
+    const { body, user } = req;
     const { role } = user;
 
     try {
         if (!user) {
-            return response
-                .status(401)
-                .json({ error: "Operation not permitted" });
+            return res.status(401).json({ error: "Operation not permitted" });
         }
 
         const client = await User.findById(body.clientId);
         if (role === "admin" && !client) {
-            return response.status(401).json({ error: "Cannot find client" });
+            return res.status(401).json({ error: "Cannot find client" });
         }
 
         const abonements = await Abonement.find({
@@ -220,18 +218,17 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
                     abonement.status === "non-active"
             )
         ) {
-            return response
-                .status(400)
-                .json({ error: "Already have an abonement" });
+            return res.status(400).json({ error: "Already have an abonement" });
         }
 
         if (!body.amount || body.amount === 0) {
-            return response
+            return res
                 .status(400)
                 .json({ error: "Amount of days in abonement is not chosen" });
         }
 
         const newAbonement = new Abonement({
+            type: body.type,
             amount: body.amount,
             price: body.price,
             purchase_date: new Date(),
@@ -249,7 +246,7 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
 
         role === "admin" ? await client.save() : await user.save();
 
-        response.status(201).json(savedAbonement);
+        res.status(201).json(savedAbonement);
     } catch (error) {
         console.log(error);
         next(error);
@@ -259,17 +256,17 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
 // abonementRouter.delete(
 //   "/:id",
 //   userExtractor,
-//   async (request, response, next) => {
-//     const user = request.user;
-//     const blog = await Blog.findById(request.params.id);
+//   async (req, res, next) => {
+//     const user = req.user;
+//     const blog = await Blog.findById(req.params.id);
 
 //     try {
 //       if (!blog) {
-//         return response.status(404).json({ error: "Blog is not found" });
+//         return res.status(404).json({ error: "Blog is not found" });
 //       }
 //       // Similarly look at user.id here too!!!
 //       if (!user || blog.user.toString() !== user.id.toString()) {
-//         return response
+//         return res
 //           .status(403)
 //           .json({ error: "Not authorized to delete this blog" });
 //       }
@@ -279,8 +276,8 @@ abonementRouter.post("/", userExtractor, async (request, response, next) => {
 //       );
 //       await user.save();
 
-//       await Blog.findByIdAndRemove(request.params.id);
-//       response.status(204).end();
+//       await Blog.findByIdAndRemove(req.params.id);
+//       res.status(204).end();
 //     } catch (error) {
 //       next(error);
 //     }

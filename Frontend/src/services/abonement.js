@@ -2,21 +2,19 @@ import axios from 'axios';
 import storageService from './storage';
 const baseUrl = '/api/abonements';
 
+import configureAxios from '../utils/axiosConfig';
+
+const axiosFetcher = configureAxios();
+
 const getAll = async () => {
-    const response = await axios.get(baseUrl);
-    return response.data;
+    const res = await axios.get(baseUrl);
+    return res.data;
 };
 
 const getAllByUserId = async () => {
-    const token = storageService.loadUser()
-        ? `Bearer ${storageService.loadUser().token}`
-        : null;
-    const config = {
-        headers: { Authorization: token },
-    };
-    const response = await axios.get(`${baseUrl}/user`, config);
-    // console.log(response.data);
-    return response.data;
+    const res = await axiosFetcher.get('/abonements/user');
+    console.log('working', res.data);
+    return res.data;
 };
 
 const create = async (newObject) => {

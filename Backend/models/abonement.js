@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const abonementSchema = new mongoose.Schema({
     status: String,
+    type: String,
     amount: {
         type: Number,
         required: true,

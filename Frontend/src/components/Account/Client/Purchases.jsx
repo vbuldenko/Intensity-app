@@ -2,24 +2,56 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyWith } from '../../../reducers/notificationReducer';
 import { createAbonement } from '../../../reducers/abonementReducer';
+import TypeSelector from '../../Elements/TypeSelector';
 
-function IndividualAbonement({ data, client }) {
+export default function Purchases({ clientId }) {
+    const notification = useSelector(({ notification }) => notification);
+    const abonementOptions = {
+        group: [
+            { amount: 1, price: 350 },
+            { amount: 4, price: 1200 },
+            { amount: 6, price: 1700 },
+            { amount: 8, price: 2000 },
+            { amount: 10, price: 2400 },
+            { amount: 12, price: 2700 },
+        ],
+        personal: [
+            { amount: 1, price: 600 },
+            { amount: 5, price: 2700 },
+            { amount: 10, price: 5500 },
+        ],
+        split: [
+            { amount: 1, price: 800 },
+            { amount: 5, price: 3800 },
+            { amount: 10, price: 7000 },
+        ],
+        kids: [
+            { amount: 1, price: 250 },
+            { amount: 8, price: 1000 },
+            { amount: 12, price: 1500 },
+        ],
+    };
     const user = useSelector(({ user }) => user);
     const dispatch = useDispatch();
+    const [selectedType, setSelectedType] = useState('group'); // Default selected type
     const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
 
-    const selectedAbonement = data[selectedAmountIndex];
+    const selectedAbonementData = abonementOptions[selectedType] || [];
+    const selectedAbonement = selectedAbonementData[selectedAmountIndex];
 
     const handleSubmit = async () => {
-        // Think about admin adding abonements
         try {
-            if (user.role === 'admin' && client) {
+            if (user.role === 'admin' && clientId) {
                 await dispatch(
-                    createAbonement({ ...selectedAbonement, clientId: client })
+                    createAbonement({
+                        ...selectedAbonement,
+                        type: selectedType,
+                        clientId: clientId,
+                    })
                 );
                 dispatch(
                     notifyWith(
-                        `Abonement for ${selectedAbonement.amount} trainings was purchased`
+                        `Abonement for ${selectedAbonement.amount} trainings was added`
                     )
                 );
             } else if (selectedAbonement) {
@@ -36,7 +68,7 @@ function IndividualAbonement({ data, client }) {
     };
 
     const handleIncrement = () => {
-        if (selectedAmountIndex < data.length - 1) {
+        if (selectedAmountIndex < selectedAbonementData.length - 1) {
             setSelectedAmountIndex((prevIndex) => prevIndex + 1);
         }
     };
@@ -47,70 +79,10 @@ function IndividualAbonement({ data, client }) {
         }
     };
 
-    return (
-        <div className="abonement-container card-el-bg">
-            <div className="amount-info l-text">
-                <div className="amount-badge">{selectedAbonement.amount}</div>
-                <div>TRAININGS</div>
-            </div>
-            <div className="align-center m-text">
-                {selectedAbonement && (
-                    <>
-                        <p className="bold">
-                            Price: {selectedAbonement.price} UAH
-                        </p>
-                        <p className="sx-font gray-clr">
-                            1 training:{' '}
-                            {Math.trunc(
-                                selectedAbonement.price /
-                                    selectedAbonement.amount
-                            ) || null}{' '}
-                            ₴
-                        </p>
-                    </>
-                )}
-            </div>
-            <div className="button-group align-center">
-                <button className="decrement-button" onClick={handleDecrement}>
-                    -
-                </button>
-                <button className="increment-button" onClick={handleIncrement}>
-                    +
-                </button>
-            </div>
-            <button className="purchase-button" onClick={handleSubmit}>
-                Buy
-            </button>
-        </div>
-    );
-}
-
-export default function Purchases({ clientId }) {
-    const notification = useSelector(({ notification }) => notification);
-    const groupAbonements = [
-        { amount: 1, price: 350 },
-        { amount: 4, price: 1200 },
-        { amount: 6, price: 1700 },
-        { amount: 8, price: 2000 },
-        { amount: 10, price: 2400 },
-        { amount: 12, price: 2700 },
-        // { amount: '∞', price: 4000 },
-    ];
-    const personalAbonements = [
-        { amount: 1, price: 600 },
-        { amount: 5, price: 2700 },
-        { amount: 10, price: 5500 },
-    ];
-    const splitAbonements = [
-        { amount: 1, price: 800 },
-        { amount: 5, price: 3800 },
-        { amount: 10, price: 7000 },
-    ];
-    // const kidsAbonements = [
-    //     { amount: 1, price: 250 },
-    //     { amount: 8, price: 1000 },
-    //     { amount: 12, price: 1500 },
-    // ];
+    const handleTypeChange = (type) => {
+        setSelectedType(type);
+        setSelectedAmountIndex(0); // Reset selected amount index when type changes
+    };
 
     return (
         <div className="flex-column">
@@ -125,26 +97,58 @@ export default function Purchases({ clientId }) {
                     {notification}
                 </div>
             )}
-            <div className="f-wrap">
-                <div className="flex-col">
-                    <h2 className="l-text bold align-center">Group training</h2>
-                    <IndividualAbonement
-                        data={groupAbonements}
-                        client={clientId ? clientId : null}
-                    />
+
+            <h2 className="l-text bold align-center">
+                Оберіть тип занять та кількість тренувань
+            </h2>
+
+            <div className="abonement-container card-el-bg">
+                <TypeSelector
+                    selectedType={selectedType}
+                    handleTypeChange={handleTypeChange}
+                />
+
+                <div className="align-center m-text">
+                    {selectedAbonement && (
+                        <>
+                            <p className="bold">
+                                Price: {selectedAbonement.price} UAH
+                            </p>
+                            <p className="sx-font gray-clr">
+                                1 training:{' '}
+                                {Math.trunc(
+                                    selectedAbonement.price /
+                                        selectedAbonement.amount
+                                ) || null}{' '}
+                                ₴
+                            </p>
+                        </>
+                    )}
                 </div>
-                {/* <div className="flex-col">
-                    <h2 className="l-text bold align-center">
-                        Personal trainings
-                    </h2>
-                    <IndividualAbonement data={personalAbonements} />
+                <div className="button-group align-center">
+                    <button
+                        className="decrement-button"
+                        onClick={handleDecrement}
+                    >
+                        -
+                    </button>
+                    <div className="amount-info l-text">
+                        <div className="amount-badge">
+                            {selectedAbonement?.amount}
+                        </div>
+                    </div>
+                    <button
+                        className="increment-button"
+                        onClick={handleIncrement}
+                    >
+                        +
+                    </button>
                 </div>
-                <div className="flex-col" >
-                    <h2 className="l-text bold align-center">
-                        Split trainings
-                    </h2>
-                    <IndividualAbonement data={splitAbonements} />
-                </div> */}
+                <button className="purchase-button" onClick={handleSubmit}>
+                    {user.role === 'admin' && clientId
+                        ? 'Додати абонемент'
+                        : 'Перейти до оплати'}
+                </button>
             </div>
         </div>
     );
