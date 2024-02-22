@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import {
     RectangleStackIcon,
     CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
+import Selector from '../../Elements/Selector';
+import { salefilterAbonements } from '../../../utils';
 
 export default function AdminOverview() {
-    const soldAbonements = useSelector(({ abonements }) => abonements);
+    const [salesView, setSalesView] = useState('All');
+    const soldAbonements = useSelector(({ abonements }) =>
+        salefilterAbonements(abonements, salesView)
+    );
     const statistics = useSelector(({ statistics }) => statistics);
     const expenses = {
         rent: 30000,
@@ -19,17 +24,11 @@ export default function AdminOverview() {
         <div className="admin-overview">
             <div className="sales card-el-bg">
                 <div className="title top-zero">Sales</div>
-                <div className="selector align-right">
-                    <button className="selector-element">
-                        <RectangleStackIcon className="h-4 w-4" />
-                        <p>All</p>
-                    </button>
-                    <div className="button-divider"></div>
-                    <button className="selector-element">
-                        <CalendarDaysIcon className="h-4 w-4" />
-                        <p>Today</p>
-                    </button>
-                </div>
+                <Selector
+                    selection={salesView}
+                    handleSelection={setSalesView}
+                    buttonNames={['All', 'Today']}
+                />
                 <div className="metrics">
                     <p> client</p>
                     <p>abonement</p>

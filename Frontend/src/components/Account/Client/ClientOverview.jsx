@@ -1,22 +1,19 @@
 import Abonement from './Abonement';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { filterAbonements, sortByPurchaseDate } from '../../../utils';
 import AbonementSelector from '../../Elements/AbonementSelector';
+import Selector from '../../Elements/Selector';
 
 export default function ClientOverview({ abonements }) {
     const [abonementView, setAbonementView] = useState('active');
     const filteredAbonements = filterAbonements(abonements, abonementView);
 
-    const handleClick = (value) => {
-        setAbonementView(value);
-    };
-
     return (
         <div className="flex-column">
-            <AbonementSelector
-                abonementView={abonementView}
-                handleClick={handleClick}
+            <Selector
+                selection={abonementView}
+                handleSelection={setAbonementView}
+                buttonNames={['active', 'expired', 'not activated']}
             />
             <div className="flex-column">
                 {filteredAbonements

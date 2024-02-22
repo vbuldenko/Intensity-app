@@ -21,6 +21,7 @@
     border-radius: 0.5em;
     width: 100%;
     border: 1px solid var(--gray-color-7);
+    background: var(--green-color2);
 }
 
 .auth-form button {

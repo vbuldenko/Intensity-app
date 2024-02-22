@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { notifyWith } from '../../../reducers/notificationReducer';
 import { createAbonement } from '../../../reducers/abonementReducer';
-import TypeSelector from '../../Elements/TypeSelector';
+import Selector from '../../Elements/Selector';
 
 export default function Purchases({ clientId }) {
     const notification = useSelector(({ notification }) => notification);
@@ -33,10 +33,11 @@ export default function Purchases({ clientId }) {
     };
     const user = useSelector(({ user }) => user);
     const dispatch = useDispatch();
-    const [selectedType, setSelectedType] = useState('group'); // Default selected type
+    const [selectedType, setSelectedType] = useState('Group'); // Default selected type
     const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
 
-    const selectedAbonementData = abonementOptions[selectedType] || [];
+    const selectedAbonementData =
+        abonementOptions[selectedType.toLowerCase()] || [];
     const selectedAbonement = selectedAbonementData[selectedAmountIndex];
 
     const handleSubmit = async () => {
@@ -102,9 +103,10 @@ export default function Purchases({ clientId }) {
                 Оберіть тип занять та кількість тренувань
             </h2>
 
-            <TypeSelector
-                selectedType={selectedType}
-                handleTypeChange={handleTypeChange}
+            <Selector
+                selection={selectedType}
+                handleSelection={handleTypeChange}
+                buttonNames={['Group', 'Personal', 'Split', 'Kids']}
             />
             <div className="abonement-container card-el-bg">
                 <div className="align-center m-text">

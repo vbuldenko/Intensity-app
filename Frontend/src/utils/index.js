@@ -92,6 +92,18 @@ export function filterAbonements(abonements, viewOption) {
 
     return abonements.filter(expirationDateFilter);
 }
+export function salefilterAbonements(abonements, viewOption) {
+    const currentDate = new Date();
+    const purchaseDateFilter = (abonement) => {
+        const purchaseDate = new Date(abonement.purchase_date);
+        if (viewOption.toLowerCase() === 'today') {
+            return purchaseDate.getDate() === currentDate.getDate();
+        }
+        return true; // 'all' option
+    };
+
+    return abonements.filter(purchaseDateFilter);
+}
 
 export const sortByPurchaseDate = (a, b) =>
     new Date(a.purchase_date) - new Date(b.purchase_date);

@@ -525,33 +525,6 @@
         inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
 }
 
-.type-buttons {
-    /* border: 1px solid rgba(255, 255, 255, 0.4); */
-    /* background: var(--gray-color-7); */
-    line-height: 1;
-    padding: 0.2rem;
-    border-radius: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.type-buttons button {
-    padding: 0.5rem;
-    color: var(--gray-color-1);
-    min-width: 75px;
-    width: 100px;
-    text-align: center;
-    /* transition: transform 0.3s, background-color 0.3s, color 0.3s; */
-}
-
-.type-buttons button.selected {
-    background: var(--green-color);
-    color: white;
-    border-radius: 0.75rem;
-    /* transform: translateX(10%); */
-}
-
 /* -----CAROUSEL */
 .carousel {
     position: relative;
