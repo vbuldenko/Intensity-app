@@ -34,23 +34,10 @@ export default function Client() {
                 </div>
             </Link>
             <div className="flex-column">
-                {/* <button
-                    className="purchase-button add-abonement-btn"
-                    onClick={handleClick}
-                >
-                    Add new Abonement
-                </button> */}
                 <ModalComponent
                     btnName={'Add new Abonement'}
                     data={<Purchases clientId={client.id} />}
                 />
-                {/* <Link
-                    to={'/account/purchases'}
-                    className="purchase-button add-abonement-btn"
-                    onClick={handleClick}
-                >
-                    Add new Abonement
-                </Link> */}
                 <ClientOverview abonements={client.abonements} />
             </div>
         </div>

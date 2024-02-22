@@ -99,6 +99,9 @@ export function salefilterAbonements(abonements, viewOption) {
         if (viewOption.toLowerCase() === 'today') {
             return purchaseDate.getDate() === currentDate.getDate();
         }
+        if (viewOption.toLowerCase() === 'month') {
+            return purchaseDate.getMonth() === currentDate.getMonth();
+        }
         return true; // 'all' option
     };
 

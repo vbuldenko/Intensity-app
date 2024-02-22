@@ -12,6 +12,7 @@ import {
     PencilSquareIcon,
     UserMinusIcon,
     ArrowRightOnRectangleIcon,
+    AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/outline';
 
 function Settings() {
@@ -40,6 +41,22 @@ function Settings() {
     };
     return (
         <div className="settings">
+            <div className="profile">
+                <h1>App settings</h1>
+                <div className="personal-info card-el-bg">
+                    <div className="personal-info-el">
+                        <div>
+                            <AdjustmentsHorizontalIcon className="h-4 w-4" />
+                            <p className="s-font">Fontsize</p>
+                            <p className="red">{14}</p>
+                        </div>
+
+                        <button>
+                            <PencilSquareIcon className="h-4 w-4" />
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div className="profile">
                 <h1>Personal information</h1>
                 <div className="personal-info card-el-bg">

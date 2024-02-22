@@ -9,9 +9,8 @@ import { salefilterAbonements } from '../../../utils';
 
 export default function AdminOverview() {
     const [salesView, setSalesView] = useState('All');
-    const soldAbonements = useSelector(({ abonements }) =>
-        salefilterAbonements(abonements, salesView)
-    );
+    const abonements = useSelector(({ abonements }) => abonements);
+    const soldAbonements = salefilterAbonements(abonements, salesView);
     const statistics = useSelector(({ statistics }) => statistics);
     const expenses = {
         rent: 30000,
@@ -27,7 +26,7 @@ export default function AdminOverview() {
                 <Selector
                     selection={salesView}
                     handleSelection={setSalesView}
-                    buttonNames={['All', 'Today']}
+                    buttonNames={['All', 'Month', 'Today']}
                 />
                 <div className="metrics">
                     <p> client</p>
