@@ -7,19 +7,12 @@ export default function Overview({ user }) {
     if (!user) {
         return null;
     }
-    const abonements =
-        user.role === 'client'
-            ? useSelector(({ abonements }) => abonements)
-            : null;
-
-    const currentDate = new Date();
     const { name, role } = user;
+    const abonements =
+        role === 'client' ? useSelector(({ abonements }) => abonements) : null;
 
     return (
         <div className="flex-column">
-            {/* <div className="status5 top-zero align-center">
-                {currentDate.toString().slice(0, 16)}
-            </div> */}
             <div className="flex-row-container green-clr">
                 <div>
                     <p>Welcome back, {name}</p>

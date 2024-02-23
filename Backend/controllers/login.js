@@ -4,9 +4,16 @@ const loginRouter = require("express").Router();
 const User = require("../models/user");
 
 loginRouter.post("/", async (request, response) => {
-    const { username, password } = request.body;
-
-    const user = await User.findOne({ username });
+    const { identifier, password } = request.body;
+    let user;
+    if (identifier.includes("@")) {
+        // If '@' is present, treat it as an email
+        user = await User.findOne({ email: identifier });
+    } else {
+        // If no '@', treat it as a phone number
+        user = await User.findOne({ phone: identifier });
+    }
+    // const user = await User.findOne({ email });
     const passwordCorrect =
         user === null
             ? false
@@ -19,7 +26,6 @@ loginRouter.post("/", async (request, response) => {
     }
 
     const userForToken = {
-        username: user.username,
         id: user._id,
     };
 

@@ -1,4 +1,4 @@
-const KEY = 'loggedIntensityUser';
+const KEY = 'IntensityUser';
 
 const saveUser = (user) => {
     localStorage.setItem(KEY, JSON.stringify(user));

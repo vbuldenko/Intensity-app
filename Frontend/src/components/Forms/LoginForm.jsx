@@ -7,10 +7,9 @@ import { signUserIn } from '../../reducers/loginReducer';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const notification = useSelector(({ notification }) => notification);
-
     const dispatch = useDispatch();
     const location = useLocation();
     const path = location.state?.from || '/account';
@@ -18,28 +17,30 @@ const LoginForm = () => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            await dispatch(signUserIn({ username, password }));
-            setUsername('');
+            await dispatch(signUserIn({ identifier, password }));
+            setIdentifier('');
             setPassword('');
-            navigate(path, { replace: true }); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack
+            navigate(path, { replace: true });
         } catch (error) {
-            dispatch(notifyWith(error.response.data.error));
+            dispatch(
+                notifyWith(error.response?.data?.error ?? 'An error occurred')
+            );
         }
     };
 
     return (
-        <div className="form-wrapper card-el-bg ">
+        <div className="form-wrapper card-el-bg">
             <form className="auth-form" onSubmit={handleLogin}>
                 <h1>Log in to application</h1>
-                {notification ? <h1>{notification}</h1> : null}
+                {notification && <h1>{notification}</h1>}
                 <div>
                     <input
-                        id="username"
+                        id="identifier"
                         type="text"
-                        value={username}
-                        name="Username"
-                        placeholder="username"
-                        onChange={({ target }) => setUsername(target.value)}
+                        value={identifier}
+                        name="identifier"
+                        placeholder="Email or Phone Number"
+                        onChange={({ target }) => setIdentifier(target.value)}
                     />
                 </div>
                 <div>
@@ -47,8 +48,8 @@ const LoginForm = () => {
                         id="password"
                         type="password"
                         value={password}
-                        name="Password"
-                        placeholder="password"
+                        name="password"
+                        placeholder="Password"
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
@@ -63,7 +64,6 @@ const LoginForm = () => {
                         Sign Up
                     </Link>
                 </div>
-
                 <Link to="/forgot-password">Forgot password?</Link>
             </div>
         </div>
