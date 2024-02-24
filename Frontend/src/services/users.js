@@ -24,9 +24,12 @@ const create = async (newUser) => {
 };
 
 const update = async (id, updatedUser) => {
-    // const response = await axios.post(baseUrl, updatedUser, config)
-    const response = await axios.put(`${baseUrl}/${id}`, updatedUser);
-    return response.data;
+    const user = storageService.loadUser();
+    if (user) {
+        config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    const res = await axios.put(`${baseUrl}/${id}`, updatedUser, config);
+    return res.data;
 };
 
 const remove = (id) => {

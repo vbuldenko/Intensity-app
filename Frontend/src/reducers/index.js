@@ -10,7 +10,6 @@ import usersReducer from './usersReducer';
 const rootReducer = combineReducers({
     statistics: statisticsReducer,
     abonements: abonementReducer,
-    reservedTrainings: reservationsReducer,
     trainings: trainingReducer,
     notification: notificationReducer,
     user: loginReducer,

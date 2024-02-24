@@ -93,7 +93,7 @@ export default function Training({ training, activeAbonement }) {
                 </div>
             )}
             <div className="scheduled-training-content">
-                <div className="flex-row-container st-title top-zero left-zero">
+                <div className="flex-row-container title2 top-zero left-zero">
                     <p>{training.time}</p>
                     <p className="bold">{training.type.toUpperCase()}</p>
                 </div>

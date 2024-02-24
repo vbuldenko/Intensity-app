@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useAppContext } from '../../context/Context';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logUserOut } from '../../reducers/loginReducer';
@@ -16,10 +18,18 @@ import {
 } from '@heroicons/react/24/outline';
 
 function Settings() {
+    const { fontSize, changeFontSize } = useAppContext();
     const user = storageService.loadUser();
     const { name, email, phone } = useSelector(({ user }) => user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const handleFontSize = (event) => {
+        const newSize = parseInt(event.target.value, 10);
+        changeFontSize(newSize);
+
+        // Implement functionality to update font size in the backend
+    };
 
     const handleLogOut = () => {
         storageService.removeUser();
@@ -48,12 +58,20 @@ function Settings() {
                         <div>
                             <AdjustmentsHorizontalIcon className="h-4 w-4" />
                             <p className="s-font">Fontsize</p>
-                            <p className="red">{14}</p>
                         </div>
 
-                        <button>
-                            <PencilSquareIcon className="h-4 w-4" />
-                        </button>
+                        <select
+                            id="fontSize"
+                            className="s-font"
+                            onChange={handleFontSize}
+                            value={fontSize}
+                        >
+                            {[10, 12, 14, 16, 18, 20].map((size) => (
+                                <option key={size} value={size}>
+                                    {size}px
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </div>

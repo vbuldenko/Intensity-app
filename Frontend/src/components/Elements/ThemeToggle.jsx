@@ -1,8 +1,8 @@
-import { useTheme } from '../../context/ThemeContext';
+import { useAppContext } from '../../context/Context';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 
 const ThemeToggle = () => {
-    const { theme, toggleTheme } = useTheme();
+    const { theme, toggleTheme } = useAppContext();
 
     return (
         <div className="switch-container">

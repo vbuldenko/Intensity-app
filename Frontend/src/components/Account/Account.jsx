@@ -1,9 +1,9 @@
 import Menu from './Menu';
 import { Outlet } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';
+import { useAppContext } from '../../context/Context';
 
 export default function Account({ user }) {
-    const { theme } = useTheme();
+    const { theme } = useAppContext();
     if (!user) {
         return null;
     }

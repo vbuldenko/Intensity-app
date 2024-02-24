@@ -3,7 +3,7 @@ import './styles/form.css';
 import './styles/main.css';
 import './styles/schedule.css';
 import './styles/account.css';
-import { useTheme } from './context/ThemeContext';
+import { useAppContext } from './context/Context';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
@@ -43,10 +43,13 @@ import {
 import { getStatistics } from './reducers/statisticsReducer';
 
 export default function App() {
-    const { theme } = useTheme();
+    const { theme, fontSize } = useAppContext();
     const dispatch = useDispatch();
     const isAuthenticated = storageService.loadUser() ? true : false;
     const user = useSelector(({ user }) => user);
+
+    // const fontSize = user.settings?.fontSize;
+    const style = fontSize ? { fontSize: `${fontSize}px` } : null;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -85,7 +88,10 @@ export default function App() {
     }, [isAuthenticated, dispatch]);
 
     return (
-        <div className={`App ${theme === 'light' ? 'light' : 'dark'}`}>
+        <div
+            style={style}
+            className={`App ${theme === 'light' ? 'light' : 'dark'}`}
+        >
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />

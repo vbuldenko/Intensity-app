@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ThemeToggle from '../Elements/ThemeToggle';
-import { useTheme } from '../../context/ThemeContext';
+import { useAppContext } from '../../context/Context';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import BurgerButton from '../Elements/BurgerButton';
 
 export default function Header() {
-    const { theme } = useTheme();
+    const { theme } = useAppContext();
     const user = useSelector(({ user }) => user);
 
     const [visible, setVisible] = useState(false);

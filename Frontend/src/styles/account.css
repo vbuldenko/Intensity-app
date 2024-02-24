@@ -27,12 +27,11 @@
     text-decoration: none;
     text-align: left;
     transition: all 0.2s ease-in-out;
-    font-size: var(--account-menu-fontsize);
+    font-size: var(--m-fontsize);
     line-height: 1;
 }
 
 .account-menu a:hover {
-    /* background: var(--selected-tab-background); */
     /* color: rgb(255, 255, 255); */
 }
 

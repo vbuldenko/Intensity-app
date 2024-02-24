@@ -1,4 +1,5 @@
 :root {
+    font-size: 16px; /* Set the desired font size */
     --light-background-color: rgba(255, 255, 255, 1);
     --dark-background-color: rgb(18, 18, 18);
     --light-theme-color: rgba(0, 0, 0, 0.8);
@@ -7,14 +8,11 @@
     --account-background2: rgba(242, 242, 247, 0.5);
     --account-background3: rgba(242, 242, 247, 0.05);
     --account-menu-background: rgba(230, 230, 240, 0.75);
-    --selected-tab-background: rgba(255, 255, 255, 0.5);
     --search-background-color: rgba(216, 216, 222, 1);
 
     --green-color: rgba(0, 169, 145, 1);
-    /* --green-color4: rgb(15, 123, 109); */
-    --green-color4: rgb(0, 84, 72);
-    --green-color3: rgba(0, 169, 144, 0.8);
     --green-color2: rgba(0, 169, 144, 0.1);
+    --green-color3: rgb(0, 84, 72);
     --red-color: rgba(255, 89, 97, 1);
     --white-color: rgb(255, 255, 255, 1);
     --gray-color-1: rgba(96, 96, 96, 1);
@@ -37,12 +35,11 @@
     --big-element-br: 1rem;
     --element-br: 0.5rem;
 
-    --account-menu-fontsize: 18px;
-    --m-fontsize: 20px;
-    --n-fontsize: 16px;
-    --s-fontsize: 14px;
-    --sx-fontsize: 12px;
-    --xs-fontsize: 10px;
+    --m-fontsize: 1.25rem;
+    --n-fontsize: 1rem;
+    --s-fontsize: 0.875rem;
+    --sx-fontsize: 0.75rem;
+    --xs-fontsize: 0.625rem;
 }
 
 .App * {
@@ -223,11 +220,11 @@
     box-shadow: var(--card-element-shadow3);
     color: var(--white-color);
 }
-.st-title {
+.title2 {
     font-size: 12px;
     width: max-content;
     text-align: center;
-    background: var(--green-color3);
+    background: var(--green-color);
     padding: 0.15rem 1rem;
     border-radius: 0.5rem 0 0.5rem 0;
     color: var(--white-color);
