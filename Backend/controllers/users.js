@@ -98,6 +98,7 @@ usersRouter.put("/:id", userExtractor, async (req, res, next) => {
 
     // Update only the specific settings provided in the request body
     Object.assign(user.settings, settingsToUpdate);
+    // console.log(user);
     await user.save();
 
     res.status(200).json(user);
