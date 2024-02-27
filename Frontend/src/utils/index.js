@@ -110,3 +110,7 @@ export function salefilterAbonements(abonements, viewOption) {
 
 export const sortByPurchaseDate = (a, b) =>
     new Date(a.purchase_date) - new Date(b.purchase_date);
+
+export const changeFontSize = (newSize) => {
+    document.documentElement.style.setProperty('font-size', newSize + 'px');
+};

@@ -4,9 +4,6 @@ import TrainerOverview from './Trainer/TrainerOverview';
 import ClientOverview from './Client/ClientOverview';
 
 export default function Overview({ user }) {
-    if (!user) {
-        return null;
-    }
     const { name, role } = user;
     const abonements =
         role === 'client' ? useSelector(({ abonements }) => abonements) : null;

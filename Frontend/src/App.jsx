@@ -40,14 +40,13 @@ import {
     initializeUserAbonements,
 } from './reducers/abonementReducer';
 import { getStatistics } from './reducers/statisticsReducer';
+import { changeFontSize } from './utils';
 
 export default function App() {
     const { theme } = useAppContext();
     const dispatch = useDispatch();
     const user = useSelector(({ user }) => user);
-
-    // const fontSize = user.settings?.fontSize;
-    const style = user.data && { fontSize: `${user.data.settings.fontSize}px` };
+    user.data && changeFontSize(user.data.settings.fontSize);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,10 +76,7 @@ export default function App() {
     }, [user.isAuthenticated]);
 
     return (
-        <div
-            style={style}
-            className={`App ${theme === 'light' ? 'light' : 'dark'}`}
-        >
+        <div className={`App ${theme === 'light' ? 'light' : 'dark'}`}>
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
