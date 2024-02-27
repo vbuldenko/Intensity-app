@@ -5,7 +5,7 @@ import SearchInput from '../../Elements/Search';
 import { ListBulletIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 
 export default function Team() {
-    const users = useSelector(({ users }) => users);
+    const users = useSelector(({ user }) => user.userList);
     const trainers = users.filter((user) => user.role === 'trainer');
 
     const [searchParams, setSearchParams] = useSearchParams();

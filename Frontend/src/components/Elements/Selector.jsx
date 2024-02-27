@@ -17,7 +17,7 @@ function Selector({ selection, handleSelection, buttonNames }) {
                     style={{
                         padding: '0.5rem',
                         minWidth: '75px',
-                        width: '150px',
+                        width: '100px',
                         textAlign: 'center',
                         borderRadius: '0.75rem',
                         color:

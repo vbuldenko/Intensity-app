@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { useAppContext } from '../../context/Context';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logUserOut } from '../../reducers/loginReducer';
-import { deleteUser } from '../../reducers/usersReducer';
+import { updateUser, logUserOut, deleteUser } from '../../reducers/userReducer';
 import storageService from '../../services/storage';
 
 import {
@@ -19,15 +17,16 @@ import {
 
 function Settings() {
     const { fontSize, changeFontSize } = useAppContext();
-    const user = storageService.loadUser();
-    const { name, email, phone } = useSelector(({ user }) => user);
+    const { id, name, email, phone, settings } = useSelector(
+        ({ user }) => user.data
+    );
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleFontSize = (event) => {
-        const newSize = parseInt(event.target.value, 10);
-        changeFontSize(newSize);
-
+        const newFontSize = parseInt(event.target.value, 10);
+        changeFontSize(newFontSize);
+        dispatch(updateUser(id, { settings: { fontSize: newFontSize } }));
         // Implement functionality to update font size in the backend
     };
 
@@ -39,7 +38,7 @@ function Settings() {
 
     const handleDelete = async () => {
         try {
-            await dispatch(deleteUser(user.id));
+            await dispatch(deleteUser(id));
             dispatch(logUserOut());
             console.log('account was successfully deleted!');
             navigate('/sign-in', { replace: true });
@@ -64,7 +63,7 @@ function Settings() {
                             id="fontSize"
                             className="s-font"
                             onChange={handleFontSize}
-                            value={fontSize}
+                            value={settings.fontSize}
                         >
                             {[10, 12, 14, 16, 18, 20].map((size) => (
                                 <option key={size} value={size}>

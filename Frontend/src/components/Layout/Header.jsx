@@ -81,7 +81,7 @@ export default function Header() {
                         gap: '1em',
                     }}
                 >
-                    {user ? (
+                    {user.data ? (
                         <NavLink
                             to="/account"
                             activeClassName="active"

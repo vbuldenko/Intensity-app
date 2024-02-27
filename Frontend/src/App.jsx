@@ -32,9 +32,8 @@ import Team from './components/Account/Admin/Team';
 import Trainer from './components/Account/Admin/Trainer';
 import Settings from './components/Account/Settings';
 
-import storageService from './services/storage';
-import { initializeUsers } from './reducers/usersReducer';
-import { loadLoggedInUser } from './reducers/loginReducer';
+import { initializeUsers } from './reducers/userReducer';
+import { loadLoggedInUser } from './reducers/userReducer';
 import { initializeTrainings } from './reducers/trainingReducer';
 import {
     initializeAllAbonements,
@@ -45,37 +44,30 @@ import { getStatistics } from './reducers/statisticsReducer';
 export default function App() {
     const { theme, fontSize } = useAppContext();
     const dispatch = useDispatch();
-    const isAuthenticated = storageService.loadUser() ? true : false;
     const user = useSelector(({ user }) => user);
 
     // const fontSize = user.settings?.fontSize;
-    const style = fontSize ? { fontSize: `${fontSize}px` } : null;
+    const style = user.data
+        ? { fontSize: `${user.data.settings.fontSize}px` }
+        : { fontSize: `${fontSize}px` };
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('App useEffect');
+            console.log('App useEffect - user:', user);
+            dispatch(loadLoggedInUser());
 
             try {
-                if (isAuthenticated) {
-                    const actions = [
-                        dispatch(loadLoggedInUser()),
-                        dispatch(initializeTrainings()),
-                    ];
-
-                    const loggedInUser = storageService.loadUser();
-
-                    if (loggedInUser) {
-                        if (loggedInUser.role === 'client') {
-                            actions.push(dispatch(initializeUserAbonements()));
-                        } else if (loggedInUser.role === 'admin') {
-                            actions.push(
-                                dispatch(initializeUsers()),
-                                dispatch(initializeAllAbonements()),
-                                dispatch(getStatistics())
-                            );
-                        }
+                if (user.isAuthenticated) {
+                    const actions = [dispatch(initializeTrainings())];
+                    if (user.data.role === 'client') {
+                        actions.push(dispatch(initializeUserAbonements()));
+                    } else if (user.data.role === 'admin') {
+                        actions.push(
+                            dispatch(initializeUsers()),
+                            dispatch(initializeAllAbonements()),
+                            dispatch(getStatistics())
+                        );
                     }
-
                     await Promise.all(actions);
                 }
             } catch (error) {
@@ -85,7 +77,7 @@ export default function App() {
         };
 
         fetchData();
-    }, [isAuthenticated, dispatch]);
+    }, [user.isAuthenticated]);
 
     return (
         <div
@@ -110,8 +102,14 @@ export default function App() {
                         element={<ResetPasswordForm />}
                     />
                     <Route element={<AuthProtected />}>
-                        <Route path="account" element={<Account user={user} />}>
-                            <Route index element={<Overview user={user} />} />
+                        <Route
+                            path="account"
+                            element={<Account user={user.data} />}
+                        >
+                            <Route
+                                index
+                                element={<Overview user={user.data} />}
+                            />
                             <Route path="purchases" element={<Purchases />} />
                             <Route path="schedule" element={<Schedule />} />
                             <Route

@@ -7,8 +7,8 @@ import Purchases from '../Client/Purchases';
 export default function Client() {
     const { id } = useParams();
     const location = useLocation();
-    const client = useSelector(({ users }) =>
-        users.find((client) => client.id === id.toString())
+    const client = useSelector(({ user }) =>
+        user.userList.find((client) => client.id === id.toString())
     );
 
     if (!client) {

@@ -5,8 +5,8 @@ import TrainerData from '../Trainer/TrainerData';
 export default function Trainer() {
     const { id } = useParams();
     const location = useLocation();
-    const trainer = useSelector(({ users }) =>
-        users.find((user) => user.id === id.toString())
+    const trainer = useSelector(({ user }) =>
+        user.userList.find((user) => user.id === id.toString())
     );
 
     const search = location.state?.search || '';

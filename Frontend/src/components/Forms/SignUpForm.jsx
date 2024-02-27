@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { notifyWith } from '../../reducers/notificationReducer';
-import { createUser } from '../../reducers/usersReducer';
+import { createUser } from '../../reducers/userReducer';
 
 const SignUpForm = () => {
     const defaultUserData = {

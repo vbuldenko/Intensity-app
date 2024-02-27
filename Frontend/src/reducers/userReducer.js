@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import userService from '../services/users';
+import loginService from '../services/login';
+import storageService from '../services/storage';
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
+        isAuthenticated: false,
         data: null,
         userList: [],
     },
@@ -11,21 +14,26 @@ const userSlice = createSlice({
         setUser(state, action) {
             state.data = action.payload;
         },
+        setAuthUser(state, action) {
+            state.data = action.payload;
+            state.isAuthenticated = true;
+        },
         setUsers(state, action) {
             state.userList = action.payload;
         },
         removeUser(state) {
             state.data = null;
+            state.isAuthenticated = false;
         },
     },
 });
 
-export const { setUser, setUsers, removeUser } = userSlice.actions;
+export const { setUser, setUsers, setAuthUser, removeUser } = userSlice.actions;
 
 export const createUser = (user) => {
     return async (dispatch) => {
         const newUser = await userService.create(user);
-        dispatch(setUser(newUser));
+        dispatch(setAuthUser(newUser));
     };
 };
 export const updateUser = (id, modifiedUser) => {
@@ -49,10 +57,38 @@ export const initializeUsers = () => {
     };
 };
 
-export const initializeUser = (id) => {
+export const signUserIn = (userInfo) => {
     return async (dispatch) => {
-        const user = await userService.getUserById(id);
-        dispatch(setUser(user));
+        try {
+            const userData = await loginService.login(userInfo);
+            storageService.saveUser(userData);
+            const user = await userService.getUserById(userData.id);
+            dispatch(setAuthUser(user));
+        } catch (error) {
+            // console.error('Login failed:', error);
+            throw error; // Re-throw the error to be caught in your component
+        }
+    };
+};
+
+export const logUserOut = () => {
+    return (dispatch) => {
+        storageService.removeUser();
+        dispatch(removeUser());
+    };
+};
+
+export const loadLoggedInUser = () => {
+    return async (dispatch) => {
+        try {
+            const userData = storageService.loadUser();
+            if (userData) {
+                const user = await userService.getUserById(userData.id);
+                dispatch(setAuthUser(user));
+            }
+        } catch (error) {
+            throw error; // Re-throw the error to be caught in your component
+        }
     };
 };
 

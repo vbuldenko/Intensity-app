@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function Clients(props) {
-    const users = useSelector(({ users }) => users);
+    const users = useSelector(({ user }) => user.userList);
     const clients = users.filter((user) => user.role === 'client');
     const [searchParams, setSearchParams] = useSearchParams();
     const viewMode = searchParams.get('view');
