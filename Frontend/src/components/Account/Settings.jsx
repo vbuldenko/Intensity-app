@@ -1,4 +1,3 @@
-import { useAppContext } from '../../context/Context';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, logUserOut, deleteUser } from '../../reducers/userReducer';
@@ -16,7 +15,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 function Settings() {
-    const { fontSize, changeFontSize } = useAppContext();
     const { id, name, email, phone, settings } = useSelector(
         ({ user }) => user.data
     );
@@ -25,7 +23,6 @@ function Settings() {
 
     const handleFontSize = (event) => {
         const newFontSize = parseInt(event.target.value, 10);
-        changeFontSize(newFontSize);
         dispatch(updateUser(id, { settings: { fontSize: newFontSize } }));
         // Implement functionality to update font size in the backend
     };

@@ -42,20 +42,17 @@ import {
 import { getStatistics } from './reducers/statisticsReducer';
 
 export default function App() {
-    const { theme, fontSize } = useAppContext();
+    const { theme } = useAppContext();
     const dispatch = useDispatch();
     const user = useSelector(({ user }) => user);
 
     // const fontSize = user.settings?.fontSize;
-    const style = user.data
-        ? { fontSize: `${user.data.settings.fontSize}px` }
-        : { fontSize: `${fontSize}px` };
+    const style = user.data && { fontSize: `${user.data.settings.fontSize}px` };
 
     useEffect(() => {
         const fetchData = async () => {
             console.log('App useEffect - user:', user);
             dispatch(loadLoggedInUser());
-
             try {
                 if (user.isAuthenticated) {
                     const actions = [dispatch(initializeTrainings())];
