@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react';
 
 const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
+export const GlobalContextProvider = ({ children }) => {
     const [theme, setTheme] = useState('light');
 
     const toggleTheme = () => {

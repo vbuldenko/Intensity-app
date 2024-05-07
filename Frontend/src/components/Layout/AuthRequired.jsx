@@ -4,7 +4,6 @@ import storageService from '../../services/storage';
 export default function AuthProtected() {
     const isAuthenticated = storageService.loadUser();
     const location = useLocation(); //Used for the state property to remember where user came from before it was redirected from protected route
-    // const [isLoading, setIsLoading] = useState(true);
 
     if (!isAuthenticated) {
         return (

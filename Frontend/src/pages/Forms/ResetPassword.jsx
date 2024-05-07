@@ -5,7 +5,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { notifyWith } from '../../reducers/notificationReducer';
 import usersService from '../../services/users';
 
-const ResetPasswordForm = () => {
+const ResetPassword = () => {
     const { resetToken } = useParams();
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
@@ -53,4 +53,4 @@ const ResetPasswordForm = () => {
     );
 };
 
-export default ResetPasswordForm;
+export default ResetPassword;

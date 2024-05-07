@@ -5,7 +5,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { notifyWith } from '../../reducers/notificationReducer';
 import { signUserIn } from '../../reducers/userReducer';
 
-const LoginForm = () => {
+const Login = () => {
     const navigate = useNavigate();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
@@ -70,4 +70,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default Login;

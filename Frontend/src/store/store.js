@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import resettableReducer from './reducers';
+import resettableReducer from '../reducers';
 // import trainingReducer from './reducers/trainingReducer';
 // import reservationsReducer from './reducers/reservationsReducer';
 // import notificationReducer from './reducers/notificationReducer';

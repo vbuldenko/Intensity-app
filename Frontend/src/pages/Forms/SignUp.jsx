@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { notifyWith } from '../../reducers/notificationReducer';
 import { createUser } from '../../reducers/userReducer';
 
-const SignUpForm = () => {
+const SignUp = () => {
     const defaultUserData = {
         username: '',
         name: '',
@@ -146,4 +146,4 @@ const SignUpForm = () => {
     );
 };
 
-export default SignUpForm;
+export default SignUp;

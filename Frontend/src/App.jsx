@@ -9,17 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useMatch } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
-import Home from './components/Layout/Home';
-import Services from './components/Layout/Services';
+import Home from './pages/Home';
+import Services from './pages/Services';
 import Schedule from './components/Schedule/Schedule';
-import Prices from './components/Layout/Prices';
-import Contacts from './components/Layout/Contacts';
-import NotFound from './components/Layout/NotFound';
+import Prices from './pages/Prices';
+import Contacts from './pages/Contacts';
+import NotFound from './pages/NotFound';
 
-import LoginForm from './components/Forms/LoginForm';
-import SignUpForm from './components/Forms/SignUpForm';
-import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
-import ResetPasswordForm from './components/Forms/ResetPasswordForm';
+import Login from './pages/Forms/Login';
+import SignUp from './pages/Forms/SignUp';
+import ForgotPassword from './pages/Forms/ForgotPassword';
+import ResetPassword from './pages/Forms/ResetPassword';
 
 import AuthProtected from './components/Layout/AuthRequired';
 import Account from './components/Account/Account';
@@ -50,7 +50,6 @@ export default function App() {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('App useEffect - user:', user);
             dispatch(loadLoggedInUser());
             try {
                 if (user.isAuthenticated) {
@@ -84,15 +83,15 @@ export default function App() {
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="prices" element={<Prices />} />
                     <Route path="contacts" element={<Contacts />} />
-                    <Route path="sign-in" element={<LoginForm />} />
-                    <Route path="sign-up" element={<SignUpForm />} />
+                    <Route path="sign-in" element={<Login />} />
+                    <Route path="sign-up" element={<SignUp />} />
                     <Route
                         path="forgot-password"
-                        element={<ForgotPasswordForm />}
+                        element={<ForgotPassword />}
                     />
                     <Route
                         path="reset-password/:resetToken"
-                        element={<ResetPasswordForm />}
+                        element={<ResetPassword />}
                     />
                     <Route element={<AuthProtected />}>
                         <Route

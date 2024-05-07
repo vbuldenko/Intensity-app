@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { notifyWith } from '../../reducers/notificationReducer';
 import usersService from '../../services/users';
 
-const ForgotPasswordForm = () => {
+const ForgotPassword = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [notification, setNotification] = useState(null);
@@ -54,4 +54,4 @@ const ForgotPasswordForm = () => {
     );
 };
 
-export default ForgotPasswordForm;
+export default ForgotPassword;
