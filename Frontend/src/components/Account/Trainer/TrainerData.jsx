@@ -1,12 +1,13 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import HistoryElement from '../../Elements/HistoryElement';
 
 const TrainerData = ({ user }) => {
     const currentDate = new Date();
-
     const trainings = useSelector(({ trainings }) => trainings);
+    if (!user) {
+        return null;
+    }
 
     const trainerTrainings = trainings
         .filter((training) => training.instructor.id === user.id)

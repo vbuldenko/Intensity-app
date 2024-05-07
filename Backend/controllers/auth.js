@@ -3,9 +3,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const authRouter = express.Router();
 const User = require("../models/user");
-const crypto = require("crypto");
 const sendResetPasswordEmail = require("../utils/email");
-const userExtractor = require("../utils/middleware").userExtractor;
 
 authRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
@@ -151,11 +149,11 @@ authRouter.post("/reset-password", async (req, res, next) => {
   try {
     // Find user
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    
+
     if (!decodedToken.id) {
-      return response.status(401).json({ error: 'token invalid' })
+      return res.status(401).json({ error: "token invalid" });
     }
-    
+
     const user = await User.findById(decodedToken.id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });

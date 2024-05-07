@@ -4,138 +4,115 @@ const userExtractor = require("../utils/middleware").userExtractor;
 const User = require("../models/user");
 
 abonementRouter.get("/", async (request, response, next) => {
-    try {
-        const abonements = await Abonement.find({}).populate({
-            path: "user",
-            select: "surname name",
-        });
+  try {
+    const abonements = await Abonement.find({}).populate({
+      path: "user",
+      select: "surname name",
+    });
 
-        response.json(abonements);
-    } catch (error) {
-        next(error);
-    }
-});
-
-// get abonnements by user ID
-abonementRouter.get("/user", userExtractor, async (request, response, next) => {
-    const { user } = request;
-    try {
-        if (!user) {
-            return response
-                .status(401)
-                .json({ error: "operation not permitted" });
-        }
-
-        const abonements = await Abonement.find({ user: user.id }).populate({
-            path: "history",
-            populate: {
-                path: "instructor",
-                select: "surname",
-            },
-        });
-
-        response.json(abonements);
-    } catch (error) {
-        next(error);
-    }
+    response.json(abonements);
+  } catch (error) {
+    next(error);
+  }
 });
 
 abonementRouter.get("/:id", async (request, response, next) => {
-    try {
-        const abonement = await Abonement.findById(request.params.id);
-        if (abonement) {
-            response.json(abonement);
-        } else {
-            response.status(404).end();
-        }
-    } catch (error) {
-        next(error);
+  try {
+    const abonement = await Abonement.findById(request.params.id);
+    if (abonement) {
+      response.json(abonement);
+    } else {
+      response.status(404).end();
     }
+  } catch (error) {
+    next(error);
+  }
 });
 
 abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
-    const abonementId = request.params.id;
-    const { body, user } = request;
-    const { updateType } = body;
+  const abonementId = request.params.id;
+  const { body, user } = request;
+  const { updateType } = body;
 
-    try {
-        if (!user || user.role !== "client") {
-            return response.status(401).json({
-                error: "Unauthorized: You are not authorized to perform this operation.",
-            });
-        }
-
-        const abonement = await Abonement.findById(abonementId);
-        if (!abonement || abonement.user.toString() !== user.id) {
-            return response.status(404).json({
-                error: "Abonement not found or not owned by the user.",
-            });
-        }
-
-        const currentDate = new Date();
-        if (updateType === "freeze" && !abonement.paused) {
-            abonement.paused = true;
-            abonement.expiration_date.setDate(
-                abonement.expiration_date.getDate() + 7
-            );
-        } else if (updateType === "freeze" && abonement.paused) {
-            return response
-                .status(400)
-                .json({ error: "Abonement is already paused." });
-        } else if (updateType === "reservation") {
-            if (abonement.history.includes(body.trainingId)) {
-                return response
-                    .status(400)
-                    .json({ error: "Training already reserved." });
-            }
-
-            if (!abonement.activation_date) {
-                const expirationDate = new Date(currentDate);
-                expirationDate.setMonth(currentDate.getMonth() + 1);
-
-                abonement.activation_date = currentDate;
-                abonement.expiration_date = expirationDate;
-                abonement.status = "active";
-            }
-            abonement.left -= 1;
-            if (abonement.left === 0) {
-                abonement.status = "ended";
-            }
-            abonement.history.push(body.trainingId);
-        } else if (updateType === "cancellation") {
-            if (abonement.left === 0) {
-                abonement.status = "active";
-            }
-            abonement.left += 1;
-            abonement.history = abonement.history.filter(
-                (id) => id.toString() !== body.trainingId
-            );
-        }
-
-        // const updatedAbonement = await Abonement.findByIdAndUpdate(
-        //     abonementId,
-        //     update,
-        //     {
-        //         new: true,
-        //         runValidators: true,
-        //         context: "query",
-        //     }
-        // );
-
-        const savedAbonement = await abonement.save();
-        const populatedAbonement = await Abonement.findById(
-            savedAbonement.id
-        ).populate({
-            path: "history",
-            populate: {
-                path: "instructor",
-            },
-        });
-
-        response.json(populatedAbonement);
-    } catch (error) {
-        next(error);
+  try {
+    if (!user || user.role !== "client") {
+      return response.status(401).json({
+        error:
+          "Unauthorized: You are not authorized to perform this operation.",
+      });
     }
+
+    const abonement = await Abonement.findById(abonementId);
+    if (!abonement || abonement.user.toString() !== user.id) {
+      return response.status(404).json({
+        error: "Abonement not found or not owned by the user.",
+      });
+    }
+
+    const currentDate = new Date();
+    if (updateType === "freeze" && !abonement.paused) {
+      abonement.paused = true;
+      abonement.expiration_date.setDate(
+        abonement.expiration_date.getDate() + 7
+      );
+    } else if (updateType === "freeze" && abonement.paused) {
+      return response
+        .status(400)
+        .json({ error: "Abonement is already paused." });
+    } else if (updateType === "reservation") {
+      if (abonement.history.includes(body.trainingId)) {
+        return response
+          .status(400)
+          .json({ error: "Training already reserved." });
+      }
+
+      if (!abonement.activation_date) {
+        const expirationDate = new Date(currentDate);
+        expirationDate.setMonth(currentDate.getMonth() + 1);
+
+        abonement.activation_date = currentDate;
+        abonement.expiration_date = expirationDate;
+        abonement.status = "active";
+      }
+      abonement.left -= 1;
+      if (abonement.left === 0) {
+        abonement.status = "ended";
+      }
+      abonement.history.push(body.trainingId);
+    } else if (updateType === "cancellation") {
+      if (abonement.left === 0) {
+        abonement.status = "active";
+      }
+      abonement.left += 1;
+      abonement.history = abonement.history.filter(
+        (id) => id.toString() !== body.trainingId
+      );
+    }
+
+    // const updatedAbonement = await Abonement.findByIdAndUpdate(
+    //     abonementId,
+    //     update,
+    //     {
+    //         new: true,
+    //         runValidators: true,
+    //         context: "query",
+    //     }
+    // );
+
+    const savedAbonement = await abonement.save();
+    const populatedAbonement = await Abonement.findById(
+      savedAbonement.id
+    ).populate({
+      path: "history",
+      populate: {
+        path: "instructor",
+      },
+    });
+
+    response.json(populatedAbonement);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // abonementRouter.post("/", userExtractor, async (request, response, next) => {
@@ -194,63 +171,62 @@ abonementRouter.put("/:id", userExtractor, async (request, response, next) => {
 // });
 
 abonementRouter.post("/", userExtractor, async (req, res, next) => {
-    const { body, user } = req;
-    const { role } = user;
+  const { body, user } = req;
+  const { role } = user;
 
-    try {
-        if (!user) {
-            return res.status(401).json({ error: "Operation not permitted" });
-        }
-
-        const client = await User.findById(body.clientId);
-        if (role === "admin" && !client) {
-            return res.status(401).json({ error: "Cannot find client" });
-        }
-
-        const abonements = await Abonement.find({
-            user: role === "admin" ? client.id : user.id,
-        });
-
-        if (
-            abonements.some(
-                (abonement) =>
-                    abonement.status === "active" ||
-                    abonement.status === "non-active"
-            )
-        ) {
-            return res.status(400).json({ error: "Already have an abonement" });
-        }
-
-        if (!body.amount || body.amount === 0) {
-            return res
-                .status(400)
-                .json({ error: "Amount of days in abonement is not chosen" });
-        }
-
-        const newAbonement = new Abonement({
-            type: body.type,
-            amount: body.amount,
-            price: body.price,
-            purchase_date: new Date(),
-            paused: false,
-            left: body.amount,
-            status: "non-active",
-            user: role === "admin" ? client.id : user.id,
-        });
-
-        const savedAbonement = await newAbonement.save();
-
-        role === "admin"
-            ? (client.abonements = client.abonements.concat(savedAbonement._id))
-            : (user.abonements = user.abonements.concat(savedAbonement._id));
-
-        role === "admin" ? await client.save() : await user.save();
-
-        res.status(201).json(savedAbonement);
-    } catch (error) {
-        console.log(error);
-        next(error);
+  try {
+    if (!user) {
+      return res.status(401).json({ error: "Operation not permitted" });
     }
+
+    const client = await User.findById(body.clientId);
+    if (role === "admin" && !client) {
+      return res.status(401).json({ error: "Cannot find client" });
+    }
+
+    const abonements = await Abonement.find({
+      user: role === "admin" ? client.id : user.id,
+    });
+
+    if (
+      abonements.some(
+        (abonement) =>
+          abonement.status === "active" || abonement.status === "non-active"
+      )
+    ) {
+      return res.status(400).json({ error: "Already have an abonement" });
+    }
+
+    if (!body.amount || body.amount === 0) {
+      return res
+        .status(400)
+        .json({ error: "Amount of days in abonement is not chosen" });
+    }
+
+    const newAbonement = new Abonement({
+      type: body.type,
+      amount: body.amount,
+      price: body.price,
+      purchase_date: new Date(),
+      paused: false,
+      left: body.amount,
+      status: "non-active",
+      user: role === "admin" ? client.id : user.id,
+    });
+
+    const savedAbonement = await newAbonement.save();
+
+    role === "admin"
+      ? (client.abonements = client.abonements.concat(savedAbonement._id))
+      : (user.abonements = user.abonements.concat(savedAbonement._id));
+
+    role === "admin" ? await client.save() : await user.save();
+
+    res.status(201).json(savedAbonement);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
 // abonementRouter.delete(

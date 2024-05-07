@@ -1,54 +1,12 @@
-GET http://localhost:3001/
-###
-GET http://localhost:3001/api/users/654237ee603900bc3c3fa1b1/
-###
-GET http://localhost:3001/api/users/654237ee603900bc3c3fa1b1/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
-###
-GET http://localhost:3001/api/abonements/
-###
-GET http://localhost:3001/api/abonements/user
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
-###
-POST http://localhost:3001/api/abonements/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NDcxODY5fQ.BHJkYA5UOfgUMHfF5FVGYv6nstER4IekVYML2Lk3Cg8
-
-{
-    "amount": 12,
-    "price": 2700
-}
-###
-POST http://localhost:3001/api/abonements/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
-
-{
-    "amount": 4,
-    "price": 1300
-}
-###
-PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
-
-{
-    "updateType": "activation"
-}
-###
-PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
-
-{
-    "updateType": "reservation",
-    "trainingId": "6546e2c1596f234a4fcb773f"
-}
-###
+# --------------------------------------------------------USERS
 GET http://localhost:3001/api/users/
 ###
+
+GET http://localhost:3001/api/users/654237ee603900bc3c3fa1b1/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+###
+
 POST http://localhost:3001/api/users/
 content-type: application/json
 
@@ -61,41 +19,61 @@ content-type: application/json
     "password": "rfrfirf",
     "role": "admin"
 }
-
 ###
-POST http://localhost:3001/api/users/
+
+# --------------------------------------------------------ABONEMENTS
+
+GET http://localhost:3001/api/abonements/
+###
+
+GET http://localhost:3001/api/abonements/654be1ad5bfc44a5a9ac3417
+###
+
+POST http://localhost:3001/api/abonements/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NDcxODY5fQ.BHJkYA5UOfgUMHfF5FVGYv6nstER4IekVYML2Lk3Cg8
 
 {
-    "username": "kappab",
-    "name": "Valeriia",
-    "surname": "Buba",
-    "email": "nurobna@gmail.com",
-    "phone": "0978612352",
-    "password": "1111",
-    "role": "client"
+    "amount": 12,
+    "price": 2700
 }
 ###
+
+PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
+
+{
+    "updateType": "activation"
+}
+###
+
+PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
+
+{
+    "updateType": "reservation",
+    "trainingId": "6546e2c1596f234a4fcb773f"
+}
+###
+
+# --------------------------------------------------------LOGIN
+
 POST http://localhost:3001/api/login/
 content-type: application/json
 
 {
-    "username": "walderhawk",
+    "identifier": "0978612345",
     "password": "1111"
 }
-
 ###
-POST http://localhost:3001/api/login/
-content-type: application/json
 
-{
-    "username": "bulbab",
-    "password": "1111"
-}
- 
-###
+# --------------------------------------------------------TRAININGS
+
 GET http://localhost:3001/api/training-sessions/
 ###
+
 POST http://localhost:3001/api/training-sessions/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
@@ -104,6 +82,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
     "mode": "month"
 }
 ###
+
 PUT http://localhost:3001/api/training-sessions/6546e2c1596f234a4fcb773f/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM 
@@ -113,6 +92,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1b
     "updateType": "reservation"
 }
 ###
+
 PUT http://localhost:3001/api/training-sessions/65423a4f603900bc3c3fa1c8/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
@@ -123,10 +103,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
     "abonementId": "65423b39603900bc3c3fa22a"
 }
 ###
+
 DELETE http://localhost:3001/api/training-sessions/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
 ###
+
+# --------------------------------------------------------SALES
+
 GET http://localhost:3001/api/sales/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0

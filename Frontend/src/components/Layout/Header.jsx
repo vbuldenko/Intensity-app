@@ -5,9 +5,12 @@ import ThemeToggle from '../Elements/ThemeToggle';
 import { useAppContext } from '../../context/Context';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import BurgerButton from '../Elements/BurgerButton';
+import { getLinkClass } from '../../utils/helpers';
 
 export default function Header() {
     const { theme } = useAppContext();
+    const themeClass = theme === 'light' ? 'light' : 'dark';
+
     const user = useSelector(({ user }) => user);
 
     const [visible, setVisible] = useState(false);
@@ -38,37 +41,35 @@ export default function Header() {
     }, []);
 
     return (
-        <header
-            className={`m-font header ${theme === 'light' ? 'light' : 'dark'}`}
-        >
+        <header className={`m-font header ${themeClass}`}>
             <Link className="logo" to="/">
                 Intensity
             </Link>
             <nav className={`header-navbar ${visible ? 'mobile' : ''}`}>
                 <NavLink
                     to="/services"
-                    activeClassName="active"
+                    className={getLinkClass}
                     onClick={closeMobileMenu}
                 >
                     Services
                 </NavLink>
                 <NavLink
                     to="/schedule"
-                    activeClassName="active"
+                    className={getLinkClass}
                     onClick={closeMobileMenu}
                 >
                     Schedule
                 </NavLink>
                 <NavLink
                     to="/prices"
-                    activeClassName="active"
+                    className={getLinkClass}
                     onClick={closeMobileMenu}
                 >
                     Prices
                 </NavLink>
                 <NavLink
                     to="/contacts"
-                    activeClassName="active"
+                    className={getLinkClass}
                     onClick={closeMobileMenu}
                 >
                     Contacts
@@ -84,7 +85,7 @@ export default function Header() {
                     {user.data ? (
                         <NavLink
                             to="/account"
-                            activeClassName="active"
+                            className={getLinkClass}
                             onClick={closeMobileMenu}
                         >
                             <UserCircleIcon className="h-6 w-6" />
@@ -92,7 +93,7 @@ export default function Header() {
                     ) : (
                         <NavLink
                             to="/sign-in"
-                            activeClassName="active"
+                            className={getLinkClass}
                             onClick={closeMobileMenu}
                         >
                             Log In/Sign Up

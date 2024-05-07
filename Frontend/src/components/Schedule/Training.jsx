@@ -108,7 +108,7 @@ export default function Training({ training, activeAbonement }) {
                     }}
                 >
                     <p className="status">
-                        Trainer: <b>{training.instructor.name}</b>
+                        Trainer: <b>{training.instructor?.name}</b>
                     </p>
                     <p className="m-text">
                         Places left: {training.maxCapacity - reservedPlaces}

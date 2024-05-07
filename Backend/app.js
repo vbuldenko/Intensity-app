@@ -8,15 +8,15 @@ const trainingRouter = require("./controllers/trainings");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const salesRouter = require("./controllers/sales");
-const authRouter = require("./controllers/authController");
+const authRouter = require("./controllers/auth");
 
 const middleware = require("./utils/middleware");
 const { connectToDatabase } = require("./utils/db");
 // const { scheduleDailyJob } = require("./utils/scheduledTrainingChecker");
 
 if (process.env.NODE_ENV === "test") {
-    const testingRouter = require("./controllers/testing");
-    app.use("/api/testing", testingRouter);
+  const testingRouter = require("./controllers/testing");
+  app.use("/api/testing", testingRouter);
 }
 // Connect to the database
 connectToDatabase();
@@ -39,7 +39,7 @@ app.use("/api/training-sessions", trainingRouter);
 
 // Serve the React app for any other route
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 app.use(middleware.unknownEndpoint);

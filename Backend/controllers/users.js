@@ -26,8 +26,17 @@ usersRouter.get("/:id", userExtractor, async (request, response) => {
   }
 
   try {
-    const user = await User.findById(request.params.id);
-    console.log(user);
+    const user = await User.findById(request.params.id).populate({
+      path: "abonements",
+      populate: {
+        path: "history",
+        populate: {
+          path: "instructor",
+          select: "surname",
+        },
+      },
+    });
+
     response.json(user);
   } catch (error) {
     console.log(error);
