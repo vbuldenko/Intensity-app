@@ -5,33 +5,37 @@ const authRouter = express.Router();
 const User = require("../models/user");
 const sendResetPasswordEmail = require("../utils/email");
 
-authRouter.post("/login", async (req, res, next) => {
-  const { email, password } = req.body;
+authRouter.post("/", async (req, res, next) => {
+  const { identifier, password } = req.body;
 
   try {
-    // Find user by email
-    const user = await User.findOne({ email });
+    // Find user
+    let user;
+    if (identifier.includes("@")) {
+      // If '@' is present, treat it as an email
+      user = await User.findOne({ email: identifier });
+    } else {
+      // If no '@', treat it as a phone number
+      user = await User.findOne({ phone: identifier });
+    }
+
     if (!user) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "invalid username or password" });
     }
 
     // Compare password
     const passwordMatch = await bcrypt.compare(password, user.passwordHash);
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "invalid username or password" });
     }
 
     // Set token expiration time
     const expiresIn = 1 * 24 * 60 * 60; // 7 days in seconds
 
     // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: expiresIn, // Token expiration time or "1h"
-      }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: expiresIn, // Token expiration time or "1h"
+    });
 
     // Send token in response
     // res.status(200).json({ token });
@@ -89,17 +93,13 @@ authRouter.post("/register", async (req, res, next) => {
     await newUser.save();
 
     // Generate JWT token
-    const token = jwt.sign(
-      { userId: newUser._id, email: newUser.email },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h", // Token expiration time
-      }
-    );
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h", // Token expiration time
+    });
 
     // Send token in response
     // res.status(201).json({ token });
-    res.status(201).send({ token, id: user._id, role: user.role });
+    res.status(201).send({ token, id: newUser._id, role: newUser.role });
   } catch (error) {
     next(error);
   }

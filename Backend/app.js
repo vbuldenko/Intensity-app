@@ -6,7 +6,6 @@ const cors = require("cors");
 const abonementRouter = require("./controllers/abonements");
 const trainingRouter = require("./controllers/trainings");
 const usersRouter = require("./controllers/users");
-const loginRouter = require("./controllers/login");
 const salesRouter = require("./controllers/sales");
 const authRouter = require("./controllers/auth");
 
@@ -31,7 +30,6 @@ app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
 app.use("/api/auth", authRouter);
-app.use("/api/login", loginRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/abonements", abonementRouter);
 app.use("/api/sales", salesRouter);

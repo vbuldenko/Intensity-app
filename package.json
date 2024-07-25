@@ -10,5 +10,8 @@
         "deploy": "cd Backend && npm run deploy:full"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.19.2"
+    }
 }
