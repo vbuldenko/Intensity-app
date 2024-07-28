@@ -1,23 +1,81 @@
+# --------------------------------------------------------LOGIN
+
+POST http://localhost:3001/api/auth/
+content-type: application/json
+
+{
+    "identifier": "anzhela@gmail.com",
+    "password": "rfrfirf"
+}
+###
+POST http://localhost:3001/api/auth/
+content-type: application/json
+
+{
+    "identifier": "hawkwalder@gmail.com",
+    "password": "1111"
+}
+###
+POST http://localhost:3001/api/auth/register
+content-type: application/json
+
+{
+    "username": "anzhela",
+    "name": "Anzhelika",
+    "surname": "Buldenko",
+    "email": "anzhela@gmail.com",
+    "phone": "0979910022",
+    "password": "rfrfirf",
+    "role": "client"
+}
+###
+
 # --------------------------------------------------------USERS
 GET http://localhost:3001/api/users/
 ###
 
-GET http://localhost:3001/api/users/654237ee603900bc3c3fa1b1/
+GET http://localhost:3001/api/users/66a56be3dff5f46c6fb33d24/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQyMzdlZTYwMzkwMGJjM2MzZmExYjEiLCJpYXQiOjE3MjIwOTQ3MzF9.v9TbnC7Es3oQhF_7_IUCjY5DwinglmUOsUOyM22Dt1g
 ###
 
 POST http://localhost:3001/api/users/
 content-type: application/json
 
 {
-    "username": "amanzhelam",
+    "username": "anzhela",
     "name": "Anzhelika",
     "surname": "Buldenko",
-    "email": "amanzhelam@gmail.com",
-    "phone": "0979910020",
+    "email": "anzhela@gmail.com",
+    "phone": "0979910022",
     "password": "rfrfirf",
-    "role": "admin"
+    "role": "client"
+}
+###
+
+PUT http://localhost:3001/api/users/66a56dd9bec5d2391c844822
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE1NmRkOWJlYzVkMjM5MWM4NDQ4MjIiLCJpYXQiOjE3MjIxMTc1OTQsImV4cCI6MTcyMjIwMzk5NH0.5oMXVqyVPOpWJOBwcpp6H7Lg45ixmNUbXSNbx0aZfPU
+
+{
+    "settings": {
+    "fontSize": 19
+  },
+  "phone": "0978612333"
+}
+###
+
+DELETE http://localhost:3001/api/users/66a52ef287263d9e2ea9b3e0/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE1MmVmMjg3MjYzZDllMmVhOWIzZTAiLCJpYXQiOjE3MjIxMDE1MTR9.yFj2Qr2GU19P1rSScCLdxAS_ppKsc9jwBccENQDpO6Y
+###
+
+PATCH  http://localhost:3001/api/users?action=delete
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQyMzdlZTYwMzkwMGJjM2MzZmExYjEiLCJpYXQiOjE3MjIwOTc2Mjd9.Nd6DZ0Z4g1Ik7FAQu-CMyY4Kn4M_fOuiwDbX08CqJCA
+
+{
+    "ids": ["66a56be3dff5f46c6fb33d24"]
 }
 ###
 
@@ -31,7 +89,7 @@ GET http://localhost:3001/api/abonements/654be1ad5bfc44a5a9ac3417
 
 POST http://localhost:3001/api/abonements/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NDcxODY5fQ.BHJkYA5UOfgUMHfF5FVGYv6nstER4IekVYML2Lk3Cg8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE1NmRkOWJlYzVkMjM5MWM4NDQ4MjIiLCJpYXQiOjE3MjIxNTgwMzQsImV4cCI6MTcyMjI0NDQzNH0.xLxmhxGV2yjs4BoGs0E7JcPYVcLHoChqhWd0HBhmq64
 
 {
     "amount": 12,
@@ -39,9 +97,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1b
 }
 ###
 
-PUT http://localhost:3001/api/abonements/654be29e5bfc44a5a9ac341c/
+PUT http://localhost:3001/api/abonements/66a60bf84710d8c5e25b49db/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE1NmRkOWJlYzVkMjM5MWM4NDQ4MjIiLCJpYXQiOjE3MjIxNTgwMzQsImV4cCI6MTcyMjI0NDQzNH0.xLxmhxGV2yjs4BoGs0E7JcPYVcLHoChqhWd0HBhmq64
 
 {
     "updateType": "activation"
@@ -58,15 +116,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1b
 }
 ###
 
-# --------------------------------------------------------LOGIN
-
-POST http://localhost:3001/api/login/
+delete http://localhost:3001/api/abonements/66a60bf84710d8c5e25b49db/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE1NmRkOWJlYzVkMjM5MWM4NDQ4MjIiLCJpYXQiOjE3MjIxNTgwMzQsImV4cCI6MTcyMjI0NDQzNH0.xLxmhxGV2yjs4BoGs0E7JcPYVcLHoChqhWd0HBhmq64
 
-{
-    "identifier": "0978612345",
-    "password": "1111"
-}
 ###
 
 # --------------------------------------------------------TRAININGS
@@ -74,18 +127,15 @@ content-type: application/json
 GET http://localhost:3001/api/training-sessions/
 ###
 
-POST http://localhost:3001/api/training-sessions/
+POST http://localhost:3001/api/training-sessions/week
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQyMzdlZTYwMzkwMGJjM2MzZmExYjEiLCJpYXQiOjE3MjIxNjQ1MDgsImV4cCI6MTcyMjI1MDkwOH0.bxBLuowWVGvfvGl3pY_rBjG__5iO7keCBUv0Dvgv9Q0
 
-{
-    "mode": "month"
-}
 ###
 
-PUT http://localhost:3001/api/training-sessions/6546e2c1596f234a4fcb773f/
+PUT http://localhost:3001/api/training-sessions/66a63444a42ecbacf8a1004a/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ1bGJhYiIsImlkIjoiNjU0OTJkZGNmY2YyZGFiOWE2ZmFmYzMzIiwiaWF0IjoxNjk5NjE5ODAxfQ.n1mAmUEFn_dlocYot0_UdZcM2DfpB3VXKVNzdgnOlUM 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQyMzdlZTYwMzkwMGJjM2MzZmExYjEiLCJpYXQiOjE3MjIxNjQ1MDgsImV4cCI6MTcyMjI1MDkwOH0.bxBLuowWVGvfvGl3pY_rBjG__5iO7keCBUv0Dvgv9Q0
 
 {
 
@@ -106,7 +156,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Indhb
 
 DELETE http://localhost:3001/api/training-sessions/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbGRlcmhhd2siLCJpZCI6IjY1NDIzN2VlNjAzOTAwYmMzYzNmYTFiMSIsImlhdCI6MTY5ODgzODc5MH0.v2i3swOq6oU6LL_zgK1uKVsubZ3AROUMVT27I_HN7m0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQyMzdlZTYwMzkwMGJjM2MzZmExYjEiLCJpYXQiOjE3MjIxNjQ1MDgsImV4cCI6MTcyMjI1MDkwOH0.bxBLuowWVGvfvGl3pY_rBjG__5iO7keCBUv0Dvgv9Q0
 ###
 
 # --------------------------------------------------------SALES

@@ -1,24 +1,19 @@
-const salesRouter = require("express").Router();
-const Sales = require("../models/sales");
-const userExtractor = require("../utils/middleware").userExtractor;
-const { collectStatistics } = require("../utils/statisticsCollector");
+const salesService = require("../services/sales.service");
 
-salesRouter.get("/", userExtractor, async (request, response, next) => {
-    const user = request.user;
+const get = async (req, res, next) => {
+  const user = req.user;
 
-    try {
-        if (!user.role === "admin") {
-            return response
-                .status(401)
-                .json({ error: "Unauthorized for this data!" });
-        }
-        // const sales = await Sales.find({});
-        const sales = await collectStatistics();
-        response.json(sales);
-    } catch (error) {
-        next(error);
-    }
-});
+  if (!user || user.role !== "admin") {
+    return res.status(401).json({ error: "Unauthorized!" });
+  }
+
+  try {
+    const sales = salesService.get();
+    res.json(sales);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // salesRouter.put("/:id", userExtractor, async (request, response, next) => {
 //     const salesDataId = request.params.id;
@@ -73,4 +68,4 @@ salesRouter.get("/", userExtractor, async (request, response, next) => {
 //     }
 // });
 
-module.exports = salesRouter;
+module.exports = { get };

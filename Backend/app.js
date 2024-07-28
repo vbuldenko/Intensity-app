@@ -3,11 +3,11 @@ const path = require("path");
 const app = express();
 const cors = require("cors");
 
-const abonementRouter = require("./controllers/abonements");
-const trainingRouter = require("./controllers/trainings");
-const usersRouter = require("./controllers/users");
-const salesRouter = require("./controllers/sales");
-const authRouter = require("./controllers/auth");
+const usersRouter = require("./routes/users.route");
+const authRouter = require("./routes/auth.route");
+const abonementRouter = require("./routes/abonement.route");
+const trainingRouter = require("./routes/training.route");
+const salesRouter = require("./routes/sales.route");
 
 const middleware = require("./utils/middleware");
 const { connectToDatabase } = require("./utils/db");
@@ -32,8 +32,8 @@ app.use(middleware.tokenExtractor);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/abonements", abonementRouter);
-app.use("/api/sales", salesRouter);
 app.use("/api/training-sessions", trainingRouter);
+app.use("/api/sales", salesRouter);
 
 // Serve the React app for any other route
 app.get("*", (req, res) => {
