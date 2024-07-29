@@ -1,6 +1,6 @@
 const Training = require("../models/training");
 const User = require("../models/user");
-const predefinedSchedule = require("../utils/predefined_schedule");
+const predefinedSchedule = require("./predefined_schedule");
 
 // Function to calculate dates for the current week or month
 function getCurrentDates(mode) {

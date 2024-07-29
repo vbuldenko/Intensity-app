@@ -1,8 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-// const users = [];
-
 async function getAll() {
   return await User.find({}).populate({
     path: "abonements",
@@ -27,31 +25,6 @@ async function getById(id) {
       },
     },
   });
-}
-
-async function create({
-  username,
-  name,
-  surname,
-  email,
-  phone,
-  password,
-  role,
-}) {
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
-
-  const user = new User({
-    username,
-    name,
-    surname,
-    email,
-    phone,
-    passwordHash,
-    role,
-  });
-
-  return await user.save();
 }
 
 async function update(id, data) {
@@ -87,7 +60,6 @@ async function removeMany(ids) {
 module.exports = {
   getAll,
   getById,
-  create,
   update,
   remove,
   removeMany,

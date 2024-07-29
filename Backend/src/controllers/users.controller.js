@@ -23,34 +23,6 @@ const getOne = async (req, res) => {
   }
 };
 
-const create = async (req, res, next) => {
-  const { username, name, surname, email, phone, password, role } = req.body;
-  if (
-    !username ||
-    !name ||
-    !surname ||
-    !email ||
-    !phone ||
-    !password ||
-    !role
-  ) {
-    return res.status(400).json({ error: "All form details are required!" });
-  }
-
-  if (password.length < 4) {
-    return res
-      .status(400)
-      .json({ error: "Password should be at least 4 characters long!" });
-  }
-
-  try {
-    const savedUser = await usersService.create(req.body);
-    res.status(201).json(savedUser);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const update = async (req, res, next) => {
   // Ensure that only the authenticated user can update their settings
   if (req.user.id !== req.params.id) {
@@ -109,7 +81,6 @@ const removeMany = async (req, res, next) => {
 module.exports = {
   get,
   getOne,
-  create,
   update,
   remove,
   removeMany,

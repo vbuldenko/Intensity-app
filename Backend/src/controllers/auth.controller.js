@@ -27,19 +27,25 @@ const login = async (req, res, next) => {
 const register = async (req, res, next) => {
   const { username, name, surname, email, phone, password, role } = req.body;
 
-  try {
-    if (
-      !username ||
-      !name ||
-      !surname ||
-      !email ||
-      !phone ||
-      !password ||
-      !role
-    ) {
-      return res.status(400).json({ error: "All form details are required!" });
-    }
+  if (
+    !username ||
+    !name ||
+    !surname ||
+    !email ||
+    !phone ||
+    !password ||
+    !role
+  ) {
+    return res.status(400).json({ error: "All form details are required!" });
+  }
 
+  if (password.length < 4) {
+    return res
+      .status(400)
+      .json({ error: "Password should be at least 4 characters long!" });
+  }
+
+  try {
     const existingUser =
       (await authService.findUserByIdentifier(email)) ||
       (await authService.findUserByIdentifier(username));
@@ -47,12 +53,6 @@ const register = async (req, res, next) => {
       return res
         .status(400)
         .json({ error: "User with this email or username already exists" });
-    }
-
-    if (password.length < 4) {
-      return res
-        .status(400)
-        .json({ error: "Password should be at least 4 characters long!" });
     }
 
     const passwordHash = await authService.hashPassword(password);
