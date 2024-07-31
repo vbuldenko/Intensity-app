@@ -9,13 +9,13 @@ const abonementRouter = require("./routes/abonement.route");
 const trainingRouter = require("./routes/training.route");
 const salesRouter = require("./routes/sales.route");
 
-const middleware = require("./utils/middleware");
+const middleware = require("./middlewares");
 const { connectToDatabase } = require("./utils/db");
 // const { scheduleDailyJob } = require("./utils/scheduledTrainingChecker");
 
 if (process.env.NODE_ENV === "test") {
-  const testingRouter = require("./controllers/testing");
-  app.use("/api/testing", testingRouter);
+  // const testingRouter = require("./controllers/testing");
+  app.use("/api/testing", usersRouter);
 }
 // Connect to the database
 connectToDatabase();
@@ -24,6 +24,7 @@ connectToDatabase();
 // scheduleDailyJob();
 
 app.use(cors());
+
 app.use(express.static("dist"));
 app.use(express.json());
 app.use(middleware.requestLogger);

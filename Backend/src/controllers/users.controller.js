@@ -7,14 +7,16 @@ const get = async (req, res) => {
 };
 
 const getOne = async (req, res) => {
-  const { user } = req; //To ensure that authenticated user can acces his userdata
-
-  if (user.role !== "admin" && user.id !== req.params.id) {
-    return res.status(401).json({ error: "Access denied" });
+  if (req.user.role !== "admin" && req.user.id !== req.params.id) {
+    return res.status(403).json({ error: "Access denied" });
   }
 
   try {
     const user = await usersService.getById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     res.json(user);
   } catch (error) {

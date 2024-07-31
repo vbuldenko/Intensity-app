@@ -1,6 +1,6 @@
 const express = require("express");
 const trainingController = require("../controllers/training.controller");
-const userExtractor = require("../utils/middleware").userExtractor;
+const userExtractor = require("../middlewares").userExtractor;
 
 const router = express.Router();
 

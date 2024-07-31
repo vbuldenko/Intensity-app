@@ -1,5 +1,5 @@
 const usersRouter = require("express").Router();
-const userExtractor = require("../utils/middleware").userExtractor;
+const userExtractor = require("../middlewares").userExtractor;
 const usersController = require("../controllers/users.controller");
 
 usersRouter.get("/", usersController.get);

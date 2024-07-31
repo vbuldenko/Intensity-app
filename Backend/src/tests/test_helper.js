@@ -1,42 +1,27 @@
-const Blog = require('../models/blog');
-const User = require('../models/user');
-
-const initialPosts = [
-    {
-        "title": "Awesome text",
-        "author": "Some James",
-        "url": "https://wwww.google.com",
-        "likes": 5
-    },
-    {
-        "title": "Second awesome text",
-        "author": "Mike James",
-        "url": "https://wwww.google.com",
-        "likes": 10
-    },
-]
+const User = require("../models/user");
 
 const nonExistingId = async () => {
-    const blog = new Blog({ likes: 0 })
-    await blog.save()
-    await blog.deleteOne()
+  const user = new User({
+    username: "anzhel",
+    name: "Anzhel",
+    surname: "Buldenko",
+    email: "anzhel@gmail.com",
+    phone: "0979910029",
+    password: "rfrfirf21",
+    role: "client",
+  });
+  await user.save();
+  await user.deleteOne();
 
-    return blog._id.toString()
-}
-
-const blogsInDb = async () => {
-    const blogs = await Blog.find({})
-    return blogs.map(blog => blog.toJSON())
-}
+  return user._id.toString();
+};
 
 const usersInDb = async () => {
-    const users = await User.find({})
-    return users.map(user => user.toJSON())
-}
+  const users = await User.find({});
+  return users.map((user) => user.toJSON());
+};
 
 module.exports = {
-    initialPosts,
-    nonExistingId,
-    blogsInDb,
-    usersInDb
-}
+  nonExistingId,
+  usersInDb,
+};

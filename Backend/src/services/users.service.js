@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
 
 async function getAll() {
   return await User.find({}).populate({
