@@ -1,3 +1,4 @@
+import { Dialect } from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -7,7 +8,7 @@ export interface DatabaseConfig {
   database: string;
   host: string;
   port: number;
-  dialect: 'postgres';
+  dialect: Dialect;
   use_env_variable?: string;
   logging: boolean | ((sql: string, timing?: number) => void);
 }
@@ -18,7 +19,7 @@ interface Config {
   production: DatabaseConfig;
 }
 
-export const config: Config = {
+const config: Config = {
   development: {
     username: process.env.DB_USER || 'dev_user',
     password: process.env.DB_PASS || 'dev_pass',

@@ -1,65 +1,42 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
+import { Sequelize } from 'sequelize';
 import fs from 'fs';
 import path from 'path';
-import { Sequelize, DataTypes } from 'sequelize';
-import { DatabaseConfig as Config } from '../../config/database';
+import process from 'process';
+import { fileURLToPath } from 'url';
 
-// Import model initialization functions
-import { initUserModel } from './user';
-import { initAbonementModel } from './abonement';
-import { config as dbConfig } from '../../config/database';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const basename: string = path.basename(__filename);
-const env: string = process.env.NODE_ENV || 'development';
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = (
+  await import(path.join(__dirname, '..', 'config', 'database.config.ts'))
+).default[env];
 
-// Load the config based on the environment
-const config: Config = dbConfig.development;
+// console.log('Index --- ', config);
 
-const db: { [key: string]: any } = {};
+export const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config,
+);
 
-let sequelize: Sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(
-    process.env[config.use_env_variable] as string,
-    config,
+const db: any = {};
+
+const modelFiles = fs.readdirSync(__dirname).filter(file => {
+  return (
+    file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.ts'
   );
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, {
-    host: config.host,
-    dialect: 'postgres', // Ensure this is correctly passed
-    logging: config.logging,
-    port: config.port,
-  });
+});
+
+for (const file of modelFiles) {
+  const model = (await import(path.join(__dirname, file))).default(sequelize);
+  console.log('Model --- ', model);
+  db[model.name] = model;
 }
 
-// Initialize models
-initUserModel(sequelize);
-initAbonementModel(sequelize);
-
-// Read all model files in the current directory and import them into Sequelize
-fs.readdirSync(__dirname)
-  .filter((file: string) => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.ts' && // Updated to '.ts' for TypeScript
-      file.indexOf('.test.ts') === -1 // Updated to '.ts' for TypeScript
-    );
-  })
-  .forEach((file: string) => {
-    const modelPath = path.join(__dirname, file);
-    const modelClass = require(modelPath).default;
-
-    if (modelClass) {
-      const model = modelClass(sequelize);
-      db[model.name] = model;
-    }
-  });
-
-// Set up associations, if any, for each model
-Object.keys(db).forEach((modelName: string) => {
+Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

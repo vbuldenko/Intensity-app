@@ -1,26 +1,39 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-class User extends Model {
-  declare id: number;
-  declare firstName: string;
-  declare lastName: string;
-  declare email: string;
-
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
-
-  static associate(models: { [key: string]: any }) {
-    // A user can have many abonements
-    this.hasMany(models.Abonement, {
-      foreignKey: 'userId',
-      as: 'abonements', // Alias for the association
-    });
-  }
+interface UserAttributes {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
 
-export const initUserModel = (sequelize: Sequelize) => {
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+
+export default function (sequelize: Sequelize) {
+  class User
+    extends Model<UserAttributes, UserCreationAttributes>
+    implements UserAttributes
+  {
+    public id!: number;
+    public firstName!: string;
+    public lastName!: string;
+    public email!: string;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+    static associate(models: any) {
+      // Define the association with the Abonement model
+      User.hasMany(models.Abonement, { foreignKey: 'userId' });
+    }
+  }
+
   User.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,38 +53,6 @@ export const initUserModel = (sequelize: Sequelize) => {
       modelName: 'User',
     },
   );
-};
 
-export default User;
-
-// import { DataTypes, Sequelize } from 'sequelize';
-
-// const User = (sequelize: Sequelize) => {
-//   const UserModel = sequelize.define(
-//     'User',
-//     {
-//       firstName: DataTypes.STRING,
-//       lastName: DataTypes.STRING,
-//       email: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//         unique: true,
-//       },
-//     },
-//     {
-//       tableName: 'Users',
-//     },
-//   );
-
-//   UserModel.associate = (models: { [key: string]: any }) => {
-//     // A user can have many abonements
-//     UserModel.hasMany(models.Abonement, {
-//       foreignKey: 'userId',
-//       as: 'abonements',
-//     });
-//   };
-
-//   return UserModel;
-// };
-
-// export default User;
+  return User;
+}

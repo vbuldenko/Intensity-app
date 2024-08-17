@@ -12,9 +12,9 @@
     "format": "prettier ./src --write",
     "prepare": "husky",
     "db:migrate": "tsx ./node_modules/.bin/sequelize db:migrate",
-    "db:seed": "ts-node ./node_modules/.bin/sequelize db:seed:all",
-    "db:migrate:undo": "ts-node ./node_modules/.bin/sequelize db:migrate:undo",
-    "db:seed:undo": "ts-node ./node_modules/.bin/sequelize db:seed:undo:all"
+    "db:seed": "tsx ./node_modules/.bin/sequelize db:seed:all",
+    "db:migrate:undo": "tsx ./node_modules/.bin/sequelize db:migrate:undo",
+    "db:seed:undo": "tsx ./node_modules/.bin/sequelize db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +42,7 @@
     "lint-staged": "^15.2.7",
     "sequelize-cli": "^6.6.2",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.4"
   },
   "lint-staged": {

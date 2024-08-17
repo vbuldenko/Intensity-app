@@ -21,6 +21,14 @@ if (process.env.NODE_ENV === "test") {
 connectToDatabase();
 
 // check the trainings and return to user abonement if needed
+const db = require("./db/models/index");
+console.log(
+  db.User.create({
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+  })
+);
 // scheduleDailyJob();
 
 app.use(cors());

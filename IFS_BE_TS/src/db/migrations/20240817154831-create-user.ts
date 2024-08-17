@@ -12,12 +12,32 @@ module.exports = {
       },
       firstName: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       lastName: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      phone: {
+        type: Sequelize.STRING,
+      },
+      password: {
+        type: Sequelize.STRING,
+      },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      settings: {
+        type: Sequelize.JSON,
+        defaultValue: {
+          fontSize: 16,
+        },
       },
       createdAt: {
         allowNull: false,
@@ -29,7 +49,7 @@ module.exports = {
       },
     });
   },
-  async down(queryInterface: QueryInterface, Sequelize: any) {
+  async down(queryInterface: QueryInterface, Sequelize: typeof DataTypes) {
     await queryInterface.dropTable('Users');
   },
 };
