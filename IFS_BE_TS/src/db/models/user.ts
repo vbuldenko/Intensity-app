@@ -5,6 +5,10 @@ interface UserAttributes {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
+  password: string;
+  role: string;
+  settings: {};
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -18,6 +22,10 @@ export default function (sequelize: Sequelize) {
     public firstName!: string;
     public lastName!: string;
     public email!: string;
+    public phone!: string;
+    public password!: string;
+    public role!: string;
+    public settings!: {};
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -47,7 +55,24 @@ export default function (sequelize: Sequelize) {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING,
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      settings: {
+        type: DataTypes.JSON,
+        defaultValue: {
+          fontSize: 16,
+        },
+      },
     },
+
     {
       sequelize,
       modelName: 'User',
