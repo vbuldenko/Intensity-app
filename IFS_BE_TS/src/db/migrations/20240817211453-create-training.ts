@@ -46,12 +46,12 @@ module.exports = {
         ),
         allowNull: false,
       },
-      maxCapacity: {
+      capacity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
       instructorId: {
-        type: Sequelize.INTEGER.UNSIGNED,
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           model: 'Users', // This should match the table name created in the User migration
@@ -66,6 +66,35 @@ module.exports = {
       },
       updatedAt: {
         type: Sequelize.DATE,
+        allowNull: false,
+      },
+    });
+
+    await queryInterface.createTable('AbonementTrainings', {
+      abonementId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Abonements',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        primaryKey: true,
+      },
+      trainingId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Trainings',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        primaryKey: true,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
     });

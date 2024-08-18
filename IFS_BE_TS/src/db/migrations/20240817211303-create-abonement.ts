@@ -10,6 +10,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users', // This should match the table name created in the User migration
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
+      },
       status: {
         type: Sequelize.STRING,
       },
@@ -20,7 +29,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       price: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       left: {
         type: Sequelize.INTEGER,
@@ -40,16 +49,6 @@ module.exports = {
       expiratedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      },
-      userId: {
-        type: Sequelize.INTEGER.UNSIGNED,
-        allowNull: false,
-        references: {
-          model: 'User', // This should match the table name created in the User migration
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
     });
   },

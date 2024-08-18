@@ -1,4 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import abonement from './abonement';
 
 interface UserAttributes {
   id: number;
@@ -31,7 +32,13 @@ export default function (sequelize: Sequelize) {
     public readonly updatedAt!: Date;
     static associate(models: any) {
       // Define the association with the Abonement model
-      User.hasMany(models.Abonement, { foreignKey: 'userId' });
+      User.hasOne(models.Token, {
+        foreignKey: 'tokenId',
+      });
+      User.hasMany(models.Abonement, {
+        foreignKey: 'userId',
+        as: 'abonements',
+      });
     }
   }
 

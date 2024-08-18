@@ -2,8 +2,14 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
 interface AbonementAttributes {
   id: number;
-  trainings: number;
   userId: number;
+  status: string;
+  type: string;
+  amount: number;
+  price: number;
+  left: number;
+  activatedAt: Date;
+  expiratedAt: Date;
 }
 
 interface AbonementCreationAttributes
@@ -15,8 +21,14 @@ export default function (sequelize: Sequelize) {
     implements AbonementAttributes
   {
     public id!: number;
-    public trainings!: number;
     public userId!: number;
+    public status!: string;
+    public type!: string;
+    public amount!: number;
+    public price!: number;
+    public left!: number;
+    public activatedAt!: Date;
+    public expiratedAt!: Date;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -24,6 +36,10 @@ export default function (sequelize: Sequelize) {
     static associate(models: any) {
       // Define the association with the User model
       Abonement.belongsTo(models.User, { foreignKey: 'userId' });
+      Abonement.belongsToMany(models.Training, {
+        through: 'AbonementTrainings',
+        as: 'trainings',
+      });
     }
   }
 
@@ -34,16 +50,37 @@ export default function (sequelize: Sequelize) {
         autoIncrement: true,
         primaryKey: true,
       },
-      trainings: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      userId: {
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      amount: {
         type: DataTypes.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      left: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      activatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      expiratedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
       },
     },
     {

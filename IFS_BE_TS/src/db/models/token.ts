@@ -2,6 +2,7 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
 interface TokenAttributes {
   id: number;
+  userId: number;
   refreshToken: string;
 }
 
@@ -13,13 +14,14 @@ export default function (sequelize: Sequelize) {
     implements TokenAttributes
   {
     public id!: number;
+    public userId!: number;
     public refreshToken!: string;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     static associate(models: any) {
       // Define the association with the Abonement model
-      Token.hasOne(models.User, { foreignKey: 'tokenId' });
+      Token.belongsTo(models.User, { foreignKey: 'tokenId' });
     }
   }
 
@@ -29,6 +31,15 @@ export default function (sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users', // This should match the table name created in the User migration
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
       },
       refreshToken: {
         type: DataTypes.STRING,
