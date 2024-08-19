@@ -35,9 +35,9 @@ export default function (sequelize: Sequelize) {
 
     static associate(models: any) {
       // Define the association with the User model
-      Abonement.belongsTo(models.User, { foreignKey: 'userId' });
+      Abonement.belongsTo(models.User);
       Abonement.belongsToMany(models.Training, {
-        through: 'AbonementTrainings',
+        through: 'History',
         as: 'trainings',
       });
     }

@@ -32,11 +32,8 @@ export default function (sequelize: Sequelize) {
     public readonly updatedAt!: Date;
     static associate(models: any) {
       // Define the association with the Abonement model
-      User.hasOne(models.Token, {
-        foreignKey: 'tokenId',
-      });
+      User.hasOne(models.Token);
       User.hasMany(models.Abonement, {
-        foreignKey: 'userId',
         as: 'abonements',
       });
     }

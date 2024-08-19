@@ -20,8 +20,8 @@ export default function (sequelize: Sequelize) {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     static associate(models: any) {
-      // Define the association with the Abonement model
-      Token.belongsTo(models.User, { foreignKey: 'tokenId' });
+      // userId will be added to Tokens table
+      Token.belongsTo(models.User);
     }
   }
 
@@ -39,7 +39,7 @@ export default function (sequelize: Sequelize) {
           model: 'Users', // This should match the table name created in the User migration
           key: 'id',
         },
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       refreshToken: {
         type: DataTypes.STRING,

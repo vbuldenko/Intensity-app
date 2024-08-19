@@ -3,7 +3,7 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 interface TrainingAttributes {
   id: number;
   type: string;
-  instructor: string;
+  instructorId: string;
   capacity: string;
   clients: string;
   date: Date;
@@ -21,7 +21,7 @@ export default function (sequelize: Sequelize) {
   {
     public id!: number;
     public type!: string;
-    public instructor!: string;
+    public instructorId!: string;
     public capacity!: string;
     public clients!: string;
     public date!: Date;
@@ -37,7 +37,7 @@ export default function (sequelize: Sequelize) {
         foreignKey: 'instructorId',
       });
       Training.belongsToMany(models.Abonement, {
-        through: 'AbonementTrainings',
+        through: 'History',
         as: 'abonements',
       });
     }
@@ -54,7 +54,7 @@ export default function (sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      instructor: {
+      instructorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
