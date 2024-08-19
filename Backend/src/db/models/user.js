@@ -5,12 +5,20 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // Define the association with the Abonement model
-      User.hasMany(models.Abonement, { foreignKey: "userId" });
+      User.hasOne(models.Token);
+      User.hasMany(models.Abonement, {
+        as: "abonements",
+      });
     }
   }
 
   User.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -24,7 +32,24 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: DataTypes.STRING,
+      },
+      password: {
+        type: DataTypes.STRING,
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      settings: {
+        type: DataTypes.JSON,
+        defaultValue: {
+          fontSize: 16,
+        },
+      },
     },
+
     {
       sequelize,
       modelName: "User",

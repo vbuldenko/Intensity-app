@@ -2,62 +2,60 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Abonement extends Model {
+  class Training extends Model {
     static associate(models) {
-      // Define the association with the User model
-      Abonement.belongsTo(models.User);
-      Abonement.belongsToMany(models.Training, {
+      // Define the association with the Abonement model
+      Training.belongsTo(models.User, {
+        foreignKey: "instructorId",
+      });
+      Training.belongsToMany(models.Abonement, {
         through: "History",
-        as: "trainings",
+        as: "abonements",
       });
     }
   }
 
-  Abonement.init(
+  Training.init(
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      price: {
+      instructorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      left: {
+      capacity: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      activatedAt: {
+      clients: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        type: DataTypes.DATE,
       },
-      expiratedAt: {
+      date: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        type: DataTypes.DATE,
+      },
+      day: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      time: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: "Abonement",
+      modelName: "Training",
     }
   );
 
-  return Abonement;
+  return Training;
 };
