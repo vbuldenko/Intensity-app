@@ -33,7 +33,7 @@ export default function (sequelize: Sequelize) {
 
     static associate(models: any) {
       // Define the association with the User model
-      Training.hasOne(models.User, {
+      Training.belongsTo(models.User, {
         foreignKey: 'instructorId',
       });
       Training.belongsToMany(models.Abonement, {

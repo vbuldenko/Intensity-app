@@ -12,7 +12,7 @@ export function createApp() {
 
   // async function createUser() {
   //   try {
-  //     console.log(db.User);
+  // console.log(db);
   //     const newUser = await db.User.create({
   //       firstName: 'John',
   //       lastName: 'Doe',
@@ -26,6 +26,7 @@ export function createApp() {
   // }
 
   // createUser();
+  // db.sequelize.sync();
 
   app.use('/todos', todosRouter);
 

@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Abonement, {
         as: "abonements",
       });
+      User.hasMany(models.Training, {
+        as: "trainings",
+      });
     }
   }
 
