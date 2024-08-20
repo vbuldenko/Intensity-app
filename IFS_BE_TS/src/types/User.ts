@@ -1,13 +1,12 @@
-import { Abonement } from './Abonement';
-
 export interface User {
-  id: string;
-  username: string;
-  name: string;
-  surname: string;
+  id: number;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
-  passwordHash: string;
+  password: string;
   role: string;
-  abonements: Abonement[];
+  settings: {};
+  createdAt: Date;
+  updatedAt: Date;
 }

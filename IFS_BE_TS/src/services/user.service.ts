@@ -3,23 +3,10 @@ import db from '../db/models';
 import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
 import { sendActivationLink } from './email.service';
+import { UserDTO } from '../types/UserDTO';
 
-interface NormalizedUser {
-  id: number;
-  name: string;
-  email: string;
-}
-
-const normalize = ({
-  id,
-  name,
-  email,
-}: {
-  id: number;
-  name: string;
-  email: string;
-}): NormalizedUser => {
-  return { id, name, email };
+const normalize = ({ id, firstName, lastName, email }: UserDTO): UserDTO => {
+  return { id, firstName, lastName, email };
 };
 
 const getAllActive = async () => {
@@ -87,8 +74,8 @@ const findOrCreateGoogleUser = async ({
   name,
   email,
 }: {
-  name: string;
-  email: string;
+  name: string | undefined;
+  email: string | undefined;
 }) => {
   let user = await db.User.findOne({ where: { email } });
 

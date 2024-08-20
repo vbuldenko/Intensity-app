@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { todosService } from '../services/users.service.js';
+import { todosService } from '../services/user.service.js';
 
 export const getAll: RequestHandler = async (req, res) => {
   const todos = await todosService.getAll();
