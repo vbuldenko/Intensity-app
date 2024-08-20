@@ -1,45 +1,118 @@
-import { User } from '../types/User';
+import bcrypt from 'bcrypt';
+import db from '../db/models';
+import { ApiError } from '../exceptions/api.error';
+import { hashPassword } from '../utils';
+import { sendActivationLink } from './email.service';
 
-const users: User[] = [];
-
-export function getAll() {
-  return users;
+interface NormalizedUser {
+  id: number;
+  name: string;
+  email: string;
 }
 
-export function getById(id: string) {
-  return users.find(user => user.id === id);
-}
+const normalize = ({
+  id,
+  name,
+  email,
+}: {
+  id: number;
+  name: string;
+  email: string;
+}): NormalizedUser => {
+  return { id, name, email };
+};
 
-export function create(title: string) {
-  const user = { title, completed: false };
+const getAllActive = async () => {
+  return db.User.findAll({
+    where: {
+      activationToken: null,
+    },
+  });
+};
 
-  users.push(user);
+const findByEmail = async (email: string) => {
+  return db.User.findOne({ where: { email } });
+};
+
+const findByToken = async (activationToken: string) => {
+  return db.User.findOne({ where: { activationToken } });
+};
+
+const findById = async (id: number) => {
+  return db.User.findOne({ where: { id } });
+};
+
+const create = async (name: string, email: string, password: string) => {
+  const existingUser = await findByEmail(email);
+
+  if (existingUser) {
+    throw ApiError.BadRequest('User already exists', {
+      email: 'User already exists',
+    });
+  }
+
+  const hash = await hashPassword(password);
+  const activationToken = bcrypt.genSaltSync(1);
+
+  await db.User.create({
+    name,
+    email,
+    password: hash,
+    activationToken,
+  });
+
+  await sendActivationLink(name, email, activationToken);
+};
+
+const update = async (
+  data: Partial<{ name: string; email: string; password: string }>,
+  userId: number,
+) => {
+  const user = await db.User.findByPk(userId);
+
+  if (!user) {
+    throw ApiError.NotFound();
+  }
+
+  if (data.password) {
+    data.password = await hashPassword(data.password);
+  }
+
+  await user.update(data);
 
   return user;
-}
+};
 
-export function deleteById(id: string) {
-  const index = users.findIndex(user => user.id === id);
+const findOrCreateGoogleUser = async ({
+  name,
+  email,
+}: {
+  name: string;
+  email: string;
+}) => {
+  let user = await db.User.findOne({ where: { email } });
 
-  if (index === -1) return;
+  if (!user) {
+    const hash = await hashPassword('defaultpassword');
 
-  const [user] = users.splice(index, 1);
+    user = await db.User.create({
+      email,
+      name,
+      password: hash,
+      activationToken: null,
+    });
+  }
 
   return user;
-}
+};
 
-export function update({ id, title, completed }: User) {
-  const user = users.find(user => user.id === id);
-
-  if (!user) return;
-
-  return Object.assign(user, { title, completed });
-}
-
-export const usersService = {
-  getAll,
-  getById,
+export {
+  normalize,
+  getAllActive,
+  findByEmail,
+  findById,
+  findByToken,
   create,
-  deleteById,
   update,
+  findOrCreateGoogleUser,
 };
