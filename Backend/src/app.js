@@ -22,7 +22,7 @@ connectToDatabase();
 
 // check the trainings and return to user abonement if needed
 const db = require("./db/models/index");
-// db.sequelize.sync();
+db.sequelize.sync({ force: true });
 
 console.log(db.User);
 // console.log(

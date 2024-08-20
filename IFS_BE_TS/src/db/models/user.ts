@@ -1,35 +1,29 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import abonement from './abonement';
-
-interface UserAttributes {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  password: string;
-  role: string;
-  settings: {};
-}
-
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  Sequelize,
+} from 'sequelize';
 
 export default function (sequelize: Sequelize) {
-  class User
-    extends Model<UserAttributes, UserCreationAttributes>
-    implements UserAttributes
-  {
-    public id!: number;
-    public firstName!: string;
-    public lastName!: string;
-    public email!: string;
-    public phone!: string;
-    public password!: string;
-    public role!: string;
-    public settings!: {};
+  class User extends Model<
+    InferAttributes<User>,
+    InferCreationAttributes<User>
+  > {
+    declare id: CreationOptional<number>;
+    declare firstName: string;
+    declare lastName: string;
+    declare email: string;
+    declare phone: string;
+    declare password: string;
+    declare role: string;
+    declare settings: {};
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare createdAt: CreationOptional<Date>;
+    declare updatedAt: CreationOptional<Date>;
+
     static associate(models: any) {
       // Define the association with the Abonement model
       User.hasOne(models.Token);
@@ -78,6 +72,8 @@ export default function (sequelize: Sequelize) {
           fontSize: 16,
         },
       },
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
 
     {

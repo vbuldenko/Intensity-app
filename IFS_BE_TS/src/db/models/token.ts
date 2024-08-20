@@ -13,12 +13,12 @@ export default function (sequelize: Sequelize) {
     extends Model<TokenAttributes, TokenCreationAttributes>
     implements TokenAttributes
   {
-    public id!: number;
-    public userId!: number;
-    public refreshToken!: string;
+    declare id: number;
+    declare userId: number;
+    declare refreshToken: string;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare createdAt: Date;
+    declare updatedAt: Date;
     static associate(models: any) {
       // userId will be added to Tokens table
       Token.belongsTo(models.User);

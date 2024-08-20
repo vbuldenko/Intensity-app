@@ -20,18 +20,18 @@ export default function (sequelize: Sequelize) {
     extends Model<AbonementAttributes, AbonementCreationAttributes>
     implements AbonementAttributes
   {
-    public id!: number;
-    public userId!: number;
-    public status!: string;
-    public type!: string;
-    public amount!: number;
-    public price!: number;
-    public left!: number;
-    public activatedAt!: Date;
-    public expiratedAt!: Date;
+    declare id: number;
+    declare userId: number;
+    declare status: string;
+    declare type: string;
+    declare amount: number;
+    declare price: number;
+    declare left: number;
+    declare activatedAt: Date;
+    declare expiratedAt: Date;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare createdAt: Date;
+    declare updatedAt: Date;
 
     static associate(models: any) {
       // Define the association with the User model

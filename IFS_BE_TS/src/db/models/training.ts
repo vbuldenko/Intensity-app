@@ -19,17 +19,17 @@ export default function (sequelize: Sequelize) {
     extends Model<TrainingAttributes, TrainingCreationAttributes>
     implements TrainingAttributes
   {
-    public id!: number;
-    public type!: string;
-    public instructorId!: string;
-    public capacity!: string;
-    public clients!: string;
-    public date!: Date;
-    public day!: string;
-    public time!: string;
+    declare id: number;
+    declare type: string;
+    declare instructorId: string;
+    declare capacity: string;
+    declare clients: string;
+    declare date: Date;
+    declare day: string;
+    declare time: string;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare createdAt: Date;
+    declare updatedAt: Date;
 
     static associate(models: any) {
       // Define the association with the User model
