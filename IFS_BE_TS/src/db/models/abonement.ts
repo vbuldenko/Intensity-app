@@ -8,6 +8,7 @@ interface AbonementAttributes {
   amount: number;
   price: number;
   left: number;
+  paused: boolean;
   activatedAt: Date;
   expiratedAt: Date;
 }
@@ -27,6 +28,7 @@ export default function (sequelize: Sequelize) {
     declare amount: number;
     declare price: number;
     declare left: number;
+    declare paused: boolean;
     declare activatedAt: Date;
     declare expiratedAt: Date;
 
@@ -74,14 +76,12 @@ export default function (sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      activatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
+      paused: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
-      expiratedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
+      activatedAt: DataTypes.DATE,
+      expiratedAt: DataTypes.DATE,
     },
     {
       sequelize,
