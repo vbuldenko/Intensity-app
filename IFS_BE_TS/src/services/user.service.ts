@@ -4,6 +4,7 @@ import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
 import { sendActivationLink } from './email.service';
 import { UserDTO } from '../types/UserDTO';
+import { User } from '../types/User';
 
 const normalize = ({ id, firstName, lastName, email }: UserDTO): UserDTO => {
   return { id, firstName, lastName, email };
@@ -17,20 +18,20 @@ const getAllActive = async () => {
   });
 };
 
-const findByEmail = async (email: string) => {
+const getByEmail = async (email: string) => {
   return db.User.findOne({ where: { email } });
 };
 
-const findByToken = async (activationToken: string) => {
+const getByToken = async (activationToken: string) => {
   return db.User.findOne({ where: { activationToken } });
 };
 
-const findById = async (id: number) => {
+const getById = async (id: number) => {
   return db.User.findOne({ where: { id } });
 };
 
-const create = async (name: string, email: string, password: string) => {
-  const existingUser = await findByEmail(email);
+const create = async (user: User) => {
+  const existingUser = await getByEmail(user.email);
 
   if (existingUser) {
     throw ApiError.BadRequest('User already exists', {
@@ -38,17 +39,16 @@ const create = async (name: string, email: string, password: string) => {
     });
   }
 
-  const hash = await hashPassword(password);
+  const hash = await hashPassword(user.password);
   const activationToken = bcrypt.genSaltSync(1);
 
   await db.User.create({
-    name,
-    email,
+    ...user,
     password: hash,
     activationToken,
   });
 
-  await sendActivationLink(name, email, activationToken);
+  await sendActivationLink(user.firstName, user.email, activationToken);
 };
 
 const update = async (
@@ -70,7 +70,7 @@ const update = async (
   return user;
 };
 
-const findOrCreateGoogleUser = async ({
+const getOrCreateGoogleUser = async ({
   name,
   email,
 }: {
@@ -96,10 +96,10 @@ const findOrCreateGoogleUser = async ({
 export {
   normalize,
   getAllActive,
-  findByEmail,
-  findById,
-  findByToken,
+  getByEmail,
+  getById,
+  getByToken,
   create,
   update,
-  findOrCreateGoogleUser,
+  getOrCreateGoogleUser,
 };

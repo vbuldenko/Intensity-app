@@ -9,4 +9,5 @@ export interface User {
   settings: {};
   createdAt: Date;
   updatedAt: Date;
+  activationToken: string | null;
 }

@@ -20,7 +20,7 @@ async function processingCallback(
 ): Promise<void> {
   try {
     const { name, email } = profile._json;
-    const user = await userService.findOrCreateGoogleUser({ name, email });
+    const user = await userService.getOrCreateGoogleUser({ name, email });
     const tokens = await tokenService.generateTokensData(user);
 
     return done(null, {

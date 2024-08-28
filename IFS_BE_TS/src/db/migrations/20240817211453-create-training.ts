@@ -49,10 +49,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: 'Users', // This should match the table name created in the User migration
+          model: 'Users',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       createdAt: {
@@ -105,7 +104,7 @@ module.exports = {
   },
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.dropTable('Trainings');
     await queryInterface.dropTable('History');
+    await queryInterface.dropTable('Trainings');
   },
 };

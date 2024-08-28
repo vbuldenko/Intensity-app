@@ -33,19 +33,21 @@ export function validateAccessToken(token: string): JwtPayload | string | null {
   }
 }
 
-export function validateRefreshToken(
-  token: string,
-): JwtPayload | string | null {
+export function validateRefreshToken(token: string): UserDTO | null {
   try {
-    return jwt.verify(token, process.env.JWT_REFRESH_SECRET as string);
+    const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET as string);
+
+    return decoded as UserDTO;
   } catch (error) {
     return null;
   }
 }
 
-export function validateResetToken(token: string): JwtPayload | string | null {
+export function validateResetToken(token: string): UserDTO | null {
   try {
-    return jwt.verify(token, process.env.JWT_ACCESS_SECRET as string);
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string);
+
+    return decoded as UserDTO;
   } catch (error) {
     return null;
   }
@@ -55,7 +57,7 @@ export const save = async (
   userId: number,
   refreshToken: string,
 ): Promise<void> => {
-  const user = await userService.findById(userId);
+  const user = await userService.getById(userId);
 
   if (!user) {
     throw ApiError.NotFound();
@@ -76,7 +78,7 @@ export const getByToken = (refreshToken: string) => {
   return db.Token.findOne({ where: { refreshToken } });
 };
 
-export const removeByUserId = (userId: string) => {
+export const removeByUserId = (userId: number) => {
   return db.Token.destroy({ where: { userId } });
 };
 

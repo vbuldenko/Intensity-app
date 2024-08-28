@@ -10,6 +10,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      activationToken: {
+        type: DataTypes.STRING,
+      },
       firstName: {
         type: Sequelize.STRING,
         allowNull: false,

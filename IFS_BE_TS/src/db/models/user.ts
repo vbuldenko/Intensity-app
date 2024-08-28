@@ -13,6 +13,7 @@ export default function (sequelize: Sequelize) {
     InferCreationAttributes<User>
   > {
     declare id: CreationOptional<number>;
+    declare activationToken: string | null;
     declare firstName: string;
     declare lastName: string;
     declare email: string;
@@ -47,6 +48,7 @@ export default function (sequelize: Sequelize) {
         autoIncrement: true,
         primaryKey: true,
       },
+      activationToken: DataTypes.STRING,
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
