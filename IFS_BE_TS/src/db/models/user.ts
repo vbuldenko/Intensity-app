@@ -33,6 +33,10 @@ export default function (sequelize: Sequelize) {
       User.hasMany(models.Training, {
         as: 'trainings',
       });
+      User.belongsToMany(models.Training, {
+        through: 'History',
+        as: 'attendedTrainings',
+      });
     }
   }
 

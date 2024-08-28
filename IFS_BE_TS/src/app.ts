@@ -28,7 +28,7 @@ export function createApp() {
   // createUser();
   // db.sequelize.sync();
 
-  app.use('/todos', todosRouter);
+  app.use('/', (req, res) => res.send('Hello'));
 
   return app;
 }

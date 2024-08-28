@@ -50,7 +50,10 @@ export const update = async (
     abonement.expiratedAt.setDate(abonement.expiratedAt.getDate() + 7);
   } else if (payload.updateType === 'freeze' && abonement.paused) {
     throw new Error('Abonement is already paused.');
-  } else if (payload.updateType === 'reservation') {
+  } else if (
+    payload.updateType === 'reservation' &&
+    (abonement.status === 'active' || abonement.status === 'inactive')
+  ) {
     const training = await Training.findByPk(payload.trainingId);
     if (await abonement.hasTraining(training)) {
       throw new Error('Training already reserved.');
@@ -92,8 +95,8 @@ export const update = async (
         as: 'trainings',
         include: [
           {
-            model: User, // Assuming Training has a relationship with User (instructor)
-            as: 'instructor', // Adjust if necessary
+            model: User,
+            as: 'instructor',
           },
         ],
       },
@@ -101,7 +104,7 @@ export const update = async (
   });
 };
 
-export const createAbonement = async (payload: any, user: any) => {
+export const create = async (payload: any, user: any) => {
   const { role } = user;
 
   const client = role === 'admin' ? await getOne(payload.clientId) : user;
@@ -113,7 +116,7 @@ export const createAbonement = async (payload: any, user: any) => {
   const abonements = await Abonement.findAll({
     where: {
       userId: client.id,
-      status: ['active', 'non-active'],
+      status: ['active', 'inactive'],
     },
   });
 
@@ -127,7 +130,7 @@ export const createAbonement = async (payload: any, user: any) => {
 
   const newAbonement = await Abonement.create({
     userId: client.id,
-    status: 'non-active',
+    status: 'inactive',
     type: payload.type,
     amount: payload.amount,
     price: payload.price,
@@ -138,7 +141,7 @@ export const createAbonement = async (payload: any, user: any) => {
   return newAbonement;
 };
 
-export const removeAbonement = async (abonementId: number, user: any) => {
+export const remove = async (abonementId: number, user: any) => {
   const abonement = await Abonement.findByPk(abonementId);
   if (!abonement) {
     throw new Error('Abonement not found');

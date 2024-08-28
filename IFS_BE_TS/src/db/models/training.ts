@@ -5,7 +5,6 @@ interface TrainingAttributes {
   type: string;
   instructorId: string;
   capacity: string;
-  clients: string;
   date: Date;
   day: string;
   time: string;
@@ -23,7 +22,6 @@ export default function (sequelize: Sequelize) {
     declare type: string;
     declare instructorId: string;
     declare capacity: string;
-    declare clients: string;
     declare date: Date;
     declare day: string;
     declare time: string;
@@ -39,6 +37,10 @@ export default function (sequelize: Sequelize) {
       Training.belongsToMany(models.Abonement, {
         through: 'History',
         as: 'abonements',
+      });
+      Training.belongsToMany(models.User, {
+        through: 'History',
+        as: 'visitors',
       });
     }
   }
@@ -59,10 +61,6 @@ export default function (sequelize: Sequelize) {
         allowNull: false,
       },
       capacity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      clients: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

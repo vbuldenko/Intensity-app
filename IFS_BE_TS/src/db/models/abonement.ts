@@ -3,7 +3,7 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 interface AbonementAttributes {
   id: number;
   userId: number;
-  status: string;
+  status: 'active' | 'ended' | 'inactive';
   type: string;
   amount: number;
   price: number;
@@ -23,7 +23,7 @@ export default function (sequelize: Sequelize) {
   {
     declare id: number;
     declare userId: number;
-    declare status: string;
+    declare status: 'active' | 'ended' | 'inactive';
     declare type: string;
     declare amount: number;
     declare price: number;
@@ -36,7 +36,6 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: Date;
 
     static associate(models: any) {
-      // Define the association with the User model
       Abonement.belongsTo(models.User);
       Abonement.belongsToMany(models.Training, {
         through: 'History',

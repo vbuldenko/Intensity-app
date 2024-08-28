@@ -36,13 +36,8 @@ module.exports = {
           'ABS',
           'Fly Stretching',
           'Tabata',
-          'Fly Yoga',
-          'Yoga',
           'Functional',
           'Pilates',
-          'Heels Basic',
-          'Heels Pro',
-          'Gymnastics',
         ),
         allowNull: false,
       },
@@ -70,14 +65,14 @@ module.exports = {
       },
     });
 
-    await queryInterface.createTable('AbonementTrainings', {
+    await queryInterface.createTable('History', {
       abonementId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Abonements',
           key: 'id',
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         primaryKey: true,
       },
       trainingId: {
@@ -86,7 +81,16 @@ module.exports = {
           model: 'Trainings',
           key: 'id',
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
         primaryKey: true,
       },
       createdAt: {
@@ -102,5 +106,6 @@ module.exports = {
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
     await queryInterface.dropTable('Trainings');
+    await queryInterface.dropTable('History');
   },
 };
