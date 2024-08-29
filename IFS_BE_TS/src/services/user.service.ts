@@ -93,6 +93,18 @@ const getOrCreateGoogleUser = async ({
   return user;
 };
 
+const remove = async (id: number) => {
+  const user = await getById(id);
+
+  if (!user) {
+    throw ApiError.BadRequest('User does not exists', {
+      id: 'User not found',
+    });
+  }
+
+  await user.destroy();
+};
+
 export {
   normalize,
   getAllActive,
@@ -102,4 +114,5 @@ export {
   create,
   update,
   getOrCreateGoogleUser,
+  remove,
 };
