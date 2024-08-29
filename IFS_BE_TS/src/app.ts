@@ -1,14 +1,23 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-import { todosRouter } from './api/todos.router';
+import { todosRouter } from './api/auth.route';
 import db from './db/models';
+import { requestLogger } from './middlewares/logger.middleware';
+import { passport } from './services/passport';
 
 export function createApp() {
   const app = express();
 
-  app.use(express.json());
   app.use(cors());
+  app.use(express.json());
+  app.use(requestLogger);
+  app.use(cookieParser());
+
+  app.use(passport.initialize());
+
+  app.use('/', authRouter);
 
   // async function createUser() {
   //   try {
