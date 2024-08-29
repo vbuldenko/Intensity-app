@@ -14,6 +14,7 @@ const Path = {
   updateName: '/profile/name',
   updateEmail: '/profile/email',
   updatePassword: '/profile/password',
+  remove: '/profile/delete',
 } as const;
 
 export { Path };

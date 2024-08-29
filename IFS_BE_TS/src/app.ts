@@ -3,9 +3,11 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import authRouter from './api/auth.route';
+import userRouter from './api/user.route';
 import db from './db/models';
 import { requestLogger } from './middlewares/logger.middleware';
 import { passport } from './services/passport';
+import { authMiddleware } from './middlewares/auth.middleware';
 
 export function createApp() {
   const app = express();
@@ -18,6 +20,7 @@ export function createApp() {
   app.use(passport.initialize());
 
   app.use('/', authRouter);
+  app.use('/users', authMiddleware, userRouter);
 
   // async function createUser() {
   //   try {
