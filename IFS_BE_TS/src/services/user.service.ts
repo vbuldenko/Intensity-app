@@ -105,6 +105,10 @@ const remove = async (id: number) => {
   await user.destroy();
 };
 
+const removeMany = async () => {
+  await db.User.destroy({ where: {} });
+};
+
 export {
   normalize,
   getAllActive,
@@ -115,4 +119,5 @@ export {
   update,
   getOrCreateGoogleUser,
   remove,
+  removeMany,
 };
