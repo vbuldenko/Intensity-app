@@ -171,3 +171,19 @@ export const updatePassword = async (
 
   res.sendStatus(200);
 };
+
+export const remove = async (req: Request, res: Response): Promise<void> => {
+  const refreshToken = req.cookies?.refreshToken || '';
+  const userData = tokenService.validateRefreshToken(
+    refreshToken,
+  ) as UserDTO | null;
+  const token = await tokenService.getByToken(refreshToken);
+
+  if (!userData || !token || userData.id !== token.userId) {
+    throw ApiError.Unauthorized();
+  }
+
+  await userService.remove(userData.id);
+
+  res.status(204).end();
+};
