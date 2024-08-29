@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import { todosRouter } from './api/auth.route';
+import authRouter from './api/auth.route';
 import db from './db/models';
 import { requestLogger } from './middlewares/logger.middleware';
 import { passport } from './services/passport';
