@@ -12,6 +12,15 @@ export function validateEmail(email: string): string | undefined {
   }
 }
 
+export function validatePhone(phone: string): string | undefined {
+  if (!phone) {
+    return 'Phone is required';
+  }
+
+  if (phone.length < 10) {
+    return 'Should be at least 10 characters';
+  }
+}
 export function validatePassword(password: string): string | undefined {
   if (!password) {
     return 'Password is required';
@@ -23,6 +32,10 @@ export function validatePassword(password: string): string | undefined {
 }
 
 export function validateName(value: string): string | undefined {
+  if (!value) {
+    return 'Shold not be empty';
+  }
+
   if (!value || value.length < 3) {
     return 'Should be at least 3 characters';
   }

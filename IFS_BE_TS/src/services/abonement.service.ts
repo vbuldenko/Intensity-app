@@ -34,6 +34,43 @@ export const getById = async (id: number) => {
   });
 };
 
+export const create = async (payload: any, user: any) => {
+  const { role } = user;
+
+  const client = role === 'admin' ? await getOne(payload.clientId) : user;
+
+  if (!client) {
+    throw new Error('Cannot find client');
+  }
+
+  const abonements = await Abonement.findAll({
+    where: {
+      userId: client.id,
+      status: ['active', 'inactive'],
+    },
+  });
+
+  if (abonements.length > 0) {
+    throw new Error('Already have an abonement');
+  }
+
+  if (!payload.amount || payload.amount === 0) {
+    throw new Error('Amount in abonement is not chosen');
+  }
+
+  const newAbonement = await Abonement.create({
+    userId: client.id,
+    status: 'inactive',
+    type: payload.type,
+    amount: payload.amount,
+    price: payload.price,
+    left: payload.amount,
+    paused: false,
+  });
+
+  return newAbonement;
+};
+
 export const update = async (
   abonementId: number,
   userId: number,
@@ -102,43 +139,6 @@ export const update = async (
       },
     ],
   });
-};
-
-export const create = async (payload: any, user: any) => {
-  const { role } = user;
-
-  const client = role === 'admin' ? await getOne(payload.clientId) : user;
-
-  if (!client) {
-    throw new Error('Cannot find client');
-  }
-
-  const abonements = await Abonement.findAll({
-    where: {
-      userId: client.id,
-      status: ['active', 'inactive'],
-    },
-  });
-
-  if (abonements.length > 0) {
-    throw new Error('Already have an abonement');
-  }
-
-  if (!payload.amount || payload.amount === 0) {
-    throw new Error('Amount in abonement is not chosen');
-  }
-
-  const newAbonement = await Abonement.create({
-    userId: client.id,
-    status: 'inactive',
-    type: payload.type,
-    amount: payload.amount,
-    price: payload.price,
-    left: payload.amount,
-    paused: false,
-  });
-
-  return newAbonement;
 };
 
 export const remove = async (abonementId: number, user: any) => {

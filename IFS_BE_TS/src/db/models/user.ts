@@ -27,7 +27,7 @@ export default function (sequelize: Sequelize) {
 
     static associate(models: any) {
       // Define the association with the Abonement model
-      User.hasOne(models.Token);
+      User.hasOne(models.Token, { foreignKey: 'userId' });
       User.hasMany(models.Abonement, {
         as: 'abonements',
       });

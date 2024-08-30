@@ -4,10 +4,12 @@ import cookieParser from 'cookie-parser';
 
 import authRouter from './api/auth.route';
 import userRouter from './api/user.route';
-import db from './db/models';
+// import db from './db/models';
 import { requestLogger } from './middlewares/logger.middleware';
 import { passport } from './services/passport';
 import { authMiddleware } from './middlewares/auth.middleware';
+import { errorMiddleware } from './middlewares/error.middleware';
+import { unknownEndpoint } from './middlewares/helper.middleware';
 
 export function createApp() {
   const app = express();
@@ -39,8 +41,8 @@ export function createApp() {
 
   // createUser();
   // db.sequelize.sync();
-
-  app.use('/', (req, res) => res.send('Hello'));
+  app.use(unknownEndpoint);
+  app.use(errorMiddleware);
 
   return app;
 }

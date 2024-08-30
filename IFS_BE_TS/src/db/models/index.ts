@@ -13,8 +13,6 @@ const config = (
   await import(path.join(__dirname, '..', 'config', 'database.config.ts'))
 ).default[env];
 
-// console.log('Index --- ', config);
-
 export const sequelize = new Sequelize(
   config.database,
   config.username,
@@ -32,7 +30,6 @@ const modelFiles = fs.readdirSync(__dirname).filter(file => {
 
 for (const file of modelFiles) {
   const model = (await import(path.join(__dirname, file))).default(sequelize);
-  console.log('Model --- ', model);
   db[model.name] = model;
 }
 
@@ -44,5 +41,6 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+// console.log('DB index file ---');
 
 export default db;

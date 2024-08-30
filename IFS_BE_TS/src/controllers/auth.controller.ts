@@ -7,6 +7,7 @@ import * as emailService from '../services/email.service';
 import {
   validateName,
   validateEmail,
+  validatePhone,
   validatePassword,
   comparePasswords,
 } from '../utils';
@@ -40,8 +41,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     firstName: validateName(firstName),
     lastName: validateName(lastName),
     email: validateEmail(email),
-    phone: validateEmail(phone),
+    phone: validatePhone(phone),
     password: validatePassword(password),
+    role: validateName(role),
   };
 
   if (Object.values(errors).some(error => error)) {

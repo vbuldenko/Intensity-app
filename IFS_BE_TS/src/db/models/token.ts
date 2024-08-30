@@ -19,9 +19,9 @@ export default function (sequelize: Sequelize) {
 
     declare createdAt: Date;
     declare updatedAt: Date;
+
     static associate(models: any) {
-      // userId will be added to Tokens table
-      Token.belongsTo(models.User);
+      Token.belongsTo(models.User, { foreignKey: 'userId' });
     }
   }
 

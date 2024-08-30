@@ -1,0 +1,48 @@
+# --------------------------------------------------------AUTH
+GET http://localhost:3001/activation/$2b$04$kSQGiuESHq7wOb9G39bTze
+content-type: application/json
+###
+POST http://localhost:3001/registration
+content-type: application/json
+
+{
+  "firstName": "vlad",
+  "lastName": "Bul",
+  "email": "vladbuldenko@gmail.com",
+  "phone": "0978612121",
+  "password": "123456",
+  "role": "client"
+}
+###
+POST http://localhost:3001/login
+content-type: application/json
+
+{
+  "email": "vladbuldenko@gmail.com",
+  "password": "123456"
+}
+###
+GET http://localhost:3001/refresh
+content-type: application/json
+###
+POST http://localhost:3001/forgotPassword
+content-type: application/json
+
+{
+  "email": "vladbuldenko@gmail.com"
+}
+###
+POST http://localhost:3001/resetPassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InZsYWQiLCJlbWFpbCI6InZsYWRidWxkZW5rb0BnbWFpbC5jb20iLCJpYXQiOjE3MjMxMTM3MTMsImV4cCI6MTcyMzExNzMxM30.qTuEeKgu9wYtY9caHF_A-YIfGUGagpD0DH365Llb8bE
+content-type: application/json
+
+{
+  "password": "1234567",
+  "passwordConfirm": "1234567"
+}
+###
+
+# --------------------------------------------------------USERS
+GET http://localhost:3001/users/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwiaWF0IjoxNzI1MDE4NTczLCJleHAiOjE3MjUwMTg2MzN9.erBQK4UQZVRjnQVAVExFWVNasisYt1DAHnsZN4_G9jQ
+###
