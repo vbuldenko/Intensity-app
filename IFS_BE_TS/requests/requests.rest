@@ -32,12 +32,12 @@ content-type: application/json
   "email": "vladbuldenko@gmail.com"
 }
 ###
-POST http://localhost:3001/resetPassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InZsYWQiLCJlbWFpbCI6InZsYWRidWxkZW5rb0BnbWFpbC5jb20iLCJpYXQiOjE3MjMxMTM3MTMsImV4cCI6MTcyMzExNzMxM30.qTuEeKgu9wYtY9caHF_A-YIfGUGagpD0DH365Llb8bE
+POST http://localhost:3001/resetPassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwiaWF0IjoxNzI1MDk3NDk5LCJleHAiOjE3MjUxMDEwOTl9.MB53R4GyrdTqRSzf8BMgLjw7t_mZCyEsi6wwQb1h5wI
 content-type: application/json
 
 {
-  "password": "1234567",
-  "passwordConfirm": "1234567"
+  "password": "123456",
+  "passwordConfirm": "123456"
 }
 ###
 

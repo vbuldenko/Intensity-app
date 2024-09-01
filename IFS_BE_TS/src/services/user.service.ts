@@ -52,7 +52,12 @@ const create = async (user: User) => {
 };
 
 const update = async (
-  data: Partial<{ name: string; email: string; password: string }>,
+  data: Partial<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }>,
   userId: number,
 ) => {
   const user = await db.User.findByPk(userId);

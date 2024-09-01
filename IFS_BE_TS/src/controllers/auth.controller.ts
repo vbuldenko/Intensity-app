@@ -155,7 +155,7 @@ export const forgotPassword = async (
   const userData = userService.normalize(user);
   const resetToken = tokenService.generateResetToken(userData);
 
-  await emailService.sendResetLink(user.name, user.email, resetToken);
+  await emailService.sendResetLink(user.firstName, email, resetToken);
 
   res.status(200).send({
     message: 'Instructions on password reset were sent to your email',
@@ -203,7 +203,7 @@ export const resetPassword = async (
     throw ApiError.Unauthorized();
   }
 
-  await userService.update(user.id, password);
+  await userService.update({ password }, user.id);
 
   res.status(200).send({ message: 'Password reset successfully' });
 };

@@ -1,4 +1,5 @@
 import db from '../db/models';
+import { ApiError } from '../exceptions/api.error';
 
 const { Abonement, User, Training } = db;
 
@@ -40,7 +41,7 @@ export const create = async (payload: any, user: any) => {
   const client = role === 'admin' ? await getOne(payload.clientId) : user;
 
   if (!client) {
-    throw new Error('Cannot find client');
+    throw ApiError.NotFound({ user: 'User not found' });
   }
 
   const abonements = await Abonement.findAll({
@@ -51,11 +52,13 @@ export const create = async (payload: any, user: any) => {
   });
 
   if (abonements.length > 0) {
-    throw new Error('Already have an abonement');
+    throw ApiError.BadRequest('Existing element', {
+      abonement: 'was already created',
+    });
   }
 
   if (!payload.amount || payload.amount === 0) {
-    throw new Error('Amount in abonement is not chosen');
+    throw ApiError.BadRequest('Validation error', { amount: 'Required field' });
   }
 
   const newAbonement = await Abonement.create({
@@ -78,7 +81,9 @@ export const update = async (
 ) => {
   const abonement = await Abonement.findByPk(abonementId);
   if (!abonement || abonement.userId !== userId) {
-    throw new Error('Abonement not found or not owned by the user.');
+    throw ApiError.NotFound({
+      abonement: 'Abonement not found or not owned by the user',
+    });
   }
 
   const currentDate = new Date();

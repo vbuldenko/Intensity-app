@@ -47,24 +47,26 @@ export const updateName = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { name } = req.body;
+  const { firstName } = req.body;
   const refreshToken = req.cookies?.refreshToken || '';
   const userData = tokenService.validateRefreshToken(
     refreshToken,
   ) as UserDTO | null;
   const token = await tokenService.getByToken(refreshToken);
 
-  const validationError = validateName(name);
+  const validationError = validateName(firstName);
 
   if (validationError) {
-    throw ApiError.BadRequest('Validation error', { name: validationError });
+    throw ApiError.BadRequest('Validation error', {
+      firstName: validationError,
+    });
   }
 
   if (!userData || !token || userData.id !== token.userId) {
     throw ApiError.Unauthorized();
   }
 
-  const newUser = await userService.update({ name }, userData.id);
+  const newUser = await userService.update({ firstName }, userData.id);
 
   res.status(200).send(userService.normalize(newUser));
 };
