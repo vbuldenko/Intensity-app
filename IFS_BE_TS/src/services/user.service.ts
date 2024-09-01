@@ -6,8 +6,8 @@ import { sendActivationLink } from './email.service';
 import { UserDTO } from '../types/UserDTO';
 import { User } from '../types/User';
 
-const normalize = ({ id, firstName, lastName, email }: UserDTO): UserDTO => {
-  return { id, firstName, lastName, email };
+const normalize = ({ id, firstName, lastName, email, role }: User): UserDTO => {
+  return { id, firstName, lastName, email, role };
 };
 
 const getAllActive = async () => {

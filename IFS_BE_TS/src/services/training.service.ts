@@ -29,7 +29,7 @@ export const create = async (body: Training) => {
 
 export const update = async (
   trainingId: number,
-  userId: string,
+  userId: number,
   updateType: 'reservation' | 'cancellation',
 ) => {
   const training = await Training.findByPk(trainingId, {

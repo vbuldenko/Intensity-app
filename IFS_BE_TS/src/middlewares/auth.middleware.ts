@@ -22,7 +22,7 @@ export function authMiddleware(
   }
 
   // Add user data to the request object if needed
-  // req.user = userData;
+  req.user = userData;
 
   next();
 }

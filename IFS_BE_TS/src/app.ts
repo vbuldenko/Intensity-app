@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 
 import authRouter from './api/auth.route';
 import userRouter from './api/user.route';
+import abonementRouter from './api/abonement.route';
+import trainingRouter from './api/training.route';
 // import db from './db/models';
 import { requestLogger } from './middlewares/logger.middleware';
 import { passport } from './services/passport';
@@ -23,6 +25,8 @@ export function createApp() {
 
   app.use('/', authRouter);
   app.use('/users', authMiddleware, userRouter);
+  app.use('/abonements', authMiddleware, abonementRouter);
+  app.use('/trainings', authMiddleware, trainingRouter);
 
   // async function createUser() {
   //   try {

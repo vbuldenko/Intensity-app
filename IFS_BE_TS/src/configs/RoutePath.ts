@@ -17,6 +17,8 @@ const Path = {
   remove: '/profile/delete',
   abonements: '/',
   abonement: '/:id',
+  trainings: '/',
+  training: '/:id',
 } as const;
 
 export { Path };

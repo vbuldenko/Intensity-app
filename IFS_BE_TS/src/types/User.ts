@@ -5,7 +5,7 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  role: string;
+  role: 'client' | 'trainer' | 'admin';
   settings: {};
   createdAt: Date;
   updatedAt: Date;

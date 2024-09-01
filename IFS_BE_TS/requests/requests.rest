@@ -14,6 +14,7 @@ content-type: application/json
   "role": "client"
 }
 ###
+###
 POST http://localhost:3001/login
 content-type: application/json
 
@@ -21,6 +22,7 @@ content-type: application/json
   "email": "vladbuldenko@gmail.com",
   "password": "123456"
 }
+###
 ###
 GET http://localhost:3001/refresh
 content-type: application/json
@@ -31,6 +33,7 @@ content-type: application/json
 {
   "email": "vladbuldenko@gmail.com"
 }
+###
 ###
 POST http://localhost:3001/resetPassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwiaWF0IjoxNzI1MDk3NDk5LCJleHAiOjE3MjUxMDEwOTl9.MB53R4GyrdTqRSzf8BMgLjw7t_mZCyEsi6wwQb1h5wI
 content-type: application/json
@@ -45,4 +48,17 @@ content-type: application/json
 GET http://localhost:3001/users/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwiaWF0IjoxNzI1MDE4NTczLCJleHAiOjE3MjUwMTg2MzN9.erBQK4UQZVRjnQVAVExFWVNasisYt1DAHnsZN4_G9jQ
+###
+
+# --------------------------------------------------------ABONEMENTS
+POST http://localhost:3001/abonements
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTIzMzM2MCwiZXhwIjoxNzI1MjM2OTYwfQ.AO7lVd6NyEV4CTduOYvR6cOIFvHgqiqrPysV5tPtV7Y
+
+{
+  "clientId": 1,
+  "type": "stretching",
+  "amount": "4",
+  "price": "1700"
+}
 ###
