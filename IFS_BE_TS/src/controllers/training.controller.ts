@@ -2,6 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as trainingService from '../services/training.service';
 import { UserDTO } from '../types/UserDTO';
+import { ApiError } from '../exceptions/api.error';
 
 export const getAll = async (
   req: Request,
@@ -11,6 +12,15 @@ export const getAll = async (
   const trainingSessions = await trainingService.getAll();
   res.json(trainingSessions);
 };
+
+export async function getById(req: Request, res: Response): Promise<void> {
+  const training = await trainingService.getById(Number(req.params.id));
+  if (training) {
+    res.json(training);
+  } else {
+    throw ApiError.NotFound({ training: 'Not found' });
+  }
+}
 
 export const create = async (
   req: Request,

@@ -36,10 +36,11 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: Date;
 
     static associate(models: any) {
-      Abonement.belongsTo(models.User);
+      Abonement.belongsTo(models.User, { foreignKey: 'userId' });
       Abonement.belongsToMany(models.Training, {
         through: 'History',
         as: 'trainings',
+        foreignKey: 'trainingId',
       });
     }
   }

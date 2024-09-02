@@ -27,6 +27,7 @@ export function createApp() {
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', authMiddleware, trainingRouter);
+  console.log(new Date());
 
   // async function createUser() {
   //   try {

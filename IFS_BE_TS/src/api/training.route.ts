@@ -6,6 +6,7 @@ import { Path } from '../configs/RoutePath';
 const router = Router();
 
 router.get(Path.trainings, catchError(trainingController.getAll));
+router.get(Path.training, catchError(trainingController.getById));
 router.post(Path.trainings, catchError(trainingController.create));
 router.patch(Path.training, catchError(trainingController.update));
 router.delete(Path.training, catchError(trainingController.remove));

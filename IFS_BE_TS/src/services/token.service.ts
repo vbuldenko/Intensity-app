@@ -9,7 +9,7 @@ import { User } from '../types/User';
 
 export function generateAccessToken(user: UserDTO): string {
   return jwt.sign(user, process.env.JWT_ACCESS_SECRET as string, {
-    expiresIn: '1h',
+    expiresIn: '1d',
   });
 }
 

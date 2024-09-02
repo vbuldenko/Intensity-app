@@ -22,9 +22,12 @@ export const getAll = async (): Promise<Training> => {
     ],
   });
 };
+export const getById = async (id: number): Promise<Training> => {
+  return db.Training.findOne({ where: { id } });
+};
 
 export const create = async (body: Training) => {
-  return await Training.create(body);
+  return await Training.create({ ...body });
 };
 
 export const update = async (

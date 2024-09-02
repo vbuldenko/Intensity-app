@@ -34,12 +34,14 @@ module.exports = {
       left: {
         type: Sequelize.INTEGER,
       },
+      paused: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
       activatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
       },
       updatedAt: {

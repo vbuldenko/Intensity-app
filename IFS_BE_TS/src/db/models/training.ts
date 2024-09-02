@@ -37,10 +37,12 @@ export default function (sequelize: Sequelize) {
       Training.belongsToMany(models.Abonement, {
         through: 'History',
         as: 'abonements',
+        foreignKey: 'abonementId',
       });
       Training.belongsToMany(models.User, {
         through: 'History',
         as: 'visitors',
+        foreignKey: 'userId',
       });
     }
   }

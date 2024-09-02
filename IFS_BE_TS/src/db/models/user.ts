@@ -30,13 +30,16 @@ export default function (sequelize: Sequelize) {
       User.hasOne(models.Token, { foreignKey: 'userId' });
       User.hasMany(models.Abonement, {
         as: 'abonements',
+        foreignKey: 'userId',
       });
       User.hasMany(models.Training, {
         as: 'trainings',
+        foreignKey: 'instructorId',
       });
       User.belongsToMany(models.Training, {
         through: 'History',
         as: 'attendedTrainings',
+        foreignKey: 'userId',
       });
     }
   }
