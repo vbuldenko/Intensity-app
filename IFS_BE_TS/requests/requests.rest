@@ -19,7 +19,7 @@ POST http://localhost:3001/login
 content-type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "jane.doe@example.com",
   "password": "123456"
 }
 ###
@@ -53,25 +53,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROY
 # --------------------------------------------------------ABONEMENTS
 POST http://localhost:3001/abonements
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTI5MDk4MCwiZXhwIjoxNzI1Mjk0NTgwfQ.FaFV2D4mARXVRYyeGCJT4HvASW925XQPfiTY8paI8jg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjUzOTk5NDAsImV4cCI6MTcyNTQ4NjM0MH0.Mlh65AGrvygxXeTpmHgnSjDZOVT0iF_8X6oiiN8reDw
 
 {
   "clientId": 1,
-  "type": "stretching",
+  "type": "group",
   "amount": "4",
   "price": "1700"
 }
 ###
-GET http://localhost:3001/abonements/5
+GET http://localhost:3001/abonements/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTI5NDc3NywiZXhwIjoxNzI1MzgxMTc3fQ.kXaQpx7q6MVjt11jnYuTC09CzBOewqQdPYF5W8ETzas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjUzOTk5NDAsImV4cCI6MTcyNTQ4NjM0MH0.Mlh65AGrvygxXeTpmHgnSjDZOVT0iF_8X6oiiN8reDw
 
 ###
 
 # --------------------------------------------------------TRAININGS
 POST http://localhost:3001/trainings
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNTI5NzQ1NiwiZXhwIjoxNzI1MzgzODU2fQ.ut_x_fql6evG0-jstPzwl3I53Tt411KHGc3AhDHu_OY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNTQwMTA3MSwiZXhwIjoxNzI1NDg3NDcxfQ.G0dSFLglD067Qav1ZNlATs5l6RIm-wgPIdCN2AoOcg8
 
 {
   "instructorId": 2,
@@ -83,8 +83,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3ROY
   "date": "2024-09-02T17:22:22.961Z"
 }
 ###
-GET http://localhost:3001/trainings/2
+GET http://localhost:3001/trainings/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTI5NDc3NywiZXhwIjoxNzI1MzgxMTc3fQ.kXaQpx7q6MVjt11jnYuTC09CzBOewqQdPYF5W8ETzas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjUzOTk5NDAsImV4cCI6MTcyNTQ4NjM0MH0.Mlh65AGrvygxXeTpmHgnSjDZOVT0iF_8X6oiiN8reDw
 
+###
+PATCH  http://localhost:3001/trainings?abonementId=1&trainingId=1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTM4MjM0NiwiZXhwIjoxNzI1NDY4NzQ2fQ.g_hITVMvyoiCttY2HKDDohpIQIH3MSnhrdtF04BIxAg
+
+{
+  "updateType": "reservation"
+}
 ###

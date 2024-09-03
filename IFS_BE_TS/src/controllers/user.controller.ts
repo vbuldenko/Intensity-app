@@ -23,24 +23,17 @@ export const getProfile = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const refreshToken = req.cookies?.refreshToken || '';
-  const userData = tokenService.validateRefreshToken(
-    refreshToken,
-  ) as UserDTO | null;
-
-  const token = await tokenService.getByToken(refreshToken);
-
-  if (!userData || !token) {
+  if (!req.user) {
     throw ApiError.Unauthorized();
   }
 
-  const user = await userService.getByEmail(userData.email);
+  const user = await userService.getById(req.user.id);
 
-  if (!user || token.userId !== user.id) {
-    throw ApiError.Unauthorized();
+  if (!user) {
+    throw ApiError.NotFound();
   }
 
-  res.send(userService.normalize(user));
+  res.send(user);
 };
 
 export const updateName = async (

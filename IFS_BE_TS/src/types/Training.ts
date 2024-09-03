@@ -1,7 +1,7 @@
 export interface Training {
   id: number;
   type: string;
-  instructorId: string;
+  instructorId: number;
   capacity: string;
   clients: string;
   date: Date;

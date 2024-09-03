@@ -1,27 +1,18 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-
-interface AbonementAttributes {
-  id: number;
-  userId: number;
-  status: 'active' | 'ended' | 'inactive';
-  type: string;
-  amount: number;
-  price: number;
-  left: number;
-  paused: boolean;
-  activatedAt: Date;
-  expiratedAt: Date;
-}
-
-interface AbonementCreationAttributes
-  extends Optional<AbonementAttributes, 'id'> {}
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  Sequelize,
+} from 'sequelize';
 
 export default function (sequelize: Sequelize) {
-  class Abonement
-    extends Model<AbonementAttributes, AbonementCreationAttributes>
-    implements AbonementAttributes
-  {
-    declare id: number;
+  class Abonement extends Model<
+    InferAttributes<Abonement>,
+    InferCreationAttributes<Abonement>
+  > {
+    declare id: CreationOptional<number>;
     declare userId: number;
     declare status: 'active' | 'ended' | 'inactive';
     declare type: string;
@@ -36,11 +27,11 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: Date;
 
     static associate(models: any) {
-      Abonement.belongsTo(models.User, { foreignKey: 'userId' });
+      Abonement.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
       Abonement.belongsToMany(models.Training, {
-        through: 'History',
+        through: models.History,
         as: 'trainings',
-        foreignKey: 'trainingId',
+        foreignKey: 'abonementId',
       });
     }
   }
@@ -82,6 +73,8 @@ export default function (sequelize: Sequelize) {
       },
       activatedAt: DataTypes.DATE,
       expiratedAt: DataTypes.DATE,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,

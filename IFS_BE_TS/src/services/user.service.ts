@@ -27,7 +27,17 @@ const getByToken = async (activationToken: string) => {
 };
 
 const getById = async (id: number) => {
-  return db.User.findOne({ where: { id } });
+  return db.User.findOne({
+    where: { id },
+    attributes: { exclude: ['activationToken', 'password'] },
+    include: [
+      {
+        model: db.Abonement,
+        as: 'abonements',
+        attributes: ['id', 'status', 'type', 'amount', 'left'],
+      },
+    ],
+  });
 };
 
 const create = async (user: User) => {

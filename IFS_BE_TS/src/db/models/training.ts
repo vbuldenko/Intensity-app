@@ -30,19 +30,19 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: Date;
 
     static associate(models: any) {
-      // Define the association with the User model
       Training.belongsTo(models.User, {
+        as: 'instructor',
         foreignKey: 'instructorId',
       });
       Training.belongsToMany(models.Abonement, {
-        through: 'History',
+        through: models.History,
         as: 'abonements',
-        foreignKey: 'abonementId',
+        foreignKey: 'trainingId',
       });
       Training.belongsToMany(models.User, {
-        through: 'History',
+        through: models.History,
         as: 'visitors',
-        foreignKey: 'userId',
+        foreignKey: 'trainingId',
       });
     }
   }

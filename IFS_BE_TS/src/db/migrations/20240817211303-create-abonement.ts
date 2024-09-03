@@ -12,9 +12,8 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: 'Users', // This should match the table name created in the User migration
+          model: 'Users',
           key: 'id',
         },
         onDelete: 'SET NULL',
@@ -37,18 +36,17 @@ module.exports = {
       paused: {
         type: Sequelize.BOOLEAN,
       },
+      activatedAt: {
+        type: Sequelize.DATE,
+      },
+      expiratedAt: {
+        type: Sequelize.DATE,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      activatedAt: {
-        type: Sequelize.DATE,
-      },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      expiratedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

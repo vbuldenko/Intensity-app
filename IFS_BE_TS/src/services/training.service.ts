@@ -1,76 +1,94 @@
 import db from '../db/models';
+import { ApiError } from '../exceptions/api.error';
 import { Training } from '../types/Training';
+import * as userService from './user.service';
 
 // import initializeTrainingSessions from '../utils/trainingsInitiator';
 
-const { Abonement, User, Training } = db;
-
 interface UpdateBody {
   updateType: 'reservation' | 'cancellation';
-  userId: string;
 }
 
 export const getAll = async (): Promise<Training> => {
-  return await Training.findAll({
+  return await db.Training.findAll({
     include: [
       {
-        model: User,
+        model: db.User,
         as: 'instructor',
-        attributes: ['surname', 'name'],
+        attributes: ['firstName', 'lastName'],
       },
-      { model: User, as: 'visitors' },
+      { model: db.User, as: 'visitors' },
     ],
   });
 };
+
 export const getById = async (id: number): Promise<Training> => {
   return db.Training.findOne({ where: { id } });
 };
 
 export const create = async (body: Training) => {
-  return await Training.create({ ...body });
+  // const instructor = userService.getById(body.instructorId);
+  return await db.Training.create({ ...body });
 };
 
 export const update = async (
+  abonementId: number,
   trainingId: number,
   userId: number,
   updateType: 'reservation' | 'cancellation',
 ) => {
-  const training = await Training.findByPk(trainingId, {
-    include: [
-      { model: User, as: 'instructor' },
-      { model: User, as: 'visitors' },
-    ],
-  });
-  const user = await User.findByPk(userId);
+  const abonement = await db.Abonement.findByPk(abonementId);
+  const training = await db.Training.findByPk(trainingId);
+  const user = await db.User.findByPk(userId);
 
-  if (!training) {
-    throw new Error('Training not found.');
+  if (!user || !abonement || !training) {
+    throw ApiError.NotFound({
+      error: 'User, Abonement, or Training not found.',
+    });
   }
 
   switch (updateType) {
     case 'reservation':
       if (await training.hasVisitor(user)) {
-        throw new Error(
+        throw ApiError.BadRequest(
           'Already reserved: You have already reserved your place!',
         );
       }
-      await training.addVisitor(user);
+
+      // await training.addAbonement(abonement);
+      // await training.addVisitor(user);
+      await db.History.create({
+        abonementId,
+        trainingId,
+        userId,
+      });
       break;
     case 'cancellation':
       if (!(await training.hasVisitor(user))) {
-        throw new Error('Not reserved: You have not reserved a place!');
+        throw ApiError.BadRequest(
+          'Not reserved: You have not reserved a place!',
+        );
       }
-      await training.removeVisitor(user);
+      // await abonement.removeTraining(training);
+      // await training.removeVisitor(user);
+
+      await db.History.destroy({
+        where: {
+          abonementId,
+          trainingId,
+          userId,
+        },
+      });
       break;
     default:
-      throw new Error('Invalid updateType.');
+      throw ApiError.BadRequest('Invalid updateType');
   }
 
   return training;
 };
 
 export const remove = async (trainingId: number) => {
-  const training = await Training.findByPk(trainingId);
+  const training = await db.Training.findByPk(trainingId);
   if (!training) {
     throw new Error('Training not found.');
   }
@@ -78,7 +96,7 @@ export const remove = async (trainingId: number) => {
 };
 
 export const removeAll = async () => {
-  await Training.destroy({ where: {} });
+  await db.Training.destroy({ where: {} });
 };
 
 // export const initializeTrainings = (mode: string) => {

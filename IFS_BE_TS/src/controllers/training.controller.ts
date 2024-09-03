@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as trainingService from '../services/training.service';
 import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
+import abonement from '../db/models/abonement';
 
 export const getAll = async (
   req: Request,
@@ -43,17 +44,23 @@ export const update = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const trainingId = Number(req.params.id);
+  const abonementId = Number(req.query.abonementId);
+  const trainingId = Number(req.query.trainingId);
   const user = req.user as UserDTO;
   const { updateType } = req.body;
 
-  if (!user) {
-    return res.status(401).json({
-      error: 'Unauthorized: User not authenticated or not in client role.',
+  if (isNaN(abonementId) || isNaN(trainingId)) {
+    throw ApiError.BadRequest('Validation error', {
+      id: 'Invalid ID format. IDs must be numbers.',
     });
   }
 
+  if (!user) {
+    throw ApiError.Unauthorized();
+  }
+
   const updatedTraining = await trainingService.update(
+    abonementId,
     trainingId,
     user.id,
     updateType,

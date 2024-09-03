@@ -63,48 +63,9 @@ module.exports = {
         allowNull: false,
       },
     });
-
-    await queryInterface.createTable('History', {
-      abonementId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Abonements',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-        primaryKey: true,
-      },
-      trainingId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Trainings',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-        primaryKey: true,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-        primaryKey: true,
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-    });
   },
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.dropTable('History');
     await queryInterface.dropTable('Trainings');
   },
 };

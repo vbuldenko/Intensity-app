@@ -26,7 +26,6 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: CreationOptional<Date>;
 
     static associate(models: any) {
-      // Define the association with the Abonement model
       User.hasOne(models.Token, { foreignKey: 'userId' });
       User.hasMany(models.Abonement, {
         as: 'abonements',
@@ -37,7 +36,7 @@ export default function (sequelize: Sequelize) {
         foreignKey: 'instructorId',
       });
       User.belongsToMany(models.Training, {
-        through: 'History',
+        through: models.History,
         as: 'attendedTrainings',
         foreignKey: 'userId',
       });
