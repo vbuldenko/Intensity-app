@@ -25,20 +25,24 @@ export default function (sequelize: Sequelize) {
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
 
+    getFullname() {
+      return [this.firstName, this.lastName].join(' ');
+    }
+
     static associate(models: any) {
       User.hasOne(models.Token, { foreignKey: 'userId' });
       User.hasMany(models.Abonement, {
-        as: 'abonements',
         foreignKey: 'userId',
+        as: 'abonements',
       });
       User.hasMany(models.Training, {
-        as: 'trainings',
         foreignKey: 'instructorId',
+        as: 'trainings',
       });
       User.belongsToMany(models.Training, {
         through: models.History,
-        as: 'attendedTrainings',
         foreignKey: 'userId',
+        as: 'attendedTrainings',
       });
     }
   }

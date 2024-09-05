@@ -27,11 +27,11 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: Date;
 
     static associate(models: any) {
-      Abonement.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
+      Abonement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
       Abonement.belongsToMany(models.Training, {
         through: models.History,
-        as: 'trainings',
         foreignKey: 'abonementId',
+        as: 'visitedTrainings',
       });
     }
   }
@@ -46,6 +46,10 @@ export default function (sequelize: Sequelize) {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
       },
       status: {
         type: DataTypes.STRING,

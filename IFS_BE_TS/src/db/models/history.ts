@@ -21,7 +21,6 @@ export default function (sequelize: Sequelize) {
     declare updatedAt: CreationOptional<Date>;
 
     static associate(models: any) {
-      // Define associations
       History.belongsTo(models.Abonement, { foreignKey: 'abonementId' });
       History.belongsTo(models.Training, { foreignKey: 'trainingId' });
       History.belongsTo(models.User, { foreignKey: 'userId' });

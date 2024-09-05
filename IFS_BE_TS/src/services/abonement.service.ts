@@ -68,7 +68,6 @@ export const create = async (payload: any, user: any) => {
     amount: payload.amount,
     price: payload.price,
     left: payload.amount,
-    paused: false,
   });
 
   return newAbonement;

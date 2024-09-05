@@ -31,18 +31,18 @@ export default function (sequelize: Sequelize) {
 
     static associate(models: any) {
       Training.belongsTo(models.User, {
-        as: 'instructor',
         foreignKey: 'instructorId',
-      });
-      Training.belongsToMany(models.Abonement, {
-        through: models.History,
-        as: 'abonements',
-        foreignKey: 'trainingId',
+        as: 'instructor',
       });
       Training.belongsToMany(models.User, {
         through: models.History,
-        as: 'visitors',
         foreignKey: 'trainingId',
+        as: 'visitors',
+      });
+      Training.belongsToMany(models.Abonement, {
+        through: models.History,
+        foreignKey: 'trainingId',
+        as: 'abonements',
       });
     }
   }
@@ -61,6 +61,10 @@ export default function (sequelize: Sequelize) {
       instructorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
       },
       capacity: {
         type: DataTypes.INTEGER,
