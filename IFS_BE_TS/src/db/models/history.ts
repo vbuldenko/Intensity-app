@@ -37,21 +37,21 @@ export default function (sequelize: Sequelize) {
       abonementId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Abonements',
+          model: 'Abonement',
           key: 'id',
         },
       },
       trainingId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Trainings',
+          model: 'Training',
           key: 'id',
         },
       },
       userId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Users',
+          model: 'User',
           key: 'id',
         },
       },

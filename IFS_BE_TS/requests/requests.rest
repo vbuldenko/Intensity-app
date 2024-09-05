@@ -93,6 +93,6 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNTQ3OTY5NSwiZXhwIjoxNzI1NTY2MDk1fQ.4cNSVk4qrQAevpFJn-lePYL86eaF9coCMUzXUEE-LeY
 
 {
-  "updateType": "reservation"
+  "updateType": "cancellation"
 }
 ###
