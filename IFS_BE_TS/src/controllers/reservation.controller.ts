@@ -3,10 +3,11 @@ import * as trainingService from '../services/training.service';
 import * as abonementService from '../services/abonement.service';
 import { ApiError } from '../exceptions/api.error';
 import { UserDTO } from '../types/UserDTO';
+import { updateReservation } from '../services/reservation.service';
 
 export const reserve = async (req: Request, res: Response) => {
-  const abonementId = Number(req.params.id);
-  const trainingId = Number(req.params.id);
+  const abonementId = Number(req.query.abonementId);
+  const trainingId = Number(req.query.trainingId);
   const user = req.user as UserDTO;
   const { updateType } = req.body;
 
@@ -14,17 +15,12 @@ export const reserve = async (req: Request, res: Response) => {
     throw ApiError.Unauthorized();
   }
 
-  const updatedTraining = await trainingService.update(
+  const updatedData = await updateReservation(
+    abonementId,
     trainingId,
     user.id,
     updateType,
   );
 
-  const updatedAbonement = await abonementService.update(
-    abonementId,
-    user.id,
-    req.body,
-  );
-
-  res.status(200).send({ message: 'reserved successfully' });
+  res.send(updatedData);
 };

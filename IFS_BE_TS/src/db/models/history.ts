@@ -41,7 +41,6 @@ export default function (sequelize: Sequelize) {
           model: 'Abonements',
           key: 'id',
         },
-        onDelete: 'SET NULL',
       },
       trainingId: {
         type: DataTypes.INTEGER,
@@ -49,7 +48,6 @@ export default function (sequelize: Sequelize) {
           model: 'Trainings',
           key: 'id',
         },
-        onDelete: 'SET NULL',
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -57,7 +55,6 @@ export default function (sequelize: Sequelize) {
           model: 'Users',
           key: 'id',
         },
-        onDelete: 'SET NULL',
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -70,6 +67,13 @@ export default function (sequelize: Sequelize) {
       sequelize,
       modelName: 'History',
       tableName: 'History',
+      timestamps: true,
+      indexes: [
+        {
+          unique: true,
+          fields: ['abonementId', 'trainingId', 'userId'],
+        },
+      ],
     },
   );
 

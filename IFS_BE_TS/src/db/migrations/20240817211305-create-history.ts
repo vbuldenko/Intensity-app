@@ -49,9 +49,22 @@ module.exports = {
         allowNull: false,
       },
     });
+
+    // Add composite unique index
+    await queryInterface.addIndex(
+      'History',
+      ['abonementId', 'trainingId', 'userId'],
+      {
+        unique: true,
+        name: 'unique_reservation',
+      },
+    );
   },
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
+    // Remove the composite unique index
+    await queryInterface.removeIndex('History', 'unique_reservation');
+
     // Drop the History table
     await queryInterface.dropTable('History');
   },
