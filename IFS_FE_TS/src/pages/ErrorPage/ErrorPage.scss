@@ -1,0 +1,44 @@
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 3rem;
+    color: #ff4757;
+    margin: 0;
+  }
+
+  &__message {
+    font-size: 1rem;
+    color: #555;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  &__link {
+    padding: 0.5rem 1.25rem;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
