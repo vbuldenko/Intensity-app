@@ -1,25 +1,54 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+  BrowserRouter,
+} from "react-router-dom";
 import "./styles/main.scss";
 import ErrorPage from "./pages/ErrorPage";
 import { ThemeContextProvider } from "./contexts/ThemeContext.tsx";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <ThemeContextProvider>
-        <App />
-      </ThemeContextProvider>
-    ),
-    errorElement: <ErrorPage />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     id: "root",
+//     path: "/",
+//     element: (
+//       <ThemeContextProvider>
+//         <App />
+//       </ThemeContextProvider>
+//     ),
+//     errorElement: <ErrorPage />,
+//     children: [
+//       {
+//         index: true,
+//         Component: PublicPage,
+//       },
+//       {
+//         path: "login",
+//         action: loginAction,
+//         loader: loginLoader,
+//         Component: LoginPage,
+//       },
+//       {
+//         path: "protected",
+//         loader: protectedLoader,
+//         Component: ProtectedPage,
+//       },
+//     ],
+//   },
+// ]);
+// createRoutesFromElements();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    {/* <RouterProvider router={router} /> */}
+    <BrowserRouter>
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
+    </BrowserRouter>
   </StrictMode>
 );

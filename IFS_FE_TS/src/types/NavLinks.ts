@@ -1,0 +1,16 @@
+export enum NavLinks {
+  Home = "/",
+  Services = "services",
+  Schedule = "schedule",
+  Prices = "prices",
+  Contacts = "contacts",
+  Login = "sign-in",
+  SignUp = "sign-up",
+  ForgotPassword = "forgot-password",
+  ResetPassword = "reset-password",
+  Account = "account",
+  Purchases = "purchases",
+  Team = "team",
+  Clients = "clients",
+  Settings = "settings",
+}

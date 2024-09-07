@@ -1,5 +1,3 @@
-/* src/styles/base/_reset.scss */
-
 /* Box-sizing rules */
 *,
 *::before,
@@ -23,8 +21,9 @@ body {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling */
-ul[role="list"],
-ol[role="list"] {
+ul,
+ol,
+li {
   list-style: none;
 }
 
