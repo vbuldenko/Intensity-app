@@ -1,14 +1,19 @@
+import "./MenuButton.scss";
+
 type Props = {
-  handleOpen: () => void;
+  isMenuOpen: boolean;
+  toggleMenu: () => void;
 };
 
-export const HamburgerMenu: React.FC<Props> = ({ handleOpen }) => {
+export const MenuButton: React.FC<Props> = ({ isMenuOpen, toggleMenu }) => {
   return (
     <button
-      className="button-square button-square--mobile"
-      onClick={handleOpen}
+      className={`burger-menu ${isMenuOpen ? "open" : ""}`}
+      onClick={toggleMenu}
     >
-      <div className="icon icon--menu "></div>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
   );
 };

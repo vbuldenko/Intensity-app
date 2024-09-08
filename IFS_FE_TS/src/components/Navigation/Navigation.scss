@@ -1,6 +1,20 @@
 .nav {
   display: none;
 
+  @include on-mobile {
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+    position: fixed;
+    backdrop-filter: blur(60px);
+    top: 0;
+    right: 0;
+    width: 60%; /* Set the width to 50% of the screen */
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    transform: translateX(100%); /* Start off-screen on the right */
+    transition: transform 0.3s ease-in-out;
+    box-shadow: $shadow3;
+  }
   @include on-tablet {
     display: flex;
   }
@@ -70,4 +84,8 @@
   &::after {
     transform: scale(1);
   }
+}
+
+.mobile {
+  transform: translateX(0); /* Slide in from the right */
 }
