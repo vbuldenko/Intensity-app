@@ -1,16 +1,22 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout/MainLayout";
 import NotFound from "./pages/NotFound";
-import Home from "./pages/Home/Home";
+import HomePage from "./pages/Home";
+import ServicesPage from "./pages/Services";
+import PricesPage from "./pages/Prices/Prices";
+import { NavLinks } from "./types/NavLinks";
+import ContactsPage from "./pages/Contacts";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        {/* <Route path="services" element={<Services />} />
-          <Route path="schedule" element={<Schedule />} />
-          <Route path="prices" element={<Prices />} />
+        <Route index element={<HomePage />} />
+        <Route path={NavLinks.Services} element={<ServicesPage />} />
+        <Route path={NavLinks.Prices} element={<PricesPage />} />
+        <Route path={NavLinks.Contacts} element={<ContactsPage />} />
+        {/* <Route path="schedule" element={<Schedule />} />
+
           <Route path="contacts" element={<Contacts />} />
           <Route path="sign-in" element={<Login />} />
           <Route path="sign-up" element={<SignUp />} />

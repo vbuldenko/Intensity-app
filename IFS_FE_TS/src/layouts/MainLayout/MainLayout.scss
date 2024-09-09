@@ -19,6 +19,7 @@
 main {
   overflow: hidden;
   margin-block: 50px;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 56px;
@@ -31,9 +32,30 @@ main {
     gap: 80px;
   }
 
-  // margin-bottom: auto;
+  margin-bottom: auto;
 }
 
 .container {
   @include content-padding-inline;
+}
+
+.card-element {
+  background: $card-background;
+  min-width: 250px;
+  box-shadow: $shadow3;
+  border-radius: $big-br;
+  border: 1px solid $card-background;
+  backdrop-filter: blur(70px);
+}
+
+.accent-label-primary {
+  background: $color-green;
+  color: #fff;
+  border: 1px solid $color-green;
+  // border-radius: 0 0.25rem 0.25rem 0;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 0.1rem 1rem;
+  // font-size: var(--n-fontsize);
+  // letter-spacing: .05rem;
+  // align-self: self-start;
 }

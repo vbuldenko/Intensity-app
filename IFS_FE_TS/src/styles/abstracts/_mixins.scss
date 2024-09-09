@@ -35,6 +35,7 @@
 
   display: grid;
   column-gap: 16px;
+  row-gap: 16px;
   grid-template-columns: repeat(var(--columns), var(--column-width));
 
   @include on-tablet {
