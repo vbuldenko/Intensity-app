@@ -1,0 +1,14 @@
+.schedule {
+  display: flex;
+  gap: 2rem;
+  max-width: 30rem;
+  flex-direction: column;
+  align-items: normal;
+
+  @include on-tablet {
+    max-width: 60rem;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 0 auto;
+  }
+}
