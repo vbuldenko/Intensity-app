@@ -7,9 +7,9 @@ import {
   createRoutesFromElements,
   BrowserRouter,
 } from "react-router-dom";
-import "./styles/main.scss";
 import ErrorPage from "./pages/ErrorPage";
 import { ThemeContextProvider } from "./contexts/ThemeContext.tsx";
+import "./styles/main.scss";
 
 // const router = createBrowserRouter([
 //   {

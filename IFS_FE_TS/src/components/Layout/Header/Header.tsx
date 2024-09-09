@@ -4,8 +4,10 @@ import { Logo } from "../../Elements/Logo";
 import { Toggler } from "../../Elements/Toggler";
 import { MenuButton } from "../../Elements/MenuButton";
 import "./Header.scss";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 export const Header = () => {
+  const { theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
@@ -17,7 +19,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${theme}`}>
       <div className="header__left">
         <Logo />
         <Navigation

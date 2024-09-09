@@ -1,0 +1,39 @@
+.dark {
+  background-color: $color-black-dark;
+  color: $color-white;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  // &.dark {
+  //   background-color: $color-black-dark;
+  //   color: $color-white;
+
+  //   // @import "./styles/theme/dark";
+  // }
+}
+
+main {
+  overflow: hidden;
+  margin-block: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include on-tablet {
+    gap: 64px;
+  }
+
+  @include on-desktop {
+    gap: 80px;
+  }
+
+  // margin-bottom: auto;
+}
+
+.container {
+  @include content-padding-inline;
+}

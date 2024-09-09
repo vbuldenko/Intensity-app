@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
+import MainLayout from "./layouts/MainLayout/MainLayout";
 import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        {/* <Route index element={<Home />} /> */}
+        <Route index element={<Home />} />
         {/* <Route path="services" element={<Services />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="prices" element={<Prices />} />

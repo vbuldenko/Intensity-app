@@ -1,0 +1,23 @@
+.hero {
+  &__title {
+    padding-block: 24px;
+    text-align: center;
+
+    @include on-tablet {
+      padding-block: 32px;
+    }
+
+    @include on-desktop {
+      padding-block: 56px;
+    }
+
+    &--accent {
+      background: -webkit-linear-gradient(45deg, #09009f, #00ff95 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 24px;
+    }
+  }
+}

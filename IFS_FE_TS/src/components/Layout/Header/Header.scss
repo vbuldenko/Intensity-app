@@ -1,12 +1,12 @@
 .header {
   position: fixed;
   background-color: $account-background;
-  // z-index: 2;
+  z-index: 1;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 1px 0 0 $color-element;
+  box-shadow: 0 1px 0 0 $card-background;
 
   &__left {
     display: flex;
