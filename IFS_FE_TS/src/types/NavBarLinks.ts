@@ -1,9 +1,9 @@
 export enum NavBarLinks {
   Home = "/",
   Services = "services",
-  Schedule = "schedule",
   Prices = "prices",
   Contacts = "contacts",
+  Schedule = "schedule",
   // Login = "sign-in",
   Account = "account",
 }
