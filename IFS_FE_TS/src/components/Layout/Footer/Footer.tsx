@@ -1,3 +1,4 @@
+import { ArrowUpIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../../../contexts/ThemeContext";
 import { NavBarLinks } from "../../../types/NavBarLinks";
 import { scrollToTop } from "../../../utils/utils";
@@ -23,7 +24,9 @@ export const Footer = () => {
 
         <button className="footer__button" onClick={scrollToTop}>
           Back to top
-          <span className="footer__button-icon icon icon--arrow-up"></span>
+          <span className="footer__button-icon icon ">
+            <ArrowUpIcon className="icon--arrow-up" />
+          </span>
         </button>
       </div>
     </footer>
