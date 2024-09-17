@@ -1,26 +1,14 @@
 import { authClient } from "../api/authClient";
-
-interface AuthCredentials {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface ResetPasswordData {
-  newPassword: string;
-  newPasswordConfirmation: string;
-  resetToken: string;
-}
-
-interface ResetData {
-  email: string;
-}
+import { AuthCredentials, ResetData, ResetPasswordData } from "../types/Auth";
+import { LoginReturnData } from "../types/User";
 
 function register(credentials: AuthCredentials) {
   return authClient.post("/registration", credentials);
 }
 
-function login(credentials: Partial<AuthCredentials>) {
+function login(
+  credentials: Partial<AuthCredentials>
+): Promise<LoginReturnData> {
   return authClient.post("/login", credentials);
 }
 
