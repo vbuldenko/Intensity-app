@@ -21,8 +21,6 @@ const sendAuthentication = async (res: Response, user: User): Promise<void> => {
   const { accessToken, refreshToken, userData } =
     await tokenService.generateTokensData(user);
 
-  console.log('Ref---', refreshToken);
-
   res.cookie('refreshToken', refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,

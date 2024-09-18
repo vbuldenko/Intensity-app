@@ -65,7 +65,7 @@ export const save = async (
 
   let token = await db.Token.findOne({ where: { userId } });
 
-  if (!db.token) {
+  if (!token) {
     await db.Token.create({ userId, refreshToken });
     return;
   }
