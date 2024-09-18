@@ -1,0 +1,11 @@
+.calendar__weekdays {
+  display: grid; /* Equivalent to grid */
+  grid-template-columns: repeat(
+    7,
+    minmax(0, 1fr)
+  ); /* Equivalent to grid-cols-7 */
+  font-size: 0.75rem; /* Equivalent to text-xs */
+  line-height: 1.5; /* Equivalent to leading-6 */
+  text-align: center; /* Equivalent to text-center */
+  padding: 1rem;
+}

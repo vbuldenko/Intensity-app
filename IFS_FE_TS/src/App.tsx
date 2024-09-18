@@ -4,10 +4,19 @@ import NotFound from "./pages/NotFound";
 import HomePage from "./pages/Home";
 import ServicesPage from "./pages/Services";
 import PricesPage from "./pages/Prices/Prices";
-import { NavLinks } from "./types/NavLinks";
 import ContactsPage from "./pages/Contacts";
+import Schedule from "./components/Schedule";
+import { NavLinks } from "./types/NavLinks";
+import Login from "./pages/Login";
+import { useEffect } from "react";
+import { useAppDispatch } from "./app/hooks";
+import { checkAuth } from "./features/auth/authThunk";
 
 export default function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -15,10 +24,11 @@ export default function App() {
         <Route path={NavLinks.Services} element={<ServicesPage />} />
         <Route path={NavLinks.Prices} element={<PricesPage />} />
         <Route path={NavLinks.Contacts} element={<ContactsPage />} />
-        {/* <Route path="schedule" element={<Schedule />} />
+        <Route path={NavLinks.Schedule} element={<Schedule />} />
+        <Route path={NavLinks.Login} element={<Login />} />
+        {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}
 
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="sign-in" element={<Login />} />
+        {/* 
           <Route path="sign-up" element={<SignUp />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route

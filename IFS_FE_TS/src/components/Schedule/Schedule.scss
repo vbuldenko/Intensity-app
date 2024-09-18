@@ -1,14 +1,113 @@
 .schedule {
-  display: flex;
-  gap: 2rem;
-  max-width: 30rem;
-  flex-direction: column;
-  align-items: normal;
+  @include page-grid;
+  padding: 1rem 0;
 
   @include on-tablet {
-    max-width: 60rem;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: 0 auto;
+    // max-width: 60rem;
+  }
+}
+
+.calendar {
+  grid-column: 1 / -1;
+
+  @include on-tablet {
+    grid-column: span 6;
+  }
+
+  @include on-desktop {
+    grid-column: span 12;
+  }
+
+  &__navbar {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-button {
+      display: flex;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+
+      // @include on-tablet {
+      //   display: flex;
+      // }
+
+      &:hover {
+        color: #4a5568;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    text-align: center;
+
+    &--bold {
+      font-weight: bold;
+    }
+  }
+
+  &__select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: #aaa;
+    }
+  }
+
+  &__option {
+    padding: 5px;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(
+      7,
+      minmax(0, 1fr)
+    ); /* Equivalent to grid-cols-7 */
+    font-size: 0.875rem;
+    padding: 1rem;
+  }
+
+  &__day {
+    padding-block: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @for $i from 2 through 7 {
+      &--start-#{$i} {
+        grid-column-start: #{$i};
+      }
+    }
+
+    &-button {
+      padding: 10px;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
   }
 }

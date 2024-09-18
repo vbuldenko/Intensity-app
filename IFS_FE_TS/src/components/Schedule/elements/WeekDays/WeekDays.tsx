@@ -7,10 +7,11 @@ enum WeekDays {
   FRI = "FRI",
   SAT = "SAT",
 }
+import "./WeekDays.scss";
 
 export default function WeekDaysNames() {
   return (
-    <div className="week-days-names">
+    <div className="calendar__weekdays">
       {Object.values(WeekDays).map((day) => (
         <div key={day}>{day}</div>
       ))}

@@ -8,21 +8,18 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import MonthView from "./Month";
 import WeekView from "./Week";
 import SelectedTrainings from "./SelectedTrainings";
 import "./Schedule.scss";
-import WeekDaysNames from "./WeekDays";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import WeekDaysNames from "./elements/WeekDays/WeekDays";
+import CalendarNavbar from "./elements/Navbar/CalendarNavbar";
 
 export default function Schedule() {
-  const trainings = useSelector(({ trainings }) => trainings);
+  // const trainings = useSelector(({ trainings }) => trainings);
+  const trainings = [];
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -52,61 +49,33 @@ export default function Schedule() {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  const colStartClasses = [
-    "",
-    "col-start-2",
-    "col-start-3",
-    "col-start-4",
-    "col-start-5",
-    "col-start-6",
-    "col-start-7",
-  ];
-
   return (
     <section className="schedule">
-      <div className="calendar card-el-bg">
-        <div className="calendar-navbar">
-          <button className="calendar-navbar-button" onClick={previousMonth}>
-            <ChevronLeftIcon className="w-4 h-4" />
-          </button>
-          <h3 className="section-title bold">
-            {format(firstDayCurrentMonth, "MMMM yyyy")}
-          </h3>
-          <button className="calendar-navbar-button" onClick={nextMonth}>
-            <ChevronRightIcon className="w-4 h-4" />
-          </button>
-          <select
-            id="view"
-            name="view"
-            value={scheduleView}
-            onChange={handleViewChange}
-          >
-            <option value="month">Month</option>
-            <option value="week">Week</option>
-          </select>
-        </div>
+      <div className="calendar card-element">
+        <CalendarNavbar
+          firstDayCurrentMonth={firstDayCurrentMonth}
+          previousMonth={previousMonth}
+          nextMonth={nextMonth}
+          view={scheduleView}
+          handleViewChange={handleViewChange}
+        />
         <WeekDaysNames />
         {scheduleView === "month" ? (
           <MonthView
             days={days}
-            firstDayCurrentMonth={firstDayCurrentMonth}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
-            classNames={classNames}
             trainings={trainings}
-            colStartClasses={colStartClasses}
           />
         ) : (
           <WeekView
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
-            classNames={classNames}
             trainings={trainings}
-            colStartClasses={colStartClasses}
           />
         )}
       </div>
-      <SelectedTrainings trainings={selectedDayTrainings} />
+      {/* <SelectedTrainings trainings={selectedDayTrainings} /> */}
     </section>
   );
 }
