@@ -24,8 +24,10 @@
     padding: 0;
     display: flex;
     flex-direction: column;
+    // flex-direction: column-reverse;
     gap: 32px;
     align-items: center;
+    // justify-content: flex-end;
 
     @include on-tablet {
       flex-direction: row;
@@ -34,6 +36,10 @@
 
     @include on-desktop {
       gap: 64px;
+    }
+
+    & :last-child {
+      order: -1;
     }
   }
 

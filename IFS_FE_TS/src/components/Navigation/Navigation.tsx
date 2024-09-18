@@ -1,11 +1,11 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { getLinkClass } from "../../utils/utils";
 import { NavBarLinks } from "../../types/NavBarLinks";
-import React from "react";
-import "./Navigation.scss";
 import { useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../features/auth/authSlice";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import "./Navigation.scss";
 
 type Props = {
   className?: string;
