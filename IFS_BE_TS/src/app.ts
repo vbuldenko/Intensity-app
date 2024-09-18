@@ -16,8 +16,14 @@ import { hashPassword } from './utils';
 
 export function createApp() {
   const app = express();
+  console.log(process.env.CLIENT_URL);
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URL,
+      credentials: true,
+    }),
+  );
   app.use(express.json());
   app.use(requestLogger);
   app.use(cookieParser());
