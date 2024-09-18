@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout/MainLayout";
 import NotFound from "./pages/NotFound";
@@ -8,9 +9,9 @@ import ContactsPage from "./pages/Contacts";
 import Schedule from "./components/Schedule";
 import { NavLinks } from "./types/NavLinks";
 import Login from "./pages/Login";
-import { useEffect } from "react";
 import { useAppDispatch } from "./app/hooks";
 import { checkAuth } from "./features/auth/authThunk";
+import AuthRequired from "./components/AuthRequired";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -26,6 +27,11 @@ export default function App() {
         <Route path={NavLinks.Contacts} element={<ContactsPage />} />
         <Route path={NavLinks.Schedule} element={<Schedule />} />
         <Route path={NavLinks.Login} element={<Login />} />
+        <Route element={<AuthRequired />}>
+          <Route path="account" element={<Account />}>
+            Hello
+          </Route>
+        </Route>
         {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}
 
         {/* 
