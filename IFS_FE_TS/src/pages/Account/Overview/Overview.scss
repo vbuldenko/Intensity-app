@@ -1,0 +1,14 @@
+.overview {
+  @include page-grid;
+
+  &__header {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__body {
+  }
+}

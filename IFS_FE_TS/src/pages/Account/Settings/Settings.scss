@@ -1,0 +1,91 @@
+.settings {
+  &__section {
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__info {
+    padding: 1.5rem;
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &-label {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  }
+
+  .icon {
+    &--small {
+      height: 1rem;
+      width: 1rem;
+    }
+  }
+
+  .text {
+    &--small {
+      font-size: 0.875rem;
+    }
+
+    &--highlighted {
+      color: $color-green;
+    }
+
+    &--wide {
+      width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .select {
+    border-radius: $standard-br;
+    background: $color-icons;
+    padding: 0.15rem 0.3rem;
+  }
+
+  .button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &--icon {
+      padding: 0.5rem;
+      background: $color-icons;
+      border-radius: 0.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+    &--action {
+      background: $color-green;
+      padding: 0.25rem 1.5rem;
+      border-radius: $big-br;
+      color: white;
+      width: 110px;
+    }
+
+    &--danger {
+      background: $color-red;
+      padding: 0.25rem 1.5rem;
+      border-radius: $big-br;
+      color: white;
+      width: 110px;
+    }
+  }
+}

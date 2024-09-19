@@ -21,4 +21,18 @@
       grid-column: span 6;
     }
   }
+
+  &__content {
+    padding: 1rem;
+    grid-column: 1/-1;
+
+    @include on-tablet {
+      grid-column: 4/-1;
+      position: static;
+    }
+
+    @include on-desktop {
+      grid-column: 7/-1;
+    }
+  }
 }

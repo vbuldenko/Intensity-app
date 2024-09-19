@@ -15,6 +15,8 @@ import AccountPage from "./pages/Account";
 import { useAppDispatch } from "./app/hooks";
 import { checkAuth } from "./features/auth/authThunk";
 import { NavLinks } from "./types/NavLinks";
+import Overview from "./pages/Account/Overview";
+import Settings from "./pages/Account/Settings";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -32,7 +34,8 @@ export default function App() {
         <Route path={NavLinks.Login} element={<LoginPage />} />
         <Route element={<AuthRequired />}>
           <Route path={NavLinks.Account} element={<AccountPage />}>
-            Hello
+            <Route index element={<Overview />} />
+            <Route path={NavLinks.Settings} element={<Settings />} />
           </Route>
         </Route>
         {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}

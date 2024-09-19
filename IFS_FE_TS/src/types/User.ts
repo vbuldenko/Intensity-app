@@ -8,7 +8,7 @@ export interface User {
   phone: string;
   password: string;
   role: "client" | "trainer" | "admin";
-  settings: {};
+  settings: { fontSize: string };
   createdAt: Date;
   updatedAt: Date;
   activationToken: string | null;

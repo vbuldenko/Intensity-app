@@ -52,3 +52,10 @@ main {
   // letter-spacing: .05rem;
   // align-self: self-start;
 }
+
+.status {
+  color: $color-green;
+  border: 1px solid $color-green;
+  border-radius: $big-br;
+  padding: 0 1rem;
+}
