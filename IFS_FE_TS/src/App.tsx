@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout/MainLayout";
+import AuthRequired from "./components/AuthRequired";
+
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/Home";
 import ServicesPage from "./pages/Services";
 import PricesPage from "./pages/Prices/Prices";
 import ContactsPage from "./pages/Contacts";
 import Schedule from "./components/Schedule";
-import { NavLinks } from "./types/NavLinks";
-import Login from "./pages/Login";
+import LoginPage from "./pages/Login";
+import AccountPage from "./pages/Account";
+
 import { useAppDispatch } from "./app/hooks";
 import { checkAuth } from "./features/auth/authThunk";
-import AuthRequired from "./components/AuthRequired";
+import { NavLinks } from "./types/NavLinks";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -26,9 +29,9 @@ export default function App() {
         <Route path={NavLinks.Prices} element={<PricesPage />} />
         <Route path={NavLinks.Contacts} element={<ContactsPage />} />
         <Route path={NavLinks.Schedule} element={<Schedule />} />
-        <Route path={NavLinks.Login} element={<Login />} />
+        <Route path={NavLinks.Login} element={<LoginPage />} />
         <Route element={<AuthRequired />}>
-          <Route path="account" element={<Account />}>
+          <Route path={NavLinks.Account} element={<AccountPage />}>
             Hello
           </Route>
         </Route>

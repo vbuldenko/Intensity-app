@@ -1,0 +1,40 @@
+.account {
+  @include page-grid;
+
+  max-width: 70rem;
+  min-width: min-content;
+  min-height: 80vh;
+  // margin: 0 auto;
+  /* backdrop-filter: blur(60px); */
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 100;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    box-shadow: $shadow3;
+    border-radius: 0;
+    padding: 1rem;
+    background: $card-background;
+    overflow-x: scroll;
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+
+    @include on-tablet {
+      grid-column: span 3;
+      position: static;
+      padding: 2rem 1rem;
+      flex-direction: column;
+      border-radius: 1rem 0 0 1rem;
+    }
+
+    @include on-desktop {
+      grid-column: span 6;
+    }
+  }
+}

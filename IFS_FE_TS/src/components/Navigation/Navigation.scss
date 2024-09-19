@@ -38,8 +38,15 @@
       gap: 64px;
     }
 
-    & :last-child {
-      order: -1;
+    @include on-mobile {
+      & :last-child {
+        order: -2;
+      }
+
+      & :nth-last-child(2) {
+        order: -1; // This will appear just after the last child
+        margin-bottom: 3rem;
+      }
     }
   }
 
