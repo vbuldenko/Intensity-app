@@ -10,9 +10,8 @@ export default function Account() {
   return (
     user && (
       <section className="account card-element">
-        <nav className="account__menu">
-          <Menu role={user.role} />
-        </nav>
+        <Menu className="account__menu" role={user.role} />
+
         <div className="account__content">
           <Outlet />
         </div>

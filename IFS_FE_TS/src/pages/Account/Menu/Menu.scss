@@ -1,0 +1,39 @@
+.menu {
+  backdrop-filter: blur(50px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  box-shadow: $shadow3;
+  border-radius: 0;
+  padding: 1rem;
+  background: $card-background;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+
+  @include on-tablet {
+    padding: 2rem 1rem;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 1rem 0 0 1rem;
+  }
+
+  &__link {
+    width: 100px;
+    text-align: center;
+
+    &:hover {
+      color: $color-green;
+    }
+  }
+
+  & .selected {
+    box-shadow: $shadow3;
+    padding: 0.25rem;
+    border-radius: 1rem;
+    background-color: $card-background;
+    border: 1px solid $card-background;
+  }
+}
