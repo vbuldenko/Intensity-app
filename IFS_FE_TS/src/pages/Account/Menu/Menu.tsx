@@ -40,7 +40,8 @@ const Menu = ({ role, className }: MenuProps) => {
   return (
     <nav className={`${className} menu`}>
       {getLinks(role).map(({ to, label }) => (
-        <NavLink key={to} to={to} className={getLinkClass}>
+        //"end" used to handle isActive prop for index route
+        <NavLink key={to} to={to} end={to === "."} className={getLinkClass}>
           {label}
         </NavLink>
       ))}
