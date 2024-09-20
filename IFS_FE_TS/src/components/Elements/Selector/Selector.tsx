@@ -1,18 +1,17 @@
+import React from "react";
 import "./Selector.scss";
 
-import React from "react";
-
-interface SelectorProps {
-  selection: string;
-  handleSelection: (buttonName: string) => void;
-  buttonNames: string[];
+interface SelectorProps<T> {
+  selection: T;
+  handleSelection: (buttonName: T) => void;
+  buttonNames: T[];
 }
 
-const Selector: React.FC<SelectorProps> = ({
+const Selector = <T extends React.ReactNode>({
   selection,
   handleSelection,
   buttonNames,
-}) => {
+}: SelectorProps<T>) => {
   return (
     <div className="selector">
       {buttonNames.map((buttonName, index) => (

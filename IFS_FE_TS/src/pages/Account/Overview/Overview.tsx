@@ -3,6 +3,7 @@
 // import ClientOverview from './Client/ClientOverview';
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
+import ClientOverview from "./Client/ClientOverview";
 import "./Overview.scss";
 
 export default function Overview() {
@@ -21,13 +22,13 @@ export default function Overview() {
         </div>
 
         <div className="overview__body">
-          {/* {role === "admin" ? (
+          {/* {user.role === "admin" ? (
           <Admin />
-        ) : role === "trainer" ? (
+        ) : user.role === "trainer" ? (
           <TrainerOverview />
-        ) : (
-          <ClientOverview abonements={abonements} />
-        )} */}
+        ) : ( */}
+          <ClientOverview abonements={user.abonements} />
+          {/* )} */}
         </div>
       </div>
     )

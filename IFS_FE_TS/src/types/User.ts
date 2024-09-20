@@ -12,6 +12,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   activationToken: string | null;
+  abonements: any[];
 }
 
 export interface LoginReturnData {

@@ -1,0 +1,38 @@
+.history-element {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  gap: 1rem;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-weight: bold;
+    font-size: 0.875rem;
+    color: var(--gray-color-1);
+  }
+
+  &__value {
+    font-size: 1rem;
+    color: var(--black-color);
+  }
+
+  &__deduction {
+    color: red;
+    border: 1px solid red;
+    border-radius: 0.5em;
+    padding: 0.25em;
+    font-size: 0.875rem;
+  }
+
+  &__trainer-info {
+    display: flex;
+    flex-direction: column;
+  }
+}

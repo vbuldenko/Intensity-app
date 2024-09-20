@@ -81,7 +81,3 @@ export const adaptivePaginationPages = (
 
   return [];
 };
-
-// export function classNames(...classes) {
-//   return classes.filter(Boolean).join(" ");
-// }

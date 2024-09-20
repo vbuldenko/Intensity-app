@@ -29,7 +29,7 @@ const Menu = ({ role, className }: MenuProps) => {
       links.splice(
         1,
         0,
-        { to: NavLinks.Schedule, label: "Schedule" },
+        { to: `../${NavLinks.Schedule}`, label: "Schedule" },
         { to: NavLinks.Purchases, label: "Purchases" }
       );
     }
