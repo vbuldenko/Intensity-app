@@ -1,0 +1,29 @@
+.search {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  background: rgba(216, 216, 222, 1);
+  box-shadow:
+    1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
+    1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
+    0px -0.5px 1px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -0.5px 1px 0px rgba(255, 255, 255, 0.3) inset;
+
+  &__icon {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  &__input {
+    border: none;
+    width: 200px;
+    background: inherit;
+    color: rgba(255, 255, 255, 1);
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}

@@ -18,6 +18,7 @@ import { NavLinks } from "./types/NavLinks";
 import Overview from "./pages/Account/Overview";
 import Settings from "./pages/Account/Settings";
 import Purchases from "./pages/Account/Purchases";
+import UserList from "./pages/Account/UserList";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -38,6 +39,11 @@ export default function App() {
             <Route index element={<Overview />} />
             <Route path={NavLinks.Settings} element={<Settings />} />
             <Route path={NavLinks.Purchases} element={<Purchases />} />
+            <Route
+              path={NavLinks.Clients}
+              element={<UserList type="client" />}
+            />
+            <Route path={NavLinks.Team} element={<UserList type="trainer" />} />
           </Route>
         </Route>
         {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}
@@ -51,15 +57,9 @@ export default function App() {
           />
           <Route element={<AuthProtected />}>
             <Route path="account" element={<Account user={user.data} />}>
-              <Route index element={<Overview user={user.data} />} />
-              <Route path="purchases" element={<Purchases />} />
-              <Route path="schedule" element={<Schedule />} />
               <Route path="trainings" element={<TrainerOverview />} />
-              <Route path="clients" element={<Clients />} />
               <Route path="clients/:id" element={<Client />} />
-              <Route path="team" element={<Team />} />
               <Route path="team/:id" element={<Trainer />} />
-              <Route path="settings" element={<Settings />} />
             </Route>
           </Route> */}
         <Route path="*" element={<NotFound />} />

@@ -1,0 +1,60 @@
+.users {
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    @include on-tablet {
+      flex-direction: row;
+    }
+  }
+
+  &__info {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__item {
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__name {
+    font-weight: bold;
+  }
+
+  &__status {
+    color: green;
+  }
+
+  &__data {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+  }
+
+  &__phone,
+  &__email,
+  &__abonement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

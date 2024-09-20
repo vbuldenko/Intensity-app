@@ -1,0 +1,67 @@
+.admin-dashboard {
+  padding: 2rem;
+
+  &__title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__section {
+    margin-bottom: 3rem;
+
+    &__subtitle {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__stat {
+    background: $card-background;
+    box-shadow: $shadow3;
+    border-radius: $big-br;
+    border: 1px solid $card-background;
+    padding: 1rem;
+    text-align: center;
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    span {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 1rem;
+
+    &-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+
+      span {
+        font-weight: bold;
+        margin-right: 1rem;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
