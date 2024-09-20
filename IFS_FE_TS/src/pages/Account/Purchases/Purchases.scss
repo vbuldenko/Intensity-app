@@ -1,0 +1,114 @@
+.purchases {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+
+  &__title {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__container {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  &__info {
+    &-price {
+      font-weight: bold;
+      font-size: var(--m-text);
+      margin-bottom: 0.5rem;
+    }
+
+    &-single-training {
+      font-size: var(--sx-font);
+      color: var(--gray-clr);
+    }
+  }
+
+  &__button-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .purchases__button {
+      padding: 0.25rem;
+      width: 3rem;
+      height: 3rem;
+      color: $gray-color-2;
+      border: 2px solid $gray-color-10;
+      border-radius: 50%;
+      box-shadow:
+        5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+        /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+          4px 0px rgba(0, 0, 0, 0.1) inset;
+      transition: box-shadow 0.3s ease;
+
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: var(--btn-hover-bg);
+      }
+
+      &:active {
+        box-shadow:
+          inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+          inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+      }
+
+      // &--decrement {
+      //   margin-right: 1rem;
+      // }
+
+      // &--increment {
+      //   margin-left: 1rem;
+      // }
+    }
+  }
+
+  &__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: $color-green;
+    color: white;
+    padding: 1rem;
+    width: 80px;
+    border-radius: $big-br;
+  }
+
+  &__submit-button {
+    background-color: $gray-color-10;
+    color: $color-green;
+    padding: 0.75rem 2rem;
+    border: 1px solid $gray-color-10;
+    border-radius: $big-br;
+    font-size: 1.5rem;
+    box-shadow:
+      5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+      /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+        4px 0px rgba(0, 0, 0, 0.1) inset;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      background-color: var(--primary-hover-color);
+    }
+
+    &:active {
+      box-shadow:
+        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+    }
+  }
+}

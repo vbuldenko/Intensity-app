@@ -1,0 +1,36 @@
+.selector {
+  padding: 0.2rem;
+  border-radius: 1rem;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1;
+  background-color: $card-background;
+  box-shadow: $shadow3;
+
+  &__button {
+    padding: 0.5rem;
+    min-width: 75px;
+    width: 100px;
+    text-align: center;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+
+    &:hover {
+      background-color: $color-element;
+    }
+
+    &--selected {
+      background-color: $color-green;
+      color: white;
+
+      &:hover {
+        background-color: $color-green;
+      }
+    }
+  }
+}
