@@ -27,7 +27,7 @@ function logout() {
   return authClient.post("/logout");
 }
 
-function activate(activationToken: string) {
+function activate(activationToken: string): Promise<LoginReturnData> {
   return authClient.get(`/activation/${activationToken}`);
 }
 

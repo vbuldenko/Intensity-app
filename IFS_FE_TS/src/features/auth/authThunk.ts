@@ -39,3 +39,22 @@ export const login = createAsyncThunk<
     return rejectWithValue({ message });
   }
 });
+
+export const activate = createAsyncThunk<
+  void,
+  string,
+  { rejectValue: ErrorResponse }
+>("auth/activation", async (activationToken, { dispatch, rejectWithValue }) => {
+  try {
+    const { accessToken } = await authService.activate(activationToken);
+    accessTokenService.save(accessToken);
+    dispatch(fetchUserData());
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.message || "Unexpected error occurred";
+
+    setTimeout(() => dispatch(setError(null)), 3000);
+
+    return rejectWithValue({ message });
+  }
+});

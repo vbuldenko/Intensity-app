@@ -13,6 +13,7 @@ import LoginPage from "./pages/Login";
 import AccountPage from "./pages/Account";
 import SignUpPage from "./pages/SignUp";
 import CheckEmailPage from "./pages/CheckEmail";
+import ActivationPage from "./pages/Activation/Activation";
 
 import { useAppDispatch } from "./app/hooks";
 import { checkAuth } from "./features/auth/authThunk";
@@ -24,9 +25,9 @@ import UserList from "./pages/Account/UserList";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(checkAuth());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(checkAuth());
+  // }, []);
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -38,6 +39,7 @@ export default function App() {
         <Route path={NavLinks.Login} element={<LoginPage />} />
         <Route path={NavLinks.SignUp} element={<SignUpPage />} />
         <Route path={NavLinks.CheckEmail} element={<CheckEmailPage />} />
+        <Route path={NavLinks.Activate} element={<ActivationPage />} />
         <Route element={<AuthRequired />}>
           <Route path={NavLinks.Account} element={<AccountPage />}>
             <Route index element={<Overview />} />

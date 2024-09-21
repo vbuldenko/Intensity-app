@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { accessTokenService } from "../../services/accessTokenService";
-import { checkAuth, login } from "./authThunk";
+import { activate, checkAuth, login } from "./authThunk";
 import { RootState } from "../../app/store";
 import { ErrorResponse } from "../../types/Error";
 
@@ -56,6 +56,23 @@ const authSlice = createSlice({
       })
       .addCase(
         login.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.isAuthenticated = false;
+          state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(activate.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(activate.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(
+        activate.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.isAuthenticated = false;
           state.loading = false;

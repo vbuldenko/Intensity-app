@@ -6,6 +6,7 @@ export enum NavLinks {
   Contacts = "contacts",
   Login = "sign-in",
   SignUp = "sign-up",
+  Activate = "activation/:activationToken",
   ForgotPassword = "forgot-password",
   ResetPassword = "reset-password",
   Account = "account",
