@@ -7,6 +7,8 @@ import {
 } from "../../features/notification/notificationSlice";
 import { authService } from "../../services/authService";
 import { AuthCredentials } from "../../types/Auth";
+import { NavLinks } from "../../types/NavLinks";
+import { getErrorMessage } from "../../utils/utils";
 
 const SignUp = () => {
   const defaultUserData: AuthCredentials = {
@@ -37,10 +39,10 @@ const SignUp = () => {
     try {
       await authService.register(signUpData);
       setSignUpData(defaultUserData);
-      navigate("/check-email", { replace: true });
-    } catch (error) {
+      navigate(`/${NavLinks.CheckEmail}`, { replace: true });
+    } catch (error: any) {
       console.log(error);
-      dispatch(notifyWith(error.message));
+      dispatch(notifyWith(getErrorMessage(error)));
     }
   };
 

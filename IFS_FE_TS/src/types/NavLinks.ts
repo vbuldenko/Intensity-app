@@ -13,4 +13,5 @@ export enum NavLinks {
   Team = "team",
   Clients = "clients",
   Settings = "settings",
+  CheckEmail = "check-email",
 }

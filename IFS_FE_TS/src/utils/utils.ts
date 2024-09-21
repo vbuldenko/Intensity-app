@@ -81,3 +81,21 @@ export const adaptivePaginationPages = (
 
   return [];
 };
+
+export function getErrorMessage(error: any): string {
+  // Extract errors object from error response
+  const errors = error?.response?.data?.errors;
+
+  // If errors exist, get the first key-value pair (e.g., password: 'Should be at least 4 characters')
+  if (errors) {
+    const [field, message] = Object.entries(errors)[0];
+    return `${field.toLocaleUpperCase()}: ${message}`;
+  }
+
+  // Fallback to error.response.data.message or error.message if no specific errors
+  return (
+    error?.response?.data?.message ||
+    error.message ||
+    "An unknown error occurred"
+  );
+}
