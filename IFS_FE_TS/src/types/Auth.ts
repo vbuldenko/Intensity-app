@@ -1,7 +1,10 @@
 export interface AuthCredentials {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  phone: string;
   password: string;
+  role: "client" | "trainer";
 }
 
 export interface ResetPasswordData {

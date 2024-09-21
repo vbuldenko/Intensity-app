@@ -11,6 +11,7 @@ import ContactsPage from "./pages/Contacts";
 import Schedule from "./components/Schedule";
 import LoginPage from "./pages/Login";
 import AccountPage from "./pages/Account";
+import SignUpPage from "./pages/SignUp";
 
 import { useAppDispatch } from "./app/hooks";
 import { checkAuth } from "./features/auth/authThunk";
@@ -34,6 +35,7 @@ export default function App() {
         <Route path={NavLinks.Contacts} element={<ContactsPage />} />
         <Route path={NavLinks.Schedule} element={<Schedule />} />
         <Route path={NavLinks.Login} element={<LoginPage />} />
+        <Route path={NavLinks.SignUp} element={<SignUpPage />} />
         <Route element={<AuthRequired />}>
           <Route path={NavLinks.Account} element={<AccountPage />}>
             <Route index element={<Overview />} />
@@ -49,7 +51,6 @@ export default function App() {
         {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}
 
         {/* 
-          <Route path="sign-up" element={<SignUp />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route
             path="reset-password/:resetToken"

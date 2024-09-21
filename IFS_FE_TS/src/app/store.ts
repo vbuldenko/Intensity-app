@@ -2,13 +2,15 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/user/userSlice";
 import authReducer from "../features/auth/authSlice";
+import notificationReducer from "../features/notification/notificationSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
-    // abonements: abonementsReducer,
     // trainings: trainingsReducer,
+    // abonements: abonementsReducer,
+    notification: notificationReducer,
   },
 });
 

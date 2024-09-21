@@ -1,27 +1,29 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-
-// import { notifyWith } from '../../reducers/notificationReducer';
-// import { createUser } from '../../reducers/userReducer';
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  notifyWith,
+  selectNotification,
+} from "../../features/notification/notificationSlice";
+import { authService } from "../../services/authService";
+import { AuthCredentials } from "../../types/Auth";
 
 const SignUp = () => {
-  const defaultUserData = {
-    username: "",
-    name: "",
-    surname: "",
+  const defaultUserData: AuthCredentials = {
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     password: "",
-    role: "",
+    role: "client",
   };
 
   const [signUpData, setSignUpData] = useState(defaultUserData);
   const navigate = useNavigate();
-  const notification = useSelector(({ notification }) => notification);
-  const dispatch = useDispatch();
+  const notification = useAppSelector(selectNotification);
+  const dispatch = useAppDispatch();
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setSignUpData((prev) => ({
@@ -30,53 +32,48 @@ const SignUp = () => {
     }));
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await dispatch(createUser(signUpData));
+      await authService.register(signUpData);
       setSignUpData(defaultUserData);
-      navigate("/sign-in", { replace: true });
+      navigate("/check-email", { replace: true });
     } catch (error) {
-      dispatch(notifyWith(error.response.data.error));
+      console.log(error);
+      dispatch(notifyWith(error.message));
     }
   };
 
   return (
-    <div className="form-wrapper card-el-bg ">
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Create an account</h1>
-        {notification && <h1>{notification}</h1>}
-        <div>
+    <div className="auth__form-wrapper card-element">
+      <form className="auth__form" onSubmit={handleSubmit}>
+        <h1 className="auth__title">Create an account</h1>
+        {notification && (
+          <h1 className="auth__error-message self-center card-element bg-red-100">
+            {notification}
+          </h1>
+        )}
+        <div className="auth__input-wrapper">
           <input
-            id="username"
+            id="firstName"
             type="text"
-            value={signUpData.username}
-            name="username"
-            placeholder="username"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <input
-            id="name"
-            type="text"
-            value={signUpData.name}
-            name="name"
+            value={signUpData.firstName}
+            name="firstName"
             placeholder="first name"
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="auth__input-wrapper">
           <input
-            id="surname"
+            id="lastName"
             type="text"
-            value={signUpData.surname}
-            name="surname"
+            value={signUpData.lastName}
+            name="lastName"
             placeholder="last name"
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="auth__input-wrapper">
           <input
             id="email"
             type="text"
@@ -86,7 +83,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="auth__input-wrapper">
           <input
             id="phone"
             type="text"
@@ -96,7 +93,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="auth__input-wrapper">
           <input
             id="password"
             type="password"
@@ -106,10 +103,12 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="role-input">
-          <label>Choose your role:</label>
-          <div className="flex-row">
-            <label className="label">
+        <div className="auth__radio-role flex flex-col gap-2">
+          <label className="self-center font-bold text-teal-500">
+            Choose your role:
+          </label>
+          <div className="card-element flex gap-6 justify-center p-1">
+            <label className="label flex gap-1">
               <input
                 type="radio"
                 name="role"
@@ -119,7 +118,7 @@ const SignUp = () => {
               />
               <span>Client</span>
             </label>
-            <label className="label">
+            <label className="label flex gap-1">
               <input
                 type="radio"
                 name="role"
@@ -131,13 +130,14 @@ const SignUp = () => {
             </label>
           </div>
         </div>
-        <button id="login-button" type="submit" className="bold l-font">
+        <button id="login-button" type="submit" className="auth__button">
           Sign Up
         </button>
       </form>
-      <div className="signup-subsection">
-        <div>
-          <Link className="l-font" to="/sign-in">
+      <div className="auth__subsection">
+        <div className="flex gap-4 p-4 justify-center">
+          <p>Already have an account?</p>
+          <Link className="font-bold text-xl text-teal-500" to="/sign-in">
             Log In
           </Link>
         </div>

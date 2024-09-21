@@ -3,8 +3,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../features/auth/authSlice";
 import { login } from "../../features/auth/authThunk";
-import "./Login.scss";
 import { NavLinks } from "../../types/NavLinks";
+import "./Auth.scss";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,11 +30,11 @@ const Login = () => {
   }, [isAuthenticated, navigate, path]);
 
   return (
-    <div className="login__form-wrapper card-element">
-      <form className="login__form" onSubmit={handleLogin}>
-        <h1 className="login__title">Log in to application</h1>
-        {error && <h1 className="login__error-message">{error}</h1>}
-        <div className="login__input-wrapper">
+    <div className="auth__form-wrapper card-element">
+      <form className="auth__form" onSubmit={handleLogin}>
+        <h1 className="auth__title">Log in to application</h1>
+        {error && <h1 className="auth__error-message">{error}</h1>}
+        <div className="auth__input-wrapper">
           <label htmlFor="identifier">Email or Phone Number</label>
           <input
             id="identifier"
@@ -45,7 +45,7 @@ const Login = () => {
             onChange={({ target }) => setIdentifier(target.value)}
           />
         </div>
-        <div className="login__input-wrapper">
+        <div className="auth__input-wrapper">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -56,22 +56,22 @@ const Login = () => {
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit" className="login__button">
+        <button type="submit" className="auth__button">
           Log In
         </button>
       </form>
-      <div className="login__signup-subsection">
+      <div className="auth__signup-subsection">
         <div>
           <p>New here?</p>
           <Link
-            className="login__signup-subsection__link--accent"
-            to={NavLinks.SignUp}
+            className="auth__signup-subsection__link--accent"
+            to={`/${NavLinks.SignUp}`}
           >
             Sign Up
           </Link>
         </div>
         <Link
-          className="login__signup-subsection__link"
+          className="auth__signup-subsection__link"
           to={NavLinks.ForgotPassword}
         >
           Forgot password?
