@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-interface ScheduleAttributes {
+export interface ScheduleAttributes {
   id: number;
   type: string;
   instructorId: string;

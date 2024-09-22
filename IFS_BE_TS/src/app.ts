@@ -6,6 +6,7 @@ import authRouter from './api/auth.route';
 import userRouter from './api/user.route';
 import abonementRouter from './api/abonement.route';
 import trainingRouter from './api/training.route';
+import scheduleRouter from './api/schedule.route';
 import { passport } from './services/passport';
 import { requestLogger } from './middlewares/logger.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
@@ -34,6 +35,7 @@ export function createApp() {
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', authMiddleware, trainingRouter);
+  app.use('/schedule', authMiddleware, scheduleRouter);
 
   // db.sequelize.sync();
   app.use(unknownEndpoint);
