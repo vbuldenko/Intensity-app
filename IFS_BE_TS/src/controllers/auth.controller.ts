@@ -109,7 +109,6 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
   const refreshToken = req.cookies?.refreshToken || '';
   const userData = await tokenService.validateRefreshToken(refreshToken);
   const token = await tokenService.getByToken(refreshToken);
-  console.log('----refresh:', refreshToken);
 
   if (!userData || !token) {
     res.clearCookie('refreshToken');

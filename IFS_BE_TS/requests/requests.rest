@@ -47,7 +47,7 @@ content-type: application/json
 # --------------------------------------------------------USERS
 GET http://localhost:3001/users/profile
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoidmxhZCIsImxhc3ROYW1lIjoiQnVsIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImNsaWVudCIsImlhdCI6MTcyNTI5NDc3NywiZXhwIjoxNzI1MzgxMTc3fQ.kXaQpx7q6MVjt11jnYuTC09CzBOewqQdPYF5W8ETzas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjY4MjQ2NDQsImV4cCI6MTcyNjkxMTA0NH0.SqBWan8f3E6XZx9pZkd7Z-6KNR66vZaC5GeqTyR4_Ow
 ###
 
 # --------------------------------------------------------ABONEMENTS

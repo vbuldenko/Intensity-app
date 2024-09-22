@@ -3,7 +3,7 @@ export interface Training {
   type: string;
   instructorId: number;
   capacity: string;
-  clients: string;
+  // visitors: string;
   date: Date;
   day: string;
   time: string;

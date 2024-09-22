@@ -34,7 +34,7 @@ const getById = async (id: number) => {
       {
         model: db.Abonement,
         as: 'abonements',
-        attributes: ['id', 'status', 'type', 'amount', 'left'],
+        // attributes: ['id', 'status', 'type', 'amount', 'left'],
       },
     ],
   });
