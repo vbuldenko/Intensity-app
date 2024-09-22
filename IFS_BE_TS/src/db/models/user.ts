@@ -39,6 +39,9 @@ export default function (sequelize: Sequelize) {
         foreignKey: 'instructorId',
         as: 'trainings',
       });
+      User.hasMany(models.Schedule, {
+        foreignKey: 'instructorId',
+      });
       User.belongsToMany(models.Training, {
         through: models.History,
         foreignKey: 'userId',
