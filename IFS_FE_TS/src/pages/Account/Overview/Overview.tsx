@@ -16,7 +16,7 @@ export default function Overview() {
         <div className="overview__header">
           <div>
             <h3>
-              Welcome back, <b>{user.firstName}</b>
+              Welcome back, <b className="capitalize">{user.firstName}</b>
             </h3>
           </div>
           <span className="status">{user.role}</span>

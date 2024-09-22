@@ -33,7 +33,7 @@ export const login = createAsyncThunk<
   } catch (error: any) {
     const message = getErrorMessage(error) || "Unexpected error occurred";
 
-    setTimeout(() => dispatch(setError(null)), 3000);
+    setTimeout(() => dispatch(setError(null)), 2000);
 
     return rejectWithValue({ message });
   }
