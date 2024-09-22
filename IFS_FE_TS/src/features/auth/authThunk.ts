@@ -54,3 +54,20 @@ export const activate = createAsyncThunk<
     return rejectWithValue({ message });
   }
 });
+
+export const logOut = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: ErrorResponse }
+>("auth/logout", async (_, { dispatch, rejectWithValue }) => {
+  try {
+    await authService.logout();
+    accessTokenService.remove();
+  } catch (error: any) {
+    const message = getErrorMessage(error) || "Unexpected error occurred";
+
+    setTimeout(() => dispatch(setError(null)), 3000);
+
+    return rejectWithValue({ message });
+  }
+});

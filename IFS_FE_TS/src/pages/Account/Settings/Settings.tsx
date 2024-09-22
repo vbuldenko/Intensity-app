@@ -13,9 +13,8 @@ import {
   ArrowRightOnRectangleIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
-import { accessTokenService } from "../../../services/accessTokenService";
-import { signOut } from "../../../features/auth/authSlice";
 import { User } from "../../../types/User";
+import { logOut } from "../../../features/auth/authThunk";
 
 function Settings() {
   const { data: user } = useAppSelector(selectUser);
@@ -29,15 +28,13 @@ function Settings() {
     // dispatch(updateUser(id, { settings: { fontSize: newFontSize } }));
   };
 
-  const handleLogOut = () => {
-    accessTokenService.remove();
-    dispatch(signOut());
+  const handleLogOut = async () => {
+    await dispatch(logOut());
   };
 
   const handleDelete = async () => {
     try {
-      // await dispatch(deleteUser(id));
-      dispatch(signOut());
+      await dispatch(logOut());
       navigate("/sign-in", { replace: true });
     } catch (error) {
       console.log(error);

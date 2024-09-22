@@ -25,9 +25,9 @@ import UserList from "./pages/Account/UserList";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   dispatch(checkAuth());
-  // }, []);
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
