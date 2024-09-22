@@ -33,7 +33,11 @@ const Login = () => {
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
         <h1 className="auth__title">Log in to application</h1>
-        {error && <h1 className="auth__error-message">{error}</h1>}
+        {error && (
+          <h1 className="auth__error-message self-center card-element bg-red-100">
+            {error}
+          </h1>
+        )}
         <div className="auth__input-wrapper">
           <label htmlFor="identifier">Email or Phone Number</label>
           <input
