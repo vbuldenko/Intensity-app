@@ -44,7 +44,7 @@ class ScheduleService {
   }
 
   // Delete a training session
-  async deleteSchedule(id: number) {
+  async deleteOne(id: number) {
     const session = await this.getOneById(id);
     if (session) {
       return await session.destroy();
