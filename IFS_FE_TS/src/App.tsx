@@ -44,6 +44,7 @@ export default function App() {
           <Route path={NavLinks.Account} element={<AccountPage />}>
             <Route index element={<Overview />} />
             <Route path={NavLinks.Settings} element={<Settings />} />
+            <Route path={NavLinks.Schedule} element={<Schedule />} />
             <Route path={NavLinks.Purchases} element={<Purchases />} />
             <Route
               path={NavLinks.Clients}

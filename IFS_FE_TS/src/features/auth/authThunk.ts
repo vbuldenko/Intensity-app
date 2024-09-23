@@ -16,6 +16,7 @@ export const checkAuth = createAsyncThunk<
     accessTokenService.save(accessToken);
     dispatch(fetchUserData()); // Fetch user data if the token is valid
   } catch (error: any) {
+    // accessTokenService.remove();
     const message = getErrorMessage(error) || "Unexpected error occurred";
     return rejectWithValue({ message });
   }
