@@ -9,6 +9,10 @@ const router = Router();
 router.get(Path.trainings, catchError(trainingController.getAll));
 router.get(Path.training, catchError(trainingController.getById));
 router.post(Path.trainings, catchError(trainingController.create));
+router.post(
+  Path.trainingsSchedule,
+  catchError(trainingController.initializeCurrentWeek),
+);
 // router.patch(Path.trainings, catchError(trainingController.update));
 router.patch(Path.trainings, catchError(reserve));
 router.delete(Path.training, catchError(trainingController.remove));

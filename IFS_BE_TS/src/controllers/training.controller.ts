@@ -68,22 +68,6 @@ export const update = async (
   res.json(updatedTraining);
 };
 
-// export const initialize = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   const user = req.user as UserDTO;
-//   const { mode } = req.params;
-
-//   if (!user || user.role !== 'admin') {
-//     return res.status(401).json({ error: 'Operation not permitted' });
-//   }
-
-//   await trainingService.initialize(mode);
-//   res.status(201).end();
-// };
-
 export const remove = async (
   req: Request,
   res: Response,
@@ -112,4 +96,19 @@ export const removeMany = async (
 
   await trainingService.removeAll();
   res.status(204).end();
+};
+
+export const initializeCurrentWeek = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const user = req.user as UserDTO;
+
+  if (!user || user.role !== 'admin') {
+    return res.status(403).json({ error: 'Operation not permitted' });
+  }
+
+  await trainingService.initializeWeek();
+  res.status(201).end();
 };

@@ -1,9 +1,8 @@
 import db from '../db/models';
 import { ApiError } from '../exceptions/api.error';
 import { Training } from '../types/Training';
+import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
 import * as userService from './user.service';
-
-// import initializeTrainingSessions from '../utils/trainingsInitiator';
 
 interface UpdateBody {
   updateType: 'reservation' | 'cancellation';
@@ -99,6 +98,6 @@ export const removeAll = async () => {
   await db.Training.destroy({ where: {} });
 };
 
-// export const initializeTrainings = (mode: string) => {
-//   initializeTrainingSessions(mode);
-// };
+export const initializeWeek = async () => {
+  await initializeTrainingsForWeek();
+};
