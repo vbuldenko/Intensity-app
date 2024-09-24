@@ -1,12 +1,14 @@
 .schedule-editor {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
 
   &__day {
-    border-bottom: 1px solid #ccc;
     cursor: pointer;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
     &:last-child {
       border-bottom: none;
@@ -14,7 +16,7 @@
 
     &-header {
       background-color: #f5f5f5;
-      padding: 15px;
+      padding: 0.75rem;
       cursor: pointer;
       font-weight: bold;
       display: flex;
@@ -42,48 +44,40 @@
     }
 
     &-content {
-      max-height: 0;
-      overflow: hidden;
-      transition:
-        max-height 0.5s ease-in-out,
-        padding 0.5s ease-in-out;
-      padding: 0.25rem;
-
-      &--expanded {
-        max-height: max-content; /* Adjust according to the content's height */
-        padding: 10px 0;
-      }
-
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 1rem;
+      visibility: hidden;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0.25rem;
+      transition:
+        max-height,
+        visibility,
+        0.5s ease-in-out;
+
+      &--expanded {
+        visibility: visible;
+        max-height: 400px;
+        overflow: scroll;
+        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+      }
+
+      &--expanded::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+      }
     }
   }
 
   &__training {
-    padding: 0.75rem;
+    padding: 1rem;
     min-width: 200px;
     flex: 1;
 
     &-info {
       p {
         margin: 5px 0;
-      }
-    }
-
-    &-edit-btn,
-    &-save-btn {
-      margin-top: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #0056b3;
       }
     }
 
@@ -97,6 +91,22 @@
       width: 100%;
       padding: 5px;
       margin-top: 5px;
+    }
+  }
+
+  &__edit-btn,
+  &__save-btn {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
     }
   }
 }

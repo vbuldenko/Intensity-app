@@ -106,7 +106,7 @@ const ScheduleEditor: React.FC = () => {
           >
             {daySchedule.trainings.map((training) => (
               <div
-                className="schedule-editor__training card-element"
+                className="schedule-editor__training card-element text-sm"
                 key={training.id}
               >
                 {editableTraining?.id === training.id ? (
