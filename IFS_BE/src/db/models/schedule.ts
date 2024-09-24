@@ -69,6 +69,7 @@ export default function (sequelize: Sequelize) {
     {
       sequelize,
       modelName: 'Schedule',
+      tableName: 'Schedule',
     },
   );
 
