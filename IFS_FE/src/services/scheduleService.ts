@@ -2,7 +2,7 @@ import { ScheduleTraining } from "../types/Schedule";
 import axiosClient from "../api/axiosClient";
 
 // Fetch the full schedule
-function getSchedule(): Promise<Record<string, ScheduleTraining[]>> {
+function getSchedule(): Promise<ScheduleTraining[]> {
   return axiosClient.get("/schedule");
 }
 

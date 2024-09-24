@@ -22,6 +22,7 @@ import Overview from "./pages/Account/Overview";
 import Settings from "./pages/Account/Settings";
 import Purchases from "./pages/Account/Purchases";
 import UserList from "./pages/Account/UserList";
+import ScheduleEditor from "./pages/Account/ScheduleEditor";
 
 export default function App() {
   // const dispatch = useAppDispatch();
@@ -46,11 +47,15 @@ export default function App() {
             <Route path={NavLinks.Settings} element={<Settings />} />
             <Route path={NavLinks.Schedule} element={<Schedule />} />
             <Route path={NavLinks.Purchases} element={<Purchases />} />
-            <Route
+            {/* <Route
               path={NavLinks.Clients}
               element={<UserList type="client" />}
-            />
+            /> */}
             <Route path={NavLinks.Team} element={<UserList type="trainer" />} />
+            <Route
+              path={NavLinks.ScheduleEditor}
+              element={<ScheduleEditor />}
+            />
           </Route>
         </Route>
         {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}

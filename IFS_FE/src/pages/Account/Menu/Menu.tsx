@@ -22,8 +22,9 @@ const Menu = ({ role, className }: MenuProps) => {
       links.splice(
         1,
         0,
-        { to: NavLinks.Clients, label: "Clients" },
-        { to: NavLinks.Team, label: "Team" }
+        // { to: NavLinks.Clients, label: "Clients" },
+        { to: NavLinks.Team, label: "Team" },
+        { to: NavLinks.ScheduleEditor, label: "Schedule" }
       );
     } else if (role === "client") {
       links.splice(

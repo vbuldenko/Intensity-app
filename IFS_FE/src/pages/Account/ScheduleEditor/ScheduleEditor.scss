@@ -1,60 +1,102 @@
-.schedule {
-  &__item {
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
+.schedule-editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
-  &__header {
-    background-color: #f4f4f4;
-    padding: 10px;
+  &__day {
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
-    font-weight: bold;
+    position: relative;
 
-    &:hover {
-      background-color: #ddd;
+    &:last-child {
+      border-bottom: none;
     }
-  }
 
-  &__content {
-    padding: 10px;
-  }
+    &-header {
+      background-color: #f5f5f5;
+      padding: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
 
-  &__info {
-    p {
-      margin: 5px 0;
-    }
-  }
+      &:hover {
+        background-color: #e0e0e0;
+      }
 
-  &__edit-form {
-    label {
-      display: block;
-      margin-bottom: 10px;
+      .schedule-editor__chevron {
+        font-size: 1.2rem;
+        transition: transform 0.5s ease;
 
-      input {
-        margin-left: 10px;
-        padding: 5px;
-        border: 1px solid #ccc;
+        &--open {
+          transform: rotate(180deg); /* Rotate when open */
+        }
+
+        &--closed {
+          transform: rotate(0deg); /* Default position */
+        }
       }
     }
-  }
 
-  &__save-btn,
-  &__edit-btn {
-    display: inline-block;
-    padding: 5px 10px;
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
+    &-content {
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        max-height 0.5s ease-in-out,
+        padding 0.5s ease-in-out;
+      padding: 0.25rem;
 
-    &:hover {
-      background-color: #45a049;
+      &--expanded {
+        max-height: max-content; /* Adjust according to the content's height */
+        padding: 10px 0;
+      }
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
   }
 
-  &__save-btn {
-    margin-left: 10px;
+  &__training {
+    padding: 0.75rem;
+    min-width: 200px;
+    flex: 1;
+
+    &-info {
+      p {
+        margin: 5px 0;
+      }
+    }
+
+    &-edit-btn,
+    &-save-btn {
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    &-edit-form label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    &-edit-form input {
+      display: block;
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+    }
   }
 }
