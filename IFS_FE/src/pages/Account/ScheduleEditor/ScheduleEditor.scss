@@ -1,0 +1,60 @@
+.schedule {
+  &__item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  &__header {
+    background-color: #f4f4f4;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+
+  &__content {
+    padding: 10px;
+  }
+
+  &__info {
+    p {
+      margin: 5px 0;
+    }
+  }
+
+  &__edit-form {
+    label {
+      display: block;
+      margin-bottom: 10px;
+
+      input {
+        margin-left: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+      }
+    }
+  }
+
+  &__save-btn,
+  &__edit-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+
+  &__save-btn {
+    margin-left: 10px;
+  }
+}
