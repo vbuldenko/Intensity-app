@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/api.error';
 import * as abonementService from '../services/abonement.service';
+import { UserDTO } from '../types/UserDTO';
 
 export async function getAll(req: Request, res: Response): Promise<void> {
   const abonements = await abonementService.getAll();
@@ -26,7 +27,7 @@ export async function update(req: Request, res: Response): Promise<void> {
 
   const updatedAbonement = await abonementService.update(
     abonementId,
-    user.id,
+    (user as UserDTO).id,
     body,
   );
   res.json(updatedAbonement);

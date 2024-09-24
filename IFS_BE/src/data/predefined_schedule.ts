@@ -1,6 +1,6 @@
 import { Trainers } from '../types/Trainers';
 
-export const schedule = {
+export const schedule: any = {
   Monday: [
     { time: '10:00', type: 'Healthy Back', instructorId: 1, maxCapacity: 8 },
     { time: '11:00', type: 'TRX', instructorId: 1, maxCapacity: 8 },

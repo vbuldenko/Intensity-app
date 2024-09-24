@@ -1,6 +1,9 @@
 import { Transaction } from 'sequelize';
 import db from '../db/models';
 import { ApiError } from '../exceptions/api.error';
+import { Abonement } from '../types/Abonement';
+import { Training } from '../types/Training';
+import { User } from '../types/User';
 
 export const updateReservation = async (
   abonementId: number,
@@ -72,7 +75,12 @@ export const updateReservation = async (
 };
 
 // Handles the reservation logic
-const handleReservation = async (abonement, training, user, transaction) => {
+const handleReservation = async (
+  abonement: any,
+  training: any,
+  user: any,
+  transaction: any,
+) => {
   // Check if the user has already reserved the training
   const hasVisited = await training.hasVisitor(user);
   if (hasVisited) {
@@ -114,8 +122,15 @@ const handleReservation = async (abonement, training, user, transaction) => {
   await abonement.save({ transaction });
 };
 
+// look for types later
+
 // Handles the cancellation logic
-const handleCancellation = async (abonement, training, user, transaction) => {
+const handleCancellation = async (
+  abonement: any,
+  training: any,
+  user: any,
+  transaction: any,
+) => {
   // Check if the user has a reservation for the training
   const hasVisited = await training.hasVisitor(user);
   if (!hasVisited) {

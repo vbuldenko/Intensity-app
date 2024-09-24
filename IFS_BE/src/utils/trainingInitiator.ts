@@ -2,6 +2,7 @@ import { schedule } from '../data/predefined_schedule';
 import db from '../db/models';
 // import { Trainers } from '../types/Trainers';
 import { startOfWeek, addDays, set } from 'date-fns';
+import { ScheduleTraining } from '../types/ScheduleTraining';
 
 export async function initializeTrainingsForWeek(
   day?: number,
@@ -25,14 +26,16 @@ export async function initializeTrainingsForWeek(
     .map((day, index) => {
       const trainingDate = addDays(startDate, index); // Adjust the date based on start date and index
 
-      return schedule[day as keyof typeof schedule].map(session => ({
-        type: session.type,
-        instructorId: session.instructorId,
-        capacity: session.maxCapacity,
-        date: trainingDate,
-        day,
-        time: session.time,
-      }));
+      return schedule[day as keyof typeof schedule].map(
+        (session: ScheduleTraining) => ({
+          type: session.type,
+          instructorId: session.instructorId,
+          capacity: session.maxCapacity,
+          date: trainingDate,
+          day,
+          time: session.time,
+        }),
+      );
     })
     .flat();
 

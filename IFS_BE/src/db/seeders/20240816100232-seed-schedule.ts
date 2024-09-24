@@ -1,20 +1,20 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 import { schedule } from '../../data/predefined_schedule';
-// import { ScheduleAttributes } from '../models/schedule'
+import { ScheduleTraining } from '../../types/ScheduleTraining';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    const trainings = [];
+    const trainings: ScheduleTraining[] = [];
 
     // Map through the schedule object to create the seed data
     for (const day in schedule) {
-      schedule[day].forEach(training => {
+      schedule[day].forEach((training: ScheduleTraining) => {
         trainings.push({
           time: training.time,
           type: training.type,
           maxCapacity: training.maxCapacity,
-          instructorId: training.instructorId, // Assuming instructorId is null or you can provide actual IDs
+          instructorId: training.instructorId,
           day,
           createdAt: new Date(),
           updatedAt: new Date(),

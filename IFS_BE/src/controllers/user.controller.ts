@@ -27,7 +27,7 @@ export const getProfile = async (
     throw ApiError.Unauthorized();
   }
 
-  const user = await userService.getById(req.user.id);
+  const user = await userService.getById((req.user as UserDTO).id);
 
   if (!user) {
     throw ApiError.NotFound();
