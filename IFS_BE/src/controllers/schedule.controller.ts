@@ -1,6 +1,6 @@
 // src/controllers/schedule.controller.ts
 import { Request, Response } from 'express';
-import scheduleService from '../services/schedule.services';
+import scheduleService from '../services/schedule.service';
 import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
 
