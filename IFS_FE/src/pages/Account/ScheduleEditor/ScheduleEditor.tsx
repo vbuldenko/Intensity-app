@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { ScheduleTraining } from "../../../types/Schedule";
 import { scheduleService } from "../../../services/scheduleService";
+import { groupTrainingsByDay } from "../../../utils/utils";
+import { trainingService } from "../../../services/trainingService";
 import "./ScheduleEditor.scss";
 
 interface DaySchedule {
@@ -63,117 +65,123 @@ const ScheduleEditor: React.FC = () => {
     }
   };
 
-  // Group trainings by day
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  const groupedSchedule = daysOfWeek.map((day) => ({
-    day,
-    trainings: schedule.filter((training) => training.day === day),
-  }));
+  const handleInitialization = async () => {
+    await trainingService.initializeWeek();
+  };
+
+  const groupedSchedule = groupTrainingsByDay(schedule);
 
   return (
-    <div className="schedule-editor">
-      {groupedSchedule.map((daySchedule) => (
-        <div className="schedule-editor__day" key={daySchedule.day}>
-          <div
-            className="schedule-editor__day-header"
-            onClick={() =>
-              setExpandedDay(
-                expandedDay === daySchedule.day ? null : daySchedule.day
-              )
-            }
-          >
-            <span>{daySchedule.day}</span>
-            <span
-              className={`schedule-editor__chevron ${
-                expandedDay === daySchedule.day
-                  ? "schedule-editor__chevron--open"
-                  : "schedule-editor__chevron--closed"
-              }`}
+    <>
+      <div className="card-element p-1 text-center mb-4 bg-teal-500 text-white">
+        <button className="init w-full" onClick={handleInitialization}>
+          Initialize current week
+        </button>
+      </div>
+      <div className="schedule-editor">
+        {groupedSchedule.map((daySchedule) => (
+          <div className="schedule-editor__day" key={daySchedule.day}>
+            <div
+              className="schedule-editor__day-header"
+              onClick={() =>
+                setExpandedDay(
+                  expandedDay === daySchedule.day ? null : daySchedule.day
+                )
+              }
             >
-              <ChevronDownIcon className="w-4 h-4" />
-            </span>
-          </div>
-          <div
-            className={`schedule-editor__day-content ${expandedDay === daySchedule.day ? "schedule-editor__day-content--expanded" : ""}`}
-          >
-            {daySchedule.trainings.map((training) => (
-              <div
-                className="schedule-editor__training card-element text-sm"
-                key={training.id}
+              <span>{daySchedule.day}</span>
+              <span
+                className={`schedule-editor__chevron ${
+                  expandedDay === daySchedule.day
+                    ? "schedule-editor__chevron--open"
+                    : "schedule-editor__chevron--closed"
+                }`}
               >
-                {editableTraining?.id === training.id ? (
-                  <div className="schedule-editor__edit-form">
-                    <label>
-                      Type:
-                      <input
-                        type="text"
-                        name="type"
-                        value={editableTraining.type}
-                        onChange={handleChange}
-                      />
-                    </label>
-                    <label>
-                      Instructor ID:
-                      <input
-                        type="text"
-                        name="instructorId"
-                        value={editableTraining.instructorId}
-                        onChange={handleChange}
-                      />
-                    </label>
-                    <label>
-                      Max Capacity:
-                      <input
-                        type="text"
-                        name="maxCapacity"
-                        value={editableTraining.maxCapacity}
-                        onChange={handleChange}
-                      />
-                    </label>
-                    <label>
-                      Time:
-                      <input
-                        type="text"
-                        name="time"
-                        value={editableTraining.time}
-                        onChange={handleChange}
-                      />
-                    </label>
-                    <button
-                      className="schedule-editor__save-btn"
-                      onClick={handleSave}
-                    >
-                      Save
-                    </button>
-                  </div>
-                ) : (
-                  <div className="schedule-editor__info">
-                    <p>Type: {training.type}</p>
-                    <p>Instructor ID: {training.instructorId}</p>
-                    <p>Max Capacity: {training.maxCapacity}</p>
-                    <p>Time: {training.time}</p>
-                    <button
-                      className="schedule-editor__edit-btn"
-                      onClick={() => handleEdit(training)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+                <ChevronDownIcon className="w-4 h-4" />
+              </span>
+            </div>
+            <div
+              className={`schedule-editor__day-content ${expandedDay === daySchedule.day ? "schedule-editor__day-content--expanded" : ""}`}
+            >
+              {daySchedule.trainings.map((training) => (
+                <div
+                  className="schedule-editor__training card-element text-sm"
+                  key={training.id}
+                >
+                  {editableTraining?.id === training.id ? (
+                    <div className="schedule-editor__edit-form">
+                      <label>
+                        Type:
+                        <input
+                          type="text"
+                          name="type"
+                          value={editableTraining.type}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <label>
+                        Instructor ID:
+                        <input
+                          type="text"
+                          name="instructorId"
+                          value={editableTraining.instructorId}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <label>
+                        Max Capacity:
+                        <input
+                          type="text"
+                          name="maxCapacity"
+                          value={editableTraining.maxCapacity}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <label>
+                        Time:
+                        <input
+                          type="text"
+                          name="time"
+                          value={editableTraining.time}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <div className="flex gap-4">
+                        <button
+                          className="schedule-editor__save-btn bg-lime-500"
+                          onClick={handleSave}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="schedule-editor__save-btn bg-teal-500"
+                          onClick={() => setEditableTraining(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="schedule-editor__info">
+                      <p>Type: {training.type}</p>
+                      <p>Instructor ID: {training.instructorId}</p>
+                      <p>Max Capacity: {training.maxCapacity}</p>
+                      <p>Time: {training.time}</p>
+                      <button
+                        className="schedule-editor__edit-btn bg-blue-400"
+                        onClick={() => handleEdit(training)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 

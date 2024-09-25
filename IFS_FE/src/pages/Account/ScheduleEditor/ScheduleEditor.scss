@@ -1,21 +1,21 @@
 .schedule-editor {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  // gap: 0.5rem;
   width: 100%;
 
   &__day {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
+    border-bottom: 1px solid $color-element;
 
     &:last-child {
       border-bottom: none;
     }
 
     &-header {
-      background-color: #f5f5f5;
       padding: 0.75rem;
       cursor: pointer;
       font-weight: bold;
@@ -24,10 +24,6 @@
       align-items: center;
       transition: background-color 0.3s ease;
       border-radius: 5px;
-
-      &:hover {
-        background-color: #e0e0e0;
-      }
 
       .schedule-editor__chevron {
         font-size: 1.2rem;
@@ -80,25 +76,28 @@
         margin: 5px 0;
       }
     }
+  }
 
-    &-edit-form label {
+  &__edit-form {
+    label {
       display: block;
       margin-bottom: 10px;
     }
 
-    &-edit-form input {
+    input {
       display: block;
       width: 100%;
       padding: 5px;
       margin-top: 5px;
+      background: $color-light-green;
+      border-radius: $standard-br;
     }
   }
 
   &__edit-btn,
   &__save-btn {
-    margin-top: 10px;
-    background-color: #007bff;
     color: white;
+    margin-top: 10px;
     border: none;
     padding: 5px 10px;
     cursor: pointer;

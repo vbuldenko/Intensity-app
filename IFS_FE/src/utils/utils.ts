@@ -99,3 +99,19 @@ export function getErrorMessage(error: any): string {
     "An unknown error occurred"
   );
 }
+
+export function groupTrainingsByDay(trainings) {
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  return daysOfWeek.map((day) => ({
+    day,
+    trainings: trainings.filter((training) => training.day === day),
+  }));
+}
