@@ -1,23 +1,30 @@
 import { useState, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateTraining } from "../../reducers/trainingReducer";
-import { updateAbonement } from "../../reducers/abonementReducer";
-import reservationAccess from "../../utils";
-import { isTomorrow } from "../../utils";
-import { notifyWith } from "../../reducers/notificationReducer";
+
+import reservationAccess from "../../utils/utils";
+import { isTomorrow } from "../../utils/utils";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  notifyWith,
+  selectNotification,
+} from "../../features/notification/notificationSlice";
+import { selectUser } from "../../features/user/userSlice";
 
 export default function Training({ training }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [error, setError] = useState(false);
-  const notification = useSelector(({ notification }) => notification);
+  const notification = useAppSelector(selectNotification);
+  const user = useAppSelector(selectUser);
 
-  const isReserved = activeAbonement
-    ? activeAbonement.history.some((hTraining) => hTraining.id === training.id)
-    : false;
+  const isReserved =
+    user.data?.abonements.length > 0
+      ? user.data?.abonements
+          .find((a) => a.status === "active")
+          .history.some((hTraining) => hTraining.id === training.id)
+      : false;
 
   const currentTime = new Date();
   const trainingTime = new Date(training.date);
-  const reservedPlaces = training.registeredClients.length;
+  const reservedPlaces = training.visitors.length;
   const hoursDiff = (trainingTime - currentTime) / (1000 * 60 * 60);
   const currentHour = currentTime.getHours();
 
@@ -77,7 +84,7 @@ export default function Training({ training }) {
   };
 
   return (
-    <li className="scheduled-training ">
+    <li className="training ">
       {notification && error && (
         <div
           style={{
@@ -89,38 +96,23 @@ export default function Training({ training }) {
           {notification}
         </div>
       )}
-      <div className="scheduled-training-content">
-        <div className="flex-row-container title2 top-zero left-zero">
+      <div className="training__content card-element p-4">
+        <div className="flex gap-2">
           <p>{training.time}</p>
-          <p className="bold">{training.type.toUpperCase()}</p>
+          <p className="font-bold">{training.type.toUpperCase()}</p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "1rem",
-            paddingTop: "1rem",
-          }}
-        >
+        <div className="flex items-center justify-between gap-4 pt-2">
           <p className="status">
-            Trainer: <b>{training.instructor?.name}</b>
+            Trainer: <b>{training.instructor?.firstName}</b>
           </p>
           <p className="m-text">
-            Places left: {training.maxCapacity - reservedPlaces}
+            Places left: {training.capacity - reservedPlaces}
           </p>
           <button
+            className="p-1 text-white rounded-md px-4"
             style={{
-              width: "100px",
-              padding: "0.3rem",
-              borderRadius: "0.5rem",
-              color: "white",
-              background: !access
-                ? "var(--gray-color-4)"
-                : isReserved
-                  ? "var(--red-color)"
-                  : "var(--green-color)",
+              background: !access ? "gray" : isReserved ? "red" : "teal",
               cursor: access ? "pointer" : "not-allowed",
             }}
             disabled={!access}

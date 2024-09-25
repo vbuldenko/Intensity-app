@@ -1,0 +1,16 @@
+.trainings {
+  grid-column: 1 / -1;
+
+  @include on-tablet {
+    grid-column: span 6;
+  }
+  @include on-desktop {
+    grid-column: span 12;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}

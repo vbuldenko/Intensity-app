@@ -1,6 +1,5 @@
 .schedule {
   @include page-grid;
-  padding: 1rem 0;
 
   @include on-tablet {
     // max-width: 60rem;

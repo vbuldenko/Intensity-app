@@ -3,19 +3,18 @@ import type { RootState } from "../../app/store";
 import { fetchTrainings } from "./trainingThunk";
 import { ErrorResponse } from "../../types/Error";
 import { Training } from "../../types/Training";
-import { getErrorMessage } from "../../utils/utils";
 
 // Define a type for the slice state
 export interface TrainingState {
   loading: boolean;
-  data: Training[] | null;
+  data: Training[];
   error: string | null;
 }
 
 // Define the initial state using that type
 const initialState: TrainingState = {
   loading: false,
-  data: null,
+  data: [],
   error: null,
 };
 
@@ -47,9 +46,8 @@ export const trainingSlice = createSlice({
 });
 
 // export const {
-// } = userSlice.actions;
+// } = trainingSlice.actions;
 
-// Selector to access user state
-export const selectTrainings = (state: RootState) => state.trainings;
+export const selectTrainings = (state: RootState) => state.trainings.data;
 
 export default trainingSlice.reducer;

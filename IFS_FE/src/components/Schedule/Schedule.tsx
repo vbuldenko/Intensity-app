@@ -9,17 +9,17 @@ import {
   startOfToday,
 } from "date-fns";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
 import MonthView from "./Month";
 import WeekView from "./Week";
-import SelectedTrainings from "./SelectedTrainings";
+import SelectedDayTrainings from "./SelectedDayTrainings/SelectedDayTrainings";
 import "./Schedule.scss";
 import WeekDaysNames from "./elements/WeekDays/WeekDays";
 import CalendarNavbar from "./elements/Navbar/CalendarNavbar";
+import { useAppSelector } from "../../app/hooks";
+import { selectTrainings } from "../../features/trainings/trainingSlice";
 
 export default function Schedule() {
-  // const trainings = useSelector(({ trainings }) => trainings);
-  const trainings = [];
+  const trainings = useAppSelector(selectTrainings);
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -75,7 +75,7 @@ export default function Schedule() {
           />
         )}
       </div>
-      {/* <SelectedTrainings trainings={selectedDayTrainings} /> */}
+      <SelectedDayTrainings trainings={selectedDayTrainings} />
     </section>
   );
 }
