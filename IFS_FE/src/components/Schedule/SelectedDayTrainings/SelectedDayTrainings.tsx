@@ -4,7 +4,7 @@ import "./SelectedDayTrainings.scss";
 export default function SelectedDayTrainings({ trainings }) {
   return (
     <section className="trainings">
-      <ol className="trainings__list">
+      <ul className="trainings__list">
         {trainings.length > 0 ? (
           trainings.map((training) => (
             <Training key={training.id} training={training} />
@@ -12,7 +12,7 @@ export default function SelectedDayTrainings({ trainings }) {
         ) : (
           <p>No trainings for today.</p>
         )}
-      </ol>
+      </ul>
     </section>
   );
 }
