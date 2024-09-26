@@ -116,9 +116,9 @@ export function groupTrainingsByDay(trainings) {
   }));
 }
 
-export function isTomorrow(currentDate, dateToCheck) {
-  const tomorrow = new Date(currentDate);
-  tomorrow.setDate(currentDate.getDate() + 1);
+export function isTomorrow(dateToCheck) {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
   return (
     tomorrow.getDate() === dateToCheck.getDate() &&
     tomorrow.getMonth() === dateToCheck.getMonth() &&
@@ -141,7 +141,7 @@ export default function reservationAccess(
 
   // Rule 2: Client cannot reserve next day trainings scheduled at 9 a.m, 10 a.m, and 11 a.m after 9 p.m of the current day
   if (
-    isTomorrow(currentDateTime, scheduledTime) &&
+    isTomorrow(scheduledTime) &&
     [9, 10, 11].includes(scheduledTime.getHours()) &&
     currentHour >= 21 &&
     reservedPlaces <= 1
