@@ -7,6 +7,7 @@ import {
 } from "../../features/notification/notificationSlice";
 import { selectUser } from "../../features/user/userSlice";
 import { getAbonement, isCancellationForbidden } from "../../utils/abonement";
+import { reserveTraining } from "../../features/trainings/trainingThunk";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
@@ -58,10 +59,7 @@ export default function Training({ training }) {
 
     try {
       await dispatch(
-        updateAbonement(activeAbonement.id, {
-          updateType,
-          trainingId: training.id,
-        })
+        reserveTraining(training.id, abonement.id, updateType)
       );
     } catch (error) {
       console.log(error);
