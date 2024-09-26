@@ -1,9 +1,10 @@
 import { schedule } from '../data/predefined_schedule';
 import db from '../db/models';
 // import { Trainers } from '../types/Trainers';
-import { startOfWeek, addDays, set } from 'date-fns';
+import { startOfWeek, addDays, set, endOfWeek } from 'date-fns';
 import { ScheduleTraining } from '../types/ScheduleTraining';
 import scheduleService from '../services/schedule.service';
+import { ApiError } from '../exceptions/api.error';
 
 export async function initializePredefinedSchedule() {
   const daysOfWeek = Object.keys(schedule); // ['Monday', 'Tuesday', ...]
@@ -40,10 +41,24 @@ export async function initializeTrainingsForWeek(
   );
 
   // Ensure the date is the Monday of the given or current week
-  const startDate = startOfWeek(providedDate, { weekStartsOn: 1 });
+  const startDate = startOfWeek(providedDate, {
+    weekStartsOn: 1,
+  }).toISOString(); //To avoid sequelize date type error
+  const endDate = endOfWeek(providedDate, { weekStartsOn: 1 }).toISOString();
 
   try {
-    // Fetch training data from scheduleService
+    const existingTrainings = await db.Training.findOne({
+      where: {
+        date: {
+          [db.Sequelize.Op.between]: [startDate, endDate],
+        },
+      },
+    });
+
+    if (existingTrainings) {
+      throw ApiError.BadRequest('Already initialized for current week');
+    }
+
     const scheduleTrainings = await scheduleService.getAll();
 
     // Days of the week in proper order
@@ -60,7 +75,7 @@ export async function initializeTrainingsForWeek(
     // Create an array of trainings with the proper date
     const trainings = scheduleTrainings.map((session: ScheduleTraining) => {
       const dayIndex = daysOfWeek.indexOf(session.day);
-      const trainingDate = addDays(startDate, dayIndex);
+      const trainingDate = addDays(startDate, dayIndex).toISOString();
 
       return {
         type: session.type,

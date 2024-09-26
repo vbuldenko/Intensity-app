@@ -55,7 +55,7 @@ export default function (sequelize: Sequelize) {
         primaryKey: true,
       },
       type: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       instructorId: {

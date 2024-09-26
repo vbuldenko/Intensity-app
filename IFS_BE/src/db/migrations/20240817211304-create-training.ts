@@ -30,15 +30,7 @@ module.exports = {
         allowNull: false,
       },
       type: {
-        type: Sequelize.ENUM(
-          'Stretching',
-          'Healthy Back',
-          'ABS',
-          'Fly Stretching',
-          'Tabata',
-          'Functional',
-          'Pilates',
-        ),
+        type: Sequelize.STRING,
         allowNull: false,
       },
       capacity: {
