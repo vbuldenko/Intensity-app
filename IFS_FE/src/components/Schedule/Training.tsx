@@ -14,9 +14,11 @@ export default function Training({ training }) {
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
   const user = useAppSelector(selectUser);
-  const abonement = getAbonement(user.data)
+  const abonement = getAbonement(user.data);
 
-  const isReserved = abonement?.history.some((hTraining) => hTraining.id === training.id) || false;
+  const isReserved =
+    abonement?.history.some((hTraining) => hTraining.id === training.id) ||
+    false;
 
   const currentTime = new Date();
   const trainingTime = new Date(training.date);
@@ -30,6 +32,7 @@ export default function Training({ training }) {
     reservedPlaces,
     hoursDiff
   );
+  console.log("Access: ", access);
 
   const handleNotification = (message) => {
     setError(true);
@@ -40,7 +43,12 @@ export default function Training({ training }) {
   };
 
   const handleAction = async (updateType) => {
-    const isForbidden = isCancellationForbidden(updateType, hoursDiff, trainingTime, currentHour)
+    const isForbidden = isCancellationForbidden(
+      updateType,
+      hoursDiff,
+      trainingTime,
+      currentHour
+    );
 
     if (!abonement) {
       handleNotification("No abonement, buy one to proceed!");
@@ -58,14 +66,10 @@ export default function Training({ training }) {
     }
 
     try {
-      await dispatch(
-        reserveTraining(training.id, abonement.id, updateType)
-      );
+      await dispatch(reserveTraining(training.id, abonement.id, updateType));
     } catch (error) {
       console.log(error);
-      handleNotification(
-        getErrorMessage(error)
-      );
+      handleNotification(getErrorMessage(error));
     }
   };
 
