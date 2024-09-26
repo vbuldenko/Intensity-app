@@ -33,7 +33,7 @@ export default function Schedule() {
 
   const selectedDayTrainings = trainings
     .filter((training) => isSameDay(parseISO(training.date), selectedDay))
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+    .sort((a, b) => a.time.slice(0, 2) - b.time.slice(0, 2));
 
   function handleViewChange(event) {
     setScheduleView(event.target.value);
