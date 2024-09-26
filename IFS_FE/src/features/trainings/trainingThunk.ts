@@ -17,3 +17,30 @@ export const fetchTrainings = createAsyncThunk<
     return rejectWithValue({ message });
   }
 });
+
+export const reserveTraining = createAsyncThunk<
+  Training, // Return type of successful request
+  {
+    trainingId: number;
+    abonementId: number;
+    updateType: string;
+  }, // Arguments passed to the thunk
+  { rejectValue: ErrorResponse } // Rejected value type
+>(
+  "trainings/reserveTraining", // Action type
+  async ({ trainingId, abonementId, updateType }, { rejectWithValue }) => {
+    try {
+      // Make sure you're passing the correct parameters to the service
+      const updatedTraining = await trainingService.reserveTraining(
+        trainingId,
+        abonementId,
+        updateType
+      );
+      return updatedTraining;
+    } catch (error: any) {
+      // Use a utility to extract a meaningful error message
+      const message = getErrorMessage(error) || "Unexpected error occurred";
+      return rejectWithValue({ message });
+    }
+  }
+);

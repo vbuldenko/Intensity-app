@@ -126,7 +126,7 @@ export function isTomorrow(dateToCheck) {
   );
 }
 
-export default function reservationAccess(
+export function reservationAccess(
   currentDateTime,
   scheduledTime,
   reservedPlaces,

@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react";
-
-import reservationAccess, { getErrorMessage } from "../../utils/utils";
-import { isTomorrow } from "../../utils/utils";
+import { reservationAccess, getErrorMessage } from "../../utils/utils";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   notifyWith,

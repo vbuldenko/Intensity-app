@@ -19,6 +19,14 @@ function updateTraining(
   return axiosClient.put(`/trainings/${trainingId}`, updatedTraining);
 }
 
+function reserveTraining(
+  trainingId: number,
+  abonementId: number,
+  updateType: string,
+): Promise<void> {
+  return axiosClient.patch(`/trainings?abonementId=${abonementId}&trainingId=${trainingId}`, { updateType });
+}
+
 function deleteTraining(trainingId: number): Promise<void> {
   return axiosClient.delete(`/trainings/${trainingId}`);
 }
@@ -28,5 +36,6 @@ export const trainingService = {
   getAll,
   addTraining,
   updateTraining,
+  reserveTraining,
   deleteTraining,
 };
