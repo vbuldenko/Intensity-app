@@ -1,6 +1,6 @@
 export interface Abonement {
   id: string;
-  status: string;
+  status: 'active' | 'ended' | 'inactive';
   type: string;
   amount: number;
   price: number;

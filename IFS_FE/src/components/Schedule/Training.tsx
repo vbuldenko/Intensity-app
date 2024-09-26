@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 
-import reservationAccess from "../../utils/utils";
+import reservationAccess, { getErrorMessage } from "../../utils/utils";
 import { isTomorrow } from "../../utils/utils";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -8,19 +8,16 @@ import {
   selectNotification,
 } from "../../features/notification/notificationSlice";
 import { selectUser } from "../../features/user/userSlice";
+import { getAbonement, isCancellationForbidden } from "../../utils/abonement";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
   const user = useAppSelector(selectUser);
+  const abonement = getAbonement(user.data)
 
-  const isReserved =
-    user.data?.abonements.length > 0
-      ? user.data?.abonements
-          .find((a) => a.status === "active")
-          .history.some((hTraining) => hTraining.id === training.id)
-      : false;
+  const isReserved = abonement?.history.some((hTraining) => hTraining.id === training.id) || false;
 
   const currentTime = new Date();
   const trainingTime = new Date(training.date);
@@ -44,23 +41,17 @@ export default function Training({ training }) {
   };
 
   const handleAction = async (updateType) => {
-    const cancellationForbidden =
-      updateType === "cancellation" &&
-      (hoursDiff < 3 ||
-        (isTomorrow(currentTime, trainingTime) &&
-          [9, 10, 11].includes(trainingTime.getHours()) &&
-          currentHour >= 21) ||
-        ([9, 10, 11].includes(trainingTime.getHours()) && currentHour < 8));
+    const isForbidden = isCancellationForbidden(updateType, hoursDiff, trainingTime, currentHour)
 
-    if (!activeAbonement) {
+    if (!abonement) {
       handleNotification("No abonement, buy one to proceed!");
       return;
     }
-    if (updateType === "reservation" && activeAbonement.left === 0) {
+    if (updateType === "reservation" && abonement.left === 0) {
       handleNotification("No trainings left, buy a new abonement!");
       return;
     }
-    if (cancellationForbidden) {
+    if (isForbidden) {
       handleNotification(
         "You cannot cancel morning trainings scheduled for tomorrow after 9p.m or any training 3 hours before its begining!"
       );
@@ -74,11 +65,10 @@ export default function Training({ training }) {
           trainingId: training.id,
         })
       );
-      await dispatch(updateTraining(training.id, { updateType }));
     } catch (error) {
       console.log(error);
       handleNotification(
-        error.response ? error.response.data.error : "error occurred"
+        getErrorMessage(error)
       );
     }
   };
