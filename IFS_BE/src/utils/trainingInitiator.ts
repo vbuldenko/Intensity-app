@@ -75,7 +75,10 @@ export async function initializeTrainingsForWeek(
     // Create an array of trainings with the proper date
     const trainings = scheduleTrainings.map((session: ScheduleTraining) => {
       const dayIndex = daysOfWeek.indexOf(session.day);
-      const trainingDate = addDays(startDate, dayIndex).toISOString();
+      const hours = Number(session.time.slice(0, 2));
+      let trainingDate = addDays(startDate, dayIndex);
+      trainingDate.setHours(hours, 0, 0, 0);
+      trainingDate = trainingDate.toISOString();
 
       return {
         type: session.type,
