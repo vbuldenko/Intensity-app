@@ -49,9 +49,7 @@ export const trainingSlice = createSlice({
         reserveTraining.fulfilled,
         (state, action: PayloadAction<Training>) => {
           // Update the specific training in the state after reservation
-          const index = state.data.findIndex(
-            (t) => t.id === action.payload.id
-          );
+          const index = state.data.findIndex((t) => t.id === action.payload.id);
           if (index !== -1) {
             state.data[index] = action.payload;
           }

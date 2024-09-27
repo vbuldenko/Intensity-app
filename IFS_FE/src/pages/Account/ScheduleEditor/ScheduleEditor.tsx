@@ -66,7 +66,7 @@ const ScheduleEditor: React.FC = () => {
   };
 
   const handleInitialization = async () => {
-    await trainingService.initializeWeek();
+    await trainingService.initializeWeek(30);
   };
 
   const groupedSchedule = groupTrainingsByDay(schedule);

@@ -15,6 +15,13 @@ const getAllActive = async () => {
     where: {
       activationToken: null,
     },
+    include: [
+      {
+        model: db.Abonement,
+        as: 'abonements',
+        // attributes: ['id', 'status', 'type', 'amount', 'left'],
+      },
+    ],
   });
 };
 

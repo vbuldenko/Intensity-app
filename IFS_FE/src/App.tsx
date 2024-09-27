@@ -49,11 +49,7 @@ export default function App() {
             <Route path={NavLinks.Settings} element={<Settings />} />
             <Route path={NavLinks.Schedule} element={<Schedule />} />
             <Route path={NavLinks.Purchases} element={<Purchases />} />
-            <Route
-              path={NavLinks.Clients}
-              element={<UserList type="client" />}
-            />
-            <Route path={NavLinks.Team} element={<UserList type="trainer" />} />
+            <Route path={NavLinks.Users} element={<UserList />} />
             <Route
               path={NavLinks.ScheduleEditor}
               element={<ScheduleEditor />}

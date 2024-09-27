@@ -103,12 +103,13 @@ export const initializeCurrentWeek = async (
   res: Response,
   next: NextFunction,
 ) => {
+  const { day } = req.body;
   const user = req.user as UserDTO;
 
   if (!user || user.role !== 'admin') {
     return res.status(403).json({ error: 'Operation not permitted' });
   }
 
-  await trainingService.initializeWeek();
-  res.status(201).end();
+  await trainingService.initializeWeek(day);
+  res.status(201).json({ message: 'Success' });
 };

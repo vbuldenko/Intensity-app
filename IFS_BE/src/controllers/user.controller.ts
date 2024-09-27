@@ -16,7 +16,8 @@ export const getAllActive = async (
   res: Response,
 ): Promise<void> => {
   const users = await userService.getAllActive();
-  res.send(users.map(userService.normalize));
+  res.send(users);
+  // res.send(users.map(userService.normalize));
 };
 
 export const getProfile = async (

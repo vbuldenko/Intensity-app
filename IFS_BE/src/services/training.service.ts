@@ -98,6 +98,6 @@ export const removeAll = async () => {
   await db.Training.destroy({ where: {} });
 };
 
-export const initializeWeek = async () => {
-  await initializeTrainingsForWeek();
+export const initializeWeek = async (day?: number) => {
+  await initializeTrainingsForWeek(day);
 };

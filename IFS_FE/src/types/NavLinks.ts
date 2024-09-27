@@ -11,6 +11,7 @@ export enum NavLinks {
   ResetPassword = "reset-password",
   Account = "account",
   Purchases = "purchases",
+  Users = "users",
   Team = "team",
   Clients = "clients",
   Settings = "settings",

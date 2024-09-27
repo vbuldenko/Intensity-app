@@ -1,8 +1,8 @@
 import axiosClient from "../api/axiosClient";
 import { Training } from "../types/Training";
 
-function initializeWeek(): Promise<void> {
-  return axiosClient.post("/trainings/initialization");
+function initializeWeek(day: number): Promise<void> {
+  return axiosClient.post("/trainings/initialization", { day });
 }
 function getAll(): Promise<Training[]> {
   return axiosClient.get("/trainings");
@@ -22,9 +22,12 @@ function updateTraining(
 function reserveTraining(
   trainingId: number,
   abonementId: number,
-  updateType: string,
+  updateType: string
 ): Promise<void> {
-  return axiosClient.patch(`/trainings?abonementId=${abonementId}&trainingId=${trainingId}`, { updateType });
+  return axiosClient.patch(
+    `/trainings?abonementId=${abonementId}&trainingId=${trainingId}`,
+    { updateType }
+  );
 }
 
 function deleteTraining(trainingId: number): Promise<void> {
