@@ -10,6 +10,7 @@ const Path = {
   restore: '/forgotPassword',
   reset: '/resetPassword/:resetToken',
   users: '/',
+  user: '/:id',
   profile: '/profile',
   updateName: '/profile/name',
   updateEmail: '/profile/email',

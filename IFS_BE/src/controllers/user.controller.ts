@@ -20,6 +20,24 @@ export const getAllActive = async (
   // res.send(users.map(userService.normalize));
 };
 
+export const getOneById = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const { role } = req.user as UserDTO;
+  if (role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+
+  const user = await userService.getById(Number(req.params.id));
+
+  if (!user) {
+    throw ApiError.NotFound();
+  }
+
+  res.send(user);
+};
+
 export const getProfile = async (
   req: Request,
   res: Response,
