@@ -12,6 +12,7 @@ export enum NavLinks {
   Account = "account",
   Purchases = "purchases",
   Users = "users",
+  SelectedUser = "users/:id",
   Team = "team",
   Clients = "clients",
   Settings = "settings",

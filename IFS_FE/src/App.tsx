@@ -24,6 +24,7 @@ import Purchases from "./pages/Account/Purchases";
 import UserList from "./pages/Account/UserList";
 import ScheduleEditor from "./pages/Account/ScheduleEditor";
 import { fetchUserData } from "./features/user/userThunk";
+import User from "./pages/Account/UserList/User";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -50,6 +51,7 @@ export default function App() {
             <Route path={NavLinks.Schedule} element={<Schedule />} />
             <Route path={NavLinks.Purchases} element={<Purchases />} />
             <Route path={NavLinks.Users} element={<UserList />} />
+            <Route path={NavLinks.SelectedUser} element={<User />} />
             <Route
               path={NavLinks.ScheduleEditor}
               element={<ScheduleEditor />}
