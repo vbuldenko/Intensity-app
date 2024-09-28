@@ -5,7 +5,7 @@ import Modal from "../../../../components/Elements/Modal";
 import Purchases from "../../Purchases";
 import ClientOverview from "../../Overview/Client/ClientOverview";
 import { userService } from "../../../../services/userService";
-import TrainerData from "../../Overview/Trainer/TrainerData";
+import TrainerOverview from "../../Overview/Trainer/TrainerOverview";
 
 export default function User() {
   const { id } = useParams();
@@ -46,7 +46,7 @@ export default function User() {
             <ClientOverview abonements={user.abonements} />
           </div>
         ) : (
-          <TrainerData user={user} />
+          <TrainerOverview user={user} />
         )}
       </div>
     )

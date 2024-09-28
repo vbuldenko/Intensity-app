@@ -3,7 +3,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import AdminDashboard from "./Admin";
 import ClientOverview from "./Client";
-import TrainerData from "./Trainer";
+import TrainerOverview from "./Trainer";
 import "./Overview.scss";
 import Loader from "../../../components/Elements/Loader";
 
@@ -38,7 +38,7 @@ export default function Overview() {
           {user.role === "admin" ? (
             <AdminDashboard />
           ) : user.role === "trainer" ? (
-            <TrainerData user={user} />
+            <TrainerOverview user={user} />
           ) : (
             <ClientOverview abonements={user.abonements} />
           )}

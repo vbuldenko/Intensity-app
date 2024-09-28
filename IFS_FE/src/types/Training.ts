@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface Training {
   id: number;
   type: string;
@@ -6,4 +8,5 @@ export interface Training {
   date: Date;
   day: string;
   time: string;
+  visitors: User[];
 }

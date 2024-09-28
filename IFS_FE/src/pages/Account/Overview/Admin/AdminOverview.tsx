@@ -53,8 +53,6 @@ const AdminDashboard: React.FC = () => {
   const data = studioStats;
   return (
     <div className="admin-dashboard">
-      <h1 className="admin-dashboard__title">Current Perfomance</h1>
-
       <div className="admin-dashboard__section">
         <h2 className="admin-dashboard__subtitle">General Statistics</h2>
         <div className="admin-dashboard__content">

@@ -1,0 +1,73 @@
+.trainer-overview {
+  &__salary-section,
+  &__trainings-section {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  &__result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+  }
+
+  &__value {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__trainings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+.training {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__time {
+    font-size: 1rem;
+  }
+
+  &__check-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__card {
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__type {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  &__status {
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  &__visitors {
+    font-size: 1rem;
+  }
+}

@@ -1,1 +1,1 @@
-export { default } from "./TrainerData";
+export { default } from "./TrainerOverview";

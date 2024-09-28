@@ -10,10 +10,12 @@ const MainLayout = () => {
   const { theme } = useTheme();
   const location = useLocation();
 
-  const hideFooterRoutes: string[] = [`/${NavLinks.Account}`];
+  // const hideFooterRoutes: string[] = [`/${NavLinks.Account}`];
+  const hideFooterRoutes: string = `/${NavLinks.Account}`;
 
   // Conditionally render the footer based on the current route
-  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+  // const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+  const shouldHideFooter = location.pathname.startsWith(hideFooterRoutes);
 
   return (
     <div className={`app ${theme}`}>
