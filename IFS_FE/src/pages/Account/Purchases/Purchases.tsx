@@ -1,14 +1,14 @@
 import { useState } from "react";
-// import { notifyWith } from '../../../reducers/notificationReducer';
-// import { createAbonement } from '../../../reducers/abonementReducer';
+import { notifyWith } from "../../../features/notification/notificationSlice";
+// import { createAbonement } from "../../../reducers/abonementReducer";
 import Selector from "../../../components/Elements/Selector";
 import { membership } from "../../../assets/purchaseData";
-import "./Purchases.scss";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
+import "./Purchases.scss";
 
-export default function Purchases({ clientId }) {
-  // const notification = useSelector(({ notification }) => notification);
+export default function Purchases({ clientId }: { clientId?: number }) {
+  const notification = useAppSelector(({ notification }) => notification);
   const { data: user } = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const [selectedType, setSelectedType] = useState("Group"); // Default selected type
@@ -64,17 +64,11 @@ export default function Purchases({ clientId }) {
 
   return (
     <div className="purchases">
-      {/* {notification && (
-        <div
-          style={{
-            color: "red",
-            textAlign: "center",
-            padding: "0.5em",
-          }}
-        >
+      {notification && (
+        <div className="text-center bg-red-200 text-red-600 p-4 rounded-xl">
           {notification}
         </div>
-      )} */}
+      )}
 
       <h2 className="purchases__title">
         Оберіть тип занять та кількість тренувань
