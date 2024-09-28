@@ -38,7 +38,10 @@ export const getById = async (id: number) => {
 export const create = async (payload: any, user: any) => {
   const { role } = user;
 
-  const client = role === 'admin' ? await getOne(payload.clientId) : user;
+  const client =
+    role === 'admin'
+      ? await User.findOne({ where: { id: payload.clientId } })
+      : user;
 
   if (!client) {
     throw ApiError.NotFound({ user: 'User not found' });

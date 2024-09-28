@@ -6,27 +6,30 @@ import { membership } from "../../../assets/purchaseData";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import "./Purchases.scss";
+import { abonementService } from "../../../services/abonementService";
 
 export default function Purchases({ clientId }: { clientId?: number }) {
   const notification = useAppSelector(({ notification }) => notification);
   const { data: user } = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
-  const [selectedType, setSelectedType] = useState("Group"); // Default selected type
+  const [selectedType, setSelectedType] = useState<
+    "group" | "personal" | "split" | "kids"
+  >("group"); // Default selected type
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
 
-  const selectedAbonementData = membership[selectedType.toLowerCase()] || [];
-  const selectedAbonement = selectedAbonementData[selectedAmountIndex];
+  const selectedAbonementData: { amount: number; price: number }[] =
+    membership[selectedType] || [];
+  const selectedAbonement: { amount: number; price: number } =
+    selectedAbonementData[selectedAmountIndex];
 
   const handleSubmit = async () => {
     try {
       if (user.role === "admin" && clientId) {
-        await dispatch(
-          createAbonement({
-            ...selectedAbonement,
-            type: selectedType,
-            clientId: clientId,
-          })
-        );
+        await abonementService.add({
+          ...selectedAbonement,
+          type: selectedType,
+          clientId: clientId,
+        });
         dispatch(
           notifyWith(
             `Abonement for ${selectedAbonement.amount} trainings was added`
@@ -77,7 +80,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
       <Selector
         selection={selectedType}
         handleSelection={handleTypeChange}
-        buttonNames={["Group", "Personal", "Split", "Kids"]}
+        buttonNames={["group", "personal", "split", "kids"]}
       />
       <div className="purchases__container card-element">
         <div className="purchases__info">

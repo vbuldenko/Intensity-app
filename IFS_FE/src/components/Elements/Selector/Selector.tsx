@@ -17,7 +17,7 @@ const Selector = <T extends React.ReactNode>({
       {buttonNames.map((buttonName, index) => (
         <button
           key={index}
-          className={`selector__button ${
+          className={`selector__button capitalize ${
             selection === buttonName ? "selector__button--selected" : ""
           }`}
           onClick={() => handleSelection(buttonName)}
