@@ -29,7 +29,7 @@ export default function User() {
           <div className="flex gap-2 items-center justify-between">
             <div className="flex gap-2 small-card-element px-6 py-1">
               <ArrowLeftIcon className="w-4" />
-              <span className="w-max font-bold">Back to all</span>
+              <span className="w-max">Back to all</span>
             </div>
 
             <p className="status">

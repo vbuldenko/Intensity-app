@@ -2,6 +2,7 @@
   padding: 0.2rem;
   border-radius: 1rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +11,7 @@
   box-shadow: $shadow3;
 
   &__button {
+    flex: 1;
     padding: 0.5rem 1rem;
     min-width: 100px;
     text-align: center;
