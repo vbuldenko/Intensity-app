@@ -134,8 +134,6 @@ export function reservationAccess(
 ) {
   const currentHour = currentDateTime.getHours();
   // console.log("Is tomorrosW: ", isTomorrow(scheduledTime));
-  console.log("currentDateTime: ", currentDateTime);
-  console.log("trainingTime: ", scheduledTime);
 
   // Rule 1: If scheduled time has passed, reservation is closed
   if (currentDateTime >= scheduledTime) {

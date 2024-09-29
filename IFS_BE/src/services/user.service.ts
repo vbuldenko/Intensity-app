@@ -42,6 +42,13 @@ const getById = async (id: number) => {
         model: db.Abonement,
         as: 'abonements',
         // attributes: ['id', 'status', 'type', 'amount', 'left'],
+        include: [
+          {
+            model: db.Training,
+            as: 'visitedTrainings',
+            attributes: ['id'],
+          },
+        ],
       },
     ],
   });

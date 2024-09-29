@@ -1,0 +1,12 @@
+.button {
+  &-disabled {
+    background: $gray-color-4;
+    cursor: not-allowed;
+  }
+  &-cancel {
+    background: $color-red;
+  }
+  &-reserve {
+    background: $color-green;
+  }
+}

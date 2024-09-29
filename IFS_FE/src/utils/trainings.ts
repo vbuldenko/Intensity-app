@@ -42,3 +42,8 @@ export const filterTrainingsByDate = (
     return false;
   });
 };
+
+export function calculateHoursDiff(trainingTime) {
+  const currentTime = new Date();
+  return (trainingTime - currentTime) / (1000 * 60 * 60);
+}
