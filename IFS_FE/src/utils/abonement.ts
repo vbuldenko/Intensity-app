@@ -11,15 +11,20 @@ export function filterAbonements(
   const currentDate = new Date();
 
   const expirationDateFilter = (abonement: Abonement): boolean => {
-    const expirationDate = new Date(abonement.expiratedAt);
+    const expirationDate = abonement.expiratedAt
+      ? new Date(abonement.expiratedAt)
+      : null;
 
     switch (viewOption) {
       case "active":
         return abonement.status === "active";
       case "expired":
-        return expirationDate < currentDate || abonement.status === "ended";
+        return (
+          (expirationDate !== null && expirationDate < currentDate) ||
+          abonement.status === "ended"
+        );
       case "not activated":
-        return abonement.status === "inactive";
+        return abonement.status === "inactive" && expirationDate === null;
       default: // 'all' option
         return true;
     }
@@ -46,9 +51,9 @@ export function getAbonement(user: User): Abonement | null {
 }
 
 export function isCancellationForbidden(
-  updateType: string, 
-  hoursDiff: number, 
-  trainingTime: Date, 
+  updateType: string,
+  hoursDiff: number,
+  trainingTime: Date,
   currentHour: number
 ): boolean {
   const trainingHour = trainingTime.getHours();
@@ -59,6 +64,8 @@ export function isCancellationForbidden(
 
   return (
     updateType === "cancellation" &&
-    (hoursDiff < 3 || (isLateReservationUpdate && isEarlyMorningTraining) || isEarlyReservationUpdate)
+    (hoursDiff < 3 ||
+      (isLateReservationUpdate && isEarlyMorningTraining) ||
+      isEarlyReservationUpdate)
   );
 }
