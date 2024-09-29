@@ -4,7 +4,7 @@ import "./Hero.scss";
 
 export const Hero = () => {
   return (
-    <div className="hero">
+    <div className="hero self-center">
       <h1 className="hero__title">
         Welcome to <span className="hero__title--accent">Intensity</span>{" "}
         fitness studio!

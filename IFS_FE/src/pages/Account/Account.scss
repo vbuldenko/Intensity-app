@@ -1,7 +1,8 @@
 .account {
   @include page-grid;
-
-  max-width: 70rem;
+  margin-inline: auto;
+  // max-width: 70rem;
+  width: 100%;
   min-width: min-content;
   min-height: 75vh;
   // margin: 0 auto;

@@ -51,7 +51,7 @@ export default function Schedule() {
 
   return (
     <section className="schedule">
-      <div className="calendar card-element">
+      <div className="schedule__calendar calendar card-element">
         <CalendarNavbar
           firstDayCurrentMonth={firstDayCurrentMonth}
           previousMonth={previousMonth}

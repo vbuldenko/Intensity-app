@@ -74,7 +74,7 @@ export default function Training({ training }) {
   };
 
   return (
-    <li className="training ">
+    <li className="schedule__training w-full">
       {notification && error && (
         <div
           style={{
