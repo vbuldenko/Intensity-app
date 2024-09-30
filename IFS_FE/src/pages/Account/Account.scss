@@ -27,6 +27,9 @@
     padding: 1rem;
     grid-column: 1/-1;
 
+    @include on-mobile {
+      margin-bottom: 3rem;
+    }
     @include on-tablet {
       grid-column: 4/-1;
       position: static;

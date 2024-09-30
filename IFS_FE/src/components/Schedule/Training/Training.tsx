@@ -114,11 +114,21 @@ export default function Training({ training }) {
           </p>
           <button
             className={`training-button ${!access ? "training-button--disabled" : isReserved ? "training-button--cancel" : "training-button--reserve"}`}
-            disabled={!access}
+            // className={`training-button ${
+            //   !access
+            //     ? "training-button--disabled"
+            //     : loading
+            //       ? "training-button--loading"
+            //       : isReserved
+            //         ? "training-button--cancel"
+            //         : "training-button--reserve"
+            // }`}
+            disabled={!access || loading}
             onClick={() =>
               handleAction(isReserved ? "cancellation" : "reservation")
             }
           >
+            {loading && <div className="training-button__spinner"></div>}
             {!access ? "Closed" : isReserved ? "Cancel" : "Reserve"}
           </button>
         </div>
