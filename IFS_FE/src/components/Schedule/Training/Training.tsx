@@ -18,8 +18,8 @@ export default function Training({ training }) {
   const dispatch = useAppDispatch();
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
-  const user = useAppSelector(selectUser);
-  const abonement = useMemo(() => getAbonement(user.data), [user]);
+  const { data: user, loading } = useAppSelector(selectUser);
+  const abonement = useMemo(() => getAbonement(user), [user]);
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
   const reservedPlaces = training.visitors.length;
@@ -113,7 +113,7 @@ export default function Training({ training }) {
             Places left: {training.capacity - reservedPlaces}
           </p>
           <button
-            className={`p-1 text-white rounded-md px-4 ${!access ? "button-disabled" : isReserved ? "button-cancel" : "button-reserve"}`}
+            className={`training-button ${!access ? "training-button--disabled" : isReserved ? "training-button--cancel" : "training-button--reserve"}`}
             disabled={!access}
             onClick={() =>
               handleAction(isReserved ? "cancellation" : "reservation")

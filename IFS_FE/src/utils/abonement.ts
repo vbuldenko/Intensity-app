@@ -34,6 +34,10 @@ export function filterAbonements(
 }
 
 export function getAbonement(user: User): Abonement | null {
+  if (!user) {
+    return null;
+  }
+
   let activeAbonement: Abonement | null = null;
   let inactiveAbonement: Abonement | null = null;
 

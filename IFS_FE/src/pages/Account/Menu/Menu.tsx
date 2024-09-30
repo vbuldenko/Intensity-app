@@ -2,17 +2,19 @@ import classNames from "classnames";
 import { NavLink } from "react-router-dom";
 import { NavLinks } from "../../../types/NavLinks";
 import "./Menu.scss";
+import { useAppSelector } from "../../../app/hooks";
+import { selectUser } from "../../../features/user/userSlice";
 
 interface MenuProps {
-  role: "admin" | "trainer" | "client"; // Direct role type
   className: string;
 }
 
-const Menu = ({ role, className }: MenuProps) => {
+const Menu = ({ className }: MenuProps) => {
+  const { data: user } = useAppSelector(selectUser);
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     classNames("menu__link", { selected: isActive });
 
-  const getLinks = (role: MenuProps["role"]) => {
+  const getLinks = (role: "admin" | "trainer" | "client") => {
     const links = [
       { to: ".", label: "Overview" },
       { to: NavLinks.Settings, label: "Settings" },
@@ -39,12 +41,13 @@ const Menu = ({ role, className }: MenuProps) => {
 
   return (
     <nav className={`${className} menu`}>
-      {getLinks(role).map(({ to, label }) => (
-        //"end" used to handle isActive prop for index route
-        <NavLink key={to} to={to} end={to === "."} className={getLinkClass}>
-          {label}
-        </NavLink>
-      ))}
+      {user &&
+        getLinks(user.role).map(({ to, label }) => (
+          //"end" used to handle isActive prop for index route
+          <NavLink key={to} to={to} end={to === "."} className={getLinkClass}>
+            {label}
+          </NavLink>
+        ))}
     </nav>
   );
 };

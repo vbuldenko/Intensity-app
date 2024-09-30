@@ -1,12 +1,17 @@
-.button {
-  &-disabled {
+.training-button {
+  color: white;
+  border-radius: $big-br;
+  width: 100px;
+  padding: 0.25rem 1rem;
+
+  &--disabled {
     background: $gray-color-4;
     cursor: not-allowed;
   }
-  &-cancel {
+  &--cancel {
     background: $color-red;
   }
-  &-reserve {
+  &--reserve {
     background: $color-green;
   }
 }

@@ -3,6 +3,7 @@ import { trainingService } from "../../services/trainingService";
 import { ErrorResponse } from "../../types/Error";
 import { Training } from "../../types/Training";
 import { getErrorMessage } from "../../utils/utils";
+import { fetchUserData } from "../user/userThunk";
 
 export const fetchTrainings = createAsyncThunk<
   Training[], // Return type of the successful request
@@ -28,7 +29,10 @@ export const reserveTraining = createAsyncThunk<
   { rejectValue: ErrorResponse } // Rejected value type
 >(
   "trainings/reserveTraining", // Action type
-  async ({ trainingId, abonementId, updateType }, { rejectWithValue }) => {
+  async (
+    { trainingId, abonementId, updateType },
+    { dispatch, rejectWithValue }
+  ) => {
     try {
       // Make sure you're passing the correct parameters to the service
       const updatedTraining = await trainingService.reserveTraining(
@@ -36,6 +40,7 @@ export const reserveTraining = createAsyncThunk<
         abonementId,
         updateType
       );
+      await dispatch(fetchUserData());
       return updatedTraining;
     } catch (error: any) {
       // Use a utility to extract a meaningful error message
