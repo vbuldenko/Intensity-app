@@ -25,14 +25,12 @@ import UserList from "./pages/Account/UserList";
 import ScheduleEditor from "./pages/Account/ScheduleEditor";
 import { fetchUserData } from "./features/user/userThunk";
 import User from "./pages/Account/UserList/User";
-// import { checkAuth } from "./features/auth/authThunk";
 
 export default function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTrainings());
     dispatch(fetchUserData());
-    // dispatch(checkAuth());
   }, []);
   return (
     <Routes>
@@ -60,7 +58,6 @@ export default function App() {
             />
           </Route>
         </Route>
-        {/* <Route path={NavLinks.SignUp} element={<SignUp />} /> */}
 
         {/* 
           <Route path="forgot-password" element={<ForgotPassword />} />
@@ -68,13 +65,7 @@ export default function App() {
             path="reset-password/:resetToken"
             element={<ResetPassword />}
           />
-          <Route element={<AuthProtected />}>
-            <Route path="account" element={<Account user={user.data} />}>
-              <Route path="trainings" element={<TrainerOverview />} />
-              <Route path="clients/:id" element={<Client />} />
-              <Route path="team/:id" element={<Trainer />} />
-            </Route>
-          </Route> */}
+          */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
