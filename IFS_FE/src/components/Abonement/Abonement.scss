@@ -4,16 +4,18 @@
   gap: 1rem;
   padding: 1rem;
 
+  &__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
   &__info {
     display: flex;
     gap: 1rem;
     flex-direction: column;
     justify-content: space-between;
-
-    &__title {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $color-element;
   }
 
   &__status {
@@ -25,6 +27,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    gap: 1rem;
   }
 
   &__left-trainings {
@@ -33,7 +36,7 @@
 
   &__history {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1.5rem;
   }
 }

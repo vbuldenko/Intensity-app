@@ -46,7 +46,7 @@ const getById = async (id: number) => {
           {
             model: db.Training,
             as: 'visitedTrainings',
-            attributes: ['id'],
+            // attributes: ['id'],
             through: { attributes: [] }, // Exclude History attributes
           },
         ],

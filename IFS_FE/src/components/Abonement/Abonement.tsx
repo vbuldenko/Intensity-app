@@ -63,12 +63,15 @@ export default function Abonement({ abonement }: AbonementProps) {
         </div>
       </div>
       <div className="abonement__history">
-        {abonement.history &&
-          (abonement.history.length > 0
-            ? abonement.history.map((el) => (
-                <HistoryElement key={el.id} data={el} trainer={false} />
-              ))
-            : null)}
+        <h2 className="abonement__title">Reserved trainings</h2>
+        <div className="abonement__container">
+          {abonement.visitedTrainings &&
+            (abonement.visitedTrainings.length > 0
+              ? abonement.visitedTrainings.map((el) => (
+                  <HistoryElement key={el.id} data={el} trainer={false} />
+                ))
+              : null)}
+        </div>
       </div>
     </div>
   );
