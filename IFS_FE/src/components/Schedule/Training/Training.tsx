@@ -13,12 +13,14 @@ import {
 } from "../../../utils/abonement";
 import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
+import ReservationButton from "../../Elements/ReservationButton";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
-  const { data: user, loading } = useAppSelector(selectUser);
+  const { data: user } = useAppSelector(selectUser);
   const abonement = useMemo(() => getAbonement(user), [user]);
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
@@ -26,9 +28,7 @@ export default function Training({ training }) {
 
   const isReserved = useMemo(
     () =>
-      abonement?.visitedTrainings.some(
-        (hTraining) => hTraining.id === training.id
-      ) || false,
+      abonement?.visitedTrainings.some((t) => t.id === training.id) || false,
     [abonement, training.id]
   );
 
@@ -81,6 +81,7 @@ export default function Training({ training }) {
     }
 
     try {
+      setIsSubmitting(true);
       await dispatch(
         reserveTraining({
           trainingId: training.id,
@@ -90,6 +91,8 @@ export default function Training({ training }) {
       );
     } catch (error) {
       handleNotification(getErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -112,25 +115,14 @@ export default function Training({ training }) {
           <p className="m-text">
             Places left: {training.capacity - reservedPlaces}
           </p>
-          <button
-            className={`training-button ${!access ? "training-button--disabled" : isReserved ? "training-button--cancel" : "training-button--reserve"}`}
-            // className={`training-button ${
-            //   !access
-            //     ? "training-button--disabled"
-            //     : loading
-            //       ? "training-button--loading"
-            //       : isReserved
-            //         ? "training-button--cancel"
-            //         : "training-button--reserve"
-            // }`}
-            disabled={!access || loading}
+          <ReservationButton
+            access={access}
+            isReserved={isReserved}
+            isSubmitting={isSubmitting}
             onClick={() =>
               handleAction(isReserved ? "cancellation" : "reservation")
             }
-          >
-            {loading && <div className="training-button__spinner"></div>}
-            {!access ? "Closed" : isReserved ? "Cancel" : "Reserve"}
-          </button>
+          />
         </div>
       </div>
     </li>
