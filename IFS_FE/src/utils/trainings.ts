@@ -47,3 +47,15 @@ export function calculateHoursDiff(trainingTime) {
   const currentTime = new Date();
   return (trainingTime - currentTime) / (1000 * 60 * 60);
 }
+
+export const canTrainProceed = (trainingDate: string, trainingTime: string, visitorsCount: number): boolean => {
+    const trainingDateTime = new Date(`${trainingDate}T${trainingTime}`);
+    const currentDateTime = new Date();
+    const timeDifferenceInHours = (trainingDateTime.getTime() - currentDateTime.getTime()) / (1000 * 60 * 60);
+
+    if (timeDifferenceInHours < 3 && visitorsCount < 2) {
+      return false; // Return training to user's subscription
+    }
+    return true;
+  };
+
