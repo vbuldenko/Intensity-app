@@ -1,32 +1,8 @@
-import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  Sequelize,
-} from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-export default function (sequelize: Sequelize) {
-  class Abonement extends Model<
-    InferAttributes<Abonement>,
-    InferCreationAttributes<Abonement>
-  > {
-    declare id: CreationOptional<number>;
-    declare userId: number;
-    declare status: 'active' | 'ended' | 'inactive';
-    declare type: string;
-    declare amount: number;
-    declare price: number;
-    declare left: number;
-    declare paused: boolean;
-    declare activatedAt: Date;
-    declare expiratedAt: Date;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
+export default function (sequelize) {
+  class Abonement extends Model {
+    static associate(models) {
       Abonement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
       Abonement.belongsToMany(models.Training, {
         through: models.History,

@@ -12,12 +12,11 @@ import { requestLogger } from './middlewares/logger.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
-import { hashPassword } from './utils';
-// import db from './db/models';
+// import db from './db/modelsjs/index.js';
 
 export function createApp() {
   const app = express();
-  console.log(process.env.CLIENT_URL);
+  // db.sequelize.sync({ force: true });
 
   app.use(
     cors({
@@ -36,8 +35,6 @@ export function createApp() {
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', authMiddleware, trainingRouter);
   app.use('/schedule', authMiddleware, scheduleRouter);
-
-  // db.sequelize.sync();
   app.use(unknownEndpoint);
   app.use(errorMiddleware);
 

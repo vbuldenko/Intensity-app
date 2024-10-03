@@ -36,7 +36,7 @@ export default function (sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users', // This should match the table name created in the User migration
+          model: 'Users', // This should match the table name in the database
           key: 'id',
         },
         onDelete: 'CASCADE',
