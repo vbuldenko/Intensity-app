@@ -40,6 +40,9 @@ export function getAbonement(user: User): Abonement | null {
 
   let activeAbonement: Abonement | null = null;
   let inactiveAbonement: Abonement | null = null;
+  let recentlyEnded: Abonement | null = null;
+
+  const now = new Date();
 
   for (const a of user.abonements || []) {
     if (a.status === "active") {
@@ -49,9 +52,16 @@ export function getAbonement(user: User): Abonement | null {
     if (a.status === "inactive" && !inactiveAbonement) {
       inactiveAbonement = a; // Store inactive if no active is found
     }
+    if (
+      a.status === "ended" &&
+      !recentlyEnded &&
+      new Date(a.expiratedAt) > now
+    ) {
+      recentlyEnded = a; // Store the ended abonement if it's not expired
+    }
   }
 
-  return activeAbonement || inactiveAbonement || null;
+  return activeAbonement || inactiveAbonement || recentlyEnded || null;
 }
 
 export function isCancellationForbidden(

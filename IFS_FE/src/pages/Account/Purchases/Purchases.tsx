@@ -36,7 +36,10 @@ export default function Purchases({ clientId }: { clientId?: number }) {
           )
         );
       } else if (selectedAbonement) {
-        await dispatch(createAbonement(selectedAbonement));
+        // await abonementService.add({
+        //   ...selectedAbonement,
+        //   type: selectedType,
+        // });
         dispatch(
           notifyWith(
             `Abonement for ${selectedAbonement.amount} trainings was purchased`
