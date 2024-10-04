@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV || 'development';
 
 // Convert the path for the config file to a `file://` URL for dynamic import
 const configPath = pathToFileURL(
-  path.join(__dirname, '..', 'config', 'database.config.ts'),
+  path.join(__dirname, '..', 'config', 'database.config.js'),
 ).href;
 const config = (await import(configPath)).default[env];
 
@@ -23,11 +23,12 @@ export const sequelize = new Sequelize(
   config,
 );
 
-const db: any = {};
+const db = {};
 
+// Load model files
 const modelFiles = fs.readdirSync(__dirname).filter(file => {
   return (
-    file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.ts'
+    file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   );
 });
 
@@ -38,7 +39,7 @@ for (const file of modelFiles) {
   db[model.name] = model;
 }
 
-// Set up associations between models
+// Set up associations if they exist
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

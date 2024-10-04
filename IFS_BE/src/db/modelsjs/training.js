@@ -1,35 +1,8 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-interface TrainingAttributes {
-  id: number;
-  type: string;
-  instructorId: string;
-  capacity: string;
-  date: Date;
-  day: string;
-  time: string;
-}
-
-interface TrainingCreationAttributes
-  extends Optional<TrainingAttributes, 'id'> {}
-
-export default function (sequelize: Sequelize) {
-  class Training
-    extends Model<TrainingAttributes, TrainingCreationAttributes>
-    implements TrainingAttributes
-  {
-    declare id: number;
-    declare type: string;
-    declare instructorId: string;
-    declare capacity: string;
-    declare date: Date;
-    declare day: string;
-    declare time: string;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
+export default function (sequelize) {
+  class Training extends Model {
+    static associate(models) {
       Training.belongsTo(models.User, {
         foreignKey: 'instructorId',
         as: 'instructor',
@@ -71,15 +44,15 @@ export default function (sequelize: Sequelize) {
         allowNull: false,
       },
       date: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       day: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       time: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

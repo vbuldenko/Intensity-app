@@ -1,26 +1,8 @@
-import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  Sequelize,
-} from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-export default function (sequelize: Sequelize) {
-  class History extends Model<
-    InferAttributes<History>,
-    InferCreationAttributes<History>
-  > {
-    declare id: CreationOptional<number>;
-    declare abonementId: number;
-    declare trainingId: number;
-    declare userId: number;
-
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-
-    static associate(models: any) {
+export default function (sequelize) {
+  class History extends Model {
+    static associate(models) {
       History.belongsTo(models.Abonement, { foreignKey: 'abonementId' });
       History.belongsTo(models.Training, { foreignKey: 'trainingId' });
       History.belongsTo(models.User, { foreignKey: 'userId' });
@@ -44,7 +26,7 @@ export default function (sequelize: Sequelize) {
       trainingId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Trainings',
+          model: 'Training',
           key: 'id',
         },
       },
