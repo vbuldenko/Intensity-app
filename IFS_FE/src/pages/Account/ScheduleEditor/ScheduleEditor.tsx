@@ -16,6 +16,7 @@ const ScheduleEditor: React.FC = () => {
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
   const [editableTraining, setEditableTraining] =
     useState<ScheduleTraining | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   useEffect(() => {
     const fetchScheduleData = async () => {
@@ -66,17 +67,30 @@ const ScheduleEditor: React.FC = () => {
   };
 
   const handleInitialization = async () => {
-    await trainingService.initializeWeek(30);
+    if (selectedDate) {
+      const startDate = new Date(selectedDate);
+      const day = startDate.getDate();
+      await trainingService.initializeWeek(day);
+    }
   };
 
   const groupedSchedule = groupTrainingsByDay(schedule);
 
   return (
     <>
-      <div className="card-element p-1 text-center mb-4 bg-teal-500 text-white">
-        <button className="init w-full" onClick={handleInitialization}>
-          Initialize current week
-        </button>
+      <div className="flex items-center justify-between mb-4">
+        <input
+          type="date"
+          className="init-date text-teal-600 bg-gray-100 py-1 px-6 rounded-xl"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
+
+        <div className="card-element p-1 text-center bg-teal-500 text-white">
+          <button className="init w-full" onClick={handleInitialization}>
+            Initialize from selected date
+          </button>
+        </div>
       </div>
       <div className="schedule-editor">
         {groupedSchedule.map((daySchedule) => (
