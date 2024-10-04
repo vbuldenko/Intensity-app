@@ -54,3 +54,21 @@ export const comparePasswords = (
 ): Promise<boolean> => {
   return bcrypt.compare(plainPWD, userPWDHash);
 };
+
+export function calculateHoursDiff(trainingTime) {
+  const currentTime = new Date();
+  return (trainingTime - currentTime) / (1000 * 60 * 60);
+}
+
+export const canTrainingProceed = (
+  trainingDate: string,
+  visitorsCount: number,
+): boolean => {
+  const trainingDateTime = new Date(trainingDate);
+  const timeDifference = calculateHoursDiff(trainingDateTime);
+
+  if (timeDifference < 3 && visitorsCount < 2) {
+    return false; // Return training to user's subscription
+  }
+  return true;
+};

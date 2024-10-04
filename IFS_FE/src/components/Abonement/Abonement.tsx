@@ -1,29 +1,41 @@
-import { useState } from "react";
-// import { updateAbonement } from "../../../reducers/abonementReducer";
+import { useState, useCallback, useEffect } from "react";
 import "./Abonement.scss";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectUser } from "../../features/user/userSlice";
+import { useAppDispatch } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
+import { trainingService } from "../../services/trainingService";
+import { fetchUserData } from "../../features/user/userThunk";
 
 interface AbonementProps {
   abonement: AbonementType;
+  userRole?: string;
 }
 
-export default function Abonement({ abonement }: AbonementProps) {
-  const { data: user } = useAppSelector(selectUser);
-  // const dispatch = useAppDispatch();
+export default function Abonement({ abonement, userRole }: AbonementProps) {
   const [freeze, setFreeze] = useState<boolean>(abonement.paused);
 
-  function handleClick() {
+  const handleClick = useCallback(() => {
     if (abonement.paused) {
       console.log("Abonement was frozen already, other actions forbidden!");
     } else {
       setFreeze((prev) => !prev);
       // dispatch(updateAbonement(abonement.id, { updateType: "freeze" }));
     }
-  }
+  }, [abonement.paused]);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const checkAndCancelTrainings = async () => {
+      try {
+        await trainingService.checkAndCancelNotHeld(abonement.id);
+      } catch (error) {
+        console.error("Error checking and canceling trainings:", error);
+      }
+    };
+
+    checkAndCancelTrainings();
+  }, [dispatch]);
 
   return (
     <div className="abonement card-element">
@@ -40,7 +52,7 @@ export default function Abonement({ abonement }: AbonementProps) {
                 {abonement.left}
               </span>
             </div>
-            {user?.role === "admin" && (
+            {userRole === "admin" && (
               <div className="abonement__freeze-container">
                 Freeze
                 <StateToggler state={freeze} handleClick={handleClick} />

@@ -29,6 +29,9 @@ function reserveTraining(
     { updateType }
   );
 }
+function checkAndCancelNotHeld(abonementId: number): Promise<void> {
+  return axiosClient.patch(`/trainings/cancel-unheld`, { abonementId });
+}
 
 function deleteTraining(trainingId: number): Promise<void> {
   return axiosClient.delete(`/trainings/${trainingId}`);
@@ -40,5 +43,6 @@ export const trainingService = {
   addTraining,
   updateTraining,
   reserveTraining,
+  checkAndCancelNotHeld,
   deleteTraining,
 };

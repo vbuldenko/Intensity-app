@@ -19,6 +19,7 @@ const Path = {
   abonements: '/',
   abonement: '/:id',
   trainings: '/',
+  trainingsCancel: '/cancel-unheld',
   trainingsSchedule: '/initialization',
   training: '/:id',
 } as const;

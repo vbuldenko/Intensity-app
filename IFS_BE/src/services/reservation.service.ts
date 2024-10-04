@@ -4,6 +4,7 @@ import { ApiError } from '../exceptions/api.error';
 import { Abonement } from '../types/Abonement';
 import { Training } from '../types/Training';
 import { User } from '../types/User';
+import { canTrainingProceed } from '../utils';
 
 export const updateReservation = async (
   abonementId: number,
@@ -81,7 +82,6 @@ export const updateReservation = async (
   }
 };
 
-// Handles the reservation logic
 const handleReservation = async (
   abonement: any,
   training: any,
@@ -131,7 +131,6 @@ const handleReservation = async (
 
 // look for types later
 
-// Handles the cancellation logic
 const handleCancellation = async (
   abonement: any,
   training: any,
@@ -161,4 +160,62 @@ const handleCancellation = async (
   }
 
   await abonement.save({ transaction });
+};
+
+export const cancelNotHeldTrainings = async (abonementId: number) => {
+  const abonement = await db.Abonement.findByPk(abonementId, {
+    include: [
+      {
+        model: db.Training,
+        as: 'visitedTrainings',
+        include: [
+          {
+            model: db.User,
+            as: 'visitors',
+            attributes: ['id'],
+            through: { attributes: [] },
+          },
+        ],
+      },
+    ],
+  });
+
+  if (!abonement) {
+    throw ApiError.NotFound({ error: 'Abonement not found.' });
+  }
+
+  const transaction = await db.sequelize.transaction();
+
+  try {
+    for (const training of abonement.visitedTrainings) {
+      const canProceed = canTrainingProceed(
+        training.date,
+        training.visitors.length,
+      );
+      if (!canProceed) {
+        // Remove the history record
+        await db.History.destroy({
+          where: {
+            abonementId: abonement.id,
+            trainingId: training.id,
+            userId: abonement.userId,
+          },
+          transaction,
+        });
+
+        // Update the Abonement: increment left count, set status if needed
+        abonement.left += 1;
+        if (abonement.left > 0 && abonement.status === 'ended') {
+          abonement.status = 'active';
+        }
+
+        await abonement.save({ transaction });
+      }
+    }
+
+    await transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
 };

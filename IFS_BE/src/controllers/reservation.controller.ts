@@ -3,7 +3,10 @@ import * as trainingService from '../services/training.service';
 import * as abonementService from '../services/abonement.service';
 import { ApiError } from '../exceptions/api.error';
 import { UserDTO } from '../types/UserDTO';
-import { updateReservation } from '../services/reservation.service';
+import {
+  cancelNotHeldTrainings,
+  updateReservation,
+} from '../services/reservation.service';
 
 export const reserve = async (req: Request, res: Response) => {
   const abonementId = Number(req.query.abonementId);
@@ -23,4 +26,13 @@ export const reserve = async (req: Request, res: Response) => {
   );
 
   res.send(updatedData);
+};
+
+export const cancelCheck = async (req: Request, res: Response) => {
+  const { abonementId } = req.body;
+
+  await cancelNotHeldTrainings(abonementId);
+  res
+    .status(200)
+    .send({ message: 'Bulk cancellation completed successfully.' });
 };
