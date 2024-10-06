@@ -3,8 +3,12 @@ import { ApiError } from '../exceptions/api.error';
 import * as abonementService from '../services/abonement.service';
 import { UserDTO } from '../types/UserDTO';
 
+// export async function getAll(req: Request, res: Response): Promise<void> {
+//   const abonements = await abonementService.getAll();
+//   res.send(abonements);
+// }
 export async function getAll(req: Request, res: Response): Promise<void> {
-  const abonements = await abonementService.getAll();
+  const abonements = await abonementService.getAllByUserId(req.user.id);
   res.send(abonements);
 }
 

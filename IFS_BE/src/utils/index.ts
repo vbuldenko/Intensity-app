@@ -55,8 +55,7 @@ export const comparePasswords = (
   return bcrypt.compare(plainPWD, userPWDHash);
 };
 
-export function calculateHoursDiff(trainingTime) {
-  const currentTime = new Date();
+export function calculateHoursDiff(trainingTime, currentTime = new Date()) {
   return (trainingTime - currentTime) / (1000 * 60 * 60);
 }
 
@@ -64,10 +63,22 @@ export const canTrainingProceed = (
   trainingDate: string,
   visitorsCount: number,
 ): boolean => {
+  const currentTime = new Date();
   const trainingDateTime = new Date(trainingDate);
-  const timeDifference = calculateHoursDiff(trainingDateTime);
+  const timeDifference = calculateHoursDiff(trainingDateTime, currentTime);
+
+  const isEarlyMorningTraining = [9, 10, 11].includes(
+    trainingDateTime.getHours(),
+  );
 
   if (timeDifference < 3 && visitorsCount < 2) {
+    return false; // Return training to user's subscription
+  }
+  if (
+    currentTime.getHours() >= 21 &&
+    isEarlyMorningTraining &&
+    visitorsCount < 2
+  ) {
     return false; // Return training to user's subscription
   }
   return true;

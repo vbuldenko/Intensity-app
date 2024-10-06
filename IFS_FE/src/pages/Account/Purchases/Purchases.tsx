@@ -40,11 +40,12 @@ export default function Purchases({ clientId }: { clientId?: number }) {
         //   ...selectedAbonement,
         //   type: selectedType,
         // });
-        dispatch(
-          notifyWith(
-            `Abonement for ${selectedAbonement.amount} trainings was purchased`
-          )
-        );
+        // dispatch(
+        //   notifyWith(
+        //     `Abonement for ${selectedAbonement.amount} trainings was purchased`
+        //   )
+        // );
+        dispatch(notifyWith("In Development: not available"));
       }
     } catch (error) {
       dispatch(notifyWith(error.response.data.error));

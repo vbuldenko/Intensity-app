@@ -17,6 +17,27 @@ export const getAll = async () => {
     },
   });
 };
+export const getAllByUserId = async (userId: number) => {
+  return await Abonement.findAll({
+    where: { userId },
+    include: [
+      {
+        model: db.Training,
+        as: 'visitedTrainings',
+        // attributes: ['id'],
+        through: { attributes: [] }, // Exclude History attributes
+        include: [
+          // {
+          //   model: db.User,
+          //   as: 'instructor',
+          //   attributes: ['firstName', 'lastName'],
+          // },
+          { model: db.User, as: 'visitors' },
+        ],
+      },
+    ],
+  });
+};
 
 export const getOne = async (id: number) => {
   return await Abonement.findByPk(id);

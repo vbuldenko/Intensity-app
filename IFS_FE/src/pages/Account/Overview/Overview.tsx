@@ -1,4 +1,3 @@
-// import Admin from './Admin/Admin';
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import AdminDashboard from "./Admin";
@@ -22,28 +21,26 @@ export default function Overview() {
     );
   }
 
-  return (
-    user && (
-      <div className="overview">
-        <div className="overview__header">
-          <div>
-            <h3>
-              Welcome back, <b className="capitalize">{user.firstName}</b>
-            </h3>
-          </div>
-          <span className="status">{user.role}</span>
-        </div>
+  if (!user) {
+    return null;
+  }
 
-        <div className="overview__body">
-          {user.role === "admin" ? (
-            <AdminDashboard />
-          ) : user.role === "trainer" ? (
-            <TrainerOverview user={user} />
-          ) : (
-            <ClientOverview abonements={user.abonements} />
-          )}
+  return (
+    <div className="overview">
+      <div className="overview__header">
+        <div>
+          <h3>
+            Welcome back, <b className="capitalize">{user.firstName}</b>
+          </h3>
         </div>
+        <span className="status">{user.role}</span>
       </div>
-    )
+
+      <div className="overview__body">
+        {user.role === "admin" && <AdminDashboard />}
+        {user.role === "trainer" && <TrainerOverview user={user} />}
+        {user.role === "client" && <ClientOverview />}
+      </div>
+    </div>
   );
 }

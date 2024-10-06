@@ -6,6 +6,7 @@ import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { trainingService } from "../../services/trainingService";
 import { fetchUserData } from "../../features/user/userThunk";
+import { fetchAbonements } from "../../features/abonements/abonementThunk";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -14,6 +15,7 @@ interface AbonementProps {
 
 export default function Abonement({ abonement, userRole }: AbonementProps) {
   const [freeze, setFreeze] = useState<boolean>(abonement.paused);
+  const dispatch = useAppDispatch();
 
   const handleClick = useCallback(() => {
     if (abonement.paused) {
@@ -24,17 +26,19 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
     }
   }, [abonement.paused]);
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
     const checkAndCancelTrainings = async () => {
       try {
         await trainingService.checkAndCancelNotHeld(abonement.id);
+        dispatch(fetchAbonements());
       } catch (error) {
         console.error("Error checking and canceling trainings:", error);
       }
     };
 
-    checkAndCancelTrainings();
+    if (abonement.visitedTrainings.length > 0) {
+      checkAndCancelTrainings();
+    }
   }, [dispatch]);
 
   return (
