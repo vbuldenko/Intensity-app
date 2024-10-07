@@ -67,14 +67,13 @@ export const updateReservation = async (
     await transaction.commit();
 
     // Reload the models to get the updated data without re-fetching everything
-    // await Promise.all([abonement.reload(), training.reload()]);
-    await training.reload();
+    await Promise.all([abonement.reload(), training.reload()]);
+    // await training.reload();
 
-    // return {
-    //   abonement,
-    //   training,
-    // };
-    return training;
+    return {
+      updatedAbonement: abonement,
+      updatedTraining: training,
+    };
   } catch (error) {
     // Rollback the transaction in case of any errors
     await transaction.rollback();
