@@ -107,20 +107,26 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const refresh = async (req: Request, res: Response): Promise<void> => {
   const refreshToken = req.cookies?.refreshToken || '';
+  if (!refreshToken) {
+    res.clearCookie('refreshToken');
+    throw ApiError.Unauthorized('no token provided');
+  }
+
   const userData = await tokenService.validateRefreshToken(refreshToken);
   const token = await tokenService.getByToken(refreshToken);
 
   if (!userData || !token) {
     res.clearCookie('refreshToken');
-    throw ApiError.Unauthorized();
+    throw ApiError.Unauthorized('invalid token');
   }
 
   const user = await userService.getById(userData.id);
 
   if (!user || token.userId !== user.id) {
     res.clearCookie('refreshToken');
-    throw ApiError.Unauthorized();
+    throw ApiError.Unauthorized('user not found');
   }
+
   await sendAuthentication(res, user);
 };
 
