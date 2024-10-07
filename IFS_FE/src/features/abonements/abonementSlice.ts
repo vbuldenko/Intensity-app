@@ -3,6 +3,7 @@ import type { RootState } from "../../app/store";
 import { fetchAbonements } from "./abonementThunk";
 import { ErrorResponse } from "../../types/Error";
 import { Abonement } from "../../types/Abonement";
+import { reserveTraining } from "../trainings/trainingThunk";
 
 // Define a type for the slice state
 export interface AbonementState {
@@ -39,6 +40,26 @@ export const abonementSlice = createSlice({
         fetchAbonements.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(
+        reserveTraining.fulfilled,
+        (state, action: PayloadAction<{ updatedAbonement: Abonement }>) => {
+          const { updatedAbonement } = action.payload;
+          if (state.data) {
+            const index = state.data.findIndex(
+              (a) => a.id === updatedAbonement.id
+            );
+            if (index !== -1) {
+              state.data[index] = updatedAbonement;
+            }
+          }
+        }
+      )
+      .addCase(
+        reserveTraining.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.error = action.payload?.message || "An unknown error occurred";
         }
       );

@@ -3,7 +3,7 @@ import { trainingService } from "../../services/trainingService";
 import { ErrorResponse } from "../../types/Error";
 import { Training } from "../../types/Training";
 import { getErrorMessage } from "../../utils/utils";
-import { fetchUserData } from "../user/userThunk";
+import { Abonement } from "../../types/Abonement";
 
 export const fetchTrainings = createAsyncThunk<
   Training[], // Return type of the successful request
@@ -20,7 +20,7 @@ export const fetchTrainings = createAsyncThunk<
 });
 
 export const reserveTraining = createAsyncThunk<
-  Training, // Return type of successful request
+  { updatedAbonement: Abonement; updatedTraining: Training }, // Return type of successful request
   {
     trainingId: number;
     abonementId: number;
@@ -29,19 +29,16 @@ export const reserveTraining = createAsyncThunk<
   { rejectValue: ErrorResponse } // Rejected value type
 >(
   "trainings/reserveTraining", // Action type
-  async (
-    { trainingId, abonementId, updateType },
-    { dispatch, rejectWithValue }
-  ) => {
+  async ({ trainingId, abonementId, updateType }, { rejectWithValue }) => {
     try {
       // Make sure you're passing the correct parameters to the service
-      const updatedTraining = await trainingService.reserveTraining(
+      const updatedData = await trainingService.reserveTraining(
         trainingId,
         abonementId,
         updateType
       );
-      await dispatch(fetchUserData());
-      return updatedTraining;
+
+      return updatedData;
     } catch (error: any) {
       // Use a utility to extract a meaningful error message
       const message = getErrorMessage(error) || "Unexpected error occurred";

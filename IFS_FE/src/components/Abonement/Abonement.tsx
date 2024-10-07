@@ -5,7 +5,6 @@ import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { trainingService } from "../../services/trainingService";
-import { fetchUserData } from "../../features/user/userThunk";
 import { fetchAbonements } from "../../features/abonements/abonementThunk";
 
 interface AbonementProps {

@@ -33,6 +33,39 @@ export function filterAbonements(
   return abonements.filter(expirationDateFilter);
 }
 
+export function getCurrentAbonement(abonements: Abonement[]): Abonement | null {
+  if (!abonements || abonements.length === 0) {
+    return null;
+  }
+
+  let inactiveAbonement: Abonement | null = null;
+  let recentlyEnded: Abonement | null = null;
+
+  const now = new Date();
+
+  for (const a of abonements) {
+    if (a.status === "active") {
+      return a; // Return immediately when an active abonement is found
+    }
+    if (a.status === "inactive" && !inactiveAbonement) {
+      inactiveAbonement = a; // Store inactive if no active is found
+    }
+    if (a.status === "ended") {
+      const expiratedAt = new Date(a.expiratedAt);
+      if (expiratedAt > now) {
+        if (
+          !recentlyEnded ||
+          expiratedAt > new Date(recentlyEnded.expiratedAt)
+        ) {
+          recentlyEnded = a; // Store the most recent ended abonement that is not expired
+        }
+      }
+    }
+  }
+
+  return inactiveAbonement || recentlyEnded || null;
+}
+
 export function getAbonement(user: User): Abonement | null {
   if (!user) {
     return null;

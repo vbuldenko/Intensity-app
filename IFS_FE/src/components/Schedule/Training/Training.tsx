@@ -8,20 +8,24 @@ import { selectUser } from "../../../features/user/userSlice";
 import { reserveTraining } from "../../../features/trainings/trainingThunk";
 import { reservationAccess, getErrorMessage } from "../../../utils/utils";
 import {
-  getAbonement,
+  getCurrentAbonement,
   isCancellationForbidden,
 } from "../../../utils/abonement";
 import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
 import ReservationButton from "../../Elements/ReservationButton";
+import { selectAbonements } from "../../../features/abonements/abonementSlice";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
-  const { data: user } = useAppSelector(selectUser);
-  const abonement = useMemo(() => getAbonement(user), [user]);
+  const allAbonements = useAppSelector(selectAbonements);
+  const abonement = useMemo(
+    () => getCurrentAbonement(allAbonements),
+    [allAbonements]
+  );
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
   const reservedPlaces = training.visitors.length;
@@ -29,7 +33,7 @@ export default function Training({ training }) {
   const isReserved = useMemo(
     () =>
       abonement?.visitedTrainings.some((t) => t.id === training.id) || false,
-    [abonement, training.id]
+    [abonement]
   );
 
   const hoursDiff = useMemo(

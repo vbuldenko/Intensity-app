@@ -1,4 +1,5 @@
 import axiosClient from "../api/axiosClient";
+import { Abonement } from "../types/Abonement";
 import { Training } from "../types/Training";
 
 function initializeWeek(day: number): Promise<void> {
@@ -23,7 +24,7 @@ function reserveTraining(
   trainingId: number,
   abonementId: number,
   updateType: string
-): Promise<void> {
+): Promise<{ updatedAbonement: Abonement; updatedTraining: Training }> {
   return axiosClient.patch(
     `/trainings?abonementId=${abonementId}&trainingId=${trainingId}`,
     { updateType }

@@ -47,11 +47,14 @@ export const trainingSlice = createSlice({
       })
       .addCase(
         reserveTraining.fulfilled,
-        (state, action: PayloadAction<Training>) => {
+        (state, action: PayloadAction<{ updatedTraining: Training }>) => {
           // Update the specific training in the state after reservation
-          const index = state.data.findIndex((t) => t.id === action.payload.id);
+          const { updatedTraining } = action.payload;
+          const index = state.data.findIndex(
+            (t) => t.id === updatedTraining.id
+          );
           if (index !== -1) {
-            state.data[index] = action.payload;
+            state.data[index] = updatedTraining;
           }
           state.loading = false;
           state.error = null; // Clear error on success
