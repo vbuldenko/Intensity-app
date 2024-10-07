@@ -31,8 +31,6 @@ export const reserve = async (req: Request, res: Response) => {
 export const cancelCheck = async (req: Request, res: Response) => {
   const { abonementId } = req.body;
 
-  await cancelNotHeldTrainings(abonementId);
-  res
-    .status(200)
-    .send({ message: 'Bulk cancellation completed successfully.' });
+  const data = await cancelNotHeldTrainings(abonementId);
+  res.status(200).send(data);
 };

@@ -171,7 +171,6 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
           {
             model: db.User,
             as: 'visitors',
-            attributes: ['id'],
             through: { attributes: [] },
           },
         ],
@@ -184,6 +183,7 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
   }
 
   const transaction = await db.sequelize.transaction();
+  let trainingsCanceled = false;
 
   try {
     for (const training of abonement.visitedTrainings) {
@@ -209,6 +209,7 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
         }
 
         await abonement.save({ transaction });
+        trainingsCanceled = true;
       }
     }
 
@@ -217,4 +218,12 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
     await transaction.rollback();
     throw error;
   }
+
+  if (trainingsCanceled) {
+    // Reload the abonement to get the updated data
+    await abonement.reload();
+    return { trainingsCanceled, abonement };
+  }
+
+  return { trainingsCanceled };
 };
