@@ -12,11 +12,13 @@ import { requestLogger } from './middlewares/logger.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
-// import db from './db/modelsjs/index.js';
+// import { initializePredefinedSchedule } from './utils/trainingInitiator';
+// import db from './db/models/index.js';
 
 export function createApp() {
+  // db.Schedule.sync({ force: true });
+  // initializePredefinedSchedule();
   const app = express();
-  // db.sequelize.sync({ force: true });
 
   app.use(
     cors({

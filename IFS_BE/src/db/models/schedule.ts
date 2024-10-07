@@ -42,7 +42,7 @@ export default function (sequelize: Sequelize) {
         primaryKey: true,
       },
       type: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       instructorId: {
@@ -58,11 +58,19 @@ export default function (sequelize: Sequelize) {
         allowNull: false,
       },
       day: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.ENUM(
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ),
         allowNull: false,
       },
       time: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

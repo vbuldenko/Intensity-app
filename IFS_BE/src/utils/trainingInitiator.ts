@@ -16,7 +16,7 @@ export async function initializePredefinedSchedule() {
         (session: ScheduleTraining) => ({
           type: session.type,
           instructorId: session.instructorId,
-          capacity: session.maxCapacity,
+          maxCapacity: session.maxCapacity,
           day,
           time: session.time,
         }),

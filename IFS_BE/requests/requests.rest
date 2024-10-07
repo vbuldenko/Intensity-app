@@ -6,12 +6,12 @@ POST http://localhost:3001/registration
 content-type: application/json
 
 {
-  "firstName": "vlad",
-  "lastName": "Bul",
-  "email": "vladbuldenko@gmail.com",
+  "firstName": "Ann",
+  "lastName": "Ter",
+  "email": "anter@gmail.com",
   "phone": "0978612121",
   "password": "123456",
-  "role": "client"
+  "role": "trainer"
 }
 ###
 ###
