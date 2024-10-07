@@ -69,6 +69,10 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     setSelectedAmountIndex(0); // Reset selected amount index when type changes
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="purchases">
       {notification && (

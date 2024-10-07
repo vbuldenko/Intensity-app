@@ -6,12 +6,15 @@ import { NavLinks } from "../types/NavLinks";
 import { checkAuth } from "../features/auth/authThunk";
 
 const AuthRequired: React.FC = () => {
-  const { isAuthenticated } = useAppSelector(selectAuth);
+  const { isAuthenticated, error } = useAppSelector(selectAuth);
   const location = useLocation();
 
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(checkAuth());
+    if (!isAuthenticated && !error) {
+      dispatch(checkAuth());
+    }
   }, []);
 
   return isAuthenticated ? (

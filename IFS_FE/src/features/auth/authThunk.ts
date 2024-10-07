@@ -10,11 +10,10 @@ export const checkAuth = createAsyncThunk<
   void, // Return type of the successful request
   void, // Argument type
   { rejectValue: ErrorResponse } // Type for rejected value
->("auth/checkAuth", async (_, { dispatch, rejectWithValue }) => {
+>("auth/checkAuth", async (_, { rejectWithValue }) => {
   try {
     const { accessToken } = await authService.refresh();
     accessTokenService.save(accessToken);
-    dispatch(fetchUserData()); // Fetch user data if the token is valid
   } catch (error: any) {
     // accessTokenService.remove();
     const message = getErrorMessage(error) || "Unexpected error occurred";

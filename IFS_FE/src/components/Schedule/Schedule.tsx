@@ -8,18 +8,20 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MonthView from "./Month";
 import WeekView from "./Week";
 import SelectedDayTrainings from "./SelectedDayTrainings/SelectedDayTrainings";
 import "./Schedule.scss";
 import WeekDaysNames from "./elements/WeekDays/WeekDays";
 import CalendarNavbar from "./elements/Navbar/CalendarNavbar";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectTrainings } from "../../features/trainings/trainingSlice";
+import { fetchTrainings } from "../../features/trainings/trainingThunk";
 
 export default function Schedule() {
   const trainings = useAppSelector(selectTrainings);
+  const dispatch = useAppDispatch();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -48,6 +50,12 @@ export default function Schedule() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
+
+  useEffect(() => {
+    if (!trainings.length) {
+      dispatch(fetchTrainings());
+    }
+  }, []);
 
   return (
     <section className="schedule">

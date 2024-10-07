@@ -15,10 +15,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { User } from "../../../types/User";
 import { logOut } from "../../../features/auth/authThunk";
+import Loader from "../../../components/Elements/Loader";
 
 function Settings() {
-  const { data: user } = useAppSelector(selectUser);
-  const { id, firstName, email, phone, settings } = user as User;
+  const { data: user, loading } = useAppSelector(selectUser);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,6 +40,13 @@ function Settings() {
       console.log(error);
     }
   };
+
+  if (!user || loading) {
+    return <Loader />;
+  }
+
+  const { firstName, email, phone, settings } = user as User;
+
   return (
     <div className="settings">
       <div className="settings__section">

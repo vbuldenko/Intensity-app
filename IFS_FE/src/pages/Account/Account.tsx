@@ -1,8 +1,21 @@
 import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
 import "./Account.scss";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useEffect } from "react";
+import { fetchUserData } from "../../features/user/userThunk";
+import { selectUser } from "../../features/user/userSlice";
 
 export default function Account() {
+  const { data } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!data) {
+      dispatch(fetchUserData());
+    }
+  }, []);
+
   return (
     <section className="account card-element">
       <Menu className="account__menu" />
