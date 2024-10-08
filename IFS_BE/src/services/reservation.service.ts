@@ -161,6 +161,31 @@ const handleCancellation = async (
   await abonement.save({ transaction });
 };
 
+const handleReturn = async (
+  abonement: any,
+  trainingId: any,
+  userId: any,
+  transaction: any,
+) => {
+  // Remove the history record
+  await db.History.destroy({
+    where: {
+      abonementId: abonement.id,
+      trainingId,
+      userId,
+    },
+    transaction,
+  });
+
+  // Update the Abonement: increment left count, set status if needed
+  abonement.left += 1;
+  if (abonement.left > 0 && abonement.status === 'ended') {
+    abonement.status = 'active';
+  }
+
+  await abonement.save({ transaction });
+};
+
 export const cancelNotHeldTrainings = async (abonementId: number) => {
   const abonement = await db.Abonement.findByPk(abonementId, {
     include: [
@@ -183,7 +208,7 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
   }
 
   const transaction = await db.sequelize.transaction();
-  let trainingsCanceled = false;
+  const updatedTrainings = [];
 
   try {
     for (const training of abonement.visitedTrainings) {
@@ -192,24 +217,13 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
         training.visitors.length,
       );
       if (!canProceed) {
-        // Remove the history record
-        await db.History.destroy({
-          where: {
-            abonementId: abonement.id,
-            trainingId: training.id,
-            userId: abonement.userId,
-          },
+        await handleReturn(
+          abonement,
+          training.id,
+          abonement.userId,
           transaction,
-        });
-
-        // Update the Abonement: increment left count, set status if needed
-        abonement.left += 1;
-        if (abonement.left > 0 && abonement.status === 'ended') {
-          abonement.status = 'active';
-        }
-
-        await abonement.save({ transaction });
-        trainingsCanceled = true;
+        );
+        updatedTrainings.push(training.id);
       }
     }
 
@@ -219,11 +233,28 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
     throw error;
   }
 
-  if (trainingsCanceled) {
-    // Reload the abonement to get the updated data
+  if (updatedTrainings.length > 0) {
+    const trainings = await db.Training.findAll({
+      where: {
+        id: updatedTrainings,
+      },
+      include: [
+        {
+          model: db.User,
+          as: 'instructor',
+          attributes: ['firstName', 'lastName'],
+        },
+        {
+          model: db.User,
+          as: 'visitors',
+          attributes: ['firstName', 'lastName'],
+          through: { attributes: [] },
+        },
+      ],
+    });
     await abonement.reload();
-    return { trainingsCanceled, abonement };
+    return { trainingsCanceled: true, abonement, trainings };
   }
 
-  return { trainingsCanceled };
+  return { trainingsCanceled: false };
 };
