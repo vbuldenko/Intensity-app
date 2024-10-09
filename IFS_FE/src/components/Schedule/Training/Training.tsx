@@ -1,10 +1,9 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   notifyWith,
   selectNotification,
 } from "../../../features/notification/notificationSlice";
-import { selectUser } from "../../../features/user/userSlice";
 import { reserveTraining } from "../../../features/trainings/trainingThunk";
 import { reservationAccess, getErrorMessage } from "../../../utils/utils";
 import {

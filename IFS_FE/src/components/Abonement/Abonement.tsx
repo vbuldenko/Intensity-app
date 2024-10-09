@@ -4,8 +4,7 @@ import { useAppDispatch } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
-import { trainingService } from "../../services/trainingService";
-import { fetchAbonements } from "../../features/abonements/abonementThunk";
+import { checkTrainingReturn } from "../../features/trainings/trainingThunk";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -26,17 +25,8 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   }, [abonement.paused]);
 
   useEffect(() => {
-    const checkAndCancelTrainings = async () => {
-      try {
-        await trainingService.checkAndCancelNotHeld(abonement.id);
-        dispatch(fetchAbonements());
-      } catch (error) {
-        console.error("Error checking and canceling trainings:", error);
-      }
-    };
-
     if (abonement.visitedTrainings.length > 0) {
-      checkAndCancelTrainings();
+      dispatch(checkTrainingReturn(abonement.id));
     }
   }, [dispatch]);
 

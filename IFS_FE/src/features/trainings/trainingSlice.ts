@@ -1,8 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-import { fetchTrainings, reserveTraining } from "./trainingThunk";
+import {
+  checkTrainingReturn,
+  fetchTrainings,
+  reserveTraining,
+} from "./trainingThunk";
 import { ErrorResponse } from "../../types/Error";
 import { Training } from "../../types/Training";
+import { Abonement } from "../../types/Abonement";
 
 // Define a type for the slice state
 export interface TrainingState {
@@ -62,6 +67,40 @@ export const trainingSlice = createSlice({
       )
       .addCase(
         reserveTraining.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(checkTrainingReturn.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        checkTrainingReturn.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            abonement: Abonement;
+            trainings: Training[];
+          } | null>
+        ) => {
+          if (action.payload) {
+            const { trainings } = action.payload;
+            trainings.forEach((updatedTraining) => {
+              const index = state.data.findIndex(
+                (t) => t.id === updatedTraining.id
+              );
+              if (index !== -1) {
+                state.data[index] = updatedTraining;
+              }
+            });
+          }
+          state.loading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        checkTrainingReturn.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";

@@ -48,17 +48,14 @@ export const reserveTraining = createAsyncThunk<
 );
 
 export const checkTrainingReturn = createAsyncThunk<
-  { updatedAbonement: Abonement; updatedTrainings: Training[] },
+  { abonement: Abonement; trainings: Training[] } | null,
   number, // Argument type (abonementId)
   { rejectValue: ErrorResponse }
->(
-  "trainings/checkReturn",
-  async (abonementId, { rejectWithValue }) => {
-    try {
-      return await trainingService.checkAndCancelNotHeld(abonementId);
-    } catch (error: any) {
-      const message = getErrorMessage(error) || "Unexpected error occurred";
-      return rejectWithValue({ message });
-    }
+>("trainings/checkReturn", async (abonementId, { rejectWithValue }) => {
+  try {
+    return await trainingService.checkAndCancelNotHeld(abonementId);
+  } catch (error: any) {
+    const message = getErrorMessage(error) || "Unexpected error occurred";
+    return rejectWithValue({ message });
   }
-);
+});

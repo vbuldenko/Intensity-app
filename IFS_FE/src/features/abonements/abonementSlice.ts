@@ -3,7 +3,11 @@ import type { RootState } from "../../app/store";
 import { fetchAbonements } from "./abonementThunk";
 import { ErrorResponse } from "../../types/Error";
 import { Abonement } from "../../types/Abonement";
-import { reserveTraining } from "../trainings/trainingThunk";
+import {
+  checkTrainingReturn,
+  reserveTraining,
+} from "../trainings/trainingThunk";
+import { Training } from "../../types/Training";
 
 // Define a type for the slice state
 export interface AbonementState {
@@ -59,6 +63,37 @@ export const abonementSlice = createSlice({
       )
       .addCase(
         reserveTraining.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(checkTrainingReturn.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        checkTrainingReturn.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            abonement: Abonement;
+            trainings: Training[];
+          } | null>
+        ) => {
+          if (action.payload) {
+            const { abonement } = action.payload;
+            if (state.data) {
+              const index = state.data.findIndex((a) => a.id === abonement.id);
+              if (index !== -1) {
+                state.data[index] = abonement;
+              }
+            }
+          }
+          state.loading = false;
+          state.error = null;
+        }
+      )
+      .addCase(
+        checkTrainingReturn.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.error = action.payload?.message || "An unknown error occurred";
         }
