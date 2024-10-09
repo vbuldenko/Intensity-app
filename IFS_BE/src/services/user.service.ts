@@ -59,6 +59,11 @@ const getById = async (id: number) => {
           },
         ],
       },
+      {
+        model: db.Training,
+        as: 'trainings',
+        include: [{ model: db.User, as: 'visitors' }],
+      },
     ],
   });
 };

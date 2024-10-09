@@ -12,12 +12,11 @@ import "./TrainerOverview.scss";
 
 const TrainerOverview = ({ user }) => {
   const currentDate = new Date();
-  const trainings = useAppSelector(selectTrainings);
-
-  const trainerTrainings = filterByVisitors(
-    filterByInstructor(trainings, user.id),
-    2
-  );
+  const trainerTrainings = filterByVisitors(user.trainings, 2);
+  // const trainerTrainings = filterByVisitors(
+  //   filterByInstructor(trainings, user.id),
+  //   2
+  // );
   const currentMonthTrainings = filterTrainingsByDate(
     trainerTrainings,
     currentDate,
