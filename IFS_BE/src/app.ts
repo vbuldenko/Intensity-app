@@ -13,10 +13,10 @@ import { authMiddleware } from './middlewares/auth.middleware';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
 // import { initializePredefinedSchedule } from './utils/trainingInitiator';
-// import db from './db/models/index.js';
+// import db from './db/models';
 
 export function createApp() {
-  // db.Schedule.sync({ force: true });
+  // db.History.sync({ force: true });
   // initializePredefinedSchedule();
   const app = express();
 

@@ -36,6 +36,7 @@ export default function (sequelize: Sequelize) {
       },
       abonementId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: 'Abonements',
           key: 'id',
@@ -43,6 +44,7 @@ export default function (sequelize: Sequelize) {
       },
       trainingId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: 'Trainings',
           key: 'id',
@@ -50,6 +52,7 @@ export default function (sequelize: Sequelize) {
       },
       userId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id',
@@ -71,6 +74,7 @@ export default function (sequelize: Sequelize) {
         {
           unique: true,
           fields: ['abonementId', 'trainingId', 'userId'],
+          name: 'unique_reservation',
         },
       ],
     },

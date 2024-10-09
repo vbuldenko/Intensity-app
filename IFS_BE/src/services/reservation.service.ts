@@ -253,8 +253,8 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
       ],
     });
     await abonement.reload();
-    return { trainingsCanceled: true, abonement, trainings };
+    return { abonement, trainings };
   }
 
-  return { trainingsCanceled: false };
+  return null;
 };
