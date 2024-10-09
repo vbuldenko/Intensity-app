@@ -35,7 +35,7 @@ export function createApp() {
   app.use('/', authRouter);
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);
-  app.use('/trainings', authMiddleware, trainingRouter);
+  app.use('/trainings', trainingRouter);
   app.use('/schedule', authMiddleware, scheduleRouter);
   app.use(unknownEndpoint);
   app.use(errorMiddleware);

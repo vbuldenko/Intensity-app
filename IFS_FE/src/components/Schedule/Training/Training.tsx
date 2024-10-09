@@ -14,12 +14,14 @@ import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
 import ReservationButton from "../../Elements/ReservationButton";
 import { selectAbonements } from "../../../features/abonements/abonementSlice";
+import { selectUser } from "../../../features/user/userSlice";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
+  const { data: user } = useAppSelector(selectUser);
   const allAbonements = useAppSelector(selectAbonements);
   const abonement = useMemo(
     () => getCurrentAbonement(allAbonements),
@@ -45,6 +47,7 @@ export default function Training({ training }) {
       reservationAccess(new Date(), trainingTime, reservedPlaces, hoursDiff),
     [trainingTime, reservedPlaces, hoursDiff]
   );
+  // const access = true;
 
   const handleNotification = (message) => {
     setError(true);
@@ -112,20 +115,24 @@ export default function Training({ training }) {
           <p className="font-bold">{training.type.toUpperCase()}</p>
         </div>
         <div className="flex items-center justify-between gap-4 pt-2">
-          <p className="status">
-            Trainer: <b>{training.instructor?.firstName}</b>
-          </p>
+          {user && (
+            <p className="status">
+              Trainer: <b>{training.instructor?.firstName}</b>
+            </p>
+          )}
           <p className="m-text">
             Places left: {training.capacity - reservedPlaces}
           </p>
-          <ReservationButton
-            access={access}
-            isReserved={isReserved}
-            isSubmitting={isSubmitting}
-            onClick={() =>
-              handleAction(isReserved ? "cancellation" : "reservation")
-            }
-          />
+          {user && (
+            <ReservationButton
+              access={access}
+              isReserved={isReserved}
+              isSubmitting={isSubmitting}
+              onClick={() =>
+                handleAction(isReserved ? "cancellation" : "reservation")
+              }
+            />
+          )}
         </div>
       </div>
     </li>
