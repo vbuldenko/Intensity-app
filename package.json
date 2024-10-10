@@ -2,11 +2,11 @@
   "name": "intensity-app",
   "version": "1.0.0",
   "description": "",
-  "main": "../IFS_BE/src/index.ts",
+  "main": "../BE/src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bdev": "cd IFS_BE && npm run dev",
-    "fdev": "cd IFS_FE && npm run dev"
+    "bdev": "cd BE && npm run dev",
+    "fdev": "cd FE && npm run dev"
   },
   "author": "",
   "license": "ISC"
