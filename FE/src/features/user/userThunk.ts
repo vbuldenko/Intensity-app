@@ -17,3 +17,18 @@ export const fetchUserData = createAsyncThunk<
     return rejectWithValue({ message });
   }
 });
+
+export const updateUserData = createAsyncThunk<
+  User, // Return type of the successful request
+  any, // Argument type (partial user data for update)
+  { rejectValue: ErrorResponse } // Type for rejected value
+>("user/updateProfile", async (userData, { rejectWithValue }) => {
+  try {
+    const updatedUser = await userService.update(userData);
+    return updatedUser;
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.message || "Unexpected error occurred";
+    return rejectWithValue({ message });
+  }
+});

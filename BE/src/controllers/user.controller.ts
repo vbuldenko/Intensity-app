@@ -55,68 +55,28 @@ export const getProfile = async (
   res.send(user);
 };
 
-export const updateName = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  const { firstName } = req.body;
-  const refreshToken = req.cookies?.refreshToken || '';
-  const userData = tokenService.validateRefreshToken(
-    refreshToken,
-  ) as UserDTO | null;
-  const token = await tokenService.getByToken(refreshToken);
-
-  const validationError = validateName(firstName);
-
-  if (validationError) {
-    throw ApiError.BadRequest('Validation error', {
-      firstName: validationError,
-    });
-  }
-
-  if (!userData || !token || userData.id !== token.userId) {
-    throw ApiError.Unauthorized();
-  }
-
-  const newUser = await userService.update({ firstName }, userData.id);
-
-  res.status(200).send(userService.normalize(newUser));
-};
-
-export const updateEmail = async (
+export const updateUser = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   const { refreshToken } = req.cookies;
-  const { password, email, emailConfirm } = req.body;
-
-  const errors = {
-    email: validateEmail(email),
-    confirm: validateEmail(emailConfirm),
-    password: validatePassword(password),
-  };
-
-  if (Object.values(errors).some(error => error)) {
-    throw ApiError.BadRequest('Validation error', errors);
-  }
-
-  if (email !== emailConfirm) {
-    throw ApiError.BadRequest('Invalid input', {
-      confirmation: `Emails do not match`,
-    });
-  }
+  const {
+    updateType,
+    firstName,
+    email,
+    emailConfirm,
+    password,
+    newPassword,
+    newPasswordConfirm,
+    fontSize,
+  } = req.body;
 
   const userData = tokenService.validateRefreshToken(
     refreshToken,
   ) as UserDTO | null;
-
-  if (!userData) {
-    throw ApiError.Unauthorized();
-  }
-
   const tokenFromDB = await tokenService.getByToken(refreshToken);
 
-  if (!tokenFromDB) {
+  if (!userData || !tokenFromDB || userData.id !== tokenFromDB.userId) {
     throw ApiError.Unauthorized();
   }
 
@@ -126,64 +86,92 @@ export const updateEmail = async (
     throw ApiError.NotFound();
   }
 
-  const oldEmail = user.email;
-  const isPasswordValid = await comparePasswords(password, user.password);
+  switch (updateType) {
+    case 'name':
+      const nameValidationError = validateName(firstName);
+      if (nameValidationError) {
+        throw ApiError.BadRequest('Validation error', {
+          firstName: nameValidationError,
+        });
+      }
+      const updatedNameUser = await userService.update(
+        { firstName },
+        userData.id,
+      );
+      res.status(200).send(userService.normalize(updatedNameUser));
+      break;
 
-  if (!isPasswordValid) {
-    throw ApiError.BadRequest('Password not correct');
+    case 'email':
+      const emailErrors = {
+        email: validateEmail(email),
+        confirm: validateEmail(emailConfirm),
+        password: validatePassword(password),
+      };
+
+      if (Object.values(emailErrors).some(error => error)) {
+        throw ApiError.BadRequest('Validation error', emailErrors);
+      }
+
+      if (email !== emailConfirm) {
+        throw ApiError.BadRequest('Invalid input', {
+          confirmation: 'Emails do not match',
+        });
+      }
+
+      const isEmailPasswordValid = await comparePasswords(
+        password,
+        user.password,
+      );
+      if (!isEmailPasswordValid) {
+        throw ApiError.BadRequest('Password not correct');
+      }
+
+      const oldEmail = user.email;
+      const updatedEmailUser = await userService.update({ email }, user.id);
+      await emailService.notifyOldEmail(user.name, email, oldEmail);
+
+      res.status(200).send(userService.normalize(updatedEmailUser));
+      break;
+
+    case 'password':
+      const passwordValidationError = validatePassword(newPassword);
+      if (passwordValidationError) {
+        throw ApiError.BadRequest(passwordValidationError);
+      }
+
+      if (newPassword !== newPasswordConfirm) {
+        throw ApiError.BadRequest('Invalid input', {
+          confirmation: 'Passwords do not match',
+        });
+      }
+
+      const isOldPasswordValid = await comparePasswords(
+        password,
+        user.password,
+      );
+      if (!isOldPasswordValid) {
+        throw ApiError.BadRequest('Original password not correct');
+      }
+
+      await userService.update({ password: newPassword }, user.id);
+      res.sendStatus(200);
+      break;
+
+    case 'fontSize':
+      if (typeof fontSize !== 'number' || fontSize < 10) {
+        throw ApiError.BadRequest('Invalid font size');
+      }
+
+      const updatedSettingsUser = await userService.update(
+        { settings: { ...user.settings, fontSize } },
+        user.id,
+      );
+      res.status(200).send(updatedSettingsUser);
+      break;
+
+    default:
+      throw ApiError.BadRequest('Invalid update type');
   }
-
-  const updatedUser = await userService.update({ email }, user.id);
-
-  await emailService.notifyOldEmail(user.name, email, oldEmail);
-
-  res.status(200).send(userService.normalize(updatedUser));
-};
-
-export const updatePassword = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  const { oldPassword, newPassword, confirmation } = req.body;
-  const { refreshToken } = req.cookies;
-
-  const validationError = validatePassword(newPassword);
-
-  if (validationError) {
-    throw ApiError.BadRequest(validationError);
-  }
-
-  if (newPassword !== confirmation) {
-    throw ApiError.BadRequest('Invalid input', {
-      confirmation: `Passwords do not match`,
-    });
-  }
-
-  const userData = tokenService.validateRefreshToken(
-    refreshToken,
-  ) as UserDTO | null;
-
-  if (!userData) {
-    throw ApiError.Unauthorized();
-  }
-
-  const tokenFromDB = await tokenService.getByToken(refreshToken);
-
-  if (!tokenFromDB) {
-    throw ApiError.Unauthorized();
-  }
-
-  const user = await userService.getById(userData.id);
-
-  const isPasswordValid = await comparePasswords(oldPassword, user.password);
-
-  if (!isPasswordValid) {
-    throw ApiError.BadRequest('Original password not correct');
-  }
-
-  await userService.update({ password: newPassword }, tokenFromDB.userId);
-
-  res.sendStatus(200);
 };
 
 export const remove = async (req: Request, res: Response): Promise<void> => {

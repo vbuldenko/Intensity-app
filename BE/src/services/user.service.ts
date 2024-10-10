@@ -95,10 +95,11 @@ const update = async (
     lastName: string;
     email: string;
     password: string;
+    settings: { fontSize: number };
   }>,
   userId: number,
 ) => {
-  const user = await db.User.findByPk(userId);
+  const user = await getById(userId);
 
   if (!user) {
     throw ApiError.NotFound();

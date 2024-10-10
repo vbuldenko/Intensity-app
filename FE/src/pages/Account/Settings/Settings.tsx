@@ -16,6 +16,7 @@ import {
 import { User } from "../../../types/User";
 import { logOut } from "../../../features/auth/authThunk";
 import Loader from "../../../components/Elements/Loader";
+import { updateUserData } from "../../../features/user/userThunk";
 
 function Settings() {
   const { data: user, loading } = useAppSelector(selectUser);
@@ -25,7 +26,7 @@ function Settings() {
 
   const handleFontSize = (event) => {
     const newFontSize = parseInt(event.target.value, 10);
-    // dispatch(updateUser(id, { settings: { fontSize: newFontSize } }));
+    dispatch(updateUserData({ updateType: "fontSize", fontSize: newFontSize }));
   };
 
   const handleLogOut = async () => {

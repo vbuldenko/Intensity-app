@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-import { fetchUserData } from "./userThunk";
+import { fetchUserData, updateUserData } from "./userThunk";
 import { User } from "../../types/User";
 import { ErrorResponse } from "../../types/Error";
 
@@ -37,6 +37,24 @@ export const userSlice = createSlice({
       )
       .addCase(
         fetchUserData.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(updateUserData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        updateUserData.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.data = action.payload;
+          state.loading = false;
+          state.error = null; // Clear the error on success
+        }
+      )
+      .addCase(
+        updateUserData.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";
