@@ -13,8 +13,13 @@ export default function Account() {
   useEffect(() => {
     if (!data) {
       dispatch(fetchUserData());
+    } else {
+      document.documentElement.style.setProperty(
+        "--root-font-size",
+        `${data.settings.fontSize}px`
+      );
     }
-  }, []);
+  }, [data, dispatch]);
 
   return (
     <section className="account card-element">

@@ -26,6 +26,10 @@ function Settings() {
 
   const handleFontSize = (event) => {
     const newFontSize = parseInt(event.target.value, 10);
+    document.documentElement.style.setProperty(
+      "--root-font-size",
+      `${newFontSize}px`
+    );
     dispatch(updateUserData({ updateType: "fontSize", fontSize: newFontSize }));
   };
 
