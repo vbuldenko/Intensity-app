@@ -1,0 +1,33 @@
+.schedule__training {
+  width: 100%;
+
+  &-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &--accent {
+      min-width: 230px;
+      text-align: center;
+      padding: 0.5rem;
+      border-top: 1px solid $color-light-green;
+      border-bottom: 1px solid $color-light-green;
+
+      & p {
+        line-height: 1;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.training__content {
+  padding: 1rem;
+}
+
+.notification-error {
+  text-align: center;
+  padding: 0.5rem;
+  color: #f56565; /* Tailwind's text-red-500 */
+}

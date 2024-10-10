@@ -15,6 +15,7 @@ import "./Training.scss";
 import ReservationButton from "../../Elements/ReservationButton";
 import { selectAbonements } from "../../../features/abonements/abonementSlice";
 import { selectUser } from "../../../features/user/userSlice";
+import classNames from "classnames";
 
 export default function Training({ training }) {
   const dispatch = useAppDispatch();
@@ -103,37 +104,41 @@ export default function Training({ training }) {
   };
 
   return (
-    <li className="schedule__training w-full">
+    <li className="schedule__training">
       {notification && error && (
-        <div className="notification-error text-center p-2 text-red-500">
-          {notification}
-        </div>
+        <div className="notification-error">{notification}</div>
       )}
-      <div className="training__content card-element p-4">
-        <div className="flex gap-2">
-          <p>{training.time}</p>
-          <p className="font-bold">{training.type.toUpperCase()}</p>
+      <div
+        className={classNames("training__content card-element", {
+          "flex items-center justify-center flex-wrap gap-4": !user,
+          "flex flex-col gap-4": user,
+        })}
+      >
+        <div className="schedule__training-data--accent">
+          <p>{training.type.toUpperCase()}</p>
         </div>
-        <div className="flex items-center justify-between gap-4 pt-2">
-          {user && (
-            <p className="status">
-              Trainer: <b>{training.instructor?.firstName}</b>
-            </p>
-          )}
-          <p className="m-text">
+        {user && (
+          <p className="schedule__training-data">
+            Trainer: <b>{training.instructor?.firstName}</b>
+          </p>
+        )}
+        <div className="schedule__training-data">
+          <p>{training.time}</p>
+          <p className="m-text w-max">
             Places left: {training.capacity - reservedPlaces}
           </p>
-          {user && (
-            <ReservationButton
-              access={access}
-              isReserved={isReserved}
-              isSubmitting={isSubmitting}
-              onClick={() =>
-                handleAction(isReserved ? "cancellation" : "reservation")
-              }
-            />
-          )}
         </div>
+
+        {user && (
+          <ReservationButton
+            access={access}
+            isReserved={isReserved}
+            isSubmitting={isSubmitting}
+            onClick={() =>
+              handleAction(isReserved ? "cancellation" : "reservation")
+            }
+          />
+        )}
       </div>
     </li>
   );
