@@ -111,7 +111,7 @@ export default function Training({ training }) {
       <div
         className={classNames("training__content card-element", {
           "flex items-center justify-center flex-wrap gap-4": !user,
-          "flex flex-col gap-4": user,
+          "flex flex-col gap-1": user,
         })}
       >
         <div className="schedule__training-data--accent">
