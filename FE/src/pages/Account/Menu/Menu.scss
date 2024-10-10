@@ -15,6 +15,7 @@
   scrollbar-width: none; /* Hide scrollbar for Firefox */
 
   @include on-tablet {
+    justify-content: flex-start;
     padding: 2rem 1rem;
     flex-direction: column;
     gap: 2rem;
