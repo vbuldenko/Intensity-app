@@ -1,22 +1,22 @@
 .trainer-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
   &__salary-section,
   &__trainings-section {
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 1.25rem;
+    border-radius: $standard-br;
   }
 
   &__title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: 1rem;
   }
 
   &__result {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
   }
 
   &__label {

@@ -18,11 +18,11 @@ const InfoSection: React.FC<InfoSectionProps> = ({
 }) => {
   return (
     <div className={`info-section ${className || ""}`}>
-      <h1 className="info-section__header">{header}</h1>
+      <h2 className="info-section__header">{header}</h2>
       <div className="info-section__list">
         {items.map((item, index) => (
           <div className="info-section__item card-element" key={index}>
-            <h2 className="info-section__title">{item.title}</h2>
+            <h3 className="info-section__title">{item.title}</h3>
             <p className="info-section__text">{item.description}</p>
           </div>
         ))}

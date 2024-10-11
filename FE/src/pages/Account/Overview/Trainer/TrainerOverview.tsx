@@ -31,7 +31,7 @@ const TrainerOverview = ({ user }) => {
   return (
     <div className="trainer-overview">
       <div className="trainer-overview__salary-section card-element">
-        <div className="trainer-overview__title">Salary</div>
+        <h3 className="trainer-overview__title">Salary</h3>
 
         <div className="trainer-overview__result ">
           <p className="trainer-overview__label">Current total</p>
@@ -54,7 +54,7 @@ const TrainerOverview = ({ user }) => {
       </div>
 
       <div className="trainer-overview__trainings-section card-element">
-        <div className="trainer-overview__title">Today Trainings</div>
+        <h3 className="trainer-overview__title">Today Trainings</h3>
         <div className="trainer-overview__trainings-list">
           {currentDayTrainings.map((training) => (
             <div key={training.id} className="training">

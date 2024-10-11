@@ -38,8 +38,8 @@ main {
   box-shadow: $shadow3;
   border-radius: $big-br;
   border: 1px solid $card-background;
-  // backdrop-filter: blur(70px);
 }
+
 .small-card-element {
   background: $card-background;
   box-shadow: $shadow3;
@@ -51,12 +51,8 @@ main {
   background: $color-green;
   color: #fff;
   border: 1px solid $color-green;
-  // border-radius: 0 0.25rem 0.25rem 0;
   border-radius: 0 0 0.25rem 0.25rem;
   padding: 0.1rem 1rem;
-  // font-size: var(--n-fontsize);
-  // letter-spacing: .05rem;
-  // align-self: self-start;
 }
 
 .status {
@@ -72,7 +68,6 @@ main {
   padding: 0.75rem 2rem;
   border: 1px solid $gray-color-10;
   border-radius: $big-br;
-  // font-size: 1.5rem;
   box-shadow:
     5px 5px 10px 0px rgba(174, 174, 192, 0.2),
     /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px

@@ -3,29 +3,29 @@ import "./Prices.scss";
 
 export default function PricesPage() {
   return (
-    <div className="prices">
-      <h1 className="prices__header">Абонементи</h1>
-      <div className="prices__list">
+    <div className="info-section">
+      <h2 className="info-section__header">Абонементи</h2>
+      <div className="info-section__list">
         {prices.map((el, i) => (
-          <div key={i} className="prices__element card-element">
-            <span className="prices__category accent-label-primary">
+          <div key={i} className="info-section__item card-element">
+            <h4 className="info-section__title accent-label-primary absolute top-0">
               {el.category}
-            </span>
-            <div className="prices__details">
+            </h4>
+            <div className="info-section__content mt-5">
               <div className="prices__metrics">
-                <p className="prices__metric">Amount</p>
-                <p className="prices__metric">Price</p>
-                <p className="prices__metric">Unit Price</p>
+                <h4 className="prices__metric">Amount</h4>
+                <h4 className="prices__metric">Price</h4>
+                <h4 className="prices__metric">Unit Price</h4>
               </div>
               <div className="prices__items">
                 {el.prices.map((price, index) => (
                   <div key={index} className="prices__item">
-                    <p className="prices__item-amount">
+                    <p className="prices__element">
                       {price.amount}{" "}
                       {price.amount === 1 ? "training" : "trainings"}
                     </p>
-                    <p className="prices__item-price">₴ {price.price}</p>
-                    <p className="prices__item-unit-price">
+                    <p className="prices__element">₴ {price.price}</p>
+                    <p className="prices__element">
                       ₴ {price.price / price.amount}
                     </p>
                   </div>

@@ -4,39 +4,38 @@ import {
   MapPinIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import "./Contacts.scss";
 
 export default function ContactsPage() {
   return (
-    <section className="contacts">
-      <h1 className="contacts__header">Наші контакти</h1>
-      <div className="contacts__list">
-        <div className="contacts__element card-element">
-          <span className="contacts__category accent-label-primary">
+    <section className="info-section">
+      <h2 className="info-section__header">Наші контакти</h2>
+      <div className="info-section__list">
+        <div className="info-section__item card-element">
+          <h4 className="info-section__title accent-label-primary top-0 absolute">
             Наші контакти
-          </span>
-          <div className="contacts__items">
-            <div className="contacts__item">
-              <PhoneIcon className="contacts__icon" />
+          </h4>
+          <div className="info-section__content mt-8">
+            <div className="info-section__element">
+              <PhoneIcon className="icon" />
               <p>+38(097)-99-100-70</p>
             </div>
-            <div className="contacts__item">
-              <EnvelopeIcon className="contacts__icon" />
+            <div className="info-section__element">
+              <EnvelopeIcon className="icon" />
               <p>in10sity.trainer@gmail.com</p>
             </div>
-            <div className="contacts__item">
-              <MapPinIcon className="contacts__icon" />
+            <div className="info-section__element">
+              <MapPinIcon className="icon" />
               <p>Volodymyra Ivasiuka Ave, 24, Kyiv, 04210</p>
             </div>
           </div>
         </div>
-        <div className="contacts__element card-element">
-          <span className="contacts__category accent-label-primary">
+        <div className="info-section__item card-element">
+          <h4 className="info-section__title accent-label-primary top-0 absolute">
             Графік роботи
-          </span>
-          <div className="contacts__items">
-            <div className="contacts__item">
-              <ClockIcon className="contacts__icon" />
+          </h4>
+          <div className="info-section__content mt-8">
+            <div className="info-section__element">
+              <ClockIcon className="icon" />
               <p>
                 Пн-Пт - з 9:00 до 21:00 <br /> Сб - з 9:00 до 15:00
               </p>

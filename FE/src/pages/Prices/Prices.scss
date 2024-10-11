@@ -1,52 +1,10 @@
 .prices {
-  @include page-grid;
-
-  row-gap: 8px;
-
-  &__header {
-    grid-column: 1 / -1;
-  }
-
-  &__list {
-    grid-column: 1 / -1;
-    @include page-grid;
-  }
-
-  &__element {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    width: 100%;
-    grid-column: 1 / -1;
-
-    @include on-tablet {
-      grid-column: span 6;
-    }
-
-    @include on-desktop {
-      grid-column: span 12;
-    }
-  }
-
-  &__category {
-    // font-size: 1rem;
-    position: absolute;
-    // left: 0;
-    top: 0;
-    // align-self: flex-start;
-  }
-
-  &__details {
-    margin-top: 1.25rem;
-  }
-
   &__metrics {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-    margin-bottom: 1rem;
+    border-bottom: 1px solid $color-element;
+    padding-block: 0.25rem;
   }
 
   &__metric {
@@ -66,9 +24,7 @@
     justify-content: space-between;
   }
 
-  &__item-amount,
-  &__item-price,
-  &__item-unit-price {
+  &__element {
     flex: 1;
     text-align: center;
     font-size: 0.8rem;

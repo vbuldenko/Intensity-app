@@ -5,10 +5,10 @@ import "./Hero.scss";
 export const Hero = () => {
   return (
     <div className="hero self-center">
-      <h1 className="hero__title">
+      <h2 className="hero__title">
         Welcome to <span className="hero__title--accent">Intensity</span>{" "}
         fitness studio!
-      </h1>
+      </h2>
       <div className="hero__slider">
         <Slider slides={slides} settings={{ autoplay: true, speed: 10000 }} />
       </div>

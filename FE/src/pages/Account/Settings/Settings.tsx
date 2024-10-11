@@ -55,7 +55,7 @@ function Settings() {
   return (
     <div className="settings">
       <div className="settings__section">
-        <h1 className="settings__title">App settings</h1>
+        <h3 className="settings__title">App settings</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
@@ -78,7 +78,7 @@ function Settings() {
         </div>
       </div>
       <div className="settings__section">
-        <h1 className="settings__title">Personal information</h1>
+        <h3 className="settings__title">Personal information</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
@@ -122,7 +122,7 @@ function Settings() {
         </div>
       </div>
       <div className="settings__section">
-        <h1 className="settings__title">Account actions</h1>
+        <h3 className="settings__title">Account actions</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
