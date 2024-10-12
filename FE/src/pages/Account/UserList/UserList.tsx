@@ -19,10 +19,23 @@ export default function UserList() {
     userService.getAll().then(setUsers);
   }, []);
 
+  const getStatus = (
+    userType: string,
+    abonementsLength: number,
+    trainingsLength: number
+  ) => {
+    if (userType === "client") {
+      return abonementsLength ? "Active" : "Inactive";
+    } else if (userType === "trainer") {
+      return trainingsLength ? "Active" : "Inactive";
+    }
+    return "Unknown";
+  };
+
   return (
     <div className="users">
       <div className="users__header">
-        <div className="users__info items-center justify-around">
+        <div className="users__info items-center justify-around flex-1">
           <div className="flex">
             <p>Total:</p> <p>{users.length}</p>
           </div>
@@ -34,7 +47,9 @@ export default function UserList() {
             buttonNames={["client", "trainer"]}
           />
         </div>
-        <SearchInput value={searchQuery} onChange={setSearchQuery} />
+        <div className="flex-1">
+          <SearchInput value={searchQuery} onChange={setSearchQuery} />
+        </div>
       </div>
       <div className="users__list">
         {filteredUsers.map((user) => (
@@ -47,19 +62,25 @@ export default function UserList() {
               <p className="users__name">
                 {user.firstName} {user.lastName}
               </p>
-              <p className="users__status status">Active</p>
+              <p className="users__status status">
+                {getStatus(
+                  userType,
+                  user.abonements?.length,
+                  user.trainings?.length
+                )}
+              </p>
             </div>
-            <div className="users__data">
-              <div className="users__phone">
+            <div className="users__content">
+              <div className="users__data">
                 <p>Phone</p>
                 <p>{user.phone}</p>
               </div>
-              <div className="users__email">
+              <div className="users__data">
                 <p>Mail</p>
                 <p>{user.email}</p>
               </div>
               {userType === "client" && (
-                <div className="users__abonement">
+                <div className="users__data">
                   <p>Abonement</p>
                   <p>{user.abonements.length}</p>
                 </div>

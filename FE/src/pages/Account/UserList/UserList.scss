@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
   &__header {
     display: flex;
     flex-direction: column;
@@ -11,6 +12,7 @@
 
     @include on-tablet {
       flex-direction: row;
+      flex-wrap: wrap;
     }
   }
 
@@ -47,7 +49,7 @@
     color: green;
   }
 
-  &__data {
+  &__content {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -56,9 +58,7 @@
     border-top: 1px solid $color-element;
   }
 
-  &__phone,
-  &__email,
-  &__abonement {
+  &__data {
     display: flex;
     justify-content: space-between;
     gap: 0.25rem;

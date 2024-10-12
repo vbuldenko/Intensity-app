@@ -40,18 +40,13 @@ const ScheduleEditor: React.FC = () => {
       scheduleService
         .updateTraining(editableTraining.id, editableTraining)
         .then(() => {
-          setScheduleData((prev) =>
-            prev.map((daySchedule) => ({
-              ...daySchedule,
-              trainings: daySchedule.trainings.map((training) =>
-                training.id === editableTraining.id
-                  ? editableTraining
-                  : training
-              ),
-            }))
+          setSchedule((prev) =>
+            prev.map((training) =>
+              training.id === editableTraining.id ? editableTraining : training
+            )
           );
-          setEditableTraining(null);
-        });
+        })
+        .finally(() => setEditableTraining(null));
     }
   };
 
@@ -78,15 +73,15 @@ const ScheduleEditor: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
         <input
           type="date"
-          className="init-date text-teal-600 bg-gray-100 py-1 px-6 rounded-xl"
+          className="flex-1 init-date text-teal-600 bg-gray-100 py-1 px-6 rounded-xl"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
         />
 
-        <div className="card-element p-1 text-center bg-teal-500 text-white">
+        <div className="card-element flex-1 p-1 text-center bg-teal-500 text-white">
           <button className="init w-full" onClick={handleInitialization}>
             Initialize from selected date
           </button>

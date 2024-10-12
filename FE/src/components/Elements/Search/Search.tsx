@@ -9,7 +9,7 @@ interface SearchInputProps {
 export default function SearchInput({ value, onChange }: SearchInputProps) {
   return (
     <div className="search">
-      <MagnifyingGlassIcon className="search__icon" />
+      <MagnifyingGlassIcon className="icon search__icon" />
       <input
         type="text"
         placeholder="Search clients..."
