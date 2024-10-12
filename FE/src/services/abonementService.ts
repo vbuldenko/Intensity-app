@@ -4,6 +4,9 @@ import { Abonement } from "../types/Abonement";
 function getAll(): Promise<Abonement[]> {
   return axiosClient.get("/abonements");
 }
+function getAllByUser(): Promise<Abonement[]> {
+  return axiosClient.get("/abonements/user");
+}
 
 function add(newAbonement: Abonement): Promise<Abonement> {
   return axiosClient.post(`/abonements`, newAbonement);
@@ -11,5 +14,6 @@ function add(newAbonement: Abonement): Promise<Abonement> {
 
 export const abonementService = {
   getAll,
+  getAllByUser,
   add,
 };

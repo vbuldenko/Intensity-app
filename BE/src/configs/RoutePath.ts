@@ -15,6 +15,7 @@ const Path = {
   update: '/profile/update',
   remove: '/profile/delete',
   abonements: '/',
+  userAbonements: '/user',
   abonement: '/:id',
   trainings: '/',
   trainingsCancel: '/cancel-unheld',

@@ -8,6 +8,18 @@ import { UserDTO } from '../types/UserDTO';
 //   res.send(abonements);
 // }
 export async function getAll(req: Request, res: Response): Promise<void> {
+  if (!req.user || req.user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+
+  const abonements = await abonementService.getAll();
+  res.send(abonements);
+}
+
+export async function getAllByUserId(
+  req: Request,
+  res: Response,
+): Promise<void> {
   const abonements = await abonementService.getAllByUserId(req.user.id);
   res.send(abonements);
 }

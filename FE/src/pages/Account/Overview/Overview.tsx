@@ -15,9 +15,9 @@ export default function Overview() {
 
   if (error) {
     return (
-      <h1 className="auth__error-message self-center card-element bg-red-100">
+      <p className="auth__error-message self-center card-element bg-red-100">
         {error}
-      </h1>
+      </p>
     );
   }
 
@@ -29,9 +29,9 @@ export default function Overview() {
     <div className="overview">
       <div className="overview__header">
         <div>
-          <h3>
+          <p>
             Welcome back, <b className="capitalize">{user.firstName}</b>
-          </h3>
+          </p>
         </div>
         <span className="status">{user.role}</span>
       </div>
