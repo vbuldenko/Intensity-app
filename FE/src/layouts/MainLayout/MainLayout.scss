@@ -60,6 +60,15 @@ main {
   border: 1px solid $color-green;
   border-radius: $big-br;
   padding: 0 1rem;
+
+  &--green {
+    border: 1px solid $color-green;
+    color: $color-green;
+  }
+  &--red {
+    border: 1px solid $color-red;
+    color: $color-red;
+  }
 }
 
 .action-button {

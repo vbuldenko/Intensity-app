@@ -120,12 +120,16 @@ export default function Training({ training }) {
             Trainer: <b>{training.instructor?.firstName}</b>
           </p>
         )}
-        <div className="schedule__training-data">
-          <p>{training.time}</p>
-          <p className="m-text w-max">
-            Places left: {training.capacity - reservedPlaces}
-          </p>
-        </div>
+        {
+          <div className="schedule__training-data">
+            <p>{training.time}</p>
+            {(access || user) && (
+              <p className="m-text w-max">
+                Places left: {training.capacity - reservedPlaces}
+              </p>
+            )}
+          </div>
+        }
 
         {user && (
           <ReservationButton

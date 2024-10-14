@@ -5,6 +5,7 @@ import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { checkTrainingReturn } from "../../features/trainings/trainingThunk";
+import classNames from "classnames";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -33,7 +34,14 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   return (
     <div className="abonement card-element">
       <div className="abonement__info">
-        <div className="abonement__status status">{abonement.status}</div>
+        <div
+          className={classNames("abonement__status status", {
+            status: abonement.status === "active",
+            "status--red": abonement.status === "ended",
+          })}
+        >
+          {abonement.status}
+        </div>
         <div className="abonement__container">
           <div>
             <b>Amount of trainings:</b> {abonement.amount}
