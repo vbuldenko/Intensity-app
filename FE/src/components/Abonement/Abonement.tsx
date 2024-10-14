@@ -70,12 +70,10 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
       <div className="abonement__history">
         <h2 className="abonement__title">Reserved trainings</h2>
         <div className="abonement__container">
-          {abonement.visitedTrainings &&
-            (abonement.visitedTrainings.length > 0
-              ? abonement.visitedTrainings.map((el) => (
-                  <HistoryElement key={el.id} data={el} trainer={false} />
-                ))
-              : null)}
+          {abonement.visitedTrainings.length &&
+            abonement.visitedTrainings.map((el) => (
+              <HistoryElement key={el.id} data={el} trainer={false} />
+            ))}
         </div>
       </div>
     </div>

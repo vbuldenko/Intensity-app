@@ -2,24 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./AdminOverview.scss";
 import { studioStats } from "../../../../assets/mockData";
 import classNames from "classnames";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { selectAbonements } from "../../../../features/abonements/abonementSlice";
-import { fetchAbonements } from "../../../../features/abonements/abonementThunk";
+import { abonementService } from "../../../../services/abonementService";
+import { Abonement } from "../../../../types/Abonement";
 
 const AdminDashboard: React.FC = () => {
-  const abonements = useAppSelector(selectAbonements);
-  const dispatch = useAppDispatch();
+  const [abonements, setAbonements] = useState<Abonement[]>([]);
   const data = studioStats;
   const [expenses, setExpenses] = useState(data.expenses);
 
   useEffect(() => {
-    if (!abonements) {
-      dispatch(fetchAbonements("admin"));
-    }
-  }, [dispatch, abonements]);
+    abonementService.getAll().then(setAbonements);
+  }, []);
 
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const currentMonthAbonements =
     abonements?.filter((abonement) => {
@@ -30,26 +27,25 @@ const AdminDashboard: React.FC = () => {
       );
     }) || [];
 
-  const totalIncome = currentMonthAbonements.reduce(
+  const totalIncome = abonements?.reduce((acc, a) => acc + a.price, 0);
+  const currentMonthIncome = currentMonthAbonements.reduce(
     (acc, a) => acc + a.price,
     0
   );
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const dailyIncome = totalIncome / daysInMonth;
-  const monthlyIncome = totalIncome;
+  const dailyIncome = currentMonthIncome / daysInMonth;
 
   const totalExpenses = Object.values(expenses).reduce(
     (acc, expense) => acc + expense,
     0
   );
   const dailyProfit = dailyIncome - totalExpenses / daysInMonth;
-  const monthlyProfit = monthlyIncome - totalExpenses;
+  const monthlyProfit = currentMonthIncome - totalExpenses;
 
   const generalStats = {
-    totalAbonementsSold: abonements?.length || 0,
+    abonementsSold: abonements?.length || 0,
     totalIncome: totalIncome.toFixed(1),
     dailyIncome: dailyIncome.toFixed(1),
-    monthlyIncome: monthlyIncome.toFixed(1),
+    monthlyIncome: currentMonthIncome.toFixed(1),
     dailyProfit: dailyProfit.toFixed(1),
     monthlyProfit: monthlyProfit.toFixed(1),
   };
@@ -90,7 +86,7 @@ const StatisticsSection: React.FC<{
             :
           </p>
           <span>
-            {key !== "totalAbonementsSold" && (
+            {key !== "abonementsSold" && (
               <b className="mr-1 text-xs text-violet-400">₴</b>
             )}
             {value}
