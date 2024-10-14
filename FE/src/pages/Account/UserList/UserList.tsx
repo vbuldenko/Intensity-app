@@ -4,6 +4,7 @@ import SearchInput from "../../../components/Elements/Search/Search";
 import "./UserList.scss";
 import { userService } from "../../../services/userService";
 import Selector from "../../../components/Elements/Selector";
+import classNames from "classnames";
 
 export default function UserList() {
   const [data, setUsers] = useState([]);
@@ -52,42 +53,52 @@ export default function UserList() {
         </div>
       </div>
       <div className="users__list">
-        {filteredUsers.map((user) => (
-          <Link
-            key={user.id}
-            to={`${user.id}`}
-            className="users__item card-element"
-          >
-            <div className="users__title">
-              <p className="users__name">
-                {user.firstName} {user.lastName}
-              </p>
-              <p className="users__status status">
-                {getStatus(
-                  userType,
-                  user.abonements?.length,
-                  user.trainings?.length
-                )}
-              </p>
-            </div>
-            <div className="users__content">
-              <div className="users__data">
-                <p>Phone</p>
-                <p>{user.phone}</p>
-              </div>
-              <div className="users__data">
-                <p>Mail</p>
-                <p>{user.email}</p>
-              </div>
-              {userType === "client" && (
-                <div className="users__data">
-                  <p>Abonement</p>
-                  <p>{user.abonements.length}</p>
+        {filteredUsers.map((user) => {
+          const status = getStatus(
+            userType,
+            user.abonements?.length,
+            user.trainings?.length
+          );
+
+          return (
+            <Link
+              key={user.id}
+              to={`${user.id}`}
+              className="users__item card-element"
+            >
+              <div className="users__title">
+                <p className="users__name">
+                  {user.firstName} {user.lastName}
+                </p>
+
+                <div
+                  className={classNames("status", {
+                    status: status === "Active",
+                    "status--gray": status === "Inactive",
+                  })}
+                >
+                  {status}
                 </div>
-              )}
-            </div>
-          </Link>
-        ))}
+              </div>
+              <div className="users__content">
+                <div className="users__data">
+                  <p>Phone</p>
+                  <p>{user.phone}</p>
+                </div>
+                <div className="users__data">
+                  <p>Mail</p>
+                  <p>{user.email}</p>
+                </div>
+                {userType === "client" && (
+                  <div className="users__data">
+                    <p>Abonement</p>
+                    <p>{user.abonements.length}</p>
+                  </div>
+                )}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
