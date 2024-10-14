@@ -39,7 +39,7 @@ export default function Overview() {
       <div className="overview__body">
         {user.role === "admin" && <AdminDashboard />}
         {user.role === "trainer" && <TrainerOverview user={user} />}
-        {user.role === "client" && <ClientOverview />}
+        {user.role === "client" && <ClientOverview user={user} />}
       </div>
     </div>
   );

@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import Selector from "../../../../components/Elements/Selector";
 import { filterAbonements, ViewOption } from "../../../../utils/abonement";
 import { sortByParam } from "../../../../utils/utils";
 import Abonement from "../../../../components/Abonement";
 import "./ClientOverview.scss";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { selectAbonements } from "../../../../features/abonements/abonementSlice";
-import { fetchAbonements } from "../../../../features/abonements/abonementThunk";
 
-export default function ClientOverview() {
-  const abonements = useAppSelector(selectAbonements);
+export default function ClientOverview({ user }) {
+  const abonements = user?.abonements;
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
-  const dispatch = useAppDispatch();
   const filteredAbonements = abonements
     ? filterAbonements(abonements, abonementView)
     : [];
@@ -20,12 +15,6 @@ export default function ClientOverview() {
   const handleViewChange = (view: ViewOption) => {
     setAbonementView(view);
   };
-
-  useEffect(() => {
-    if (!abonements) {
-      dispatch(fetchAbonements());
-    }
-  }, [dispatch]);
 
   return (
     <div className="client-overview">

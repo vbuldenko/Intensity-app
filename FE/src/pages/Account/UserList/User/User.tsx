@@ -14,10 +14,6 @@ export default function User() {
 
   const search = location.state?.search || "";
 
-  function handleClick() {
-    console.log("add abonement");
-  }
-
   useEffect(() => {
     userService.getOneById(id).then(setUser);
   }, []);
@@ -43,7 +39,7 @@ export default function User() {
               btnName={"Add new abonement"}
               data={<Purchases clientId={user.id} />}
             />
-            <ClientOverview abonements={user.abonements} />
+            <ClientOverview user={user} />
           </div>
         ) : (
           <TrainerOverview user={user} />

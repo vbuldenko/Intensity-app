@@ -13,7 +13,6 @@ import {
 import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
 import ReservationButton from "../../Elements/ReservationButton";
-import { selectAbonements } from "../../../features/abonements/abonementSlice";
 import { selectUser } from "../../../features/user/userSlice";
 import classNames from "classnames";
 
@@ -23,10 +22,9 @@ export default function Training({ training }) {
   const [error, setError] = useState(false);
   const notification = useAppSelector(selectNotification);
   const { data: user } = useAppSelector(selectUser);
-  const allAbonements = useAppSelector(selectAbonements);
   const abonement = useMemo(
-    () => getCurrentAbonement(allAbonements),
-    [allAbonements]
+    () => getCurrentAbonement(user?.abonements),
+    [user?.abonements]
   );
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
