@@ -29,12 +29,12 @@ interface TrainingStats {
     expiringSoon: number;
     expiredAbonements: number;
   };
-  trainingFeedbackScores: {
-    trainingId: number;
-    trainingName: string;
-    averageScore: number;
-    totalReviews: number;
-  }[];
+  // trainingFeedbackScores: {
+  //   trainingId: number;
+  //   trainingName: string;
+  //   averageScore: number;
+  //   totalReviews: number;
+  // }[];
   clientRetentionRate: number; // in percentage
   abonementDurationAnalysis: {
     shortTerm: number; // abonements for 1 month

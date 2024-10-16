@@ -15,7 +15,7 @@ interface HistoryItemProps {
   trainer: boolean;
 }
 
-export default function HistoryElement({ data, trainer }: HistoryItemProps) {
+export default function HistoryElement({ data }: HistoryItemProps) {
   return (
     <div className="history-element card-element flex-1">
       <p className="history-element__title">{data.type}</p>
