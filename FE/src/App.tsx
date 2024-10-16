@@ -20,6 +20,7 @@ import Purchases from "./pages/Account/Purchases";
 import UserList from "./pages/Account/UserList";
 import ScheduleEditor from "./pages/Account/ScheduleEditor";
 import User from "./pages/Account/UserList/User";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         <Route path={NavLinks.SignUp} element={<SignUpPage />} />
         <Route path={NavLinks.CheckEmail} element={<CheckEmailPage />} />
         <Route path={NavLinks.Activate} element={<ActivationPage />} />
+        <Route path={NavLinks.Restore} element={<ForgotPassword />} />
         <Route element={<AuthRequired />}>
           <Route path={NavLinks.Account} element={<AccountPage />}>
             <Route index element={<Overview />} />
@@ -50,7 +52,6 @@ export default function App() {
         </Route>
 
         {/* 
-          <Route path="forgot-password" element={<ForgotPassword />} />
           <Route
             path="reset-password/:resetToken"
             element={<ResetPassword />}

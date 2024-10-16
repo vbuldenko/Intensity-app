@@ -35,8 +35,8 @@ function refresh(): Promise<{ accessToken: string; userData: any }> {
   return authClient.get("/refresh");
 }
 
-function reset(data: ResetData) {
-  return authClient.post("/forgotPassword", data);
+function requestRestore(email: string): Promise<{ message: string }> {
+  return authClient.post("/forgotPassword", { email });
 }
 
 function resetPassword(data: ResetPasswordData) {
@@ -54,6 +54,6 @@ export const authService = {
   logout,
   activate,
   refresh,
-  reset,
+  requestRestore,
   resetPassword,
 };

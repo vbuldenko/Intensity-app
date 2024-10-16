@@ -32,7 +32,7 @@ const Login = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
-        <h1 className="auth__title">Log in to application</h1>
+        <h2 className="auth__title">Log in to application</h2>
         {error && (
           <h1 className="auth__error-message self-center card-element bg-red-100">
             {error}
@@ -74,10 +74,7 @@ const Login = () => {
             Sign Up
           </Link>
         </div>
-        <Link
-          className="auth__signup-subsection__link"
-          to={NavLinks.ForgotPassword}
-        >
+        <Link className="auth__signup-subsection__link" to={NavLinks.Restore}>
           Forgot password?
         </Link>
       </div>
