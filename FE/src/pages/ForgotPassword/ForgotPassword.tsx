@@ -31,7 +31,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="auth__form-wrapper card-element">
-      <form className="auth__form" onSubmit={handleSubmit}>
+      <form className="auth__form border-b-0" onSubmit={handleSubmit}>
         <h2 className="text-center">Forgot Password</h2>
         {notification && (
           <Notification
