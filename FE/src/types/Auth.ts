@@ -8,9 +8,9 @@ export interface AuthCredentials {
 }
 
 export interface ResetPasswordData {
-  newPassword: string;
-  newPasswordConfirmation: string;
-  resetToken: string;
+  password: string;
+  passwordConfirm: string;
+  resetToken: string | undefined;
 }
 
 export interface ResetData {

@@ -39,10 +39,14 @@ function requestRestore(email: string): Promise<{ message: string }> {
   return authClient.post("/forgotPassword", { email });
 }
 
-function resetPassword(data: ResetPasswordData) {
-  return authClient.post(`/resetPassword/${data.resetToken}`, {
-    password: data.newPassword,
-    passwordConfirm: data.newPasswordConfirmation,
+function resetPassword({
+  resetToken,
+  password,
+  passwordConfirm,
+}: ResetPasswordData): Promise<{ message: string }> {
+  return authClient.post(`/resetPassword/${resetToken}`, {
+    password,
+    passwordConfirm,
   });
 }
 

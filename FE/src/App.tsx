@@ -21,6 +21,7 @@ import UserList from "./pages/Account/UserList";
 import ScheduleEditor from "./pages/Account/ScheduleEditor";
 import User from "./pages/Account/UserList/User";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path={NavLinks.CheckEmail} element={<CheckEmailPage />} />
         <Route path={NavLinks.Activate} element={<ActivationPage />} />
         <Route path={NavLinks.Restore} element={<ForgotPassword />} />
+        <Route path={NavLinks.Reset} element={<ResetPassword />} />
         <Route element={<AuthRequired />}>
           <Route path={NavLinks.Account} element={<AccountPage />}>
             <Route index element={<Overview />} />
@@ -50,13 +52,6 @@ export default function App() {
             />
           </Route>
         </Route>
-
-        {/* 
-          <Route
-            path="reset-password/:resetToken"
-            element={<ResetPassword />}
-          />
-          */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

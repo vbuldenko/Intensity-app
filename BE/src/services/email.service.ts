@@ -44,7 +44,7 @@ export const sendResetLink = (
   email: string,
   token: string,
 ): Promise<void> => {
-  const link = `${process.env.CLIENT_URL}/reset/${token}`;
+  const link = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
   return send({
     email,

@@ -87,7 +87,11 @@ export function getErrorMessage(error: any): string {
   const errors = error?.response?.data?.errors;
 
   // If errors exist, get the first key-value pair (e.g., password: 'Should be at least 4 characters')
-  if (errors) {
+  if (
+    errors &&
+    typeof errors === "object" &&
+    Object.entries(errors).length > 0
+  ) {
     const [field, message] = Object.entries(errors)[0];
     return `${field.toLocaleUpperCase()}: ${message}`;
   }
