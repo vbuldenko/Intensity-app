@@ -15,7 +15,8 @@
     "db:migrate": "tsx ./node_modules/.bin/sequelize db:migrate",
     "db:seed": "tsx ./node_modules/.bin/sequelize db:seed:all",
     "db:migrate:undo": "tsx ./node_modules/.bin/sequelize db:migrate:undo",
-    "db:seed:undo": "tsx ./node_modules/.bin/sequelize db:seed:undo:all"
+    "db:seed:undo": "tsx ./node_modules/.bin/sequelize db:seed:undo:all",
+    "build:ui": "rm -rf ui && cd ../FE && npm run build && cp -r dist ../BE/ui"
   },
   "author": "",
   "license": "ISC",

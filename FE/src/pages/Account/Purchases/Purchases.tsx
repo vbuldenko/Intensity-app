@@ -81,9 +81,9 @@ export default function Purchases({ clientId }: { clientId?: number }) {
         </div>
       )}
 
-      <h2 className="purchases__title">
+      <h3 className="purchases__title">
         Оберіть тип занять та кількість тренувань
-      </h2>
+      </h3>
 
       <Selector
         selection={selectedType}
