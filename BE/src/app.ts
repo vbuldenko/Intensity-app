@@ -1,3 +1,5 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -14,6 +16,8 @@ import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
 // import { initializePredefinedSchedule } from './utils/trainingInitiator';
 // import db from './db/models';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function createApp() {
   // db.History.sync({ force: true });
@@ -38,6 +42,12 @@ export function createApp() {
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', trainingRouter);
   app.use('/schedule', authMiddleware, scheduleRouter);
+
+  // Serve the React app for any other route
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../ui', 'index.html'));
+  });
+
   app.use(unknownEndpoint);
   app.use(errorMiddleware);
 
