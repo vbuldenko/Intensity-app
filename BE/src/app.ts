@@ -26,6 +26,7 @@ export function createApp() {
       credentials: true,
     }),
   );
+  app.use(express.static('ui'));
   app.use(express.json());
   app.use(requestLogger);
   app.use(cookieParser());
