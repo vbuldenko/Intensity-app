@@ -1,5 +1,5 @@
 import { authClient } from "../api/authClient";
-import { AuthCredentials, ResetData, ResetPasswordData } from "../types/Auth";
+import { AuthCredentials, ResetPasswordData } from "../types/Auth";
 import { LoginReturnData } from "../types/User";
 
 function register(credentials: AuthCredentials) {
