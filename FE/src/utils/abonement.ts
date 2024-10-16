@@ -33,7 +33,9 @@ export function filterAbonements(
   return abonements.filter(expirationDateFilter);
 }
 
-export function getCurrentAbonement(abonements: Abonement[]): Abonement | null {
+export function getCurrentAbonement(
+  abonements: Abonement[] | undefined
+): Abonement | null {
   if (!abonements || abonements.length === 0) {
     return null;
   }

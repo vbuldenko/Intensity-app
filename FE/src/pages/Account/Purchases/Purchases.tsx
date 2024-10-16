@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import "./Purchases.scss";
 import { abonementService } from "../../../services/abonementService";
+import { getErrorMessage } from "../../../utils/utils";
 
 export default function Purchases({ clientId }: { clientId?: number }) {
   const notification = useAppSelector(({ notification }) => notification);
@@ -14,7 +15,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
   const dispatch = useAppDispatch();
   const [selectedType, setSelectedType] = useState<
     "group" | "personal" | "split" | "kids"
-  >("group"); // Default selected type
+  >("group");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
 
   const selectedAbonementData: { amount: number; price: number }[] =
@@ -24,11 +25,11 @@ export default function Purchases({ clientId }: { clientId?: number }) {
 
   const handleSubmit = async () => {
     try {
-      if (user.role === "admin" && clientId) {
+      if (user && user.role === "admin" && clientId) {
         await abonementService.add({
           ...selectedAbonement,
           type: selectedType,
-          clientId: clientId,
+          clientId,
         });
         dispatch(
           notifyWith(
@@ -48,7 +49,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
         dispatch(notifyWith("In Development: not available"));
       }
     } catch (error) {
-      dispatch(notifyWith(error.response.data.error));
+      dispatch(notifyWith(getErrorMessage(error)));
     }
   };
 
@@ -64,7 +65,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     }
   };
 
-  const handleTypeChange = (type) => {
+  const handleTypeChange = (type: typeof selectedType) => {
     setSelectedType(type);
     setSelectedAmountIndex(0); // Reset selected amount index when type changes
   };

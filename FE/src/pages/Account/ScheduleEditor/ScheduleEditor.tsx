@@ -6,11 +6,6 @@ import { groupTrainingsByDay } from "../../../utils/utils";
 import { trainingService } from "../../../services/trainingService";
 import "./ScheduleEditor.scss";
 
-interface DaySchedule {
-  day: string;
-  trainings: ScheduleTraining[];
-}
-
 const ScheduleEditor: React.FC = () => {
   const [schedule, setSchedule] = useState<ScheduleTraining[]>([]);
   const [expandedDay, setExpandedDay] = useState<string | null>(null);

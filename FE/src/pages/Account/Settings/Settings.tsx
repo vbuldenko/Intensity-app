@@ -24,7 +24,7 @@ function Settings() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleFontSize = (event) => {
+  const handleFontSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newFontSize = parseInt(event.target.value, 10);
     document.documentElement.style.setProperty(
       "--root-font-size",

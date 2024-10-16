@@ -15,8 +15,9 @@ import "./Training.scss";
 import ReservationButton from "../../Elements/ReservationButton";
 import { selectUser } from "../../../features/user/userSlice";
 import classNames from "classnames";
+import { Training as TrainingType } from "../../../types/Training";
 
-export default function Training({ training }) {
+export default function Training({ training }: { training: TrainingType }) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(false);
@@ -48,13 +49,13 @@ export default function Training({ training }) {
   );
   // const access = true;
 
-  const handleNotification = (message) => {
+  const handleNotification = (message: string) => {
     setError(true);
     dispatch(notifyWith(message));
     setTimeout(() => setError(false), 3000);
   };
 
-  const handleAction = async (updateType) => {
+  const handleAction = async (updateType: "reservation" | "cancellation") => {
     const updatedAccess = reservationAccess(
       new Date(),
       trainingTime,

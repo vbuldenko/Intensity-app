@@ -8,14 +8,22 @@ import {
   isToday,
   parseISO,
 } from "date-fns";
+import { Training } from "../../types/Training";
 // import { classNames } from "../../utils/utils";
 
-export default function MonthView({
+interface MonthViewProps {
+  days: Date[];
+  selectedDay: Date;
+  setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
+  trainings: Training[];
+}
+
+const MonthView: React.FC<MonthViewProps> = ({
   days,
   selectedDay,
   setSelectedDay,
   trainings,
-}) {
+}) => {
   const monthStart = [
     "",
     "calendar__day--start-2",
@@ -64,4 +72,6 @@ export default function MonthView({
       ))}
     </div>
   );
-}
+};
+
+export default MonthView;

@@ -1,3 +1,5 @@
+import { Abonement } from "./Abonement";
+import { Training } from "./Training";
 import { UserDTO } from "./UserDTO";
 
 export interface User {
@@ -12,7 +14,8 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   activationToken: string | null;
-  abonements: any[];
+  abonements: Abonement[];
+  trainings: Training[];
 }
 
 export interface LoginReturnData {

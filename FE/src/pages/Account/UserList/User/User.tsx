@@ -6,16 +6,17 @@ import Purchases from "../../Purchases";
 import ClientOverview from "../../Overview/Client/ClientOverview";
 import { userService } from "../../../../services/userService";
 import TrainerOverview from "../../Overview/Trainer/TrainerOverview";
+import { User as UserType } from "../../../../types/User";
 
 export default function User() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const location = useLocation();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   const search = location.state?.search || "";
 
   useEffect(() => {
-    userService.getOneById(id).then(setUser);
+    userService.getOneById(Number(id)).then(setUser);
   }, []);
 
   return (

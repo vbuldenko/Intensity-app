@@ -1,22 +1,21 @@
-import { useAppSelector } from "../../../../app/hooks";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 // import HistoryElement from "../../../../components/Elements/HistoryElement";
-import { selectTrainings } from "../../../../features/trainings/trainingSlice";
 import {
-  filterByInstructor,
   filterByVisitors,
   filterTrainingsByDate,
   getCurrentWage,
 } from "../../../../utils/trainings";
 import "./TrainerOverview.scss";
+import { User } from "../../../../types/User";
 
-const TrainerOverview = ({ user }) => {
+interface TrainerOverviewProps {
+  user: User;
+}
+
+const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
   const currentDate = new Date();
   const trainerTrainings = filterByVisitors(user.trainings, 2);
-  // const trainerTrainings = filterByVisitors(
-  //   filterByInstructor(trainings, user.id),
-  //   2
-  // );
+
   const currentMonthTrainings = filterTrainingsByDate(
     trainerTrainings,
     currentDate,
@@ -33,7 +32,7 @@ const TrainerOverview = ({ user }) => {
       <div className="trainer-overview__salary-section card-element">
         <h3 className="trainer-overview__title">Salary</h3>
 
-        <div className="trainer-overview__result ">
+        <div className="trainer-overview__result">
           <p className="trainer-overview__label">Current total</p>
           <span className="trainer-overview__value text-teal-600">
             {getCurrentWage(currentMonthTrainings)} ₴

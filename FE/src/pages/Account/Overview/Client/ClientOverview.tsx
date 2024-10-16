@@ -4,8 +4,13 @@ import { filterAbonements, ViewOption } from "../../../../utils/abonement";
 import { sortByParam } from "../../../../utils/utils";
 import Abonement from "../../../../components/Abonement";
 import "./ClientOverview.scss";
+import { User } from "../../../../types/User";
 
-export default function ClientOverview({ user }) {
+interface ClientOverviewProps {
+  user: User;
+}
+
+export default function ClientOverview({ user }: ClientOverviewProps) {
   const abonements = user?.abonements;
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
   const filteredAbonements = abonements

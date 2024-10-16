@@ -25,7 +25,7 @@ export default function Schedule() {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  const [scheduleView, setScheduleView] = useState("month");
+  const [scheduleView, setScheduleView] = useState<"month" | "week">("month");
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const days = eachDayOfInterval({
@@ -35,10 +35,14 @@ export default function Schedule() {
 
   const selectedDayTrainings = trainings
     .filter((training) => isSameDay(parseISO(training.date), selectedDay))
-    .sort((a, b) => a.time.slice(0, 2) - b.time.slice(0, 2));
+    .sort(
+      (a, b) =>
+        parseInt(a.time.slice(0, 2), 10) - parseInt(b.time.slice(0, 2), 10)
+    );
 
-  function handleViewChange(event) {
-    setScheduleView(event.target.value);
+  function handleViewChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const value = event.target.value as "month" | "week";
+    setScheduleView(value);
   }
 
   function previousMonth() {

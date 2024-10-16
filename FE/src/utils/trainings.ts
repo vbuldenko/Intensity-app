@@ -10,19 +10,25 @@ export function getCurrentWage(trainings: Training[]): number {
   }, 0);
 }
 
-export const filterByInstructor = (trainings, instructorId) => {
+export const filterByInstructor = (
+  trainings: Training[],
+  instructorId: number
+) => {
   return trainings.filter((training) => training.instructorId === instructorId);
 };
 
-export const filterByVisitors = (trainings, minVisitors) => {
+export const filterByVisitors = (
+  trainings: Training[],
+  minVisitors: number
+) => {
   return trainings.filter(
     (training) => training.visitors.length >= minVisitors
   );
 };
 
 export const filterTrainingsByDate = (
-  trainings,
-  currentDate,
+  trainings: Training[],
+  currentDate: Date,
   filterType: "month" | "day"
 ) => {
   return trainings.filter((training) => {
@@ -43,9 +49,10 @@ export const filterTrainingsByDate = (
   });
 };
 
-export function calculateHoursDiff(trainingTime) {
+export function calculateHoursDiff(trainingTime: Date): number {
   const currentTime = new Date();
-  return (trainingTime - currentTime) / (1000 * 60 * 60);
+  const diffInMilliseconds = trainingTime.getTime() - currentTime.getTime();
+  return diffInMilliseconds / (1000 * 60 * 60);
 }
 
 export const canTrainingProceed = (
@@ -56,7 +63,7 @@ export const canTrainingProceed = (
   const timeDifference = calculateHoursDiff(trainingDateTime);
 
   if (timeDifference < 3 && visitorsCount < 2) {
-    return false; // Return training to user's subscription
+    return false;
   }
   return true;
 };

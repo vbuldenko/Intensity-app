@@ -4,6 +4,7 @@ import { studioStats } from "../../../../assets/mockData";
 import classNames from "classnames";
 import { abonementService } from "../../../../services/abonementService";
 import { Abonement } from "../../../../types/Abonement";
+import { User } from "../../../../types/User";
 
 const AdminDashboard: React.FC = () => {
   const [abonements, setAbonements] = useState<Abonement[]>([]);
@@ -97,15 +98,15 @@ const StatisticsSection: React.FC<{
   </div>
 );
 
-const TrainersSection: React.FC<{ trainers: Trainer[] }> = ({ trainers }) => (
+const TrainersSection: React.FC<{ trainers: User[] }> = ({ trainers }) => (
   <div className="admin-dashboard__section">
     <h3 className="admin-dashboard__subtitle">Top Trainers by Attendance</h3>
     <ul className="admin-dashboard__list card-element">
       {trainers.map((trainer, i) => (
-        <li key={trainer.trainerId} className="admin-dashboard__list-item">
-          <span>{trainer.trainerName}:</span>
+        <li key={trainer.id} className="admin-dashboard__list-item">
+          <span>{trainer.firstName}:</span>
           <p className={classNames({ "text-teal-500": i === 0 })}>
-            {trainer.totalAttendees} attendees
+            {/* {trainer.totalAttendees} attendees */}
           </p>
         </li>
       ))}

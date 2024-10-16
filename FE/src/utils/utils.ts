@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ScheduleTraining } from "../types/Schedule";
 
 export const getLinkClass = ({ isActive }: { isActive: boolean }) =>
   classNames("nav__link", {
@@ -83,10 +84,8 @@ export const adaptivePaginationPages = (
 };
 
 export function getErrorMessage(error: any): string {
-  // Extract errors object from error response
   const errors = error?.response?.data?.errors;
 
-  // If errors exist, get the first key-value pair (e.g., password: 'Should be at least 4 characters')
   if (
     errors &&
     typeof errors === "object" &&
@@ -96,7 +95,6 @@ export function getErrorMessage(error: any): string {
     return `${field.toLocaleUpperCase()}: ${message}`;
   }
 
-  // Fallback to error.response.data.message or error.message if no specific errors
   return (
     error?.response?.data?.message ||
     error.message ||
@@ -104,7 +102,7 @@ export function getErrorMessage(error: any): string {
   );
 }
 
-export function groupTrainingsByDay(trainings) {
+export function groupTrainingsByDay(trainings: ScheduleTraining[]) {
   const daysOfWeek = [
     "Monday",
     "Tuesday",
@@ -120,7 +118,7 @@ export function groupTrainingsByDay(trainings) {
   }));
 }
 
-export function isTomorrow(dateToCheck) {
+export function isTomorrow(dateToCheck: Date) {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   return (
@@ -131,10 +129,10 @@ export function isTomorrow(dateToCheck) {
 }
 
 export function reservationAccess(
-  currentDateTime,
-  scheduledTime,
-  reservedPlaces,
-  hoursDiff
+  currentDateTime: Date,
+  scheduledTime: Date,
+  reservedPlaces: number,
+  hoursDiff: number
 ) {
   const currentHour = currentDateTime.getHours();
   // console.log("Is tomorrosW: ", isTomorrow(scheduledTime));

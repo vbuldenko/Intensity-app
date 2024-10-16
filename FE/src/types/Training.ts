@@ -3,10 +3,11 @@ import { User } from "./User";
 export interface Training {
   id: number;
   type: string;
-  instructorId: string;
-  capacity: string;
-  date: Date;
+  instructorId: number;
+  capacity: number;
+  date: string;
   day: string;
   time: string;
   visitors: User[];
+  instructor?: User;
 }

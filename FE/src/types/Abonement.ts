@@ -1,5 +1,5 @@
 export interface Abonement {
-  id: string;
+  id: number;
   userId: number;
   status: "active" | "ended" | "inactive";
   type: "group" | "personal" | "split" | "kids";
@@ -15,5 +15,5 @@ export interface Abonement {
   // updatedAt: Date;
   // activatedAt: Date;
   // expiratedAt: Date;
-  history: any[];
+  visitedTrainings: any[];
 }

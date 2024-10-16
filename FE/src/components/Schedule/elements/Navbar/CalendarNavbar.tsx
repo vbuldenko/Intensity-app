@@ -1,13 +1,22 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
+import React from "react";
 
-export default function CalendarNavbar({
+interface CalendarNavbarProps {
+  firstDayCurrentMonth: Date;
+  previousMonth: () => void;
+  nextMonth: () => void;
+  view: "month" | "week";
+  handleViewChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
   firstDayCurrentMonth,
   previousMonth,
   nextMonth,
   view,
   handleViewChange,
-}) {
+}) => {
   return (
     <div className="calendar__navbar">
       <button className="calendar__navbar-button" onClick={previousMonth}>
@@ -31,4 +40,6 @@ export default function CalendarNavbar({
       </select>
     </div>
   );
-}
+};
+
+export default CalendarNavbar;

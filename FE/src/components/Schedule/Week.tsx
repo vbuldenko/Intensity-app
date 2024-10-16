@@ -11,9 +11,20 @@ import {
   startOfWeek,
   endOfWeek,
 } from "date-fns";
+import { Training } from "../../types/Training";
 // import { classNames } from "../../utils/utils";
 
-export default function WeekView({ selectedDay, setSelectedDay, trainings }) {
+interface Props {
+  selectedDay: Date;
+  setSelectedDay: React.Dispatch<React.SetStateAction<Date>>;
+  trainings: Training[];
+}
+
+const WeekView: React.FC<Props> = ({
+  selectedDay,
+  setSelectedDay,
+  trainings,
+}) => {
   const weekStart = startOfWeek(selectedDay);
   const weekEnd = endOfWeek(selectedDay);
   const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
@@ -70,4 +81,6 @@ export default function WeekView({ selectedDay, setSelectedDay, trainings }) {
       ))}
     </div>
   );
-}
+};
+
+export default WeekView;
