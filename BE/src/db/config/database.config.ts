@@ -21,18 +21,19 @@ interface Config {
 
 const config: Config = {
   development: {
-    username: 'fsadmin',
-    password: '5pYiaw9DBCTnsruaoWylw8djfF0ltWbP',
-    database: 'dbifs',
-    host: 'dpg-cs7nbpt6l47c73c69eh0-a.frankfurt-postgres.render.com',
-    port: 5432,
+    username: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASS || '123',
+    database: process.env.DB_NAME || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 5432,
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
         require: true,
-        // rejectUnauthorized: false, // You might need this for self-signed certificates
+        rejectUnauthorized: false, // You might need this for self-signed certificates
       },
     },
+    logging: console.log,
   },
   test: {
     username: process.env.DB_USER || 'test_user',
