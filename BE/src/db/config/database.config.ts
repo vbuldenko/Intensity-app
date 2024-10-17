@@ -30,7 +30,7 @@ const config: Config = {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false, // You might need this for self-signed certificates
+        // rejectUnauthorized: false, // You might need this for self-signed certificates
       },
     },
   },
