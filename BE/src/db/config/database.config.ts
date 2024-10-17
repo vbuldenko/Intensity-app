@@ -24,7 +24,7 @@ const config: Config = {
     username: 'fsadmin',
     password: '5pYiaw9DBCTnsruaoWylw8djfF0ltWbP',
     database: 'dbifs',
-    host: 'dpg-cs7nbpt6l47c73c69eh0-a.frankfurt-postgres.render.com',
+    host: 'dpg-cs7nbpt6l47c73c69eh0-a',
     port: 5432,
     dialect: 'postgres',
     dialectOptions: {
