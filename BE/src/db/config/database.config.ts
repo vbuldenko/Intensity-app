@@ -21,15 +21,18 @@ interface Config {
 
 const config: Config = {
   development: {
-    username: process.env.DB_USER || 'fsadmin',
-    password: process.env.DB_PASS || '5pYiaw9DBCTnsruaoWylw8djfF0ltWbP',
-    database: process.env.DB_NAME || 'dbifs',
-    host:
-      process.env.DB_HOST ||
-      'dpg-cs7nbpt6l47c73c69eh0-a.frankfurt-postgres.render.com',
-    port: Number(process.env.DB_PORT) || 5432,
+    username: 'fsadmin',
+    password: '5pYiaw9DBCTnsruaoWylw8djfF0ltWbP',
+    database: 'dbifs',
+    host: 'dpg-cs7nbpt6l47c73c69eh0-a.frankfurt-postgres.render.com',
+    port: 5432,
     dialect: 'postgres',
-    logging: console.log,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // You might need this for self-signed certificates
+      },
+    },
   },
   test: {
     username: process.env.DB_USER || 'test_user',

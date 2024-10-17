@@ -23,6 +23,22 @@ export const sequelize = new Sequelize(
   config,
 );
 
+// Connection URL for the PostgreSQL database
+// const connectionUrl =
+//   'postgresql://fsadmin:5pYiaw9DBCTnsruaoWylw8djfF0ltWbP@dpg-cs7nbpt6l47c73c69eh0-a.frankfurt-postgres.render.com/dbifs';
+
+// export const sequelize = new Sequelize(connectionUrl, {
+//   dialect: 'postgres',
+//   protocol: 'postgres',
+//   logging: false, // Disable logging; default: console.log
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false, // You might need this for self-signed certificates
+//     },
+//   },
+// });
+
 const db: any = {};
 
 const modelFiles = fs.readdirSync(__dirname).filter(file => {

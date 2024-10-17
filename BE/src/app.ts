@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export function createApp() {
-  // db.History.sync({ force: true });
+  // db.sequelize.sync({ force: true });
   // initializePredefinedSchedule();
   const app = express();
 
