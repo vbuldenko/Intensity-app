@@ -24,7 +24,7 @@ export const sendActivationLink = (
   email: string,
   token: string,
 ): Promise<void> => {
-  const link = `${process.env.CLIENT_HOST}/activation/${token}`;
+  const link = `${process.env.CLIENT_URL}/activation/${token}`;
 
   return send({
     email,
