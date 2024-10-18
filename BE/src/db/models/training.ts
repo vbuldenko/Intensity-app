@@ -71,15 +71,15 @@ export default function (sequelize: Sequelize) {
         allowNull: false,
       },
       date: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       day: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       time: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
