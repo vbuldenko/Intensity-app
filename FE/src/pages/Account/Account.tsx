@@ -22,7 +22,7 @@ export default function Account() {
   }, [data, dispatch]);
 
   return (
-    <section className="account card-element">
+    <section className="account">
       <Menu className="account__menu" />
 
       <div className="account__content">
