@@ -6,12 +6,12 @@ POST http://localhost:3001/registration
 content-type: application/json
 
 {
-  "firstName": "Ann",
-  "lastName": "Ter",
-  "email": "anter@gmail.com",
-  "phone": "0978612121",
+  "firstName": "Angy",
+  "lastName": "Bul",
+  "email": "in10sity.trainer@gmail.com",
+  "phone": "0979910070",
   "password": "123456",
-  "role": "trainer"
+  "role": "admin"
 }
 ###
 ###
