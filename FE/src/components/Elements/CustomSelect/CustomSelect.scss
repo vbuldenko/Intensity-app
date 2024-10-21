@@ -1,0 +1,51 @@
+.custom-select {
+  position: relative;
+  display: flex;
+  width: 8rem;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    background-color: $color-background;
+    border: 1px solid #d1d5db;
+    border-radius: 1rem;
+    cursor: pointer;
+    text-align: left;
+    text-transform: capitalize;
+    color: black;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__icon {
+    width: 1rem;
+    color: #4b5563;
+  }
+
+  &__menu {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  &__option {
+    padding: 0.25rem 1rem;
+    cursor: pointer;
+    color: black;
+    text-transform: capitalize;
+
+    &:hover {
+      background-color: #e5e7eb;
+    }
+  }
+}

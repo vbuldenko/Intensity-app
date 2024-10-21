@@ -1,13 +1,14 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
 import React from "react";
+import CustomSelect from "../../../Elements/CustomSelect";
 
 interface CalendarNavbarProps {
   firstDayCurrentMonth: Date;
   previousMonth: () => void;
   nextMonth: () => void;
   view: "month" | "week";
-  handleViewChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleViewChange: (value: "month" | "week") => void;
 }
 
 const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
@@ -22,22 +23,17 @@ const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
       <button className="calendar__navbar-button" onClick={previousMonth}>
         <ChevronLeftIcon className="calendar__navbar-icon" />
       </button>
-      <h3 className="calendar__title calendar__title--bold">
+      <h3 className="calendar__title">
         {format(firstDayCurrentMonth, "MMMM yyyy")}
       </h3>
       <button className="calendar__navbar-button" onClick={nextMonth}>
         <ChevronRightIcon className="calendar__navbar-icon" />
       </button>
-      <select
-        id="view"
-        className="calendar__select"
-        name="view"
+      <CustomSelect
         value={view}
+        options={["month", "week"]}
         onChange={handleViewChange}
-      >
-        <option value="month">Month</option>
-        <option value="week">Week</option>
-      </select>
+      />
     </div>
   );
 };

@@ -39,7 +39,7 @@ const WeekView: React.FC<Props> = ({
     "col-start-6",
   ];
   return (
-    <div className="grid grid-cols-7 mt-2 text-sm">
+    <div className="calendar__body">
       {weekDays.map((day, dayIdx) => (
         <div
           key={day.toString()}

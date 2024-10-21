@@ -40,8 +40,7 @@ export default function Schedule() {
         parseInt(a.time.slice(0, 2), 10) - parseInt(b.time.slice(0, 2), 10)
     );
 
-  function handleViewChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    const value = event.target.value as "month" | "week";
+  function handleViewChange(value: "month" | "week") {
     setScheduleView(value);
   }
 
