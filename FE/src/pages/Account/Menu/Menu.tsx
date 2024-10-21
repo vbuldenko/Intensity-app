@@ -4,12 +4,14 @@ import { NavLinks } from "../../../types/NavLinks";
 import "./Menu.scss";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 interface MenuProps {
   className: string;
 }
 
 const Menu = ({ className }: MenuProps) => {
+  const { theme } = useTheme();
   const { data: user } = useAppSelector(selectUser);
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     classNames("menu__link", { selected: isActive });
@@ -40,7 +42,7 @@ const Menu = ({ className }: MenuProps) => {
   };
 
   return (
-    <nav className={`${className} menu`}>
+    <nav className={`menu ${theme} ${className}`}>
       {user &&
         getLinks(user.role).map(({ to, label }) => (
           //"end" used to handle isActive prop for index route
