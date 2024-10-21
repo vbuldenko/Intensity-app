@@ -25,13 +25,13 @@ const MonthView: React.FC<MonthViewProps> = ({
   trainings,
 }) => {
   const monthStart = [
-    "",
+    "calendar__day--start-7",
+    "calendar__day--start-1",
     "calendar__day--start-2",
     "calendar__day--start-3",
     "calendar__day--start-4",
     "calendar__day--start-5",
     "calendar__day--start-6",
-    "calendar__day--start-7",
   ];
 
   return (
