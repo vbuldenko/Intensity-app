@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
       },
       refreshToken: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1024),
         allowNull: false,
       },
       userId: {

@@ -42,7 +42,7 @@ export default function (sequelize: Sequelize) {
         onDelete: 'CASCADE',
       },
       refreshToken: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1024),
         allowNull: false,
       },
     },
