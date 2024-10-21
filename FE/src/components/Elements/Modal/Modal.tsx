@@ -24,15 +24,17 @@ export default function Modal({ btnName, data }: ModalProps) {
       </button>
 
       {isOpen && (
-        <div className="modal">
-          <button
-            className="modal__close-button self-end"
-            onClick={toggleModal}
-            aria-label="Close modal"
-          >
-            &times;
-          </button>
-          <div className="px-6">{data}</div>
+        <div className="modal-container">
+          <div className="modal">
+            <button
+              className="modal__close-button self-end"
+              onClick={toggleModal}
+              aria-label="Close modal"
+            >
+              &times;
+            </button>
+            <div className="px-6">{data}</div>
+          </div>
         </div>
       )}
     </>
