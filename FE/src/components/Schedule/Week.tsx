@@ -25,18 +25,18 @@ const WeekView: React.FC<Props> = ({
   setSelectedDay,
   trainings,
 }) => {
-  const weekStart = startOfWeek(selectedDay);
-  const weekEnd = endOfWeek(selectedDay);
+  const weekStart = startOfWeek(selectedDay, { weekStartsOn: 1 });
+  const weekEnd = endOfWeek(selectedDay, { weekStartsOn: 1 });
   const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
 
   const colStartClasses = [
-    "",
+    "col-start-7",
+    "col-start-1",
     "col-start-2",
     "col-start-3",
     "col-start-4",
     "col-start-5",
     "col-start-6",
-    "col-start-7",
   ];
   return (
     <div className="grid grid-cols-7 mt-2 text-sm">
