@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { ScheduleTraining } from "../../../types/Schedule";
 import { scheduleService } from "../../../services/scheduleService";
-import { groupTrainingsByDay } from "../../../utils/utils";
+import { getErrorMessage, groupTrainingsByDay } from "../../../utils/utils";
 import { trainingService } from "../../../services/trainingService";
 import "./ScheduleEditor.scss";
+import Notification from "../../../components/Elements/Notification";
 
 const ScheduleEditor: React.FC = () => {
   const [schedule, setSchedule] = useState<ScheduleTraining[]>([]);
@@ -12,6 +13,9 @@ const ScheduleEditor: React.FC = () => {
   const [editableTraining, setEditableTraining] =
     useState<ScheduleTraining | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchScheduleData = async () => {
@@ -58,17 +62,36 @@ const ScheduleEditor: React.FC = () => {
 
   const handleInitialization = async () => {
     if (selectedDate) {
-      const startDate = new Date(selectedDate);
-      const day = startDate.getDate();
-      await trainingService.initializeWeek(day);
-    }
+      setIsSubmitting(true);
+      try {
+        const startDate = new Date(selectedDate);
+        const day = startDate.getDate();
+        await trainingService.initializeWeek(day);
+        setNotification("Successfully initialized week");
+      } catch (error) {
+        setError(getErrorMessage(error) || "error occured");
+      } finally {
+        setIsSubmitting(false);
+
+        setTimeout(() => {
+          setError(null);
+          setNotification(null);
+        }, 5000);
+      }
+    } else
+      setError("Error initializing week: selectedDate is not defined or empty");
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
   };
 
   const groupedSchedule = groupTrainingsByDay(schedule);
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
+      {notification && <Notification message={notification} />}
+      {error && <Notification message={error} type="error" />}
+      <div className="flex flex-wrap items-center justify-between mb-4 gap-4 mt-2">
         <input
           type="date"
           className="flex-1 init-date text-teal-600 bg-gray-100 py-1 px-6 rounded-xl"
@@ -77,8 +100,12 @@ const ScheduleEditor: React.FC = () => {
         />
 
         <div className="card-element flex-1 p-1 text-center bg-teal-500 text-white">
-          <button className="init w-full" onClick={handleInitialization}>
-            Initialize from selected date
+          <button
+            className="init w-full flex items-center justify-center min-h-6"
+            onClick={handleInitialization}
+          >
+            {isSubmitting && <div className="reservation-btn__spinner"></div>}
+            {!isSubmitting && "Initialize from selected date"}
           </button>
         </div>
       </div>

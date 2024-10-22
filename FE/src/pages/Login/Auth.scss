@@ -43,13 +43,33 @@
   }
 
   &__button {
-    background-color: $color-green;
-    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    // background-color: $account-background;
+    background-color: $gray-color-9;
+    color: $color-green;
+    // color: rgb(0, 190, 162);
     padding: 0.75rem 1.5rem;
     font-weight: bold;
     cursor: pointer;
     border: none;
     border-radius: 0.5rem;
+    box-shadow:
+      5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+      /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+        4px 0px rgba(0, 0, 0, 0.1) inset;
+    transition:
+      // transform 0.1s ease-in-out,
+      box-shadow 0.3s ease-in-out;
+
+    &:active {
+      box-shadow:
+        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+      // transform: scale(0.98);
+    }
   }
 
   &__signup-subsection {
@@ -66,7 +86,12 @@
 
     &__link {
       font-size: 1rem;
+
+      &:hover {
+        color: $color-green;
+      }
     }
+
     &__link--accent {
       font-size: 1.25rem;
       font-weight: bold;

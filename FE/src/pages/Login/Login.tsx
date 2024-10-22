@@ -11,13 +11,16 @@ const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const { isAuthenticated, error } = useAppSelector(selectAuth);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const path = location.state?.from || "/account";
 
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(login({ email: identifier, password }));
+    setIsSubmitting(true);
+    await dispatch(login({ email: identifier, password }));
+    setIsSubmitting(false);
     // setIdentifier("");
     // setPassword("");
     // navigate(path, { replace: true });
@@ -61,21 +64,24 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="auth__button">
-          Log In
+          {isSubmitting && <div className="reservation-btn__spinner"></div>}
+          {!isSubmitting && "Log in"}
         </button>
       </form>
       <div className="auth__signup-subsection">
         <div>
-          <p>New here?</p>
           <Link
-            className="auth__signup-subsection__link--accent"
+            className="auth__signup-subsection__link auth__signup-subsection__link--accent"
             to={`/${NavLinks.SignUp}`}
           >
             Sign Up
           </Link>
         </div>
-        <Link className="auth__signup-subsection__link" to={NavLinks.Restore}>
-          Forgot password?
+        <Link
+          className="auth__signup-subsection__link text-sm"
+          to={NavLinks.Restore}
+        >
+          Forgot password
         </Link>
       </div>
     </div>

@@ -17,9 +17,11 @@ import { User } from "../../../types/User";
 import { logOut } from "../../../features/auth/authThunk";
 import Loader from "../../../components/Elements/Loader";
 import { updateUserData } from "../../../features/user/userThunk";
+import { useState } from "react";
 
 function Settings() {
   const { data: user, loading } = useAppSelector(selectUser);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -34,7 +36,9 @@ function Settings() {
   };
 
   const handleLogOut = async () => {
+    setIsSubmitting(true);
     await dispatch(logOut());
+    setIsSubmitting(false);
   };
 
   const handleDelete = async () => {
@@ -130,7 +134,8 @@ function Settings() {
               <p className="text text--small">Log yourself out:</p>
             </div>
             <button className="button button--action" onClick={handleLogOut}>
-              Log Out
+              {isSubmitting && <div className="reservation-btn__spinner"></div>}
+              {!isSubmitting && "Log out"}
             </button>
           </div>
           <div className="settings__info-item">
