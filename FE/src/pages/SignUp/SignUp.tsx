@@ -132,8 +132,8 @@ const SignUp = () => {
         </button>
       </form>
       <div className="auth__subsection">
-        <div className="flex gap-4 p-4 justify-center">
-          <p>Already have an account?</p>
+        <div className="flex gap-4 px-8 py-4 justify-between items-center">
+          <p className="text-sm">Already have an account?</p>
           <Link className="font-bold text-xl text-teal-500" to="/sign-in">
             Log In
           </Link>

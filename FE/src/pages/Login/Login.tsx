@@ -35,25 +35,25 @@ const Login = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
-        <h2 className="auth__title">Log in to application</h2>
+        <h2 className="auth__title">Log in</h2>
         {error && (
           <h1 className="auth__error-message self-center card-element bg-red-100">
             {error}
           </h1>
         )}
         <div className="auth__input-wrapper">
-          <label htmlFor="identifier">Email or Phone Number</label>
+          {/* <label htmlFor="identifier">Email or Phone Number</label> */}
           <input
             id="identifier"
             type="text"
             value={identifier}
             name="identifier"
-            placeholder="Email or Phone Number"
+            placeholder="Email"
             onChange={({ target }) => setIdentifier(target.value)}
           />
         </div>
         <div className="auth__input-wrapper">
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             id="password"
             type="password"
@@ -81,7 +81,7 @@ const Login = () => {
           className="auth__signup-subsection__link text-sm"
           to={NavLinks.Restore}
         >
-          Forgot password
+          Forgot password?
         </Link>
       </div>
     </div>
