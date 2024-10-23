@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  notifyWith,
-  selectNotification,
-} from "../../features/notification/notificationSlice";
 import { authService } from "../../services/authService";
 import { AuthCredentials } from "../../types/Auth";
 import { NavLinks } from "../../types/NavLinks";
 import { getErrorMessage } from "../../utils/utils";
+import Notification from "../../components/Elements/Notification";
 
 const SignUp = () => {
   const defaultUserData: AuthCredentials = {
@@ -19,11 +15,15 @@ const SignUp = () => {
     password: "",
     role: "client",
   };
+  const [notification, setNotification] = useState<string | null>(null);
 
   const [signUpData, setSignUpData] = useState(defaultUserData);
   const navigate = useNavigate();
-  const notification = useAppSelector(selectNotification);
-  const dispatch = useAppDispatch();
+
+  const handleNotification = (message: string) => {
+    setNotification(message);
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -41,8 +41,7 @@ const SignUp = () => {
       setSignUpData(defaultUserData);
       navigate(`/${NavLinks.CheckEmail}`, { replace: true });
     } catch (error: any) {
-      console.log(error);
-      dispatch(notifyWith(getErrorMessage(error)));
+      handleNotification(getErrorMessage(error));
     }
   };
 
@@ -50,11 +49,7 @@ const SignUp = () => {
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleSubmit}>
         <h1 className="auth__title">Create an account</h1>
-        {notification && (
-          <h1 className="auth__error-message self-center card-element bg-red-100">
-            {notification}
-          </h1>
-        )}
+        {notification && <Notification message={notification} type="error" />}
         <div className="auth__input-wrapper">
           <input
             id="firstName"

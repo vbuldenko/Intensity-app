@@ -1,9 +1,5 @@
 import { useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  notifyWith,
-  selectNotification,
-} from "../../../features/notification/notificationSlice";
 import { reserveTraining } from "../../../features/trainings/trainingThunk";
 import { reservationAccess, getErrorMessage } from "../../../utils/utils";
 import {
@@ -16,12 +12,15 @@ import ReservationButton from "../../Elements/ReservationButton";
 import { selectUser } from "../../../features/user/userSlice";
 import classNames from "classnames";
 import { Training as TrainingType } from "../../../types/Training";
+import Notification from "../../Elements/Notification";
 
 export default function Training({ training }: { training: TrainingType }) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(false);
-  const notification = useAppSelector(selectNotification);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "error" | "notification" | undefined;
+  } | null>(null);
   const { data: user } = useAppSelector(selectUser);
   const abonement = useMemo(
     () => getCurrentAbonement(user?.abonements),
@@ -49,10 +48,12 @@ export default function Training({ training }: { training: TrainingType }) {
   );
   // const access = true;
 
-  const handleNotification = (message: string) => {
-    setError(true);
-    dispatch(notifyWith(message));
-    setTimeout(() => setError(false), 3000);
+  const handleNotification = (
+    message: string,
+    type?: "error" | "notification"
+  ) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
   };
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
@@ -63,15 +64,18 @@ export default function Training({ training }: { training: TrainingType }) {
       calculateHoursDiff(trainingTime)
     );
     if (!updatedAccess) {
-      return handleNotification("The reservation period has passed!");
+      return handleNotification("The reservation period has passed!", "error");
     }
 
     if (!abonement) {
-      return handleNotification("No abonement, buy one to proceed!");
+      return handleNotification("No abonement, buy one to proceed!", "error");
     }
 
     if (updateType === "reservation" && abonement.left === 0) {
-      return handleNotification("No trainings left, buy a new abonement!");
+      return handleNotification(
+        "No trainings left, buy a new abonement!",
+        "error"
+      );
     }
 
     const isForbidden = isCancellationForbidden(
@@ -82,7 +86,8 @@ export default function Training({ training }: { training: TrainingType }) {
     );
     if (isForbidden) {
       return handleNotification(
-        "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!"
+        "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
+        "error"
       );
     }
 
@@ -95,6 +100,7 @@ export default function Training({ training }: { training: TrainingType }) {
           updateType,
         })
       );
+      return handleNotification("Success");
     } catch (error) {
       handleNotification(getErrorMessage(error));
     } finally {
@@ -104,8 +110,8 @@ export default function Training({ training }: { training: TrainingType }) {
 
   return (
     <li className="schedule__training">
-      {notification && error && (
-        <div className="notification-error">{notification}</div>
+      {notification && (
+        <Notification message={notification.message} type={notification.type} />
       )}
       <div
         className={classNames("training__content card-element", {

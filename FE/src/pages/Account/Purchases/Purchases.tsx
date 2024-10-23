@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { notifyWith } from "../../../features/notification/notificationSlice";
 // import { createAbonement } from "../../../reducers/abonementReducer";
 import Selector from "../../../components/Elements/Selector";
 import { membership } from "../../../assets/purchaseData";
@@ -8,11 +7,16 @@ import { selectUser } from "../../../features/user/userSlice";
 import "./Purchases.scss";
 import { abonementService } from "../../../services/abonementService";
 import { getErrorMessage } from "../../../utils/utils";
+import Notification from "../../../components/Elements/Notification";
 
 export default function Purchases({ clientId }: { clientId?: number }) {
-  const notification = useAppSelector(({ notification }) => notification);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "error" | "notification";
+  } | null>(null);
+
   const { data: user } = useAppSelector(selectUser);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [selectedType, setSelectedType] = useState<
     "group" | "personal" | "split" | "kids"
   >("group");
@@ -31,25 +35,23 @@ export default function Purchases({ clientId }: { clientId?: number }) {
           type: selectedType,
           clientId,
         });
-        dispatch(
-          notifyWith(
-            `Abonement for ${selectedAbonement.amount} trainings was added`
-          )
-        );
+        setNotification({
+          message: `Abonement for ${selectedAbonement.amount} trainings was added`,
+          type: "notification",
+        });
       } else if (selectedAbonement) {
         // await abonementService.add({
         //   ...selectedAbonement,
         //   type: selectedType,
         // });
-        // dispatch(
-        //   notifyWith(
-        //     `Abonement for ${selectedAbonement.amount} trainings was purchased`
-        //   )
-        // );
-        dispatch(notifyWith("In Development: not available"));
+        setNotification({ message: "In development", type: "error" });
       }
     } catch (error) {
-      dispatch(notifyWith(getErrorMessage(error)));
+      setNotification({ message: getErrorMessage(error), type: "error" });
+    } finally {
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
     }
   };
 
@@ -77,9 +79,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
   return (
     <div className="purchases">
       {notification && (
-        <div className="text-center bg-red-200 text-red-600 p-4 rounded-xl">
-          {notification}
-        </div>
+        <Notification message={notification.message} type={notification.type} />
       )}
 
       <h3 className="purchases__title">
