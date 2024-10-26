@@ -26,10 +26,18 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   }, [abonement.paused]);
 
   useEffect(() => {
-    if (abonement.visitedTrainings.length > 0) {
+    const isNotExpired = new Date(abonement.expiratedAt) > new Date();
+    const hasVisitedTrainings = abonement.visitedTrainings.length > 0;
+
+    if (isNotExpired && hasVisitedTrainings) {
       dispatch(checkTrainingReturn(abonement.id));
     }
-  }, [dispatch]);
+  }, [
+    abonement.expiratedAt,
+    abonement.visitedTrainings,
+    abonement.id,
+    dispatch,
+  ]);
 
   return (
     <div className="abonement card-element">

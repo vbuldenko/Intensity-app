@@ -99,10 +99,10 @@ export default function Training({ training }: { training: TrainingType }) {
           abonementId: abonement.id,
           updateType,
         })
-      );
-      return handleNotification("Success");
+      ).unwrap();
+      handleNotification("Success");
     } catch (error) {
-      handleNotification(getErrorMessage(error));
+      handleNotification(getErrorMessage(error), "error");
     } finally {
       setIsSubmitting(false);
     }
