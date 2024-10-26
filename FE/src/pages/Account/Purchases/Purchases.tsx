@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { createAbonement } from "../../../reducers/abonementReducer";
 import Selector from "../../../components/Elements/Selector";
 import { membership } from "../../../assets/purchaseData";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import "./Purchases.scss";
 import { abonementService } from "../../../services/abonementService";
