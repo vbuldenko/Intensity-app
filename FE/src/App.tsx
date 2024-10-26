@@ -12,7 +12,6 @@ import LoginPage from "./pages/Login";
 import AccountPage from "./pages/Account";
 import SignUpPage from "./pages/SignUp";
 import CheckEmailPage from "./pages/CheckEmail";
-import ActivationPage from "./pages/Activation/Activation";
 import { NavLinks } from "./types/NavLinks";
 import Overview from "./pages/Account/Overview";
 import Settings from "./pages/Account/Settings";
@@ -22,6 +21,7 @@ import ScheduleEditor from "./pages/Account/ScheduleEditor";
 import User from "./pages/Account/UserList/User";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AccountActivation from "./pages/Activation/Activation";
 
 export default function App() {
   return (
@@ -35,7 +35,7 @@ export default function App() {
         <Route path={NavLinks.Login} element={<LoginPage />} />
         <Route path={NavLinks.SignUp} element={<SignUpPage />} />
         <Route path={NavLinks.CheckEmail} element={<CheckEmailPage />} />
-        <Route path={NavLinks.Activate} element={<ActivationPage />} />
+        <Route path={NavLinks.Activate} element={<AccountActivation />} />
         <Route path={NavLinks.Restore} element={<ForgotPassword />} />
         <Route path={NavLinks.Reset} element={<ResetPassword />} />
         <Route element={<AuthRequired />}>
