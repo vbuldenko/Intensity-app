@@ -26,7 +26,7 @@ export default function ClientOverview({ user }: ClientOverviewProps) {
       <Selector
         selection={abonementView}
         handleSelection={handleViewChange}
-        buttonNames={["active", "expired", "not activated"]}
+        buttonNames={["active", "expired", "inactive"]}
       />
       <div className="client-overview__content">
         {sortByParam(filteredAbonements, "createdAt").map((abonement) => {

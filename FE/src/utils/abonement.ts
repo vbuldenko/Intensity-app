@@ -2,7 +2,7 @@ import { Abonement } from "../types/Abonement";
 import { User } from "../types/User";
 import { isTomorrow } from "./utils";
 
-export type ViewOption = "all" | "active" | "expired" | "not activated";
+export type ViewOption = "all" | "active" | "expired" | "inactive";
 
 export function filterAbonements(
   abonements: Abonement[],
@@ -23,7 +23,7 @@ export function filterAbonements(
           (expirationDate !== null && expirationDate < currentDate) ||
           abonement.status === "ended"
         );
-      case "not activated":
+      case "inactive":
         return abonement.status === "inactive" && expirationDate === null;
       default: // 'all' option
         return true;
