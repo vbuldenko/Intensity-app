@@ -40,6 +40,7 @@ export function getCurrentAbonement(
     return null;
   }
 
+  let earliestActiveAbonement: Abonement | null = null;
   let inactiveAbonement: Abonement | null = null;
   let recentlyEnded: Abonement | null = null;
 
@@ -47,7 +48,12 @@ export function getCurrentAbonement(
 
   for (const a of abonements) {
     if (a.status === "active") {
-      return a; // Return immediately when an active abonement is found
+      if (
+        !earliestActiveAbonement ||
+        new Date(a.createdAt) < new Date(earliestActiveAbonement.createdAt)
+      ) {
+        earliestActiveAbonement = a; // Store the earliest purchased active abonement
+      }
     }
     if (a.status === "inactive" && !inactiveAbonement) {
       inactiveAbonement = a; // Store inactive if no active is found
@@ -65,7 +71,7 @@ export function getCurrentAbonement(
     }
   }
 
-  return inactiveAbonement || recentlyEnded || null;
+  return earliestActiveAbonement || inactiveAbonement || recentlyEnded || null;
 }
 
 export function getAbonement(user: User): Abonement | null {
