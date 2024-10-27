@@ -94,3 +94,9 @@ export const getUserFromRequest = (req: Request): UserDTO => {
   }
   return user;
 };
+
+export const checkAdminRole = (user: UserDTO): void => {
+  if (user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+};
