@@ -1,52 +1,35 @@
-// controllers/training.controller.ts
 import { Request, Response, NextFunction } from 'express';
 import * as trainingService from '../services/training.service';
 import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
-import abonement from '../db/models/abonement';
+import { checkAdminRole, getUserFromRequest } from '../utils';
 
-export const getAll = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getAll = async (req: Request, res: Response) => {
   const trainingSessions = await trainingService.getAll();
   res.json(trainingSessions);
 };
 
-export async function getById(req: Request, res: Response): Promise<void> {
+export const getById = async (req: Request, res: Response) => {
   const training = await trainingService.getById(Number(req.params.id));
   if (training) {
     res.json(training);
   } else {
     throw ApiError.NotFound({ training: 'Not found' });
   }
-}
+};
 
-export const create = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const { body } = req;
-  const user = req.user as UserDTO;
+export const create = async (req: Request, res: Response) => {
+  const user = getUserFromRequest(req);
+  checkAdminRole(user);
 
-  if (!user || user.role !== 'admin') {
-    return res.status(401).json({ error: 'Operation not permitted' });
-  }
-
-  const newTraining = await trainingService.create(body);
+  const newTraining = await trainingService.create(req.body);
   res.status(201).json(newTraining);
 };
 
-export const update = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const update = async (req: Request, res: Response) => {
+  const user = getUserFromRequest(req);
   const abonementId = Number(req.query.abonementId);
   const trainingId = Number(req.query.trainingId);
-  const user = req.user as UserDTO;
   const { updateType } = req.body;
 
   if (isNaN(abonementId) || isNaN(trainingId)) {
@@ -68,16 +51,9 @@ export const update = async (
   res.json(updatedTraining);
 };
 
-export const remove = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const user = req.user as UserDTO;
-
-  if (!user || user.role !== 'admin') {
-    return res.status(401).json({ error: 'Operation not permitted' });
-  }
+export const remove = async (req: Request, res: Response) => {
+  const user = getUserFromRequest(req);
+  checkAdminRole(user);
 
   await trainingService.remove(Number(req.params.id));
   res.status(204).end();
@@ -88,27 +64,17 @@ export const removeMany = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const user = req.user as UserDTO;
-
-  if (!user || user.role !== 'admin') {
-    return res.status(403).json({ error: 'Operation not permitted' });
-  }
+  const user = getUserFromRequest(req);
+  checkAdminRole(user);
 
   await trainingService.removeAll();
   res.status(204).end();
 };
 
-export const initializeCurrentWeek = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const initializeCurrentWeek = async (req: Request, res: Response) => {
+  const user = getUserFromRequest(req);
+  checkAdminRole(user);
   const { day } = req.body;
-  const user = req.user as UserDTO;
-
-  if (!user || user.role !== 'admin') {
-    return res.status(403).json({ error: 'Operation not permitted' });
-  }
 
   await trainingService.initializeWeek(day);
   res.status(201).json({ message: 'Success' });

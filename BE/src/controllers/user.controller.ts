@@ -8,6 +8,8 @@ import {
   validateEmail,
   validatePassword,
   comparePasswords,
+  getUserFromRequest,
+  checkAdminRole,
 } from '../utils';
 import { UserDTO } from '../types/UserDTO';
 
@@ -17,17 +19,14 @@ export const getAllActive = async (
 ): Promise<void> => {
   const users = await userService.getAllActive();
   res.send(users);
-  // res.send(users.map(userService.normalize));
 };
 
 export const getOneById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { role } = req.user as UserDTO;
-  if (role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
+  const userData = getUserFromRequest(req);
+  checkAdminRole(userData);
 
   const user = await userService.getById(Number(req.params.id));
 
@@ -42,17 +41,15 @@ export const getProfile = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  if (!req.user) {
-    throw ApiError.Unauthorized();
-  }
+  const user = getUserFromRequest(req);
 
-  const user = await userService.getById((req.user as UserDTO).id);
+  const profileData = await userService.getById(user.id);
 
-  if (!user) {
+  if (!profileData) {
     throw ApiError.NotFound();
   }
 
-  res.send(user);
+  res.send(profileData);
 };
 
 export const updateUser = async (

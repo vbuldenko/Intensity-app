@@ -7,16 +7,13 @@ import {
   cancelNotHeldTrainings,
   updateReservation,
 } from '../services/reservation.service';
+import { getUserFromRequest } from '../utils';
 
 export const reserve = async (req: Request, res: Response) => {
+  const user = getUserFromRequest(req);
   const abonementId = Number(req.query.abonementId);
   const trainingId = Number(req.query.trainingId);
-  const user = req.user as UserDTO;
   const { updateType } = req.body;
-
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
 
   const updatedData = await updateReservation(
     abonementId,

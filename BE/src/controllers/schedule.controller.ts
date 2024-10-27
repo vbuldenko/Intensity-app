@@ -1,30 +1,24 @@
-// src/controllers/schedule.controller.ts
 import { Request, Response } from 'express';
 import scheduleService from '../services/schedule.service';
-import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
+import { getUserFromRequest } from '../utils';
 
 class ScheduleController {
-  // Create a new training session
   async createOne(req: Request, res: Response) {
-    const scheduleData = req.body;
-    const user = req.user as UserDTO;
-
-    if (!user || user.role !== 'admin') {
+    const user = getUserFromRequest(req);
+    if (user.role !== 'admin') {
       throw ApiError.Unauthorized();
     }
-
+    const scheduleData = req.body;
     const newSchedule = await scheduleService.createOne(scheduleData);
     res.status(201).json(newSchedule);
   }
 
-  // Get all training sessions
   async getAll(req: Request, res: Response) {
     const schedules = await scheduleService.getAll();
     res.status(200).json(schedules);
   }
 
-  // Get a schedule by ID
   async getOneById(req: Request, res: Response) {
     const { id } = req.params;
     const schedule = await scheduleService.getOneById(Number(id));
@@ -35,14 +29,12 @@ class ScheduleController {
     }
   }
 
-  // Update a training session
   async updateOne(req: Request, res: Response) {
-    const { id } = req.params;
-    const user = req.user as UserDTO;
-
-    if (!user || user.role !== 'admin') {
+    const user = getUserFromRequest(req);
+    if (user.role !== 'admin') {
       throw ApiError.Unauthorized();
     }
+    const { id } = req.params;
     const updatedSchedule = await scheduleService.updateOne(
       Number(id),
       req.body,
@@ -50,14 +42,12 @@ class ScheduleController {
     res.status(200).json(updatedSchedule);
   }
 
-  // Delete a training session
   async deleteOne(req: Request, res: Response) {
-    const { id } = req.params;
-    const user = req.user as UserDTO;
-
-    if (!user || user.role !== 'admin') {
+    const user = getUserFromRequest(req);
+    if (user.role !== 'admin') {
       throw ApiError.Unauthorized();
     }
+    const { id } = req.params;
     await scheduleService.deleteOne(Number(id));
     res.status(204).end();
   }
