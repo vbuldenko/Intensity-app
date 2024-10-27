@@ -8,11 +8,13 @@ import {
 } from "../../../utils/abonement";
 import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
-import ReservationButton from "../../Elements/ReservationButton";
+
 import { selectUser } from "../../../features/user/userSlice";
 import classNames from "classnames";
 import { Training as TrainingType } from "../../../types/Training";
-import Notification from "../../Elements/Notification";
+
+import ReservationButton from "../../../components/Elements/ReservationButton";
+import Notification from "../../../components/Elements/Notification";
 
 export default function Training({ training }: { training: TrainingType }) {
   const dispatch = useAppDispatch();

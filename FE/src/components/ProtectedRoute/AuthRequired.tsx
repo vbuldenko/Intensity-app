@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { selectAuth } from "../features/auth/authSlice";
-import { NavLinks } from "../types/NavLinks";
+import { useAppSelector } from "../../app/hooks";
+import { selectAuth } from "../../features/auth/authSlice";
+import { NavLinks } from "../../types/NavLinks";
 
 const AuthRequired: React.FC = () => {
   const { isAuthenticated } = useAppSelector(selectAuth);

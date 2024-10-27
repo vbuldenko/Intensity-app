@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout/MainLayout";
-import AuthRequired from "./components/AuthRequired";
+import MainLayout from "./components/Layout/MainLayout";
+import AuthRequired from "./components/ProtectedRoute";
 
 import NotFound from "./pages/NotFound/NotFound";
 import HomePage from "./pages/Home";
 import ServicesPage from "./pages/Services";
 import PricesPage from "./pages/Prices/Prices";
 import ContactsPage from "./pages/Contacts";
-import Schedule from "./components/Schedule";
+import Schedule from "./pages/Schedule";
 import LoginPage from "./pages/Login";
 import AccountPage from "./pages/Account";
 import SignUpPage from "./pages/SignUp";

@@ -1,4 +1,7 @@
 import bcrypt from 'bcrypt';
+import { UserDTO } from '../types/UserDTO';
+import { ApiError } from '../exceptions/api.error';
+import { Request } from 'express';
 
 export function validateEmail(email: string): string | undefined {
   const emailPattern = /^[\w.+-]+@([\w-]+\.){1,3}[\w-]{2,}$/;
@@ -82,4 +85,12 @@ export const canTrainingProceed = (
     return false; // Return training to user's subscription
   }
   return true;
+};
+
+export const getUserFromRequest = (req: Request): UserDTO => {
+  const user = req.user as UserDTO;
+  if (!user) {
+    throw ApiError.Unauthorized();
+  }
+  return user;
 };

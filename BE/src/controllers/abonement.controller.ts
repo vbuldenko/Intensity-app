@@ -2,13 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/api.error';
 import * as abonementService from '../services/abonement.service';
 import { UserDTO } from '../types/UserDTO';
+import { getUserFromRequest } from '../utils';
 
-// export async function getAll(req: Request, res: Response): Promise<void> {
-//   const abonements = await abonementService.getAll();
-//   res.send(abonements);
-// }
 export async function getAll(req: Request, res: Response): Promise<void> {
-  if (!req.user || req.user.role !== 'admin') {
+  const user = getUserFromRequest(req);
+  if (user.role !== 'admin') {
     throw ApiError.Unauthorized();
   }
 
@@ -20,7 +18,8 @@ export async function getAllByUserId(
   req: Request,
   res: Response,
 ): Promise<void> {
-  const abonements = await abonementService.getAllByUserId(req.user.id);
+  const user = getUserFromRequest(req);
+  const abonements = await abonementService.getAllByUserId(user.id);
   res.send(abonements);
 }
 
@@ -34,35 +33,27 @@ export async function getById(req: Request, res: Response): Promise<void> {
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
-  const { body, user } = req;
+  const user = getUserFromRequest(req);
   const abonementId = Number(req.params.id);
-
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
 
   const updatedAbonement = await abonementService.update(
     abonementId,
-    (user as UserDTO).id,
-    body,
+    user.id,
+    req.body,
   );
   res.json(updatedAbonement);
 }
 
 export async function create(req: Request, res: Response): Promise<void> {
-  const { body, user } = req;
+  const user = getUserFromRequest(req);
 
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
-
-  const newAbonement = await abonementService.create(body, user);
+  const newAbonement = await abonementService.create(req.body, user);
   res.status(201).json(newAbonement);
 }
 
 export async function remove(req: Request, res: Response): Promise<void> {
+  const user = getUserFromRequest(req);
   const abonementId = Number(req.params.id);
-  const { user } = req;
 
   await abonementService.remove(abonementId, user);
   res.sendStatus(204);

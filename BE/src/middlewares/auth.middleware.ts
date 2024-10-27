@@ -12,13 +12,13 @@ export function authMiddleware(
   const [, accessToken] = authHeader.split(' ');
 
   if (!authHeader || !accessToken) {
-    throw ApiError.Unauthorized();
+    throw ApiError.Unauthorized('Access token is missing');
   }
 
   const userData = validateAccessToken(accessToken) as UserDTO | null;
 
   if (!userData) {
-    throw ApiError.Unauthorized();
+    throw ApiError.Unauthorized('Invalid access token');
   }
 
   // Add user data to the request object if needed

@@ -4,7 +4,6 @@ import userReducer from "../features/user/userSlice";
 import authReducer from "../features/auth/authSlice";
 import trainingReducer from "../features/trainings/trainingSlice";
 import abonementReducer from "../features/abonements/abonementSlice";
-import notificationReducer from "../features/notification/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +11,6 @@ export const store = configureStore({
     user: userReducer,
     trainings: trainingReducer,
     abonements: abonementReducer,
-    notification: notificationReducer,
   },
 });
 

@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
 
 import { useTheme } from "../../contexts/ThemeContext";
-import { Header } from "../../components/Layout/Header";
-import { Footer } from "../../components/Layout/Footer";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 import "./MainLayout.scss";
 import { NavLinks } from "../../types/NavLinks";
 

@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
 import React from "react";
-import CustomSelect from "../../../Elements/CustomSelect";
+import CustomSelect from "../../../../components/Elements/CustomSelect";
 
 interface CalendarNavbarProps {
   firstDayCurrentMonth: Date;
