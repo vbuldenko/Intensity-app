@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../features/auth/authSlice";
 import { login } from "../../features/auth/authThunk";
-import { NavLinks } from "../../types/NavLinks";
+import { Path } from "../../types/Path";
 import "./Auth.scss";
 
 const Login = () => {
@@ -72,14 +72,14 @@ const Login = () => {
         <div>
           <Link
             className="auth__signup-subsection__link auth__signup-subsection__link--accent"
-            to={`/${NavLinks.SignUp}`}
+            to={`/${Path.SignUp}`}
           >
             Sign Up
           </Link>
         </div>
         <Link
           className="auth__signup-subsection__link text-sm"
-          to={NavLinks.Restore}
+          to={Path.Restore}
         >
           Forgot password?
         </Link>

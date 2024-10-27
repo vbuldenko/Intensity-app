@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
-import { NavLinks } from "../../../types/NavLinks";
+import { Path } from "../../../types/Path";
 import "./Menu.scss";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
@@ -19,22 +19,22 @@ const Menu = ({ className }: MenuProps) => {
   const getLinks = (role: "admin" | "trainer" | "client") => {
     const links = [
       { to: ".", label: "Overview" },
-      { to: NavLinks.Settings, label: "Settings" },
+      { to: Path.Settings, label: "Settings" },
     ];
 
     if (role === "admin") {
       links.splice(
         1,
         0,
-        { to: NavLinks.Users, label: "Users" },
-        { to: NavLinks.ScheduleEditor, label: "Schedule" }
+        { to: Path.Users, label: "Users" },
+        { to: Path.ScheduleEditor, label: "Schedule" }
       );
     } else if (role === "client") {
       links.splice(
         1,
         0,
-        { to: NavLinks.Schedule, label: "Schedule" },
-        { to: NavLinks.Purchases, label: "Purchases" }
+        { to: Path.Schedule, label: "Schedule" },
+        { to: Path.Purchases, label: "Purchases" }
       );
     }
 

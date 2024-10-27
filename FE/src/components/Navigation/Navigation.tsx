@@ -6,6 +6,7 @@ import { useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../features/auth/authSlice";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import "./Navigation.scss";
+import { Path } from "../../types/Path";
 
 type Props = {
   className?: string;
@@ -28,7 +29,7 @@ export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
         {isAuthenticated ? (
           <li className="nav__item">
             <NavLink
-              to="/account"
+              to={Path.Account}
               className={getLinkClass}
               onClick={handleClick}
             >
@@ -38,7 +39,7 @@ export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
         ) : (
           <li className="nav__item">
             <NavLink
-              to="/sign-in"
+              to={Path.Login}
               className={getLinkClass}
               onClick={handleClick}
             >

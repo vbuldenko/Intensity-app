@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { activate } from "../../features/auth/authThunk";
 import { selectAuth } from "../../features/auth/authSlice";
 import Loader from "../../components/Elements/Loader";
-import { NavLinks } from "../../types/NavLinks";
+import { Path } from "../../types/Path";
 
 const AccountActivation = () => {
   const { activationToken } = useParams();
@@ -20,7 +20,7 @@ const AccountActivation = () => {
     }
   }, [activationToken, dispatch]);
 
-  if (redirect) return <Navigate to={`/${NavLinks.Account}`} replace />;
+  if (redirect) return <Navigate to={`/${Path.Account}`} replace />;
 
   return (
     <div className="card-element p-4 flex flex-col items-center">

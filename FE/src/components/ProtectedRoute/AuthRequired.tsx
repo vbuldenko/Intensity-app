@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../features/auth/authSlice";
-import { NavLinks } from "../../types/NavLinks";
+import { Path } from "../../types/Path";
 
 const AuthRequired: React.FC = () => {
   const { isAuthenticated } = useAppSelector(selectAuth);
@@ -12,7 +12,7 @@ const AuthRequired: React.FC = () => {
     <Outlet />
   ) : (
     <Navigate
-      to={NavLinks.Login}
+      to={Path.Login}
       replace
       state={{
         message: "You must log in first",

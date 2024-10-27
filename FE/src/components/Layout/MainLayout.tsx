@@ -4,14 +4,14 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import "./MainLayout.scss";
-import { NavLinks } from "../../types/NavLinks";
+import { Path } from "../../types/Path";
 
 const MainLayout = () => {
   const { theme } = useTheme();
   const location = useLocation();
 
-  // const hideFooterRoutes: string[] = [`/${NavLinks.Account}`];
-  const hideFooterRoutes: string = `/${NavLinks.Account}`;
+  // const hideFooterRoutes: string[] = [`/${Path.Account}`];
+  const hideFooterRoutes: string = `/${Path.Account}`;
 
   // Conditionally render the footer based on the current route
   // const shouldHideFooter = hideFooterRoutes.includes(location.pathname);

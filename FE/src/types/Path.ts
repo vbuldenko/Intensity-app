@@ -1,7 +1,7 @@
-export enum NavLinks {
+export enum Path {
   Home = "/",
   Services = "services",
-  Schedule = "schedule",
+  Schedule = "schedule-trainings",
   Prices = "prices",
   Contacts = "contacts",
   Login = "sign-in",

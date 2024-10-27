@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../../services/authService";
 import { AuthCredentials } from "../../types/Auth";
-import { NavLinks } from "../../types/NavLinks";
+import { Path } from "../../types/Path";
 import { getErrorMessage } from "../../utils/utils";
 import Notification from "../../components/Elements/Notification";
 
@@ -39,7 +39,7 @@ const SignUp = () => {
     try {
       await authService.register(signUpData);
       setSignUpData(defaultUserData);
-      navigate(`/${NavLinks.CheckEmail}`, { replace: true });
+      navigate(`/${Path.CheckEmail}`, { replace: true });
     } catch (error: any) {
       handleNotification(getErrorMessage(error));
     }
