@@ -84,7 +84,7 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
         </div>
       </div>
       <div className="abonement__history">
-        <h2 className="abonement__title">Reserved trainings</h2>
+        {/* <h2 className="abonement__title text-center">History</h2> */}
         <div className="abonement__container">
           {abonement.visitedTrainings.length > 0 ? (
             abonement.visitedTrainings.map((el) => (

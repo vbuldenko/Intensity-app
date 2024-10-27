@@ -1,8 +1,8 @@
 .abonement {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  // gap: 1rem;
+  // padding: 1rem;
 
   &__title {
     font-size: 1.25rem;
@@ -11,11 +11,19 @@
 
   &__info {
     display: flex;
+    // background: $color-light-green;
+    background: -webkit-linear-gradient(
+      135deg,
+      rgb(255, 191, 0),
+      rgb(255, 251, 0) 50%
+    );
     gap: 1rem;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid $color-element;
+    padding: 1rem;
+    border-radius: $big-br;
+    // border-radius: $big-br $big-br 0 0;
+    color: black;
   }
 
   &__status {
@@ -31,12 +39,13 @@
   }
 
   &__left-trainings {
-    color: $color-green;
+    // color: $color-green;
   }
 
   &__history {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    padding: 1rem;
   }
 }
