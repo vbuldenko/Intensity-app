@@ -112,6 +112,6 @@ export const trainingSlice = createSlice({
 // export const {
 // } = trainingSlice.actions;
 
-export const selectTrainings = (state: RootState) => state.trainings.data;
+export const selectTrainings = (state: RootState) => state.trainings;
 
 export default trainingSlice.reducer;

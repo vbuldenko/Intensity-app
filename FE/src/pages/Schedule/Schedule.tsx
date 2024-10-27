@@ -18,9 +18,10 @@ import CalendarNavbar from "./elements/Navbar/CalendarNavbar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectTrainings } from "../../features/trainings/trainingSlice";
 import { fetchTrainings } from "../../features/trainings/trainingThunk";
+import Loader from "../../components/Elements/Loader";
 
 export default function Schedule() {
-  const trainings = useAppSelector(selectTrainings);
+  const { data: trainings, loading } = useAppSelector(selectTrainings);
   const dispatch = useAppDispatch();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -86,7 +87,13 @@ export default function Schedule() {
           />
         )}
       </div>
-      <SelectedDayTrainings trainings={selectedDayTrainings} />
+      {!loading && <SelectedDayTrainings trainings={selectedDayTrainings} />}
+      {loading && (
+        <div className="schedule__trainings flex justify-center items-center relative">
+          <Loader />
+          <div className="absolute w-max">Loading trainings...</div>
+        </div>
+      )}
     </section>
   );
 }
