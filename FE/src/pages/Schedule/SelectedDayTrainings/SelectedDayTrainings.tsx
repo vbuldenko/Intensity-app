@@ -15,7 +15,7 @@ export default function SelectedDayTrainings({
             <Training key={training.id} training={training} />
           ))
         ) : (
-          <p>No trainings for today.</p>
+          <p className="text-center">No trainings for today.</p>
         )}
       </ul>
     </section>
