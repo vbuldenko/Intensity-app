@@ -58,8 +58,11 @@ export const comparePasswords = (
   return bcrypt.compare(plainPWD, userPWDHash);
 };
 
-export function calculateHoursDiff(trainingTime, currentTime = new Date()) {
-  return (trainingTime - currentTime) / (1000 * 60 * 60);
+export function calculateHoursDiff(
+  trainingTime: Date,
+  currentTime: Date = new Date(),
+): number {
+  return (trainingTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
 }
 
 export const canTrainingProceed = (

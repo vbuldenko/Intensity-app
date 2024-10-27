@@ -11,6 +11,12 @@ export interface DatabaseConfig {
   dialect: Dialect;
   use_env_variable?: string;
   logging: boolean | ((sql: string, timing?: number) => void);
+  dialectOptions?: {
+    ssl: {
+      require: boolean;
+      rejectUnauthorized: boolean;
+    };
+  };
 }
 
 interface Config {

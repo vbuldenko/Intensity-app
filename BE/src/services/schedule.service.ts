@@ -2,7 +2,6 @@ import db from '../db/models';
 import { ApiError } from '../exceptions/api.error';
 
 class ScheduleService {
-  // Create a new training session
   async createOne(scheduleData: {
     day: string;
     time: string;
@@ -13,17 +12,14 @@ class ScheduleService {
     return await db.Schedule.create(scheduleData);
   }
 
-  // Get all training sessions
   async getAll() {
     return await db.Schedule.findAll();
   }
 
-  // Get a schedule by ID
   async getOneById(id: number) {
     return await db.Schedule.findByPk(id);
   }
 
-  // Update a training session
   async updateOne(
     id: number,
     scheduleData: Partial<{
@@ -43,7 +39,6 @@ class ScheduleService {
     });
   }
 
-  // Delete a training session
   async deleteOne(id: number) {
     const session = await this.getOneById(id);
     if (session) {

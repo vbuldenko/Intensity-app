@@ -78,13 +78,12 @@ export async function initializeTrainingsForWeek(
       const hours = Number(session.time.slice(0, 2));
       let trainingDate = addDays(startDate, dayIndex);
       trainingDate.setHours(hours, 0, 0, 0);
-      trainingDate = trainingDate.toISOString();
 
       return {
         type: session.type,
         instructorId: session.instructorId,
         capacity: session.maxCapacity,
-        date: trainingDate,
+        date: trainingDate.toISOString(),
         day: session.day,
         time: session.time,
       };

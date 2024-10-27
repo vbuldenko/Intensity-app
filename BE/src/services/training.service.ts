@@ -2,11 +2,6 @@ import db from '../db/models';
 import { ApiError } from '../exceptions/api.error';
 import { Training } from '../types/Training';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
-import * as userService from './user.service';
-
-interface UpdateBody {
-  updateType: 'reservation' | 'cancellation';
-}
 
 export const getAll = async (): Promise<Training> => {
   return await db.Training.findAll({
