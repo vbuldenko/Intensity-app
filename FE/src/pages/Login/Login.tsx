@@ -5,6 +5,7 @@ import { selectAuth } from "../../features/auth/authSlice";
 import { login } from "../../features/auth/authThunk";
 import { Path } from "../../types/Path";
 import "./Auth.scss";
+import Notification from "../../components/Elements/Notification";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,11 +37,7 @@ const Login = () => {
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
         <h2 className="auth__title">Log in</h2>
-        {error && (
-          <h1 className="auth__error-message self-center card-element bg-red-100">
-            {error}
-          </h1>
-        )}
+        {error && <Notification message={error} type="error" />}
         <div className="auth__input-wrapper">
           {/* <label htmlFor="identifier">Email or Phone Number</label> */}
           <input

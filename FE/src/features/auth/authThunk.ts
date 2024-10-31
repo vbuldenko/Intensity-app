@@ -15,7 +15,7 @@ export const checkAuth = createAsyncThunk<
     const { accessToken } = await authService.refresh();
     accessTokenService.save(accessToken);
   } catch (error: any) {
-    // accessTokenService.remove();
+    accessTokenService.remove();
     const message = getErrorMessage(error) || "Unexpected error occurred";
     return rejectWithValue({ message });
   }
@@ -61,8 +61,8 @@ export const logOut = createAsyncThunk<
   { rejectValue: ErrorResponse }
 >("auth/logout", async (_, { dispatch, rejectWithValue }) => {
   try {
-    await authService.logout();
     accessTokenService.remove();
+    await authService.logout();
   } catch (error: any) {
     const message = getErrorMessage(error) || "Unexpected error occurred";
 
