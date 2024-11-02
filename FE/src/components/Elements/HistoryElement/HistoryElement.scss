@@ -9,7 +9,7 @@
   &__title {
     // border-bottom: 1px solid $color-green;
     border-bottom: 1px solid $color-light-green;
-    color: $color-green;
+    color: black;
     font-size: 0.875rem;
     font-weight: 600;
     width: 100%;
@@ -28,6 +28,7 @@
   &__label {
     font-weight: bold;
     font-size: 0.875rem;
+    color: $gray-color-2;
   }
 
   &__value {
