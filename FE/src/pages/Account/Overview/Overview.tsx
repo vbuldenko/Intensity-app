@@ -27,14 +27,14 @@ export default function Overview() {
 
   return (
     <div className="overview">
-      <div className="overview__header">
+      {/* <div className="overview__header">
         <div>
           <p>
             Welcome back, <b className="capitalize">{user.firstName}</b>
           </p>
         </div>
         <span className="status">{user.role}</span>
-      </div>
+      </div> */}
 
       <div className="overview__body">
         {user.role === "admin" && <AdminDashboard />}

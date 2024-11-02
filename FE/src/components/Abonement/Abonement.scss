@@ -28,8 +28,8 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem 1rem 2.5rem;
+    // border-radius: $big-br;
     border-radius: $big-br $big-br 0 0;
-    // border-radius: $big-br $big-br 0 0;
     color: black;
   }
 
@@ -70,7 +70,9 @@
     left: 0;
     background-color: inherit;
     padding: 0 3rem;
-    border-radius: 0 1rem 0 0;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -4px 6px -4px rgba(0, 0, 0, 0.1);
+    // border-radius: 1rem;
     color: rgb(255, 136, 0);
     // border-top: 0.5rem solid transparent;
     // border-right: 0.5rem solid transparent;
