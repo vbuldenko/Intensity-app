@@ -6,6 +6,7 @@ interface ButtonProps {
   access: boolean;
   isReserved: boolean;
   isSubmitting: boolean;
+  isDataUpdating: boolean;
   onClick: () => Promise<void>; // Update to return a Promise
 }
 
@@ -13,6 +14,7 @@ const ReservationButton: React.FC<ButtonProps> = ({
   access,
   isReserved,
   isSubmitting,
+  isDataUpdating,
   onClick,
 }) => {
   const buttonClass = classNames("reservation-btn mt-2", {
@@ -26,7 +28,7 @@ const ReservationButton: React.FC<ButtonProps> = ({
     <button
       className={buttonClass}
       onClick={onClick}
-      disabled={!access || isSubmitting} // Disable button if no access or during submission
+      disabled={!access || isSubmitting || isDataUpdating} // Disable button if no access or during submission
     >
       {isSubmitting && <div className="reservation-btn__spinner"></div>}
       {!access ? "Closed" : isReserved ? "Cancel" : "Reserve"}

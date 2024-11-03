@@ -16,14 +16,18 @@ import { Training as TrainingType } from "../../../types/Training";
 import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
 
+type NotificationType = "error" | "notification" | undefined;
+
+type NotificationState = {
+  message: string;
+  type: NotificationType;
+} | null;
+
 export default function Training({ training }: { training: TrainingType }) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [notification, setNotification] = useState<{
-    message: string;
-    type: "error" | "notification" | undefined;
-  } | null>(null);
-  const { data: user } = useAppSelector(selectUser);
+  const [notification, setNotification] = useState<NotificationState>(null);
+  const { data: user, loading } = useAppSelector(selectUser);
   const abonement = useMemo(
     () => getCurrentAbonement(user?.abonements),
     [user?.abonements]
@@ -38,17 +42,13 @@ export default function Training({ training }: { training: TrainingType }) {
     [abonement]
   );
 
-  const hoursDiff = useMemo(
-    () => calculateHoursDiff(trainingTime),
-    [trainingTime]
+  const hoursDiff = calculateHoursDiff(trainingTime);
+  const access = reservationAccess(
+    new Date(),
+    trainingTime,
+    reservedPlaces,
+    hoursDiff
   );
-
-  const access = useMemo(
-    () =>
-      reservationAccess(new Date(), trainingTime, reservedPlaces, hoursDiff),
-    [trainingTime, reservedPlaces, hoursDiff]
-  );
-  // const access = true;
 
   const handleNotification = (
     message: string,
@@ -149,6 +149,7 @@ export default function Training({ training }: { training: TrainingType }) {
             access={access}
             isReserved={isReserved}
             isSubmitting={isSubmitting}
+            isDataUpdating={loading}
             onClick={() =>
               handleAction(isReserved ? "cancellation" : "reservation")
             }
