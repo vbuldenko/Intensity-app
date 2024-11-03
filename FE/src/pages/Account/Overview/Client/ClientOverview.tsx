@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Selector from "../../../../components/Elements/Selector";
 import { filterAbonements, ViewOption } from "../../../../utils/abonement";
 import { sortByParam } from "../../../../utils/utils";
@@ -10,12 +10,20 @@ interface ClientOverviewProps {
   user: User;
 }
 
-export default function ClientOverview({ user }: ClientOverviewProps) {
-  const abonements = user?.abonements;
+const ClientOverview: React.FC<ClientOverviewProps> = ({ user }) => {
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
-  const filteredAbonements = abonements
-    ? filterAbonements(abonements, abonementView)
-    : [];
+
+  const abonements = user?.abonements || [];
+
+  const filteredAbonements = useMemo(
+    () => filterAbonements(abonements, abonementView),
+    [abonements, abonementView]
+  );
+
+  const sortedAbonements = useMemo(
+    () => sortByParam(filteredAbonements, "createdAt"),
+    [filteredAbonements]
+  );
 
   const handleViewChange = (view: ViewOption) => {
     setAbonementView(view);
@@ -29,10 +37,16 @@ export default function ClientOverview({ user }: ClientOverviewProps) {
         buttonNames={["active", "expired", "inactive"]}
       />
       <div className="client-overview__content">
-        {sortByParam(filteredAbonements, "createdAt").map((abonement) => {
-          return <Abonement key={abonement.id} abonement={abonement} />;
-        })}
+        {sortedAbonements.length ? (
+          sortedAbonements.map((abonement) => (
+            <Abonement key={abonement.id} abonement={abonement} />
+          ))
+        ) : (
+          <p className="text-center mt-8 text-gray-500">No abonements found</p>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default ClientOverview;
