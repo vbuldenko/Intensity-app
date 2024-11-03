@@ -1,3 +1,4 @@
+import React from "react";
 import classNames from "classnames";
 import "./ReservationButton.scss";
 
@@ -5,15 +6,15 @@ interface ButtonProps {
   access: boolean;
   isReserved: boolean;
   isSubmitting: boolean;
-  onClick: () => void;
+  onClick: () => Promise<void>; // Update to return a Promise
 }
 
-export default function ReservationButton({
+const ReservationButton: React.FC<ButtonProps> = ({
   access,
   isReserved,
   isSubmitting,
   onClick,
-}: ButtonProps) {
+}) => {
   const buttonClass = classNames("reservation-btn mt-2", {
     "reservation-btn--disabled": !access,
     "reservation-btn--reserve": access && !isReserved && !isSubmitting,
@@ -28,14 +29,9 @@ export default function ReservationButton({
       disabled={!access || isSubmitting} // Disable button if no access or during submission
     >
       {isSubmitting && <div className="reservation-btn__spinner"></div>}
-
-      {isSubmitting
-        ? ""
-        : !access
-          ? "Closed"
-          : isReserved
-            ? "Cancel"
-            : "Reserve"}
+      {!access ? "Closed" : isReserved ? "Cancel" : "Reserve"}
     </button>
   );
-}
+};
+
+export default ReservationButton;

@@ -33,8 +33,8 @@ const Menu = ({ className }: MenuProps) => {
       links.splice(
         1,
         0,
-        { to: Path.Schedule, label: "Schedule" },
-        { to: Path.Purchases, label: "Purchases" }
+        { to: Path.Schedule, label: "Schedule" }
+        // { to: Path.Purchases, label: "Purchases" }
       );
     }
 

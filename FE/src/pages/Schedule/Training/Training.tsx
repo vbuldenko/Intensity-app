@@ -111,9 +111,13 @@ export default function Training({ training }: { training: TrainingType }) {
   };
 
   return (
-    <li className="schedule__training">
+    <li className="schedule__training relative">
       {notification && (
-        <Notification message={notification.message} type={notification.type} />
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          className="absolute top-0 w-full"
+        />
       )}
       <div
         className={classNames("training__content card-element", {

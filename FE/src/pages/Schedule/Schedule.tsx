@@ -87,8 +87,8 @@ export default function Schedule() {
           />
         )}
       </div>
-      {!loading && <SelectedDayTrainings trainings={selectedDayTrainings} />}
-      {loading && (
+      <SelectedDayTrainings trainings={selectedDayTrainings} />
+      {!trainings.length && loading && (
         <div className="schedule__trainings flex justify-center items-center relative">
           <Loader />
           <div className="absolute w-max">Loading trainings...</div>
