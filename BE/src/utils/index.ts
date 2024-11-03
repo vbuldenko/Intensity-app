@@ -3,6 +3,16 @@ import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
 import { Request } from 'express';
 
+export function validateIdentifier(identifier: string): string | undefined {
+  if (identifier.includes('@')) {
+    return validateEmail(identifier);
+  } else if (/^\d+$/.test(identifier)) {
+    return validatePhone(identifier);
+  } else {
+    return 'Input data should be email or phone number';
+  }
+}
+
 export function validateEmail(email: string): string | undefined {
   const emailPattern = /^[\w.+-]+@([\w-]+\.){1,3}[\w-]{2,}$/;
 
@@ -16,14 +26,21 @@ export function validateEmail(email: string): string | undefined {
 }
 
 export function validatePhone(phone: string): string | undefined {
+  // const phonePattern = /^380\d{9}$/;
+
   if (!phone) {
     return 'Phone is required';
   }
 
-  if (phone.length < 10) {
-    return 'Should be at least 10 characters';
-  }
+  // if (!phonePattern.test(phone)) {
+  //   return 'Phone number must start with 380 and be followed by 9 digits';
+  // }
+
+  // if (phone.length !== 12) {
+  //   return 'Phone number should be exactly 12 characters long';
+  // }
 }
+
 export function validatePassword(password: string): string | undefined {
   if (!password) {
     return 'Password is required';

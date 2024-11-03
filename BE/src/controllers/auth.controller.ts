@@ -10,6 +10,7 @@ import {
   validatePhone,
   validatePassword,
   comparePasswords,
+  validateIdentifier,
 } from '../utils';
 import { User } from '../types/User';
 import { UserDTO } from '../types/UserDTO';
@@ -73,10 +74,10 @@ export const activate = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const login = async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body;
+  const { identifier, password } = req.body;
 
   const errors = {
-    email: validateEmail(email),
+    identifier: validateIdentifier(identifier),
     password: validatePassword(password),
   };
 
@@ -84,10 +85,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     throw ApiError.BadRequest('Validation error', errors);
   }
 
-  const user = await userService.getByEmail(email);
+  const user = await userService.getUserByIdentifier(identifier);
 
   if (!user) {
-    throw ApiError.NotFound({ user: 'Invalid email or password' });
+    throw ApiError.NotFound({ user: 'Invalid user data' });
   }
 
   if (user.activationToken) {

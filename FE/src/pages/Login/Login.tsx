@@ -20,7 +20,7 @@ const Login = () => {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-    await dispatch(login({ email: identifier, password }));
+    await dispatch(login({ identifier, password }));
     setIsSubmitting(false);
     // setIdentifier("");
     // setPassword("");
@@ -45,7 +45,7 @@ const Login = () => {
             type="text"
             value={identifier}
             name="identifier"
-            placeholder="Email"
+            placeholder="Email or Phone Number"
             onChange={({ target }) => setIdentifier(target.value)}
           />
         </div>

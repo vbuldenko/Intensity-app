@@ -25,8 +25,24 @@ const getAllActive = async () => {
   });
 };
 
+const getUserByIdentifier = async (identifier: string) => {
+  if (identifier.includes('@')) {
+    return await getByEmail(identifier);
+  } else if (/^\d+$/.test(identifier)) {
+    return await getByPhone(identifier);
+  } else {
+    throw ApiError.BadRequest('Wrong input data', {
+      identifier: 'Input data should be email or phone number',
+    });
+  }
+};
+
 const getByEmail = async (email: string) => {
   return db.User.findOne({ where: { email } });
+};
+
+const getByPhone = async (phone: string) => {
+  return db.User.findOne({ where: { phone } });
 };
 
 const getByToken = async (activationToken: string) => {
@@ -156,6 +172,7 @@ const removeMany = async () => {
 export {
   normalize,
   getAllActive,
+  getUserByIdentifier,
   getByEmail,
   getById,
   getByToken,

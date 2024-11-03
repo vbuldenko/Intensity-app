@@ -23,7 +23,7 @@ export const checkAuth = createAsyncThunk<
 
 export const login = createAsyncThunk<
   void,
-  { email: string; password: string },
+  { identifier: string; password: string },
   { rejectValue: ErrorResponse }
 >("auth/login", async (credentials, { dispatch, rejectWithValue }) => {
   try {
