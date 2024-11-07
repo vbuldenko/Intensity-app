@@ -1,6 +1,6 @@
 import "./InfoSection.scss";
 
-interface InfoItem {
+export interface InfoItem {
   title: string;
   description: string;
 }
