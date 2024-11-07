@@ -7,6 +7,7 @@ import { selectAuth } from "../../features/auth/authSlice";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import "./Navigation.scss";
 import { Path } from "../../types/Path";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   className?: string;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAppSelector(selectAuth);
 
   return (
@@ -22,7 +24,7 @@ export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
         {Object.entries(NavBarLinks).map(([key, value]) => (
           <li className="nav__item" key={key}>
             <NavLink to={value} className={getLinkClass} onClick={handleClick}>
-              {key}
+              {t(`nav.${key.toLowerCase()}`)}
             </NavLink>
           </li>
         ))}
@@ -44,6 +46,7 @@ export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
               onClick={handleClick}
             >
               Log In/Sign Up
+              {t("nav.login")}
             </NavLink>
           </li>
         )}

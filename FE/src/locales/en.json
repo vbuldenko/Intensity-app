@@ -3,6 +3,15 @@
   "fitness_studio": "fitness studio!",
   "our_values": "Our values",
   "our_rules": "Studio rules",
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "prices": "Prices",
+    "contacts": "Contacts",
+    "schedule": "Schedule",
+    "login": "Login"
+  },
+
   "values": [
     {
       "title": "Health",

@@ -3,6 +3,14 @@
   "fitness_studio": "фітнес-студії !",
   "our_values": "Наші цінності",
   "our_rules": "Правила студії",
+  "nav": {
+    "home": "Головна",
+    "services": "Послуги",
+    "prices": "Ціни",
+    "contacts": "Контакти",
+    "schedule": "Розклад",
+    "login": "Увійти"
+  },
   "values": [
     {
       "title": "Здоровʼя",
