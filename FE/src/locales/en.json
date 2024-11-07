@@ -1,8 +1,6 @@
 {
   "welcome_to": "Welcome to",
   "fitness_studio": "fitness studio!",
-  "our_values": "Our values",
-  "our_rules": "Studio rules",
   "nav": {
     "home": "Home",
     "services": "Services",
@@ -11,53 +9,121 @@
     "schedule": "Schedule",
     "login": "Login"
   },
-
-  "values": [
-    {
-      "title": "Health",
-      "description": "We strive for everyone to have a quality and long life filled with energy"
-    },
-    {
-      "title": "Safety",
-      "description": "We explain each exercise and monitor the correct technique"
-    },
-    {
-      "title": "Systematic Approach",
-      "description": "The desired result depends on a systematic approach and discipline. Thanks to this, we form healthy habits"
-    },
-    {
-      "title": "Individuality",
-      "description": "Each person is special. And we take this into account in every training session."
-    },
-    {
-      "title": "Culture",
-      "description": "We believe that respect should be both for oneself and for others"
-    },
-    {
-      "title": "Development and Innovation",
-      "description": "We constantly monitor new trends, add new types of activities, and our trainers continuously improve their qualifications"
-    }
-  ],
-  "rules": [
-    {
-      "title": "*",
-      "description": "Maintain personal and general hygiene"
-    },
-    {
-      "title": "*",
-      "description": "Treat studio trainers and other visitors with respect."
-    },
-    {
-      "title": "*",
-      "description": "Use changeable shoes and clothes. Clothes should be clean and comfortable"
-    },
-    {
-      "title": "*",
-      "description": "Pre-registration is mandatory (done on the website through personal account login)"
-    },
-    {
-      "title": "*",
-      "description": "You can cancel registration for a group class no later than 3 hours before it starts. Morning training registration is done until 9 PM"
-    }
-  ]
+  "home": {
+    "header": "Fitness Studio",
+    "header_values": "Our Values",
+    "header_rules": "Studio Rules",
+    "values": [
+      {
+        "title": "Health",
+        "description": "We strive for everyone to have a quality and long life filled with energy"
+      },
+      {
+        "title": "Safety",
+        "description": "We explain each exercise and monitor the correct technique"
+      },
+      {
+        "title": "Systematic Approach",
+        "description": "The desired result depends on a systematic approach and discipline. Thanks to this, we form healthy habits"
+      },
+      {
+        "title": "Individuality",
+        "description": "Each person is special. And we take this into account in every training session."
+      },
+      {
+        "title": "Culture",
+        "description": "We believe that respect should be both for oneself and for others"
+      },
+      {
+        "title": "Development and Innovation",
+        "description": "We constantly monitor new trends, add new types of activities, and our trainers continuously improve their qualifications"
+      }
+    ],
+    "rules": [
+      {
+        "title": "*",
+        "description": "Maintain personal and general hygiene"
+      },
+      {
+        "title": "*",
+        "description": "Treat studio trainers and other visitors with respect."
+      },
+      {
+        "title": "*",
+        "description": "Use changeable shoes and clothes. Clothes should be clean and comfortable"
+      },
+      {
+        "title": "*",
+        "description": "Pre-registration is mandatory (done on the website through personal account login)"
+      },
+      {
+        "title": "*",
+        "description": "You can cancel registration for a group class no later than 3 hours before it starts. Morning training registration is done until 9 PM"
+      }
+    ]
+  },
+  "services": {
+    "header_classes": "Our Services",
+    "header_trainings": "Training Directions",
+    "classes": [
+      {
+        "title": "Functional",
+        "description": "Strength training using dumbbells, elastic bands, and/or body weight. It comprehensively works all muscles of the body, focusing on muscle definition."
+      },
+      {
+        "title": "Tabata",
+        "description": "Cardio-strength intensive training within time frames. 20 seconds - exercises, 10 seconds - rest. For those who want to lose weight and burn more calories during the workout."
+      },
+      {
+        "title": "ABS",
+        "description": "Strength training. A set of exercises for the muscles of the abdomen, thighs, buttocks, and lower back."
+      },
+      {
+        "title": "Healthy Back",
+        "description": "Low-intensity training aimed at developing back mobility, light stretching, and safe strengthening of the muscle corset. Corrective and preventive training direction."
+      },
+      {
+        "title": "Pilates",
+        "description": "Comprehensive training aimed at developing and strengthening muscles. Includes elements of static positions, strength exercises, stretching, and detailed work on deep muscles."
+      },
+      {
+        "title": "Yoga",
+        "description": "A set of asanas (poses) that combine moderately dynamic and static positions, breathing exercises, and stretching. Practices awaken, energize, and set you up for a productive day."
+      },
+      {
+        "title": "Stretching",
+        "description": "A direction for stretching the muscles of the whole body. Increases range of motion, relaxes. Perfect for compensating for strength training."
+      },
+      {
+        "title": "Fly Stretching",
+        "description": "Stretching on hammocks. A combination of balance exercises to engage deep muscles along with classic stretching."
+      },
+      {
+        "title": "Yoga Stretching",
+        "description": "A set of yoga asanas aimed at conscious stretching of the muscles of the whole body, improving mobility. Working with breathing."
+      },
+      {
+        "title": "Heels",
+        "description": "Dance direction on heels. To release and discover femininity, sexuality, and grace."
+      }
+    ],
+    "trainings": [
+      {
+        "title": "Group Training",
+        "description": "Training with a coach in a group of up to 8 people."
+      },
+      {
+        "title": "Personal Training",
+        "description": "Training for one person."
+      },
+      {
+        "title": "Split Training",
+        "description": "Training for two."
+      },
+      {
+        "title": "Children's Groups",
+        "description": "Training for children and teenagers."
+      }
+    ]
+  }
 }

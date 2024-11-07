@@ -8,16 +8,16 @@ import { InfoItem } from "../../components/InfoSection/InfoSection";
 export default function HomePage() {
   const { t } = useTranslation();
 
-  const values = t("values", { returnObjects: true }) as InfoItem[];
-  const rules = t("rules", { returnObjects: true }) as InfoItem[];
+  const values = t("home.values", { returnObjects: true }) as InfoItem[];
+  const rules = t("home.rules", { returnObjects: true }) as InfoItem[];
 
   return (
     <>
       <Hero />
 
-      <InfoSection header={t("our_values")} items={values} />
+      <InfoSection header={t("home.header_values")} items={values} />
 
-      <InfoSection header={t("our_rules")} items={rules} />
+      <InfoSection header={t("home.header_rules")} items={rules} />
     </>
   );
 }
