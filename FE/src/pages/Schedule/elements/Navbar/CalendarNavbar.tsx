@@ -2,6 +2,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
 import React from "react";
 import CustomSelect from "../../../../components/Elements/CustomSelect";
+import { enUS, uk } from "date-fns/locale";
+import { useTranslation } from "react-i18next";
+import ukCustom from "../../../../locales/ukCustom";
 
 interface CalendarNavbarProps {
   firstDayCurrentMonth: Date;
@@ -18,13 +21,19 @@ const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
   view,
   handleViewChange,
 }) => {
+  const { i18n } = useTranslation();
+
+  const locale = i18n.language === "ua" ? ukCustom : enUS;
+
   return (
     <div className="calendar__navbar">
       <button className="calendar__navbar-button" onClick={previousMonth}>
         <ChevronLeftIcon className="calendar__navbar-icon" />
       </button>
-      <h3 className="calendar__title">
-        {format(firstDayCurrentMonth, "MMMM yyyy")}
+      <h3 className="calendar__title capitalize">
+        {format(firstDayCurrentMonth, "MMMM yyyy", {
+          locale,
+        })}
       </h3>
       <button className="calendar__navbar-button" onClick={nextMonth}>
         <ChevronRightIcon className="calendar__navbar-icon" />
