@@ -137,5 +137,13 @@
       "split": "Спліт",
       "children": "Дитячі"
     }
+  },
+  "contacts": {
+    "header": "Наші контакти",
+    "phone": "+38(097)-99-100-70",
+    "email": "in10sity.trainer@gmail.com",
+    "address": "проспект Володимира Івасюка, 24, Київ, 04210",
+    "schedule": "Графік роботи",
+    "working_hours": "Пн-Пт: 9:00 - 18:00"
   }
 }

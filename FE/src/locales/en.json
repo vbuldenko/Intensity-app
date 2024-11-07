@@ -137,5 +137,13 @@
       "split": "Split",
       "children": "Children"
     }
+  },
+  "contacts": {
+    "header": "Our Contacts",
+    "phone": "+38(097)-99-100-70",
+    "email": "in10sity.trainer@gmail.com",
+    "address": "Volodymyra Ivasiuka Ave, 24, Kyiv, 04210",
+    "schedule": "Working Schedule",
+    "working_hours": "Mon-Fri: 9:00 AM - 6:00 PM"
   }
 }
