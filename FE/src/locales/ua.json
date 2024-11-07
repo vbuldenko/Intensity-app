@@ -125,5 +125,17 @@
         "description": "Тренування для дітей та підлітків."
       }
     ]
+  },
+  "prices": {
+    "abonements": "Абонементи",
+    "amount": "Кількість",
+    "price": "Ціна",
+    "unit_price": "Вартість одиниці",
+    "categories": {
+      "group": "Групові",
+      "individual": "Індивідуальні",
+      "split": "Спліт",
+      "children": "Дитячі"
+    }
   }
 }

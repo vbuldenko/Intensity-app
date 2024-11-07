@@ -125,5 +125,17 @@
         "description": "Training for children and teenagers."
       }
     ]
+  },
+  "prices": {
+    "abonements": "Abonements",
+    "amount": "Amount",
+    "price": "Price",
+    "unit_price": "Unit Price",
+    "categories": {
+      "group": "Group",
+      "individual": "Individual",
+      "split": "Split",
+      "children": "Children"
+    }
   }
 }

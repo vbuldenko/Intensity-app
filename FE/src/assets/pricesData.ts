@@ -26,12 +26,12 @@ export const prices = [
       { amount: 10, price: 7000 },
     ],
   },
-  {
-    category: "Children",
-    prices: [
-      { amount: 1, price: 250 },
-      { amount: 8, price: 1000 },
-      { amount: 12, price: 1500 },
-    ],
-  },
+  // {
+  //   category: "Children",
+  //   prices: [
+  //     { amount: 1, price: 250 },
+  //     { amount: 8, price: 1000 },
+  //     { amount: 12, price: 1500 },
+  //   ],
+  // },
 ];

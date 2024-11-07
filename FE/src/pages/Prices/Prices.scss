@@ -1,16 +1,25 @@
 .prices {
+  &__card {
+    background: $card-background;
+    box-shadow: $shadow3;
+    border-radius: $big-br;
+    border: 1px solid $card-background;
+  }
+
   &__metrics {
     display: flex;
     justify-content: space-between;
-    font-weight: bold;
+    font-weight: 500;
     border-bottom: 1px solid $color-element;
     padding-block: 0.25rem;
+    color: $gray-color-3;
   }
 
   &__metric {
     flex: 1;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    min-width: max-content;
   }
 
   &__items {
