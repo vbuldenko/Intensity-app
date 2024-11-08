@@ -31,6 +31,13 @@
     "loginQuestion": "Вже є створений акаунт?",
     "login": "Увійти"
   },
+  "forgotPassword": {
+    "title": "Забули пароль",
+    "emailPlaceholder": "Електронна пошта",
+    "submitButton": "Надіслати",
+    "successMessage": "Посилання для скидання пароля було надіслано на вашу електронну пошту.",
+    "errorMessage": "Сталася помилка"
+  },
   "home": {
     "header": "Fitness Studio",
     "header_values": "Наші цінності",

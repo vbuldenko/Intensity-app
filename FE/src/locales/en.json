@@ -23,6 +23,13 @@
     "loginQuestion": "Already have an account?",
     "loginLink": "Log in"
   },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "emailPlaceholder": "Email",
+    "submitButton": "Submit",
+    "successMessage": "A password reset link has been sent to your email.",
+    "errorMessage": "An error occurred"
+  },
   "nav": {
     "home": "Home",
     "services": "Services",

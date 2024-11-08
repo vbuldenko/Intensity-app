@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { getErrorMessage } from "../../utils/utils";
 import { authService } from "../../services/authService";
 import Notification from "../../components/Elements/Notification";
+import { useTranslation } from "react-i18next";
 
 const NOTIFICATION_TIMEOUT = 5000;
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [notification, setNotification] = useState<{
     message: string;
@@ -15,12 +17,15 @@ const ForgotPassword = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const { message } = await authService.requestRestore(email);
+      await authService.requestRestore(email);
       setEmail("");
-      setNotification({ message, type: "notification" });
+      setNotification({
+        message: t("forgotPassword.successMessage"),
+        type: "notification",
+      });
     } catch (error) {
       setNotification({
-        message: getErrorMessage(error) || "An error occurred",
+        message: getErrorMessage(error) || t("forgotPassword.errorMessage"),
         type: "error",
       });
       setTimeout(() => {
@@ -32,7 +37,7 @@ const ForgotPassword = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form border-b-0" onSubmit={handleSubmit}>
-        <h2 className="text-center">Forgot Password</h2>
+        <h2 className="text-center">{t("forgotPassword.title")}</h2>
         {notification && (
           <Notification
             message={notification.message}
@@ -47,12 +52,12 @@ const ForgotPassword = () => {
                 type="email"
                 value={email}
                 name="email"
-                placeholder="Enter your account email"
+                placeholder={t("forgotPassword.emailPlaceholder")}
                 onChange={({ target }) => setEmail(target.value)}
               />
             </div>
             <button type="submit" className="auth__button">
-              Send
+              {t("forgotPassword.submitButton")}
             </button>
           </>
         )}
