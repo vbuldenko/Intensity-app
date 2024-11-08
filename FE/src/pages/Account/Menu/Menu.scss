@@ -10,13 +10,16 @@
   border-radius: 0;
   padding: 1rem;
   background: $account-background;
-  overflow-x: scroll;
-  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
 
   &.dark {
     background-color: $color-black-dark;
     border-top: 1px solid $color-element-dark;
+  }
+
+  @include on-mobile {
+    overflow-x: scroll;
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
   }
 
   @include on-tablet {
@@ -29,7 +32,7 @@
   }
 
   &__link {
-    min-width: 100px;
+    min-width: max-content;
     text-align: center;
 
     &:hover {
@@ -48,7 +51,8 @@
   & .selected {
     background-color: $color-background;
     color: $color-green;
-    padding: 0.3rem 0.75rem;
+    padding-block: 0.25rem;
+    padding-inline: 1rem;
     border: 1px solid $color-middle-green;
     border-radius: $big-br;
     box-shadow:
