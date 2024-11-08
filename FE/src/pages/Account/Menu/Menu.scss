@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
   box-shadow: $shadow3;
   border-radius: 0;
@@ -29,7 +29,7 @@
   }
 
   &__link {
-    width: 100px;
+    min-width: 100px;
     text-align: center;
 
     &:hover {
@@ -48,7 +48,7 @@
   & .selected {
     background-color: $color-background;
     color: $color-green;
-    padding: 0.3rem 0.25rem;
+    padding: 0.3rem 0.75rem;
     border: 1px solid $color-middle-green;
     border-radius: $big-br;
     box-shadow:

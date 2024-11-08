@@ -5,12 +5,14 @@ import "./Menu.scss";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import { useTheme } from "../../../contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 interface MenuProps {
   className: string;
 }
 
 const Menu = ({ className }: MenuProps) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const { data: user } = useAppSelector(selectUser);
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -18,23 +20,23 @@ const Menu = ({ className }: MenuProps) => {
 
   const getLinks = (role: "admin" | "trainer" | "client") => {
     const links = [
-      { to: ".", label: "Overview" },
-      { to: Path.Settings, label: "Settings" },
+      { to: ".", label: t("menu.overview") },
+      { to: Path.Settings, label: t("menu.settings") },
     ];
 
     if (role === "admin") {
       links.splice(
         1,
         0,
-        { to: Path.Users, label: "Users" },
-        { to: Path.ScheduleEditor, label: "Schedule" }
+        { to: Path.Users, label: t("menu.users") },
+        { to: Path.ScheduleEditor, label: t("menu.schedule") }
       );
     } else if (role === "client") {
       links.splice(
         1,
         0,
-        { to: Path.Schedule, label: "Schedule" }
-        // { to: Path.Purchases, label: "Purchases" }
+        { to: Path.Schedule, label: t("menu.schedule") }
+        // { to: Path.Purchases, label: t("menu.purchases")}
       );
     }
 
