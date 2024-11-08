@@ -160,5 +160,28 @@
     "users": "Users",
     "schedule": "Schedule",
     "purchases": "Purchases"
+  },
+  "clientOverview": {
+    "active": "Active",
+    "expired": "Expired",
+    "inactive": "Inactive",
+    "noAbonements": "No abonements found"
+  },
+  "abonement": {
+    "amount": "Amount",
+    "left": "Left",
+    "from": "From",
+    "to": "To",
+    "purchaseDate": "Purchase Date",
+    "alreadyFrozen": "Abonement was frozen already, other actions forbidden!",
+    "freeze": "Freeze",
+    "history": "History",
+    "noHistory": "No history found!"
+  },
+  "history": {
+    "date": "Date",
+    "time": "Time",
+    "trainer": "Trainer",
+    "visitors": "Visitors"
   }
 }

@@ -5,12 +5,14 @@ import { sortByParam } from "../../../../utils/utils";
 import Abonement from "../../../../components/Abonement";
 import "./ClientOverview.scss";
 import { User } from "../../../../types/User";
+import { useTranslation } from "react-i18next";
 
 interface ClientOverviewProps {
   user: User;
 }
 
 const ClientOverview: React.FC<ClientOverviewProps> = ({ user }) => {
+  const { t } = useTranslation();
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
 
   const abonements = user?.abonements || [];
@@ -42,7 +44,9 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ user }) => {
             <Abonement key={abonement.id} abonement={abonement} />
           ))
         ) : (
-          <p className="text-center mt-8 text-gray-500">No abonements found</p>
+          <p className="text-center mt-8 text-gray-500">
+            {t("clientOverview.noAbonements")}
+          </p>
         )}
       </div>
     </div>

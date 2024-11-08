@@ -6,6 +6,7 @@ import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { checkTrainingReturn } from "../../features/trainings/trainingThunk";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -13,6 +14,7 @@ interface AbonementProps {
 }
 
 export default function Abonement({ abonement, userRole }: AbonementProps) {
+  const { t } = useTranslation();
   const [freeze, setFreeze] = useState<boolean>(abonement.paused);
   const dispatch = useAppDispatch();
 
@@ -52,11 +54,11 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
         </div>
         <div className="abonement__container">
           <div>
-            <b>Amount of trainings:</b> {abonement.amount}
+            <b>{t("abonement.amount")}</b> {abonement.amount}
           </div>
           <div>
             <div>
-              <b>Left trainings:</b>{" "}
+              <b>{t("abonement.left")}</b>{" "}
               <span className="abonement__left-trainings">
                 {abonement.left}
               </span>
@@ -71,27 +73,30 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
         </div>
         <div className="abonement__container">
           <div>
-            <b>From:</b>{" "}
+            <b>{t("abonement.from")}</b>{" "}
             {abonement.activatedAt ? abonement.activatedAt.slice(0, 10) : null}
           </div>
           <div>
-            <b>To:</b>{" "}
+            <b>{t("abonement.to")}</b>{" "}
             {abonement.expiratedAt ? abonement.expiratedAt.slice(0, 10) : null}
           </div>
           <div>
-            <b>Purchase date:</b> {abonement.createdAt.slice(0, 10)}
+            <b>{t("abonement.purchaseDate")}</b>{" "}
+            {abonement.createdAt.slice(0, 10)}
           </div>
         </div>
       </div>
       <div className="abonement__history">
-        <h2 className="abonement__title abonement__history-title">History</h2>
+        <h2 className="abonement__title abonement__history-title">
+          {t("abonement.history")}
+        </h2>
         <div className="abonement__container">
           {abonement.visitedTrainings.length > 0 ? (
             abonement.visitedTrainings.map((el) => (
               <HistoryElement key={el.id} data={el} trainer={false} />
             ))
           ) : (
-            <p className="flex-1 text-gray-300">No trainings reserved!</p>
+            <p className="flex-1 text-gray-300">{t("abonement.noHistory")}</p>
           )}
         </div>
       </div>
