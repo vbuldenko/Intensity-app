@@ -1,4 +1,6 @@
 .settings {
+  display: flex;
+  flex-direction: column;
   &__section {
     margin-bottom: 2rem;
   }
@@ -25,6 +27,25 @@
       display: flex;
       gap: 0.5rem;
       align-items: center;
+    }
+  }
+
+  &__logout-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    width: max-content;
+    align-self: center;
+    color: #f56565;
+    padding: 0.25rem 3rem;
+    background-color: white;
+    border-radius: $standard-br;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+
+    &:active {
+      transform: scale(0.95);
     }
   }
 

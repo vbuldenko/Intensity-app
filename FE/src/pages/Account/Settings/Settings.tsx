@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/user/userSlice";
 import "./Settings.scss";
@@ -9,8 +9,8 @@ import {
   KeyIcon,
   IdentificationIcon,
   PencilSquareIcon,
-  UserMinusIcon,
-  ArrowRightOnRectangleIcon,
+  // UserMinusIcon,
+  ArrowRightStartOnRectangleIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
 import { User } from "../../../types/User";
@@ -18,13 +18,15 @@ import { logOut } from "../../../features/auth/authThunk";
 import Loader from "../../../components/Elements/Loader";
 import { updateUserData } from "../../../features/user/userThunk";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function Settings() {
+  const { t } = useTranslation();
   const { data: user, loading } = useAppSelector(selectUser);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleFontSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newFontSize = parseInt(event.target.value, 10);
@@ -41,14 +43,14 @@ function Settings() {
     setIsSubmitting(false);
   };
 
-  const handleDelete = async () => {
-    try {
-      await dispatch(logOut());
-      navigate("/sign-in", { replace: true });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDelete = async () => {
+  //   try {
+  //     await dispatch(logOut());
+  //     navigate("/sign-in", { replace: true });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   if (!user || loading) {
     return <Loader />;
@@ -59,7 +61,7 @@ function Settings() {
   return (
     <div className="settings">
       <div className="settings__section">
-        <h3 className="settings__title">App settings</h3>
+        <h3 className="settings__title">{t("settings.general")}</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
@@ -82,7 +84,7 @@ function Settings() {
         </div>
       </div>
       <div className="settings__section">
-        <h3 className="settings__title">Personal information</h3>
+        <h3 className="settings__title">{t("settings.personal")}</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
@@ -125,17 +127,26 @@ function Settings() {
           </div>
         </div>
       </div>
-      <div className="settings__section">
+      <button
+        className="settings__logout-button card-element"
+        onClick={handleLogOut}
+      >
+        <ArrowRightStartOnRectangleIcon className="icon icon--small" />
+        {isSubmitting && <div className="reservation-btn__spinner"></div>}
+        {t("settings.logoutButton")}
+      </button>
+      {/* <div className="settings__section">
         <h3 className="settings__title">Account actions</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
             <div className="settings__info-label">
-              <ArrowRightOnRectangleIcon className="icon icon--small" />
+              <ArrowRightStartOnRectangleIcon className="icon icon--small" />
               <p className="text text--small">Log yourself out:</p>
             </div>
             <button className="button button--action" onClick={handleLogOut}>
+              <ArrowRightStartOnRectangleIcon className="icon icon--small" />
               {isSubmitting && <div className="reservation-btn__spinner"></div>}
-              {!isSubmitting && "Log out"}
+              {!isSubmitting && t("settings.logoutButton")}
             </button>
           </div>
           <div className="settings__info-item">
@@ -148,7 +159,7 @@ function Settings() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

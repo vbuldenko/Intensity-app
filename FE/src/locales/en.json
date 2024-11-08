@@ -212,5 +212,12 @@
     "time": "Time",
     "trainer": "Trainer",
     "visitors": "Visitors"
+  },
+  "settings": {
+    "general": "App settings",
+    "personal": "Personal information",
+    "logoutButton": "Log Out",
+    "logoutSuccess": "You have been logged out successfully.",
+    "logoutError": "An error occurred while logging out."
   }
 }
