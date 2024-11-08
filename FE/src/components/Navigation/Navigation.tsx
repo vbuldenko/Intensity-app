@@ -45,7 +45,6 @@ export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
               className={getLinkClass}
               onClick={handleClick}
             >
-              Log In/Sign Up
               {t("nav.login")}
             </NavLink>
           </li>

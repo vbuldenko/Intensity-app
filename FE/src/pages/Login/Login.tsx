@@ -6,8 +6,10 @@ import { login } from "../../features/auth/authThunk";
 import { Path } from "../../types/Path";
 import "./Auth.scss";
 import Notification from "../../components/Elements/Notification";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +38,7 @@ const Login = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
-        <h2 className="auth__title">Log in</h2>
+        <h2 className="auth__title">{t("login.title")}</h2>
         {error && <Notification message={error} type="error" />}
         <div className="auth__input-wrapper">
           {/* <label htmlFor="identifier">Email or Phone Number</label> */}
@@ -45,7 +47,7 @@ const Login = () => {
             type="text"
             value={identifier}
             name="identifier"
-            placeholder="Email or Phone Number"
+            placeholder={t("login.identifierPlaceholder")}
             onChange={({ target }) => setIdentifier(target.value)}
           />
         </div>
@@ -56,13 +58,13 @@ const Login = () => {
             type="password"
             value={password}
             name="password"
-            placeholder="Password"
+            placeholder={t("login.passwordPlaceholder")}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit" className="auth__button">
+        <button type="submit" className="auth__button" disabled={isSubmitting}>
           {isSubmitting && <div className="reservation-btn__spinner"></div>}
-          {!isSubmitting && "Log in"}
+          {!isSubmitting && t("login.submitButton")}
         </button>
       </form>
       <div className="auth__signup-subsection">
@@ -71,14 +73,14 @@ const Login = () => {
             className="auth__signup-subsection__link auth__signup-subsection__link--accent"
             to={`/${Path.SignUp}`}
           >
-            Sign Up
+            {t("login.register")}
           </Link>
         </div>
         <Link
           className="auth__signup-subsection__link text-sm"
           to={Path.Restore}
         >
-          Forgot password?
+          {t("login.forgotPassword")}
         </Link>
       </div>
     </div>

@@ -1,6 +1,28 @@
 {
   "welcome_to": "Welcome to",
   "fitness_studio": "fitness studio!",
+  "login": {
+    "title": "Log in",
+    "identifierPlaceholder": "Email or Phone Number",
+    "passwordPlaceholder": "Password",
+    "submitButton": "Log in",
+    "register": "Sign up",
+    "forgotPassword": "Forgot password?"
+  },
+  "signup": {
+    "title": "Sign Up",
+    "firstNamePlaceholder": "First Name",
+    "lastNamePlaceholder": "Last Name",
+    "emailPlaceholder": "Email",
+    "phonePlaceholder": "Phone",
+    "passwordPlaceholder": "Password",
+    "submitButton": "Sign Up",
+    "roleQuestion": "What role do you want to sign up for?",
+    "roleClient": "Client",
+    "roleTrainer": "Trainer",
+    "loginQuestion": "Already have an account?",
+    "loginLink": "Log in"
+  },
   "nav": {
     "home": "Home",
     "services": "Services",

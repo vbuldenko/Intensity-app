@@ -9,6 +9,28 @@
     "schedule": "Розклад",
     "login": "Увійти"
   },
+  "login": {
+    "title": "Увійти",
+    "identifierPlaceholder": "Електронна пошта або номер телефону",
+    "passwordPlaceholder": "Пароль",
+    "submitButton": "Увійти",
+    "register": "Реєстрація",
+    "forgotPassword": "Забули пароль?"
+  },
+  "signup": {
+    "title": "Реєстрація",
+    "firstNamePlaceholder": "Ім'я",
+    "lastNamePlaceholder": "Прізвище",
+    "emailPlaceholder": "Електронна пошта",
+    "phonePlaceholder": "Телефон",
+    "passwordPlaceholder": "Пароль",
+    "roleQuestion": "Тип облікового запису",
+    "roleClient": "Клієнт",
+    "roleTrainer": "Тренер",
+    "submitButton": "Зареєструватися",
+    "loginQuestion": "Вже є створений акаунт?",
+    "login": "Увійти"
+  },
   "home": {
     "header": "Fitness Studio",
     "header_values": "Наші цінності",

@@ -5,8 +5,10 @@ import { AuthCredentials } from "../../types/Auth";
 import { Path } from "../../types/Path";
 import { getErrorMessage } from "../../utils/utils";
 import Notification from "../../components/Elements/Notification";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
+  const { t } = useTranslation();
   const defaultUserData: AuthCredentials = {
     firstName: "",
     lastName: "",
@@ -48,7 +50,7 @@ const SignUp = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleSubmit}>
-        <h1 className="auth__title">Create an account</h1>
+        <h1 className="auth__title">{t("signup.title")}</h1>
         {notification && <Notification message={notification} type="error" />}
         <div className="auth__input-wrapper">
           <input
@@ -56,7 +58,7 @@ const SignUp = () => {
             type="text"
             value={signUpData.firstName}
             name="firstName"
-            placeholder="first name"
+            placeholder={t("signup.firstNamePlaceholder")}
             onChange={handleChange}
           />
         </div>
@@ -66,7 +68,7 @@ const SignUp = () => {
             type="text"
             value={signUpData.lastName}
             name="lastName"
-            placeholder="last name"
+            placeholder={t("signup.lastNamePlaceholder")}
             onChange={handleChange}
           />
         </div>
@@ -76,7 +78,7 @@ const SignUp = () => {
             type="text"
             value={signUpData.email}
             name="email"
-            placeholder="email"
+            placeholder={t("signup.emailPlaceholder")}
             onChange={handleChange}
           />
         </div>
@@ -86,7 +88,7 @@ const SignUp = () => {
             type="text"
             value={signUpData.phone}
             name="phone"
-            placeholder="phone number"
+            placeholder={t("signup.phonePlaceholder")}
             onChange={handleChange}
           />
         </div>
@@ -96,13 +98,13 @@ const SignUp = () => {
             type="password"
             value={signUpData.password}
             name="password"
-            placeholder="password"
+            placeholder={t("signup.passwordPlaceholder")}
             onChange={handleChange}
           />
         </div>
         <div className="auth__radio-role flex flex-col gap-2">
           <label className="self-center font-bold text-teal-500">
-            Choose your role:
+            {t("signup.roleQuestion")}
           </label>
           <div className="card-element flex gap-6 justify-center p-1">
             <label className="label flex gap-1">
@@ -113,7 +115,7 @@ const SignUp = () => {
                 checked={signUpData.role === "client"}
                 onChange={handleChange}
               />
-              <span>Client</span>
+              <span>{t("signup.roleClient")}</span>
             </label>
             <label className="label flex gap-1">
               <input
@@ -123,19 +125,19 @@ const SignUp = () => {
                 checked={signUpData.role === "trainer"}
                 onChange={handleChange}
               />
-              <span>Trainer</span>
+              <span>{t("signup.roleTrainer")}</span>
             </label>
           </div>
         </div>
         <button id="login-button" type="submit" className="auth__button">
-          Sign Up
+          {t("signup.submitButton")}
         </button>
       </form>
       <div className="auth__subsection">
         <div className="flex gap-4 px-8 py-4 justify-between items-center">
-          <p className="text-sm">Already have an account?</p>
+          <p className="text-sm">{t("signup.loginQuestion")}</p>
           <Link className="font-bold text-xl text-teal-500" to="/sign-in">
-            Log In
+            {t("signup.login")}
           </Link>
         </div>
       </div>
