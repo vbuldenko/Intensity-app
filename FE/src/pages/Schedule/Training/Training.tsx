@@ -15,6 +15,7 @@ import { Training as TrainingType } from "../../../types/Training";
 
 import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
+import { useTranslation } from "react-i18next";
 
 type NotificationType = "error" | "notification" | undefined;
 
@@ -24,6 +25,7 @@ type NotificationState = {
 } | null;
 
 export default function Training({ training }: { training: TrainingType }) {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState<NotificationState>(null);
@@ -66,18 +68,18 @@ export default function Training({ training }: { training: TrainingType }) {
       calculateHoursDiff(trainingTime)
     );
     if (!updatedAccess) {
-      return handleNotification("The reservation period has passed!", "error");
+      return handleNotification(
+        t("training.reservation_period_passed"),
+        "error"
+      );
     }
 
     if (!abonement) {
-      return handleNotification("No abonement, buy one to proceed!", "error");
+      return handleNotification(t("training.no_abonement"), "error");
     }
 
     if (updateType === "reservation" && abonement.left === 0) {
-      return handleNotification(
-        "No trainings left, buy a new abonement!",
-        "error"
-      );
+      return handleNotification(t("training.no_trainings_left"), "error");
     }
 
     const isForbidden = isCancellationForbidden(
@@ -87,10 +89,7 @@ export default function Training({ training }: { training: TrainingType }) {
       new Date().getHours()
     );
     if (isForbidden) {
-      return handleNotification(
-        "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
-        "error"
-      );
+      return handleNotification(t("training.cancel_forbidden_rule"), "error");
     }
 
     try {
@@ -130,7 +129,9 @@ export default function Training({ training }: { training: TrainingType }) {
         </div>
         {user && (
           <p className="schedule__training-data">
-            Trainer: <b>{training.instructor?.firstName}</b>
+            {t("training.trainer")}
+            {":"}
+            <b>{training.instructor?.firstName}</b>
           </p>
         )}
         {
@@ -138,7 +139,7 @@ export default function Training({ training }: { training: TrainingType }) {
             <p>{training.time}</p>
             {(access || user) && (
               <p className="m-text w-max">
-                Places left: {training.capacity - reservedPlaces}
+                {t("training.left")} {training.capacity - reservedPlaces}
               </p>
             )}
           </div>

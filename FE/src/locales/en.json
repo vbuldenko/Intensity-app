@@ -145,5 +145,13 @@
     "address": "Volodymyra Ivasiuka Ave, 24, Kyiv, 04210",
     "schedule": "Working Schedule",
     "working_hours": "Mon-Fri: 9:00 AM - 6:00 PM"
+  },
+  "training": {
+    "reservation_period_passed": "The reservation period has passed!",
+    "no_abonement": "No abonement, buy one to proceed!",
+    "no_trainings_left": "No trainings left, buy a new abonement!",
+    "cancel_forbidden_rule": "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
+    "trainer": "Trainer",
+    "left": "Places left:"
   }
 }
