@@ -37,7 +37,7 @@ export const Header = () => {
         />
       </div>
 
-      <div className="header__right gap-2">
+      <div className="header__right gap-4">
         <CustomSelect
           value={lang}
           options={["ua", "en"]}

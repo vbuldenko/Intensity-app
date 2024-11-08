@@ -1,17 +1,19 @@
 .custom-select {
   position: relative;
   display: flex;
-  width: 8rem;
+  width: max-content;
 
   &__button {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.5rem;
     width: 100%;
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 0.75rem;
+    line-height: 1;
     background-color: $color-background;
-    border: 1px solid #d1d5db;
-    border-radius: 1rem;
+    border: 1px solid $color-element;
+    border-radius: $standard-br;
     cursor: pointer;
     text-align: left;
     text-transform: capitalize;
@@ -32,14 +34,14 @@
     z-index: 10;
     width: 100%;
     background-color: white;
-    border: 1px solid #d1d5db;
-    border-radius: 1rem;
+    border: 1px solid $color-element;
+    border-radius: $standard-br;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
 
   &__option {
-    padding: 0.25rem 1rem;
+    padding: 0.25rem 0.75rem;
     cursor: pointer;
     color: black;
     text-transform: capitalize;
