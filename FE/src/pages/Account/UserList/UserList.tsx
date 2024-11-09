@@ -6,8 +6,10 @@ import { userService } from "../../../services/userService";
 import Selector from "../../../components/Elements/Selector";
 import classNames from "classnames";
 import { User } from "../../../types/User";
+import { useTranslation } from "react-i18next";
 
 export default function UserList() {
+  const { t } = useTranslation();
   const [data, setData] = useState<User[]>([]);
   const [userType, setUserType] = useState<"client" | "trainer">("client");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -35,11 +37,11 @@ export default function UserList() {
     trainingsLength: number = 0
   ): string => {
     if (userType === "client") {
-      return abonementsLength ? "Active" : "Inactive";
+      return abonementsLength ? t("userList.active") : t("userList.inactive");
     } else if (userType === "trainer") {
-      return trainingsLength ? "Active" : "Inactive";
+      return trainingsLength ? t("userList.active") : t("userList.inactive");
     }
-    return "Unknown";
+    return t("userList.unknown");
   };
 
   return (
@@ -47,7 +49,7 @@ export default function UserList() {
       <div className="users__header">
         <div className="users__info items-center justify-around flex-1">
           <div className="flex">
-            <p>Total:</p> <p>{users.length}</p>
+            <p>{t("userList.total")}:</p> <p>{users.length}</p>
           </div>
           <Selector
             selection={userType}
@@ -87,8 +89,8 @@ export default function UserList() {
 
                 <div
                   className={classNames("status", {
-                    status: status === "Active",
-                    "status--gray": status === "Inactive",
+                    status: status === t("userList.active"),
+                    "status--gray": status === t("userList.inactive"),
                   })}
                 >
                   {status}
@@ -96,16 +98,16 @@ export default function UserList() {
               </div>
               <div className="users__content">
                 <div className="users__data">
-                  <p>Phone</p>
+                  <p>{t("userList.phone")}</p>
                   <p>{phone}</p>
                 </div>
                 <div className="users__data">
-                  <p>Mail</p>
+                  <p>{t("userList.email")}</p>
                   <p>{email}</p>
                 </div>
                 {userType === "client" && (
                   <div className="users__data">
-                    <p>Abonement</p>
+                    <p>{t("userList.abonement")}</p>
                     <p>{abonements?.length}</p>
                   </div>
                 )}

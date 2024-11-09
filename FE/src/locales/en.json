@@ -238,5 +238,16 @@
     "utilities": "Utilities",
     "taxes": "Taxes",
     "wages": "Wages"
+  },
+  "userList": {
+    "total": "Total",
+    "phone": "Phone",
+    "email": "Email",
+    "abonement": "Abonement",
+    "client": "Client",
+    "trainer": "Trainer",
+    "active": "Active",
+    "inactive": "Inactive",
+    "unknown": "Unknown"
   }
 }
