@@ -98,6 +98,12 @@ export default function UserList() {
               </div>
               <div className="users__content">
                 <div className="users__data">
+                  <p>ID</p>
+                  <p className="bg-teal-100 text-teal-600 px-2 rounded-sm">
+                    {id}
+                  </p>
+                </div>
+                <div className="users__data">
                   <p>{t("userList.phone")}</p>
                   <p>{phone}</p>
                 </div>
