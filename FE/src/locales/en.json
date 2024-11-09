@@ -249,5 +249,8 @@
     "active": "Active",
     "inactive": "Inactive",
     "unknown": "Unknown"
+  },
+  "search": {
+    "placeholder": "User name..."
   }
 }
