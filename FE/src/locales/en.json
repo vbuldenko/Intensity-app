@@ -215,7 +215,12 @@
   },
   "settings": {
     "general": "App settings",
+    "fontSize": "Font size",
     "personal": "Personal information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
     "logoutButton": "Log Out",
     "logoutSuccess": "You have been logged out successfully.",
     "logoutError": "An error occurred while logging out."

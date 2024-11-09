@@ -66,7 +66,7 @@ function Settings() {
           <div className="settings__info-item">
             <div className="settings__info-label">
               <AdjustmentsHorizontalIcon className="icon icon--small" />
-              <p className="text text--small">Font Size</p>
+              <p className="text text--small">{t("settings.fontSize")}</p>
             </div>
             <select
               id="fontSize"
@@ -89,7 +89,7 @@ function Settings() {
           <div className="settings__info-item">
             <div className="settings__info-label">
               <IdentificationIcon className="icon icon--small" />
-              <p className="text text--small">Name</p>
+              <p className="text text--small">{t("settings.name")}</p>
               <p className="text text--highlighted">{firstName}</p>
             </div>
             <button className="button button--icon">
@@ -99,7 +99,7 @@ function Settings() {
           <div className="settings__info-item">
             <div className="settings__info-label">
               <AtSymbolIcon className="icon icon--small" />
-              <p className="text text--small">Email</p>
+              <p className="text text--small">{t("settings.email")}</p>
               <p className="text text--highlighted text--wide">{email}</p>
             </div>
             <button className="button button--icon">
@@ -109,7 +109,7 @@ function Settings() {
           <div className="settings__info-item">
             <div className="settings__info-label">
               <PhoneIcon className="icon icon--small" />
-              <p className="text text--small">Phone</p>
+              <p className="text text--small">{t("settings.phone")}</p>
               <p className="text--highlighted">{phone}</p>
             </div>
             <button className="button button--icon">
@@ -119,7 +119,7 @@ function Settings() {
           <div className="settings__info-item">
             <div className="settings__info-label">
               <KeyIcon className="icon icon--small" />
-              <p className="text text--small">Password</p>
+              <p className="text text--small">{t("settings.password")}</p>
             </div>
             <button className="button button--icon">
               <PencilSquareIcon className="icon icon--small" />
