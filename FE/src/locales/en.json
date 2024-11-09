@@ -239,6 +239,14 @@
     "taxes": "Taxes",
     "wages": "Wages"
   },
+  "trainerOverview": {
+    "salary": "Salary",
+    "currentTotal": "Current total",
+    "today": "Today",
+    "monthTrainings": "Month trainings",
+    "todayTrainings": "Today trainings",
+    "noTrainings": "No trainings found"
+  },
   "userList": {
     "total": "Total",
     "phone": "Phone",
