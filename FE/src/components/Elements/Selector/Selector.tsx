@@ -1,28 +1,33 @@
 import React from "react";
 import "./Selector.scss";
 
-interface SelectorProps<T> {
-  selection: T;
-  handleSelection: (buttonName: T) => void;
-  buttonNames: T[];
+interface ButtonName {
+  value: string;
+  label: string;
 }
 
-const Selector = <T extends React.ReactNode>({
+interface SelectorProps {
+  selection: string;
+  handleSelection: (buttonName: any) => void;
+  buttonNames: ButtonName[];
+}
+
+const Selector: React.FC<SelectorProps> = ({
   selection,
   handleSelection,
   buttonNames,
-}: SelectorProps<T>) => {
+}) => {
   return (
     <div className="selector">
-      {buttonNames.map((buttonName, index) => (
+      {buttonNames.map(({ value, label }, index) => (
         <button
           key={index}
           className={`selector__button capitalize ${
-            selection === buttonName ? "selector__button--selected" : ""
+            selection === value ? "selector__button--selected" : ""
           }`}
-          onClick={() => handleSelection(buttonName)}
+          onClick={() => handleSelection(value)}
         >
-          {buttonName}
+          {label}
         </button>
       ))}
     </div>

@@ -44,6 +44,11 @@ export default function UserList() {
     return t("userList.unknown");
   };
 
+  const buttonNames = [
+    { value: "client", label: t("userList.client") },
+    { value: "trainer", label: t("userList.trainer") },
+  ];
+
   return (
     <div className="users">
       <div className="users__header">
@@ -56,7 +61,7 @@ export default function UserList() {
             handleSelection={() =>
               setUserType((prev) => (prev === "client" ? "trainer" : "client"))
             }
-            buttonNames={["client", "trainer"]}
+            buttonNames={buttonNames}
           />
         </div>
         <div className="flex-1">

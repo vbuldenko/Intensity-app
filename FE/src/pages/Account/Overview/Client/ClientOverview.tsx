@@ -31,12 +31,18 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ user }) => {
     setAbonementView(view);
   };
 
+  const buttonNames = [
+    { value: "active", label: t("abonement.active") },
+    { value: "expired", label: t("abonement.expired") },
+    { value: "inactive", label: t("abonement.inactive") },
+  ];
+
   return (
     <div className="client-overview">
       <Selector
         selection={abonementView}
         handleSelection={handleViewChange}
-        buttonNames={["active", "expired", "inactive"]}
+        buttonNames={buttonNames}
       />
       <div className="client-overview__content">
         {sortedAbonements.length ? (

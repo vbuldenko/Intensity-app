@@ -197,15 +197,18 @@
     "noAbonements": "No abonements found"
   },
   "abonement": {
-    "amount": "Amount",
-    "left": "Left",
-    "from": "From",
-    "to": "To",
-    "purchaseDate": "Purchase Date",
+    "amount": "Amount:",
+    "left": "Left:",
+    "from": "From:",
+    "to": "To:",
+    "purchaseDate": "Purchase Date:",
     "alreadyFrozen": "Abonement was frozen already, other actions forbidden!",
     "freeze": "Freeze",
     "history": "History",
-    "noHistory": "No history found!"
+    "noHistory": "No history found!",
+    "active": "Active",
+    "expired": "Expired",
+    "inactive": "Inactive"
   },
   "history": {
     "date": "Date",
