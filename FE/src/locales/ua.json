@@ -224,5 +224,19 @@
     "logoutButton": "Вийти",
     "logoutSuccess": "Ви успішно вийшли з системи.",
     "logoutError": "Сталася помилка під час виходу."
+  },
+  "adminDashboard": {
+    "generalStatistics": "Загальна статистика",
+    "expenses": "Витрати",
+    "abonementsSold": "Продано абонементів",
+    "totalIncome": "Загальний дохід",
+    "dailyIncome": "Щоденний дохід",
+    "monthlyIncome": "Місячний дохід",
+    "dailyProfit": "Щоденний прибуток",
+    "monthlyProfit": "Місячний прибуток",
+    "rent": "Оренда",
+    "utilities": "Комунальні послуги",
+    "taxes": "Податки",
+    "wages": "Зарплати"
   }
 }

@@ -4,9 +4,11 @@ import { studioStats } from "../../../../assets/mockData";
 // import classNames from "classnames";
 import { abonementService } from "../../../../services/abonementService";
 import { Abonement } from "../../../../types/Abonement";
+import { useTranslation } from "react-i18next";
 // import { User } from "../../../../types/User";
 
 const AdminDashboard: React.FC = () => {
+  const { t } = useTranslation();
   const [abonements, setAbonements] = useState<Abonement[]>([]);
   const data = studioStats;
   const [expenses, setExpenses] = useState(data.expenses);
@@ -28,7 +30,7 @@ const AdminDashboard: React.FC = () => {
       );
     }) || [];
 
-  const totalIncome = abonements?.reduce((acc, a) => acc + a.price, 0);
+  // const totalIncome = abonements?.reduce((acc, a) => acc + a.price, 0);
   const currentMonthIncome = currentMonthAbonements.reduce(
     (acc, a) => acc + a.price,
     0
@@ -44,7 +46,7 @@ const AdminDashboard: React.FC = () => {
 
   const generalStats = {
     abonementsSold: abonements?.length || 0,
-    totalIncome: totalIncome.toFixed(1),
+    // totalIncome: totalIncome.toFixed(1),
     dailyIncome: dailyIncome.toFixed(1),
     monthlyIncome: currentMonthIncome.toFixed(1),
     dailyProfit: dailyProfit.toFixed(1),
@@ -61,7 +63,10 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="admin-dashboard">
-      <StatisticsSection title="General Statistics" stats={generalStats} />
+      <StatisticsSection
+        title={t("adminDashboard.generalStatistics")}
+        stats={generalStats}
+      />
       <ExpensesSection
         expenses={expenses}
         onExpenseChange={handleExpenseChange}
@@ -74,29 +79,28 @@ const AdminDashboard: React.FC = () => {
 const StatisticsSection: React.FC<{
   title: string;
   stats: Record<string, string | number>;
-}> = ({ title, stats }) => (
-  <div className="admin-dashboard__section">
-    <h3 className="admin-dashboard__subtitle">{title}</h3>
-    <div className="admin-dashboard__content">
-      {Object.entries(stats).map(([key, value]) => (
-        <div className="admin-dashboard__stat" key={key}>
-          <p>
-            {key
-              .replace(/([A-Z])/g, " $1")
-              .replace(/^./, (str) => str.toUpperCase())}
-            :
-          </p>
-          <span>
-            {key !== "abonementsSold" && (
-              <b className="mr-1 text-xs text-violet-400">₴</b>
-            )}
-            {value}
-          </span>
-        </div>
-      ))}
+}> = ({ title, stats }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="admin-dashboard__section">
+      <h3 className="admin-dashboard__subtitle">{title}</h3>
+      <div className="admin-dashboard__content">
+        {Object.entries(stats).map(([key, value]) => (
+          <div className="admin-dashboard__stat" key={key}>
+            <p>{t(`adminDashboard.${key}`)}:</p>
+            <span>
+              {key !== "abonementsSold" && (
+                <b className="mr-1 text-xs text-violet-400">₴</b>
+              )}
+              {value}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // const TrainersSection: React.FC<{ trainers: User[] }> = ({ trainers }) => (
 //   <div className="admin-dashboard__section">
@@ -117,25 +121,31 @@ const StatisticsSection: React.FC<{
 const ExpensesSection: React.FC<{
   expenses: Record<string, number>;
   onExpenseChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ expenses, onExpenseChange }) => (
-  <div className="admin-dashboard__section">
-    <h3 className="admin-dashboard__subtitle">Expenses</h3>
-    <div className="admin-dashboard__content">
-      {Object.entries(expenses).map(([key, value]) => (
-        <div className="admin-dashboard__stat" key={key}>
-          <p>{key.charAt(0).toUpperCase() + key.slice(1)}:</p>
-          <span>
-            <input
-              type="number"
-              name={key}
-              value={value}
-              onChange={onExpenseChange}
-            />
-          </span>
-        </div>
-      ))}
+}> = ({ expenses, onExpenseChange }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="admin-dashboard__section">
+      <h3 className="admin-dashboard__subtitle">
+        {t("adminDashboard.expenses")}
+      </h3>
+      <div className="admin-dashboard__content">
+        {Object.entries(expenses).map(([key, value]) => (
+          <div className="admin-dashboard__stat" key={key}>
+            <p>{t(`adminDashboard.${key}`)}:</p>
+            <span>
+              <input
+                type="number"
+                name={key}
+                value={value}
+                onChange={onExpenseChange}
+              />
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AdminDashboard;

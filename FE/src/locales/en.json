@@ -224,5 +224,19 @@
     "logoutButton": "Log Out",
     "logoutSuccess": "You have been logged out successfully.",
     "logoutError": "An error occurred while logging out."
+  },
+  "adminDashboard": {
+    "generalStatistics": "General Statistics",
+    "expenses": "Expenses",
+    "abonementsSold": "Abonements Sold",
+    "totalIncome": "Total Income",
+    "dailyIncome": "Daily Income",
+    "monthlyIncome": "Monthly Income",
+    "dailyProfit": "Daily Profit",
+    "monthlyProfit": "Monthly Profit",
+    "rent": "Rent",
+    "utilities": "Utilities",
+    "taxes": "Taxes",
+    "wages": "Wages"
   }
 }
