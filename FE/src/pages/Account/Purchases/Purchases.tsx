@@ -8,8 +8,10 @@ import "./Purchases.scss";
 import { abonementService } from "../../../services/abonementService";
 import { getErrorMessage } from "../../../utils/utils";
 import Notification from "../../../components/Elements/Notification";
+import { useTranslation } from "react-i18next";
 
 export default function Purchases({ clientId }: { clientId?: number }) {
+  const { t } = useTranslation();
   const [notification, setNotification] = useState<{
     message: string;
     type: "error" | "notification";
@@ -76,30 +78,35 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     return null;
   }
 
+  const buttonNames = [
+    { value: "group", label: t("prices.categories.group") },
+    { value: "personal", label: t("prices.categories.individual") },
+    { value: "split", label: t("prices.categories.split") },
+    // { value: "kids", label: t("prices.categories.children") },
+  ];
+
   return (
     <div className="purchases">
       {notification && (
         <Notification message={notification.message} type={notification.type} />
       )}
 
-      <h3 className="purchases__title">
-        Оберіть тип занять та кількість тренувань
-      </h3>
+      <h3 className="purchases__title">{t("prices.choose")}</h3>
 
       <Selector
         selection={selectedType}
         handleSelection={handleTypeChange}
-        buttonNames={["group", "personal", "split", "kids"]}
+        buttonNames={buttonNames}
       />
       <div className="purchases__container card-element">
         <div className="purchases__info">
           {selectedAbonement && (
             <>
               <p className="purchases__info-price">
-                Price: {selectedAbonement.price} UAH
+                {t("prices.price")}: {selectedAbonement.price} UAH
               </p>
               <p className="purchases__info-single-training">
-                1 training:{" "}
+                {t("prices.unit_price")}:{" "}
                 {Math.trunc(
                   selectedAbonement.price / selectedAbonement.amount
                 ) || null}{" "}

@@ -4,7 +4,7 @@ const ukCustom = {
   ...uk,
   localize: {
     ...uk.localize,
-    month: (n: number, options: { width?: string; context?: string } = {}) => {
+    month: (n: number) => {
       const months = [
         "січень",
         "лютий",
@@ -19,7 +19,6 @@ const ukCustom = {
         "листопад",
         "грудень",
       ];
-      const width = options.width ? options.width : "wide";
       return months[n];
     },
   },

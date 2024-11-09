@@ -13,7 +13,7 @@
   &__button {
     flex: 1;
     padding: 0.5rem 1rem;
-    min-width: 100px;
+    min-width: max-content;
     text-align: center;
     border-radius: 0.75rem;
     cursor: pointer;
@@ -28,6 +28,7 @@
     &--selected {
       background-color: $color-green;
       color: white;
+      min-width: max-content;
 
       &:hover {
         background-color: $color-green;

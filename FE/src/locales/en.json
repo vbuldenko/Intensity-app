@@ -165,7 +165,8 @@
       "individual": "Individual",
       "split": "Split",
       "children": "Children"
-    }
+    },
+    "choose": "Choose the type and a number of trainings"
   },
   "contacts": {
     "header": "Our Contacts",
