@@ -19,8 +19,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectTrainings } from "../../features/trainings/trainingSlice";
 import { fetchTrainings } from "../../features/trainings/trainingThunk";
 import Loader from "../../components/Elements/Loader";
+import { useTranslation } from "react-i18next";
 
 export default function Schedule() {
+  const { t } = useTranslation();
   const { data: trainings, loading } = useAppSelector(selectTrainings);
   const dispatch = useAppDispatch();
   const today = startOfToday();
@@ -87,12 +89,19 @@ export default function Schedule() {
           />
         )}
       </div>
-      <SelectedDayTrainings trainings={selectedDayTrainings} />
-      {!trainings.length && loading && (
+      {selectedDayTrainings.length > 0 && (
+        <SelectedDayTrainings trainings={selectedDayTrainings} />
+      )}
+      {loading && (
         <div className="schedule__trainings flex justify-center items-center relative">
           <Loader />
           <div className="absolute w-max">Loading trainings...</div>
         </div>
+      )}
+      {!selectedDayTrainings.length && !loading && (
+        <p className="text-center text-gray-400 col-span-full">
+          {t("trainerOverview.noTrainings")}
+        </p>
       )}
     </section>
   );

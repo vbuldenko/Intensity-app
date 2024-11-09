@@ -10,13 +10,9 @@ export default function SelectedDayTrainings({
   return (
     <section className="schedule__trainings trainings">
       <ul className="trainings__list">
-        {trainings.length > 0 ? (
-          trainings.map((training) => (
-            <Training key={training.id} training={training} />
-          ))
-        ) : (
-          <p className="text-center">No trainings for today.</p>
-        )}
+        {trainings.map((training) => (
+          <Training key={training.id} training={training} />
+        ))}
       </ul>
     </section>
   );
