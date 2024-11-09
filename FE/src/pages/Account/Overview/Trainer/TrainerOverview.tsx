@@ -89,6 +89,17 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
           )}
         </div>
       </div>
+
+      <div className="trainer-overview__trainings-section card-element">
+        <h3 className="trainer-overview__title text-gray-300">
+          {t("trainerOverview.history")}
+        </h3>
+        <div className="trainer-overview__trainings-list">
+          <p className="text-gray-300 text-center">
+            {t("trainerOverview.noHistory")}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

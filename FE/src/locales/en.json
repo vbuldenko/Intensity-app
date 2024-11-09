@@ -245,7 +245,9 @@
     "today": "Today",
     "monthTrainings": "Month trainings",
     "todayTrainings": "Today trainings",
-    "noTrainings": "No trainings found"
+    "noTrainings": "No trainings found",
+    "history": "Training history",
+    "noHistory": "No history found"
   },
   "userList": {
     "total": "Total",
