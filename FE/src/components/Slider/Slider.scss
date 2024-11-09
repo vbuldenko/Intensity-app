@@ -1,8 +1,8 @@
 .slider {
-  @include page-grid;
-
   row-gap: 8px;
   grid-template-rows: 1fr 24px;
+
+  @include page-grid;
 
   &__container {
     z-index: 0;

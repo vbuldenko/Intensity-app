@@ -16,6 +16,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 56px;
+  margin-bottom: auto;
 
   @include on-tablet {
     gap: 64px;
@@ -24,8 +25,6 @@ main {
   @include on-desktop {
     gap: 80px;
   }
-
-  margin-bottom: auto;
 }
 
 .container {

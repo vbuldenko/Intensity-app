@@ -1,10 +1,11 @@
 .account {
-  @include page-grid;
   margin-inline: auto;
   // max-width: 70rem;
   width: 100%;
   min-width: min-content;
   min-height: 75vh;
+
+  @include page-grid;
 
   @include on-tablet {
     background: $card-background;
