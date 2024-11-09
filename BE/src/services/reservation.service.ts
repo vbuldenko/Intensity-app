@@ -1,45 +1,33 @@
-import { Transaction } from 'sequelize';
-import db from '../db/models';
+import Abonement from '../db/mdbmodels/Abonement';
+import User from '../db/mdbmodels/User';
+import Training, { ITraining } from '../db/mdbmodels/Training';
+import History from '../db/mdbmodels/History';
 import { ApiError } from '../exceptions/api.error';
-import { Abonement } from '../types/Abonement';
-import { Training } from '../types/Training';
-import { User } from '../types/User';
 import { canTrainingProceed } from '../utils';
 
 export const updateReservation = async (
-  abonementId: number,
-  trainingId: number,
-  userId: number,
+  abonementId: string,
+  trainingId: string,
+  userId: string,
   updateType: 'reservation' | 'cancellation',
 ) => {
   // Fetch relevant data with necessary associations
   const [abonement, training, user] = await Promise.all([
-    db.Abonement.findByPk(abonementId, {
-      include: [
-        {
-          model: db.Training,
-          as: 'visitedTrainings',
-          attributes: { exclude: ['capacity'] },
-          through: { attributes: [] },
-        },
-      ],
+    Abonement.findById(abonementId).populate({
+      path: 'visitedTrainings',
+      select: '-capacity',
     }),
-    db.Training.findByPk(trainingId, {
-      include: [
-        {
-          model: db.User,
-          as: 'instructor',
-          attributes: ['firstName', 'lastName'],
-        },
-        {
-          model: db.User,
-          as: 'visitors',
-          attributes: ['firstName', 'lastName'],
-          through: { attributes: [] }, // Exclude History attributes
-        },
-      ],
-    }),
-    db.User.findByPk(userId),
+    Training.findById(trainingId).populate([
+      {
+        path: 'instructorId',
+        select: 'firstName lastName',
+      },
+      {
+        path: 'visitors',
+        select: 'firstName lastName',
+      },
+    ]),
+    User.findById(userId),
   ]);
 
   if (!user || !abonement || !training) {
@@ -48,47 +36,37 @@ export const updateReservation = async (
     });
   }
 
-  // Start a transaction
-  const transaction = await db.sequelize.transaction();
-
   try {
     switch (updateType) {
       case 'reservation':
-        await handleReservation(abonement, training, user, transaction);
+        await handleReservation(abonement, training, user);
         break;
       case 'cancellation':
-        await handleCancellation(abonement, training, user, transaction);
+        await handleCancellation(abonement, training, user);
         break;
       default:
         throw ApiError.BadRequest('Invalid updateType');
     }
 
-    // Commit the transaction to apply changes
-    await transaction.commit();
-
     // Reload the models to get the updated data without re-fetching everything
-    await Promise.all([abonement.reload(), training.reload()]);
-    // await training.reload();
+    await Promise.all([abonement.save(), training.save()]);
 
     return {
       updatedAbonement: abonement,
       updatedTraining: training,
     };
   } catch (error) {
-    // Rollback the transaction in case of any errors
-    await transaction.rollback();
     throw error;
   }
 };
 
-const handleReservation = async (
-  abonement: any,
-  training: any,
-  user: any,
-  transaction: any,
-) => {
+const handleReservation = async (abonement: any, training: any, user: any) => {
   // Check if the user has already reserved the training
-  const hasVisited = await training.hasVisitor(user);
+  const hasVisited = await History.findOne({
+    abonementId: abonement._id,
+    trainingId: training._id,
+    userId: user._id,
+  });
   if (hasVisited) {
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
@@ -110,14 +88,11 @@ const handleReservation = async (
   }
 
   // Create history record and update Abonement and Training as per your logic
-  await db.History.create(
-    {
-      abonementId: abonement.id,
-      trainingId: training.id,
-      userId: user.id,
-    },
-    { transaction },
-  );
+  await new History({
+    abonementId: abonement._id,
+    trainingId: training._id,
+    userId: user._id,
+  }).save();
 
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
@@ -125,31 +100,25 @@ const handleReservation = async (
     abonement.status = 'ended';
   }
 
-  await abonement.save({ transaction });
+  await abonement.save();
 };
 
-// look for types later
-
-const handleCancellation = async (
-  abonement: any,
-  training: any,
-  user: any,
-  transaction: any,
-) => {
+const handleCancellation = async (abonement: any, training: any, user: any) => {
   // Check if the user has a reservation for the training
-  const hasVisited = await training.hasVisitor(user);
+  const hasVisited = await History.findOne({
+    abonementId: abonement._id,
+    trainingId: training._id,
+    userId: user._id,
+  });
   if (!hasVisited) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
   }
 
   // Remove the history record
-  await db.History.destroy({
-    where: {
-      abonementId: abonement.id,
-      trainingId: training.id,
-      userId: user.id,
-    },
-    transaction,
+  await History.deleteOne({
+    abonementId: abonement._id,
+    trainingId: training._id,
+    userId: user._id,
   });
 
   // Update the Abonement: increment left count, set status if needed
@@ -158,23 +127,15 @@ const handleCancellation = async (
     abonement.status = 'active';
   }
 
-  await abonement.save({ transaction });
+  await abonement.save();
 };
 
-const handleReturn = async (
-  abonement: any,
-  trainingId: any,
-  userId: any,
-  transaction: any,
-) => {
+const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
   // Remove the history record
-  await db.History.destroy({
-    where: {
-      abonementId: abonement.id,
-      trainingId,
-      userId,
-    },
-    transaction,
+  await History.deleteOne({
+    abonementId: abonement._id,
+    trainingId,
+    userId,
   });
 
   // Update the Abonement: increment left count, set status if needed
@@ -183,31 +144,22 @@ const handleReturn = async (
     abonement.status = 'active';
   }
 
-  await abonement.save({ transaction });
+  await abonement.save();
 };
 
-export const cancelNotHeldTrainings = async (abonementId: number) => {
-  const abonement = await db.Abonement.findByPk(abonementId, {
-    include: [
-      {
-        model: db.Training,
-        as: 'visitedTrainings',
-        include: [
-          {
-            model: db.User,
-            as: 'visitors',
-            through: { attributes: [] },
-          },
-        ],
-      },
-    ],
+export const cancelNotHeldTrainings = async (abonementId: string) => {
+  const abonement = await Abonement.findById(abonementId).populate({
+    path: 'visitedTrainings',
+    populate: {
+      path: 'visitors',
+      select: 'firstName lastName',
+    },
   });
 
   if (!abonement) {
     throw ApiError.NotFound({ error: 'Abonement not found.' });
   }
 
-  const transaction = await db.sequelize.transaction();
   const updatedTrainings = [];
 
   try {
@@ -217,42 +169,28 @@ export const cancelNotHeldTrainings = async (abonementId: number) => {
         training.visitors.length,
       );
       if (!canProceed) {
-        await handleReturn(
-          abonement,
-          training.id,
-          abonement.userId,
-          transaction,
-        );
-        updatedTrainings.push(training.id);
+        await handleReturn(abonement, training._id, abonement.user);
+        updatedTrainings.push(training._id);
       }
     }
-
-    await transaction.commit();
   } catch (error) {
-    await transaction.rollback();
     throw error;
   }
 
   if (updatedTrainings.length > 0) {
-    const trainings = await db.Training.findAll({
-      where: {
-        id: updatedTrainings,
+    const trainings = await Training.find({
+      _id: { $in: updatedTrainings },
+    }).populate([
+      {
+        path: 'instructorId',
+        select: 'firstName lastName',
       },
-      include: [
-        {
-          model: db.User,
-          as: 'instructor',
-          attributes: ['firstName', 'lastName'],
-        },
-        {
-          model: db.User,
-          as: 'visitors',
-          attributes: ['firstName', 'lastName'],
-          through: { attributes: [] },
-        },
-      ],
-    });
-    await abonement.reload();
+      {
+        path: 'visitors',
+        select: 'firstName lastName',
+      },
+    ]);
+    await abonement.save();
     return { abonement, trainings };
   }
 

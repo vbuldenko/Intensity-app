@@ -1,28 +1,24 @@
 import bcrypt from 'bcrypt';
-import db from '../db/models';
+// import db from '../db/models';
+import User, { IUser } from '../db/mdbmodels/User';
 import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
 import { sendActivationLink } from './email.service';
 import { UserDTO } from '../types/UserDTO';
-import { User } from '../types/User';
+// import { User } from '../types/User';
 
-const normalize = ({ id, firstName, lastName, email, role }: User): UserDTO => {
+const normalize = ({
+  id,
+  firstName,
+  lastName,
+  email,
+  role,
+}: IUser): UserDTO => {
   return { id, firstName, lastName, email, role };
 };
 
 const getAllActive = async () => {
-  return db.User.findAll({
-    where: {
-      activationToken: null,
-    },
-    include: [
-      {
-        model: db.Abonement,
-        as: 'abonements',
-        // attributes: ['id', 'status', 'type', 'amount', 'left'],
-      },
-    ],
-  });
+  return User.find({ activationToken: null }).populate('abonements');
 };
 
 const getUserByIdentifier = async (identifier: string) => {
@@ -38,53 +34,38 @@ const getUserByIdentifier = async (identifier: string) => {
 };
 
 const getByEmail = async (email: string) => {
-  return db.User.findOne({ where: { email } });
+  return User.findOne({ email });
 };
 
 const getByPhone = async (phone: string) => {
-  return db.User.findOne({ where: { phone } });
+  return User.findOne({ phone });
 };
 
 const getByToken = async (activationToken: string) => {
-  return db.User.findOne({ where: { activationToken } });
+  return User.findOne({ activationToken });
 };
 
-const getById = async (id: number) => {
-  return db.User.findOne({
-    where: { id },
-    attributes: { exclude: ['activationToken', 'password'] },
-    include: [
-      {
-        model: db.Abonement,
-        as: 'abonements',
-        // attributes: ['id', 'status', 'type', 'amount', 'left'],
-        include: [
-          {
-            model: db.Training,
-            as: 'visitedTrainings',
-            // attributes: ['id'],
-            through: { attributes: [] }, // Exclude History attributes
-            include: [
-              // {
-              //   model: db.User,
-              //   as: 'instructor',
-              //   attributes: ['firstName', 'lastName'],
-              // },
-              { model: db.User, as: 'visitors' },
-            ],
-          },
-        ],
+const getById = async (id: string) => {
+  return User.findById(id)
+    .select('-activationToken -password')
+    .populate({
+      path: 'abonements',
+      populate: {
+        path: 'visitedTrainings',
+        populate: {
+          path: 'visitors',
+        },
       },
-      {
-        model: db.Training,
-        as: 'trainings',
-        include: [{ model: db.User, as: 'visitors' }],
+    })
+    .populate({
+      path: 'trainings',
+      populate: {
+        path: 'visitors',
       },
-    ],
-  });
+    });
 };
 
-const create = async (user: User) => {
+const create = async (user: IUser) => {
   const existingUser = await getByEmail(user.email);
 
   if (existingUser) {
@@ -96,11 +77,13 @@ const create = async (user: User) => {
   const hash = await hashPassword(user.password);
   const activationToken = bcrypt.genSaltSync(1);
 
-  await db.User.create({
+  const newUser = new User({
     ...user,
     password: hash,
     activationToken,
   });
+
+  await newUser.save();
 
   await sendActivationLink(user.firstName, user.email, activationToken);
 };
@@ -113,7 +96,7 @@ const update = async (
     password: string;
     settings: { fontSize: number };
   }>,
-  userId: number,
+  userId: string,
 ) => {
   const user = await getById(userId);
 
@@ -125,7 +108,8 @@ const update = async (
     data.password = await hashPassword(data.password);
   }
 
-  await user.update(data);
+  Object.assign(user, data);
+  await user.save();
 
   return user;
 };
@@ -137,23 +121,25 @@ const getOrCreateGoogleUser = async ({
   name: string | undefined;
   email: string | undefined;
 }) => {
-  let user = await db.User.findOne({ where: { email } });
+  let user = await User.findOne({ email });
 
   if (!user) {
     const hash = await hashPassword('defaultpassword');
 
-    user = await db.User.create({
+    user = new User({
       email,
       name,
       password: hash,
       activationToken: null,
     });
+
+    await user.save();
   }
 
   return user;
 };
 
-const remove = async (id: number) => {
+const remove = async (id: string) => {
   const user = await getById(id);
 
   if (!user) {
@@ -162,11 +148,11 @@ const remove = async (id: number) => {
     });
   }
 
-  await user.destroy();
+  await user.deleteOne();
 };
 
 const removeMany = async () => {
-  await db.User.destroy({ where: {} });
+  await User.deleteMany({});
 };
 
 export {

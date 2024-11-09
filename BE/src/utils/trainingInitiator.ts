@@ -1,5 +1,6 @@
 import { schedule } from '../data/predefined_schedule';
-import db from '../db/models';
+import Schedule from '../db/mdbmodels/Schedule';
+import Training from '../db/mdbmodels/Training';
 // import { Trainers } from '../types/Trainers';
 import { startOfWeek, addDays, set, endOfWeek } from 'date-fns';
 import { ScheduleTraining } from '../types/ScheduleTraining';
@@ -25,7 +26,7 @@ export async function initializePredefinedSchedule() {
     .flat();
 
   // Save trainings to the database
-  await db.Schedule.bulkCreate(trainings);
+  await Schedule.insertMany(trainings);
 }
 
 export async function initializeTrainingsForWeek(
@@ -43,15 +44,14 @@ export async function initializeTrainingsForWeek(
   // Ensure the date is the Monday of the given or current week
   const startDate = startOfWeek(providedDate, {
     weekStartsOn: 1,
-  }).toISOString(); //To avoid sequelize date type error
-  const endDate = endOfWeek(providedDate, { weekStartsOn: 1 }).toISOString();
+  });
+  const endDate = endOfWeek(providedDate, { weekStartsOn: 1 });
 
   try {
-    const existingTrainings = await db.Training.findOne({
-      where: {
-        date: {
-          [db.Sequelize.Op.between]: [startDate, endDate],
-        },
+    const existingTrainings = await Training.findOne({
+      date: {
+        $gte: startDate,
+        $lte: endDate,
       },
     });
 
@@ -73,7 +73,7 @@ export async function initializeTrainingsForWeek(
     ];
 
     // Create an array of trainings with the proper date
-    const trainings = scheduleTrainings.map((session: ScheduleTraining) => {
+    const trainings = scheduleTrainings.map(session => {
       const dayIndex = daysOfWeek.indexOf(session.day);
       const hours = Number(session.time.slice(0, 2));
       let trainingDate = addDays(startDate, dayIndex);
@@ -81,7 +81,7 @@ export async function initializeTrainingsForWeek(
 
       return {
         type: session.type,
-        instructorId: session.instructorId,
+        instructor: session.instructorId,
         capacity: session.maxCapacity,
         date: trainingDate.toISOString(),
         day: session.day,
@@ -90,7 +90,7 @@ export async function initializeTrainingsForWeek(
     });
 
     // Save trainings to the database
-    await db.Training.bulkCreate(trainings);
+    await Training.insertMany(trainings);
   } catch (error) {
     console.error('Error initializing trainings:', error);
     throw error;

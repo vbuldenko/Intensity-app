@@ -7,7 +7,7 @@ function getProfile(): Promise<User> {
 function getAll(): Promise<User[]> {
   return axiosClient.get("/users");
 }
-function getOneById(id: number): Promise<User> {
+function getOneById(id: string): Promise<User> {
   return axiosClient.get(`/users/${id}`);
 }
 function update(updatedUser: Partial<User>): Promise<User> {

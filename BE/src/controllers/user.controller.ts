@@ -28,7 +28,7 @@ export const getOneById = async (
   const userData = getUserFromRequest(req);
   checkAdminRole(userData);
 
-  const user = await userService.getById(Number(req.params.id));
+  const user = await userService.getById(req.params.id);
 
   if (!user) {
     throw ApiError.NotFound();

@@ -1,17 +1,17 @@
 # --------------------------------------------------------AUTH
-GET http://localhost:3001/activation/$2b$04$ipmj84RyGaoVdkUPsqU.He
+GET http://localhost:3001/activation/$2b$04$XCLIdmD.wVrylBkWWOM8T.
 content-type: application/json
 ###
 POST http://localhost:3001/registration
 content-type: application/json
 
 {
-  "firstName": "Angy",
-  "lastName": "Bul",
-  "email": "in10sity.trainer@gmail.com",
-  "phone": "0979910070",
-  "password": "123456",
-  "role": "admin"
+  "firstName": "test",
+  "lastName": "test",
+  "email": "hawkwalder@gmail.com",
+  "phone": "0997847295",
+  "password": "111111",
+  "role": "client"
 }
 ###
 ###
@@ -19,8 +19,8 @@ POST http://localhost:3001/login
 content-type: application/json
 
 {
-  "email": "jane.doe@example.com",
-  "password": "123456"
+  "identifier": "vladbuldenko@gmail.com",
+  "password": "111111"
 }
 ###
 ###
@@ -47,16 +47,16 @@ content-type: application/json
 # --------------------------------------------------------USERS
 GET http://localhost:3001/users/profile
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjY4MjQ2NDQsImV4cCI6MTcyNjkxMTA0NH0.SqBWan8f3E6XZx9pZkd7Z-6KNR66vZaC5GeqTyR4_Ow
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MmY5NGEwYmI5MzMzNDAzNDZkYmFhZSIsImZpcnN0TmFtZSI6IlZsYWQiLCJsYXN0TmFtZSI6IkJ1bGRlbmtvIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMxMTgxODkxLCJleHAiOjE3MzEyNjgyOTF9.Ki4IDT_GUfsPPerZyC7NBrgvWUzUS2_LuVIFPGEt1sM
 ###
 
 # --------------------------------------------------------ABONEMENTS
 POST http://localhost:3001/abonements
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjUzOTk5NDAsImV4cCI6MTcyNTQ4NjM0MH0.Mlh65AGrvygxXeTpmHgnSjDZOVT0iF_8X6oiiN8reDw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MmY5NGEwYmI5MzMzNDAzNDZkYmFhZSIsImZpcnN0TmFtZSI6IlZsYWQiLCJsYXN0TmFtZSI6IkJ1bGRlbmtvIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMxMTgxODkxLCJleHAiOjE3MzEyNjgyOTF9.Ki4IDT_GUfsPPerZyC7NBrgvWUzUS2_LuVIFPGEt1sM
 
 {
-  "clientId": 1,
+  "clientId": "672f94a0bb933340346dbaae",
   "type": "group",
   "amount": "4",
   "price": "1700"
@@ -64,7 +64,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROY
 ###
 GET http://localhost:3001/abonements/
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiSmFuZSIsImxhc3ROYW1lIjoiRG9lIiwiZW1haWwiOiJqYW5lLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3MjUzOTk5NDAsImV4cCI6MTcyNTQ4NjM0MH0.Mlh65AGrvygxXeTpmHgnSjDZOVT0iF_8X6oiiN8reDw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MmY5NGEwYmI5MzMzNDAzNDZkYmFhZSIsImZpcnN0TmFtZSI6IlZsYWQiLCJsYXN0TmFtZSI6IkJ1bGRlbmtvIiwiZW1haWwiOiJ2bGFkYnVsZGVua29AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMxMTgxODkxLCJleHAiOjE3MzEyNjgyOTF9.Ki4IDT_GUfsPPerZyC7NBrgvWUzUS2_LuVIFPGEt1sM
 
 ###
 

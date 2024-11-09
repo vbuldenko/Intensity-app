@@ -1,4 +1,4 @@
-import db from '../db/models';
+// import db from '../db/models';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ApiError } from '../exceptions/api.error';
 
@@ -6,6 +6,9 @@ import * as userService from './user.service';
 import 'dotenv/config';
 import { UserDTO } from '../types/UserDTO';
 import { User } from '../types/User';
+
+import Token from '../db/mdbmodels/Token';
+import { IUser } from '../db/mdbmodels/User';
 
 export function generateAccessToken(user: UserDTO): string {
   return jwt.sign(user, process.env.JWT_ACCESS_SECRET as string, {
@@ -54,7 +57,7 @@ export function validateResetToken(token: string): UserDTO | null {
 }
 
 export const save = async (
-  userId: number,
+  userId: string,
   refreshToken: string,
 ): Promise<void> => {
   const user = await userService.getById(userId);
@@ -63,10 +66,10 @@ export const save = async (
     throw ApiError.NotFound();
   }
 
-  let token = await db.Token.findOne({ where: { userId } });
+  let token = await Token.findOne({ userId });
 
   if (!token) {
-    await db.Token.create({ userId, refreshToken });
+    await Token.create({ userId, refreshToken });
     return;
   }
 
@@ -75,14 +78,14 @@ export const save = async (
 };
 
 export const getByToken = (refreshToken: string) => {
-  return db.Token.findOne({ where: { refreshToken } });
+  return Token.findOne({ refreshToken });
 };
 
 export const removeByUserId = (userId: number) => {
-  return db.Token.destroy({ where: { userId } });
+  return Token.deleteOne({ userId });
 };
 
-export async function generateTokensData(user: User) {
+export async function generateTokensData(user: IUser) {
   const userData = userService.normalize(user);
   const accessToken = generateAccessToken(userData);
   const refreshToken = generateRefreshToken(userData);

@@ -104,22 +104,22 @@ export default function UserList() {
               <div className="users__content">
                 <div className="users__data items-center">
                   <p>ID</p>
-                  <p className="bg-teal-100 text-teal-600 px-2 rounded-full w-8 h-8 flex items-center justify-center">
+                  <p className="bg-teal-100 text-teal-600 px-2 py-1 rounded-md">
                     {id}
                   </p>
                 </div>
                 <div className="users__data">
                   <p>{t("userList.phone")}</p>
-                  <p>{phone}</p>
+                  <p className="px-2 py-1">{phone}</p>
                 </div>
                 <div className="users__data">
                   <p>{t("userList.email")}</p>
-                  <p>{email}</p>
+                  <p className="px-2 py-1">{email}</p>
                 </div>
                 {userType === "client" && (
                   <div className="users__data">
                     <p>{t("userList.abonement")}</p>
-                    <p>{abonements?.length}</p>
+                    <p className="px-2 py-1">{abonements?.length}</p>
                   </div>
                 )}
               </div>

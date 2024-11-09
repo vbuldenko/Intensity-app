@@ -1,4 +1,4 @@
-import db from '../db/models';
+import Schedule, { ISchedule } from '../db/mdbmodels/Schedule';
 import { ApiError } from '../exceptions/api.error';
 
 class ScheduleService {
@@ -7,42 +7,47 @@ class ScheduleService {
     time: string;
     type: string;
     maxCapacity: number;
-    instructorId?: number;
+    instructorId?: string;
   }) {
-    return await db.Schedule.create(scheduleData);
+    const newSchedule = new Schedule(scheduleData);
+    await newSchedule.save();
+    return newSchedule;
   }
 
   async getAll() {
-    return await db.Schedule.findAll();
+    return await Schedule.find();
   }
 
-  async getOneById(id: number) {
-    return await db.Schedule.findByPk(id);
+  async getOneById(id: string) {
+    return await Schedule.findById(id);
   }
 
   async updateOne(
-    id: number,
+    id: string,
     scheduleData: Partial<{
       day: string;
       time: string;
       type: string;
       maxCapacity: number;
-      instructorId: number;
+      instructorId: string;
     }>,
   ) {
     const session = await this.getOneById(id);
     if (session) {
-      return await session.update(scheduleData);
+      Object.assign(session, scheduleData);
+      await session.save();
+      return session;
     }
     throw ApiError.NotFound({
       error: 'Training session not found',
     });
   }
 
-  async deleteOne(id: number) {
+  async deleteOne(id: string) {
     const session = await this.getOneById(id);
     if (session) {
-      return await session.destroy();
+      await session.deleteOne();
+      return session;
     }
     throw ApiError.NotFound({
       error: 'Training session not found',

@@ -18,7 +18,7 @@ export default function User() {
   const search = location.state?.search || "";
 
   useEffect(() => {
-    userService.getOneById(Number(id)).then(setUser);
+    userService.getOneById(id as string).then(setUser);
   }, []);
 
   return (

@@ -1,39 +1,38 @@
-import db from '../db/models';
+import Training, { ITraining } from '../db/mdbmodels/Training';
+import User from '../db/mdbmodels/User';
+import Abonement from '../db/mdbmodels/Abonement';
+import History from '../db/mdbmodels/History';
 import { ApiError } from '../exceptions/api.error';
-import { Training } from '../types/Training';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
 
-export const getAll = async (): Promise<Training> => {
-  return await db.Training.findAll({
-    include: [
-      {
-        model: db.User,
-        as: 'instructor',
-        attributes: ['firstName', 'lastName'],
-      },
-      { model: db.User, as: 'visitors' },
-    ],
-  });
+export const getAll = async (): Promise<ITraining[]> => {
+  return await Training.find()
+    .populate({
+      path: 'instructor',
+      select: 'firstName lastName',
+    })
+    .populate('visitors');
 };
 
-export const getById = async (id: number): Promise<Training> => {
-  return db.Training.findOne({ where: { id } });
+export const getById = async (id: string): Promise<ITraining | null> => {
+  return Training.findById(id).populate('instructor').populate('visitors');
 };
 
-export const create = async (body: Training) => {
-  // const instructor = userService.getById(body.instructorId);
-  return await db.Training.create({ ...body });
+export const create = async (body: ITraining) => {
+  const newTraining = new Training(body);
+  await newTraining.save();
+  return newTraining;
 };
 
 export const update = async (
-  abonementId: number,
-  trainingId: number,
-  userId: number,
+  abonementId: string,
+  trainingId: string,
+  userId: string,
   updateType: 'reservation' | 'cancellation',
 ) => {
-  const abonement = await db.Abonement.findByPk(abonementId);
-  const training = await db.Training.findByPk(trainingId);
-  const user = await db.User.findByPk(userId);
+  const abonement = await Abonement.findById(abonementId);
+  const training = await Training.findById(trainingId);
+  const user = await User.findById(userId);
 
   if (!user || !abonement || !training) {
     throw ApiError.NotFound({
@@ -43,35 +42,41 @@ export const update = async (
 
   switch (updateType) {
     case 'reservation':
-      if (await training.hasVisitor(user)) {
+      const existingHistory = await History.findOne({
+        abonementId,
+        trainingId,
+        userId,
+      });
+
+      if (existingHistory) {
         throw ApiError.BadRequest(
           'Already reserved: You have already reserved your place!',
         );
       }
 
-      // await training.addAbonement(abonement);
-      // await training.addVisitor(user);
-      await db.History.create({
+      await new History({
+        abonementId,
+        trainingId,
+        userId,
+      }).save();
+      break;
+    case 'cancellation':
+      const history = await History.findOne({
         abonementId,
         trainingId,
         userId,
       });
-      break;
-    case 'cancellation':
-      if (!(await training.hasVisitor(user))) {
+
+      if (!history) {
         throw ApiError.BadRequest(
           'Not reserved: You have not reserved a place!',
         );
       }
-      // await abonement.removeTraining(training);
-      // await training.removeVisitor(user);
 
-      await db.History.destroy({
-        where: {
-          abonementId,
-          trainingId,
-          userId,
-        },
+      await History.deleteOne({
+        abonementId,
+        trainingId,
+        userId,
       });
       break;
     default:
@@ -81,16 +86,16 @@ export const update = async (
   return training;
 };
 
-export const remove = async (trainingId: number) => {
-  const training = await db.Training.findByPk(trainingId);
+export const remove = async (trainingId: string) => {
+  const training = await Training.findById(trainingId);
   if (!training) {
     throw new Error('Training not found.');
   }
-  await training.destroy();
+  await training.deleteOne();
 };
 
 export const removeAll = async () => {
-  await db.Training.destroy({ where: {} });
+  await Training.deleteMany({});
 };
 
 export const initializeWeek = async (day?: number) => {

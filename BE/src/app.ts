@@ -14,7 +14,8 @@ import { requestLogger } from './middlewares/logger.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
-// import { initializePredefinedSchedule } from './utils/trainingInitiator';
+import connectToDB from './db/db';
+import { initializePredefinedSchedule } from './utils/trainingInitiator';
 // import db from './db/models';
 // import { runTest } from './monoApiAcquiring/monobank.test.js';
 
@@ -22,22 +23,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export function createApp() {
-  // db.sequelize.sync({ force: true });
-  // db.Token.sync({ alter: true });
+  // Connect to MongoDB
+  connectToDB();
   // initializePredefinedSchedule();
-  // runTest()
-  //   .then(() => {
-  //     console.log('Test completed successfully.');
-  //   })
-  //   .catch(error => {
-  //     console.error('Test failed:', error);
-  //   });
 
   const app = express();
 
   app.use(
     cors({
-      origin: process.env.CLIENT_URL,
+      origin: process.env.CLIENT_HOST,
       credentials: true,
     }),
   );
