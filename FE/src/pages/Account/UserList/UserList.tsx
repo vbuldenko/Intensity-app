@@ -97,9 +97,9 @@ export default function UserList() {
                 </div>
               </div>
               <div className="users__content">
-                <div className="users__data">
+                <div className="users__data items-center">
                   <p>ID</p>
-                  <p className="bg-teal-100 text-teal-600 px-2 rounded-sm">
+                  <p className="bg-teal-100 text-teal-600 px-2 rounded-full w-8 h-8 flex items-center justify-center">
                     {id}
                   </p>
                 </div>

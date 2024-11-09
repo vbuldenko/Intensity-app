@@ -237,7 +237,8 @@
     "rent": "Rent",
     "utilities": "Utilities",
     "taxes": "Taxes",
-    "wages": "Wages"
+    "wages": "Wages",
+    "addAbonement": "Add Abonement"
   },
   "trainerOverview": {
     "salary": "Salary",

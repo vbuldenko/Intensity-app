@@ -237,7 +237,8 @@
     "rent": "Оренда",
     "utilities": "Комунальні послуги",
     "taxes": "Податки",
-    "wages": "Зарплати"
+    "wages": "Зарплати",
+    "addAbonement": "Додати абонемент"
   },
   "trainerOverview": {
     "salary": "Зарплата",

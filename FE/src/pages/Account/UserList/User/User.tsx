@@ -7,8 +7,10 @@ import ClientOverview from "../../Overview/Client/ClientOverview";
 import { userService } from "../../../../services/userService";
 import TrainerOverview from "../../Overview/Trainer/TrainerOverview";
 import { User as UserType } from "../../../../types/User";
+import { useTranslation } from "react-i18next";
 
 export default function User() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const [user, setUser] = useState<UserType | null>(null);
@@ -24,9 +26,8 @@ export default function User() {
       <div className="flex flex-col gap-4">
         <Link to={`..${search}`} relative="path">
           <div className="flex gap-2 items-center justify-between">
-            <div className="flex gap-2 small-card-element px-6 py-1">
+            <div className="flex gap-2 small-card-element px-6 py-1 text-teal-500 bg-teal-100">
               <ArrowLeftIcon className="w-4" />
-              <span className="w-max">Back to all</span>
             </div>
 
             <p className="status">
@@ -37,7 +38,7 @@ export default function User() {
         {user.role === "client" ? (
           <div className="flex flex-col gap-4">
             <Modal
-              btnName={"Add new abonement"}
+              btnName={t("adminDashboard.addAbonement")}
               data={<Purchases clientId={user.id} />}
             />
             <ClientOverview user={user} />
