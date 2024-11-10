@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
-import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
 import { Request } from 'express';
+import { UserDTO } from '../db/models/User';
 
 export function validateIdentifier(identifier: string): string | undefined {
   if (identifier.includes('@')) {

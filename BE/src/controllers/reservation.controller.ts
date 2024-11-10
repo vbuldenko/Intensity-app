@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import * as trainingService from '../services/training.service';
 import * as abonementService from '../services/abonement.service';
 import { ApiError } from '../exceptions/api.error';
-import { UserDTO } from '../types/UserDTO';
 import {
   cancelNotHeldTrainings,
   updateReservation,

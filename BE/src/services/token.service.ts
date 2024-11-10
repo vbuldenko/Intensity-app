@@ -76,7 +76,7 @@ export const getByToken = (refreshToken: string) => {
   return Token.findOne({ refreshToken });
 };
 
-export const removeByUserId = (userId: number) => {
+export const removeByUserId = (userId: string) => {
   return Token.deleteOne({ userId });
 };
 

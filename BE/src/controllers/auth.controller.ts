@@ -12,13 +12,15 @@ import {
   comparePasswords,
   validateIdentifier,
 } from '../utils';
-import { User } from '../types/User';
-import { UserDTO } from '../types/UserDTO';
+import { IUser } from '../db/models/User';
 // import { admin } from '../configs/Firebase';
 
 dotenv.config();
 
-const sendAuthentication = async (res: Response, user: User): Promise<void> => {
+const sendAuthentication = async (
+  res: Response,
+  user: IUser,
+): Promise<void> => {
   const { accessToken, refreshToken, userData } =
     await tokenService.generateTokensData(user);
 
@@ -51,7 +53,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     throw ApiError.BadRequest('Validation error', errors);
   }
 
-  await userService.create(req.body as User);
+  await userService.create(req.body as IUser);
 
   res.status(200).send({
     message: 'Further instructions were sent to your email',

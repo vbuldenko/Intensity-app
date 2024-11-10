@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/api.error';
 import * as abonementService from '../services/abonement.service';
-import { UserDTO } from '../types/UserDTO';
 import { getUserFromRequest } from '../utils';
 
 export async function getAll(req: Request, res: Response): Promise<void> {
@@ -24,7 +23,7 @@ export async function getAllByUserId(
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {
-  const abonement = await abonementService.getById(Number(req.params.id));
+  const abonement = await abonementService.getById(req.params.id);
   if (abonement) {
     res.json(abonement);
   } else {
@@ -32,17 +31,17 @@ export async function getById(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function update(req: Request, res: Response): Promise<void> {
-  const user = getUserFromRequest(req);
-  const abonementId = Number(req.params.id);
+// export async function update(req: Request, res: Response): Promise<void> {
+//   const user = getUserFromRequest(req);
+//   const abonementId = Number(req.params.id);
 
-  const updatedAbonement = await abonementService.update(
-    abonementId,
-    user.id,
-    req.body,
-  );
-  res.json(updatedAbonement);
-}
+//   const updatedAbonement = await abonementService.update(
+//     abonementId,
+//     user.id,
+//     req.body,
+//   );
+//   res.json(updatedAbonement);
+// }
 
 export async function create(req: Request, res: Response): Promise<void> {
   const user = getUserFromRequest(req);
@@ -53,7 +52,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 export async function remove(req: Request, res: Response): Promise<void> {
   const user = getUserFromRequest(req);
-  const abonementId = Number(req.params.id);
+  const abonementId = req.params.id;
 
   await abonementService.remove(abonementId, user);
   res.sendStatus(204);

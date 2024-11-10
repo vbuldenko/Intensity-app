@@ -11,7 +11,7 @@ import {
   getUserFromRequest,
   checkAdminRole,
 } from '../utils';
-import { UserDTO } from '../types/UserDTO';
+import { UserDTO } from '../db/models/User';
 
 export const getAllActive = async (
   req: Request,

@@ -1,5 +1,3 @@
-import { Trainers } from '../types/Trainers';
-
 export const schedule: any = {
   Monday: [
     {
