@@ -9,3 +9,8 @@ export const error = (...params: unknown[]): void => {
     console.error(...params);
   }
 };
+
+export const logger = {
+  info,
+  error,
+};

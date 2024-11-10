@@ -16,7 +16,7 @@ import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
 import connectToDB from './db/db';
 import { initializePredefinedSchedule } from './utils/trainingInitiator';
-// import db from './db/models';
+
 // import { runTest } from './monoApiAcquiring/monobank.test.js';
 
 const __filename = fileURLToPath(import.meta.url);

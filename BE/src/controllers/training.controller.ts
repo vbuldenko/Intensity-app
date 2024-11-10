@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import * as trainingService from '../services/training.service';
-import { UserDTO } from '../types/UserDTO';
 import { ApiError } from '../exceptions/api.error';
 import { checkAdminRole, getUserFromRequest } from '../utils';
 
@@ -10,7 +9,7 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const getById = async (req: Request, res: Response) => {
-  const training = await trainingService.getById(Number(req.params.id));
+  const training = await trainingService.getById(req.params.id);
   if (training) {
     res.json(training);
   } else {
@@ -26,36 +25,36 @@ export const create = async (req: Request, res: Response) => {
   res.status(201).json(newTraining);
 };
 
-export const update = async (req: Request, res: Response) => {
-  const user = getUserFromRequest(req);
-  const abonementId = Number(req.query.abonementId);
-  const trainingId = Number(req.query.trainingId);
-  const { updateType } = req.body;
+// export const update = async (req: Request, res: Response) => {
+//   const user = getUserFromRequest(req);
+//   const abonementId = Number(req.query.abonementId);
+//   const trainingId = Number(req.query.trainingId);
+//   const { updateType } = req.body;
 
-  if (isNaN(abonementId) || isNaN(trainingId)) {
-    throw ApiError.BadRequest('Validation error', {
-      id: 'Invalid ID format. IDs must be numbers.',
-    });
-  }
+//   if (isNaN(abonementId) || isNaN(trainingId)) {
+//     throw ApiError.BadRequest('Validation error', {
+//       id: 'Invalid ID format. IDs must be numbers.',
+//     });
+//   }
 
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
+//   if (!user) {
+//     throw ApiError.Unauthorized();
+//   }
 
-  const updatedTraining = await trainingService.update(
-    abonementId,
-    trainingId,
-    user.id,
-    updateType,
-  );
-  res.json(updatedTraining);
-};
+//   const updatedTraining = await trainingService.update(
+//     abonementId,
+//     trainingId,
+//     user.id,
+//     updateType,
+//   );
+//   res.json(updatedTraining);
+// };
 
 export const remove = async (req: Request, res: Response) => {
   const user = getUserFromRequest(req);
   checkAdminRole(user);
 
-  await trainingService.remove(Number(req.params.id));
+  await trainingService.remove(req.params.id);
   res.status(204).end();
 };
 

@@ -1,7 +1,5 @@
-import Training, { ITraining } from '../db/mdbmodels/Training';
-import User from '../db/mdbmodels/User';
-import Abonement from '../db/mdbmodels/Abonement';
-import History from '../db/mdbmodels/History';
+import Training, { ITraining } from '../db/models/Training';
+import User from '../db/models/User';
 import { ApiError } from '../exceptions/api.error';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
 
@@ -24,67 +22,21 @@ export const create = async (body: ITraining) => {
   return newTraining;
 };
 
-export const update = async (
-  abonementId: string,
-  trainingId: string,
-  userId: string,
-  updateType: 'reservation' | 'cancellation',
-) => {
-  const abonement = await Abonement.findById(abonementId);
-  const training = await Training.findById(trainingId);
-  const user = await User.findById(userId);
+// export const update = async (
+//   trainingId: string,
+//   userId: string,
+// ) => {
+//   const training = await Training.findById(trainingId);
+//   const user = await User.findById(userId);
 
-  if (!user || !abonement || !training) {
-    throw ApiError.NotFound({
-      error: 'User, Abonement, or Training not found.',
-    });
-  }
+//   if (!user || !training) {
+//     throw ApiError.NotFound({
+//       error: 'User or Training not found.',
+//     });
+//   }
 
-  switch (updateType) {
-    case 'reservation':
-      const existingHistory = await History.findOne({
-        abonementId,
-        trainingId,
-        userId,
-      });
-
-      if (existingHistory) {
-        throw ApiError.BadRequest(
-          'Already reserved: You have already reserved your place!',
-        );
-      }
-
-      await new History({
-        abonementId,
-        trainingId,
-        userId,
-      }).save();
-      break;
-    case 'cancellation':
-      const history = await History.findOne({
-        abonementId,
-        trainingId,
-        userId,
-      });
-
-      if (!history) {
-        throw ApiError.BadRequest(
-          'Not reserved: You have not reserved a place!',
-        );
-      }
-
-      await History.deleteOne({
-        abonementId,
-        trainingId,
-        userId,
-      });
-      break;
-    default:
-      throw ApiError.BadRequest('Invalid updateType');
-  }
-
-  return training;
-};
+//   return training;
+// };
 
 export const remove = async (trainingId: string) => {
   const training = await Training.findById(trainingId);

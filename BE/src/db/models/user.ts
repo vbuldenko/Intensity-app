@@ -1,101 +1,106 @@
-import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  Sequelize,
-} from 'sequelize';
+import mongoose, { Document, Schema } from 'mongoose';
 
-export default function (sequelize: Sequelize) {
-  class User extends Model<
-    InferAttributes<User>,
-    InferCreationAttributes<User>
-  > {
-    declare id: CreationOptional<number>;
-    declare activationToken: string | null;
-    declare firstName: string;
-    declare lastName: string;
-    declare email: string;
-    declare phone: string;
-    declare password: string;
-    declare role: string;
-    declare settings: {};
-
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-
-    getFullname() {
-      return [this.firstName, this.lastName].join(' ');
-    }
-
-    static associate(models: any) {
-      User.hasOne(models.Token, { foreignKey: 'userId' });
-      User.hasMany(models.Abonement, {
-        foreignKey: 'userId',
-        as: 'abonements',
-      });
-      User.hasMany(models.Training, {
-        foreignKey: 'instructorId',
-        as: 'trainings',
-      });
-      User.hasMany(models.Schedule, {
-        foreignKey: 'instructorId',
-      });
-      User.belongsToMany(models.Training, {
-        through: models.History,
-        foreignKey: 'userId',
-        as: 'attendedTrainings',
-      });
-    }
-  }
-
-  User.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      activationToken: DataTypes.STRING,
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      phone: {
-        type: DataTypes.STRING,
-      },
-      password: {
-        type: DataTypes.STRING,
-      },
-      role: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      settings: {
-        type: DataTypes.JSON,
-        defaultValue: {
-          fontSize: 16,
-        },
-      },
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
-    },
-
-    {
-      sequelize,
-      modelName: 'User',
-    },
-  );
-
-  return User;
+export interface UserDTO {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: 'client' | 'trainer' | 'admin';
 }
+
+export interface IUser extends Document {
+  activationToken: string | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  role: 'client' | 'trainer' | 'admin';
+  settings: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
+  getFullname(): string;
+}
+
+const UserSchema: Schema = new Schema(
+  {
+    activationToken: {
+      type: String,
+      default: null,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    phone: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    settings: {
+      type: Map,
+      of: Schema.Types.Mixed,
+      default: { fontSize: 16 },
+    },
+    abonements: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Abonement',
+      },
+    ],
+    trainings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Training',
+      },
+    ],
+    attendedTrainings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Training',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
+    },
+  },
+);
+
+UserSchema.methods.getFullname = function () {
+  return `${this.firstName} ${this.lastName}`;
+};
+
+const User = mongoose.model<IUser>('User', UserSchema);
+
+export default User;

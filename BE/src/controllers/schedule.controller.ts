@@ -21,7 +21,7 @@ class ScheduleController {
 
   async getOneById(req: Request, res: Response) {
     const { id } = req.params;
-    const schedule = await scheduleService.getOneById(Number(id));
+    const schedule = await scheduleService.getOneById(id);
     if (schedule) {
       res.status(200).json(schedule);
     } else {
@@ -35,10 +35,7 @@ class ScheduleController {
       throw ApiError.Unauthorized();
     }
     const { id } = req.params;
-    const updatedSchedule = await scheduleService.updateOne(
-      Number(id),
-      req.body,
-    );
+    const updatedSchedule = await scheduleService.updateOne(id, req.body);
     res.status(200).json(updatedSchedule);
   }
 
@@ -48,7 +45,7 @@ class ScheduleController {
       throw ApiError.Unauthorized();
     }
     const { id } = req.params;
-    await scheduleService.deleteOne(Number(id));
+    await scheduleService.deleteOne(id);
     res.status(204).end();
   }
 }

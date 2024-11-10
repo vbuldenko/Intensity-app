@@ -1,7 +1,5 @@
-import Abonement from '../db/mdbmodels/Abonement';
-import User from '../db/mdbmodels/User';
-import Training, { ITraining } from '../db/mdbmodels/Training';
-import History from '../db/mdbmodels/History';
+import Abonement, { IAbonement } from '../db/models/Abonement';
+import Training, { ITraining } from '../db/models/Training';
 import { ApiError } from '../exceptions/api.error';
 import { canTrainingProceed } from '../utils';
 
@@ -12,14 +10,14 @@ export const updateReservation = async (
   updateType: 'reservation' | 'cancellation',
 ) => {
   // Fetch relevant data with necessary associations
-  const [abonement, training, user] = await Promise.all([
+  const [abonement, training] = await Promise.all([
     Abonement.findById(abonementId).populate({
       path: 'visitedTrainings',
       select: '-capacity',
     }),
     Training.findById(trainingId).populate([
       {
-        path: 'instructorId',
+        path: 'instructor',
         select: 'firstName lastName',
       },
       {
@@ -27,22 +25,24 @@ export const updateReservation = async (
         select: 'firstName lastName',
       },
     ]),
-    User.findById(userId),
   ]);
 
-  if (!user || !abonement || !training) {
+  if (!abonement || !training) {
     throw ApiError.NotFound({
-      error: 'User, Abonement, or Training not found.',
+      error: 'Abonement, or Training not found.',
     });
+  }
+  if (abonement.user.toString() !== userId) {
+    throw ApiError.BadRequest('Invalid abonement owner');
   }
 
   try {
     switch (updateType) {
       case 'reservation':
-        await handleReservation(abonement, training, user);
+        await handleReservation(abonement, training);
         break;
       case 'cancellation':
-        await handleCancellation(abonement, training, user);
+        await handleCancellation(abonement, training);
         break;
       default:
         throw ApiError.BadRequest('Invalid updateType');
@@ -60,39 +60,25 @@ export const updateReservation = async (
   }
 };
 
-const handleReservation = async (abonement: any, training: any, user: any) => {
+const handleReservation = async (abonement: any, training: any) => {
   // Check if the user has already reserved the training
-  const hasVisited = await History.findOne({
-    abonementId: abonement._id,
-    trainingId: training._id,
-    userId: user._id,
-  });
-  if (hasVisited) {
+  if (isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
     );
   }
 
-  if (abonement.status !== 'inactive' && abonement.status !== 'active') {
+  if (!isAbonementActive(abonement)) {
     throw ApiError.BadRequest('Abonement has ended!');
   }
 
   if (abonement.status === 'inactive') {
-    const currentDate = new Date();
-    const expirationDate = new Date(currentDate);
-    expirationDate.setMonth(currentDate.getMonth() + 1);
-
-    abonement.activatedAt = currentDate;
-    abonement.expiratedAt = expirationDate;
-    abonement.status = 'active';
+    activateAbonement(abonement);
   }
 
-  // Create history record and update Abonement and Training as per your logic
-  await new History({
-    abonementId: abonement._id,
-    trainingId: training._id,
-    userId: user._id,
-  }).save();
+  // Add training to visitedTrainings and user to visitors
+  abonement.visitedTrainings.push(training._id);
+  training.visitors.push(abonement.user);
 
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
@@ -101,25 +87,21 @@ const handleReservation = async (abonement: any, training: any, user: any) => {
   }
 
   await abonement.save();
+  await training.save();
 };
 
-const handleCancellation = async (abonement: any, training: any, user: any) => {
+const handleCancellation = async (abonement: any, training: any) => {
   // Check if the user has a reservation for the training
-  const hasVisited = await History.findOne({
-    abonementId: abonement._id,
-    trainingId: training._id,
-    userId: user._id,
-  });
-  if (!hasVisited) {
+  if (!isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
   }
 
-  // Remove the history record
-  await History.deleteOne({
-    abonementId: abonement._id,
-    trainingId: training._id,
-    userId: user._id,
-  });
+  // Remove the training from visitedTrainings and user from visitors
+  abonement.visitedTrainings = removeTraining(
+    abonement.visitedTrainings,
+    training._id,
+  );
+  training.visitors = removeVisitor(training.visitors, abonement.user);
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
@@ -128,15 +110,18 @@ const handleCancellation = async (abonement: any, training: any, user: any) => {
   }
 
   await abonement.save();
+  await training.save();
 };
 
 const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
-  // Remove the history record
-  await History.deleteOne({
-    abonementId: abonement._id,
+  const training = (await Training.findById(trainingId)) as ITraining;
+
+  // Remove the training from visitedTrainings and user from visitors
+  abonement.visitedTrainings = removeTraining(
+    abonement.visitedTrainings,
     trainingId,
-    userId,
-  });
+  );
+  training.visitors = removeVisitor(training.visitors, userId);
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
@@ -145,22 +130,23 @@ const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
   }
 
   await abonement.save();
+  await training.save();
 };
 
 export const cancelNotHeldTrainings = async (abonementId: string) => {
-  const abonement = await Abonement.findById(abonementId).populate({
+  const abonement = (await Abonement.findById(abonementId).populate({
     path: 'visitedTrainings',
     populate: {
       path: 'visitors',
       select: 'firstName lastName',
     },
-  });
+  })) as IAbonement;
 
   if (!abonement) {
     throw ApiError.NotFound({ error: 'Abonement not found.' });
   }
 
-  const updatedTrainings = [];
+  const updatedTrainings: string[] = [];
 
   try {
     for (const training of abonement.visitedTrainings) {
@@ -195,4 +181,42 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
   }
 
   return null;
+};
+
+// Helper functions
+const isTrainingReserved = (abonement: any, training: any) => {
+  return abonement.visitedTrainings.some(
+    (visitedTraining: any) =>
+      visitedTraining._id.toString() === training._id.toString(),
+  );
+};
+
+const isAbonementActive = (abonement: any) => {
+  return abonement.status === 'inactive' || abonement.status === 'active';
+};
+
+const activateAbonement = (abonement: any) => {
+  const currentDate = new Date();
+  const expirationDate = new Date(currentDate);
+  expirationDate.setMonth(currentDate.getMonth() + 1);
+
+  abonement.activatedAt = currentDate;
+  abonement.expiratedAt = expirationDate;
+  abonement.status = 'active';
+};
+
+const removeTraining = (trainings: any[], trainingId: any) => {
+  return trainings.filter((visitedTraining: any) => {
+    const visitedTrainingId = visitedTraining._id
+      ? visitedTraining._id.toString()
+      : visitedTraining.toString();
+    return visitedTrainingId !== trainingId.toString();
+  });
+};
+
+const removeVisitor = (visitors: any[], userId: any) => {
+  return visitors.filter((visitor: any) => {
+    const visitorId = visitor._id ? visitor._id.toString() : visitor.toString();
+    return visitorId !== userId.toString();
+  });
 };

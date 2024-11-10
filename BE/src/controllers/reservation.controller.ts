@@ -11,8 +11,8 @@ import { getUserFromRequest } from '../utils';
 
 export const reserve = async (req: Request, res: Response) => {
   const user = getUserFromRequest(req);
-  const abonementId = Number(req.query.abonementId);
-  const trainingId = Number(req.query.trainingId);
+  const abonementId = req.query.abonementId as string;
+  const trainingId = req.query.trainingId as string;
   const { updateType } = req.body;
 
   const updatedData = await updateReservation(

@@ -73,7 +73,11 @@ export const updateUser = async (
   ) as UserDTO | null;
   const tokenFromDB = await tokenService.getByToken(refreshToken);
 
-  if (!userData || !tokenFromDB || userData.id !== tokenFromDB.userId) {
+  if (
+    !userData ||
+    !tokenFromDB ||
+    userData.id !== tokenFromDB.userId.toString()
+  ) {
     throw ApiError.Unauthorized();
   }
 
@@ -125,7 +129,7 @@ export const updateUser = async (
 
       const oldEmail = user.email;
       const updatedEmailUser = await userService.update({ email }, user.id);
-      await emailService.notifyOldEmail(user.name, email, oldEmail);
+      await emailService.notifyOldEmail(user.firstName, email, oldEmail);
 
       res.status(200).send(userService.normalize(updatedEmailUser));
       break;
@@ -178,7 +182,7 @@ export const remove = async (req: Request, res: Response): Promise<void> => {
   ) as UserDTO | null;
   const token = await tokenService.getByToken(refreshToken);
 
-  if (!userData || !token || userData.id !== token.userId) {
+  if (!userData || !token || userData.id !== token.userId.toString()) {
     throw ApiError.Unauthorized();
   }
 

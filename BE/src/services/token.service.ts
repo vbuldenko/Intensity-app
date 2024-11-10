@@ -1,14 +1,9 @@
-// import db from '../db/models';
+import 'dotenv/config';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ApiError } from '../exceptions/api.error';
-
 import * as userService from './user.service';
-import 'dotenv/config';
-import { UserDTO } from '../types/UserDTO';
-import { User } from '../types/User';
-
-import Token from '../db/mdbmodels/Token';
-import { IUser } from '../db/mdbmodels/User';
+import Token from '../db/models/Token';
+import { IUser, UserDTO } from '../db/models/User';
 
 export function generateAccessToken(user: UserDTO): string {
   return jwt.sign(user, process.env.JWT_ACCESS_SECRET as string, {

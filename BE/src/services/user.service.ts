@@ -1,11 +1,8 @@
 import bcrypt from 'bcrypt';
-// import db from '../db/models';
-import User, { IUser } from '../db/mdbmodels/User';
+import User, { IUser, UserDTO } from '../db/models/User';
 import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
 import { sendActivationLink } from './email.service';
-import { UserDTO } from '../types/UserDTO';
-// import { User } from '../types/User';
 
 const normalize = ({
   id,

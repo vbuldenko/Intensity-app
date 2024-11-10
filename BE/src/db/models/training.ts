@@ -1,93 +1,72 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import mongoose, { Document, Schema } from 'mongoose';
 
-interface TrainingAttributes {
-  id: number;
+export interface ITraining extends Document {
   type: string;
-  instructorId: string;
-  capacity: string;
+  instructor: mongoose.Types.ObjectId;
+  capacity: number;
   date: Date;
   day: string;
   time: string;
+  createdAt: Date;
+  updatedAt: Date;
+  visitors: any[];
 }
 
-interface TrainingCreationAttributes
-  extends Optional<TrainingAttributes, 'id'> {}
-
-export default function (sequelize: Sequelize) {
-  class Training
-    extends Model<TrainingAttributes, TrainingCreationAttributes>
-    implements TrainingAttributes
+const TrainingSchema: Schema = new Schema(
   {
-    declare id: number;
-    declare type: string;
-    declare instructorId: string;
-    declare capacity: string;
-    declare date: Date;
-    declare day: string;
-    declare time: string;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
-      Training.belongsTo(models.User, {
-        foreignKey: 'instructorId',
-        as: 'instructor',
-      });
-      Training.belongsToMany(models.User, {
-        through: models.History,
-        foreignKey: 'trainingId',
-        as: 'visitors',
-      });
-      Training.belongsToMany(models.Abonement, {
-        through: models.History,
-        foreignKey: 'trainingId',
-        as: 'abonements',
-      });
-    }
-  }
-
-  Training.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+    type: {
+      type: String,
+      required: true,
+    },
+    capacity: {
+      type: Number,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    day: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    visitors: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
       },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      instructorId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },
-      capacity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      day: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      time: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    ],
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
       },
     },
-    {
-      sequelize,
-      modelName: 'Training',
+    toObject: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
     },
-  );
+  },
+);
 
-  return Training;
-}
+const Training = mongoose.model<ITraining>('Training', TrainingSchema);
+
+export default Training;

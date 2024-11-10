@@ -1,9 +1,7 @@
 import { schedule } from '../data/predefined_schedule';
-import Schedule from '../db/mdbmodels/Schedule';
-import Training from '../db/mdbmodels/Training';
-// import { Trainers } from '../types/Trainers';
+import Schedule, { ISchedule } from '../db/models/Schedule';
+import Training from '../db/models/Training';
 import { startOfWeek, addDays, set, endOfWeek } from 'date-fns';
-import { ScheduleTraining } from '../types/ScheduleTraining';
 import scheduleService from '../services/schedule.service';
 import { ApiError } from '../exceptions/api.error';
 
@@ -14,7 +12,7 @@ export async function initializePredefinedSchedule() {
   const trainings = daysOfWeek
     .map(day => {
       return schedule[day as keyof typeof schedule].map(
-        (session: ScheduleTraining) => ({
+        (session: ISchedule) => ({
           type: session.type,
           instructorId: session.instructorId,
           maxCapacity: session.maxCapacity,

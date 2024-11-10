@@ -1,56 +1,45 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import mongoose, { Document, Schema } from 'mongoose';
 
-interface TokenAttributes {
-  id: number;
-  userId: number;
+export interface IToken extends Document {
+  userId: mongoose.Types.ObjectId;
   refreshToken: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-interface TokenCreationAttributes extends Optional<TokenAttributes, 'id'> {}
-
-export default function (sequelize: Sequelize) {
-  class Token
-    extends Model<TokenAttributes, TokenCreationAttributes>
-    implements TokenAttributes
+const TokenSchema: Schema = new Schema(
   {
-    declare id: number;
-    declare userId: number;
-    declare refreshToken: string;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
-      Token.belongsTo(models.User, { foreignKey: 'userId' });
-    }
-  }
-
-  Token.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users', // This should match the table name in the database
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-      },
-      refreshToken: {
-        type: DataTypes.STRING(1024),
-        allowNull: false,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    refreshToken: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
       },
     },
-    {
-      sequelize,
-      modelName: 'Token',
+    toObject: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
     },
-  );
+  },
+);
 
-  return Token;
-}
+const Token = mongoose.model<IToken>('Token', TokenSchema);
+
+export default Token;

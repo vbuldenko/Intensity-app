@@ -1,85 +1,70 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import mongoose, { Document, Schema } from 'mongoose';
 
-export interface ScheduleAttributes {
-  id: number;
+export interface ISchedule extends Document {
   type: string;
-  instructorId: string;
-  maxCapacity: string;
+  instructorId: mongoose.Types.ObjectId;
+  maxCapacity: number;
   day: string;
   time: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-interface ScheduleCreationAttributes
-  extends Optional<ScheduleAttributes, 'id'> {}
-
-export default function (sequelize: Sequelize) {
-  class Schedule
-    extends Model<ScheduleAttributes, ScheduleCreationAttributes>
-    implements ScheduleAttributes
+const ScheduleSchema: Schema = new Schema(
   {
-    declare id: number;
-    declare type: string;
-    declare instructorId: string;
-    declare maxCapacity: string;
-    declare day: string;
-    declare time: string;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
-      Schedule.belongsTo(models.User, {
-        foreignKey: 'instructorId',
-      });
-    }
-  }
-
-  Schedule.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      instructorId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },
-      maxCapacity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      day: {
-        type: DataTypes.ENUM(
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-          'Sunday',
-        ),
-        allowNull: false,
-      },
-      time: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    type: {
+      type: String,
+      required: true,
+    },
+    instructorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    maxCapacity: {
+      type: Number,
+      required: true,
+    },
+    day: {
+      type: String,
+      enum: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+    tableName: 'Schedule',
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
       },
     },
-    {
-      sequelize,
-      modelName: 'Schedule',
-      tableName: 'Schedule',
+    toObject: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
     },
-  );
+  },
+);
 
-  return Schedule;
-}
+const Schedule = mongoose.model<ISchedule>('Schedule', ScheduleSchema);
+
+export default Schedule;

@@ -1,90 +1,87 @@
-import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  Sequelize,
-} from 'sequelize';
+import mongoose, { Document, Schema } from 'mongoose';
 
-export default function (sequelize: Sequelize) {
-  class Abonement extends Model<
-    InferAttributes<Abonement>,
-    InferCreationAttributes<Abonement>
-  > {
-    declare id: CreationOptional<number>;
-    declare userId: number;
-    declare status: 'active' | 'ended' | 'inactive';
-    declare type: string;
-    declare amount: number;
-    declare price: number;
-    declare left: number;
-    declare paused: boolean;
-    declare activatedAt: Date;
-    declare expiratedAt: Date;
-
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
-    static associate(models: any) {
-      Abonement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-      Abonement.belongsToMany(models.Training, {
-        through: models.History,
-        foreignKey: 'abonementId',
-        as: 'visitedTrainings',
-      });
-    }
-  }
-
-  Abonement.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },
-      status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      amount: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      left: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      paused: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      activatedAt: DataTypes.DATE,
-      expiratedAt: DataTypes.DATE,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
-    },
-    {
-      sequelize,
-      modelName: 'Abonement',
-    },
-  );
-
-  return Abonement;
+export interface IAbonement extends Document {
+  user: mongoose.Types.ObjectId;
+  status: 'active' | 'ended' | 'inactive';
+  type: string;
+  amount: number;
+  price: number;
+  left: number;
+  paused: boolean;
+  activatedAt: Date;
+  expiratedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  visitedTrainings: any[];
 }
+
+const AbonementSchema: Schema = new Schema(
+  {
+    status: {
+      type: String,
+      enum: ['active', 'ended', 'inactive'],
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    left: {
+      type: Number,
+      required: true,
+    },
+    paused: {
+      type: Boolean,
+      default: false,
+    },
+    activatedAt: {
+      type: Date,
+    },
+    expiratedAt: {
+      type: Date,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    visitedTrainings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Training',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+    tableName: 'Abonement',
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
+    },
+  },
+);
+
+const Abonement = mongoose.model<IAbonement>('Abonement', AbonementSchema);
+
+export default Abonement;
