@@ -1,6 +1,6 @@
 import { schedule } from '../data/predefined_schedule';
-import Schedule, { ISchedule } from '../db/models/Schedule';
-import Training from '../db/models/Training';
+import Schedule, { ISchedule } from '../db/models/schedule';
+import Training from '../db/models/training';
 import { startOfWeek, addDays, set, endOfWeek } from 'date-fns';
 import scheduleService from '../services/schedule.service';
 import { ApiError } from '../exceptions/api.error';

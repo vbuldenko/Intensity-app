@@ -1,5 +1,5 @@
-import Abonement, { IAbonement } from '../db/models/Abonement';
-import Training, { ITraining } from '../db/models/Training';
+import Abonement, { IAbonement } from '../db/models/abonement';
+import Training, { ITraining } from '../db/models/training';
 import { ApiError } from '../exceptions/api.error';
 import { canTrainingProceed } from '../utils';
 

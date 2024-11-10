@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import User, { IUser, UserDTO } from '../db/models/User';
+import User, { IUser, UserDTO } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
 import { sendActivationLink } from './email.service';

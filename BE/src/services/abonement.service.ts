@@ -1,6 +1,6 @@
 import { ApiError } from '../exceptions/api.error';
-import Abonement from '../db/models/Abonement';
-import User from '../db/models/User';
+import Abonement from '../db/models/abonement';
+import User from '../db/models/user';
 
 interface Payload {
   updateType: string;

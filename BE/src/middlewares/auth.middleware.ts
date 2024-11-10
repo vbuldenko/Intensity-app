@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/api.error';
 import { validateAccessToken } from '../services/token.service';
-import { UserDTO } from '../db/models/User';
+import { UserDTO } from '../db/models/user';
 
 export function authMiddleware(
   req: Request,

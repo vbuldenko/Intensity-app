@@ -1,4 +1,4 @@
-import Schedule, { ISchedule } from '../db/models/Schedule';
+import Schedule, { ISchedule } from '../db/models/schedule';
 import { ApiError } from '../exceptions/api.error';
 
 class ScheduleService {

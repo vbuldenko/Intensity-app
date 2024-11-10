@@ -1,5 +1,5 @@
-import Training, { ITraining } from '../db/models/Training';
-import User from '../db/models/User';
+import Training, { ITraining } from '../db/models/training';
+import User from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
 

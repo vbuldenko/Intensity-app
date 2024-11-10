@@ -12,7 +12,7 @@ import {
   comparePasswords,
   validateIdentifier,
 } from '../utils';
-import { IUser } from '../db/models/User';
+import { IUser } from '../db/models/user';
 // import { admin } from '../configs/Firebase';
 
 dotenv.config();
