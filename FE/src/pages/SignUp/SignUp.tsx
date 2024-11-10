@@ -102,7 +102,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="auth__radio-role flex flex-col gap-2">
+        {/* <div className="auth__radio-role flex flex-col gap-2">
           <label className="self-center font-bold text-teal-500">
             {t("signup.roleQuestion")}
           </label>
@@ -128,7 +128,7 @@ const SignUp = () => {
               <span>{t("signup.roleTrainer")}</span>
             </label>
           </div>
-        </div>
+        </div> */}
         <button id="login-button" type="submit" className="auth__button">
           {t("signup.submitButton")}
         </button>
