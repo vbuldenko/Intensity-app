@@ -129,7 +129,6 @@ const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
     abonement.status = 'active';
   }
 
-  await abonement.save();
   await training.save();
 };
 
@@ -176,6 +175,7 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
         select: 'firstName lastName',
       },
     ]);
+
     await abonement.save();
     return { abonement, trainings };
   }
