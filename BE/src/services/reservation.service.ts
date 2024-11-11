@@ -168,7 +168,7 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
       _id: { $in: updatedTrainings },
     }).populate([
       {
-        path: 'instructorId',
+        path: 'instructor',
         select: 'firstName lastName',
       },
       {
