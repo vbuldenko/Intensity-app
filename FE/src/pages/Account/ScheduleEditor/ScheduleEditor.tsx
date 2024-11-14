@@ -6,8 +6,11 @@ import { getErrorMessage, groupTrainingsByDay } from "../../../utils/utils";
 import { trainingService } from "../../../services/trainingService";
 import "./ScheduleEditor.scss";
 import Notification from "../../../components/Elements/Notification";
+import { User } from "../../../types/User";
+import { userService } from "../../../services/userService";
 
 const ScheduleEditor: React.FC = () => {
+  const [trainers, setTrainers] = useState<User[]>([]);
   const [schedule, setSchedule] = useState<ScheduleTraining[]>([]);
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
   const [editableTraining, setEditableTraining] =
@@ -30,6 +33,10 @@ const ScheduleEditor: React.FC = () => {
     fetchScheduleData();
   }, []);
 
+  useEffect(() => {
+    userService.getTrainers().then(setTrainers);
+  }, []);
+
   const handleEdit = (training: ScheduleTraining) => {
     setEditableTraining(training);
   };
@@ -38,10 +45,10 @@ const ScheduleEditor: React.FC = () => {
     if (editableTraining) {
       scheduleService
         .updateTraining(editableTraining.id, editableTraining)
-        .then(() => {
+        .then((updatedTraining) => {
           setSchedule((prev) =>
             prev.map((training) =>
-              training.id === editableTraining.id ? editableTraining : training
+              training.id === updatedTraining.id ? updatedTraining : training
             )
           );
         })
@@ -151,13 +158,19 @@ const ScheduleEditor: React.FC = () => {
                         />
                       </label>
                       <label>
-                        Instructor ID:
-                        <input
-                          type="text"
-                          name="instructorId"
-                          value={editableTraining.instructorId}
+                        Instructor:
+                        <select
+                          name="instructor"
+                          value={editableTraining.instructor}
                           onChange={handleChange}
-                        />
+                        >
+                          <option value="">Select a trainer</option>
+                          {trainers.map((trainer) => (
+                            <option key={trainer.id} value={trainer.id}>
+                              {trainer.firstName} {trainer.lastName}
+                            </option>
+                          ))}
+                        </select>
                       </label>
                       <label>
                         Max Capacity:
@@ -195,7 +208,7 @@ const ScheduleEditor: React.FC = () => {
                   ) : (
                     <div className="schedule-editor__info">
                       <p>Type: {training.type}</p>
-                      <p>Instructor ID: {training.instructorId}</p>
+                      <p>Instructor: {training.instructor?.firstName}</p>
                       <p>Max Capacity: {training.maxCapacity}</p>
                       <p>Time: {training.time}</p>
                       <button

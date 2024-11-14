@@ -7,7 +7,7 @@ class ScheduleService {
     time: string;
     type: string;
     maxCapacity: number;
-    instructorId?: string;
+    instructor?: string;
   }) {
     const newSchedule = new Schedule(scheduleData);
     await newSchedule.save();
@@ -15,7 +15,10 @@ class ScheduleService {
   }
 
   async getAll() {
-    return await Schedule.find();
+    return await Schedule.find().populate({
+      path: 'instructor',
+      select: 'firstName lastName',
+    });
   }
 
   async getOneById(id: string) {
@@ -29,14 +32,17 @@ class ScheduleService {
       time: string;
       type: string;
       maxCapacity: number;
-      instructorId: string;
+      instructor: string;
     }>,
   ) {
     const session = await this.getOneById(id);
     if (session) {
       Object.assign(session, scheduleData);
       await session.save();
-      return session;
+      return session.populate({
+        path: 'instructor',
+        select: 'firstName lastName',
+      });
     }
     throw ApiError.NotFound({
       error: 'Training session not found',

@@ -7,6 +7,10 @@ function getProfile(): Promise<User> {
 function getAll(): Promise<User[]> {
   return axiosClient.get("/users");
 }
+async function getTrainers(): Promise<User[]> {
+  const trainers: User[] = await axiosClient.get("/users");
+  return trainers.filter((user: User) => user.role === "trainer");
+}
 function getOneById(id: string): Promise<User> {
   return axiosClient.get(`/users/${id}`);
 }
@@ -16,6 +20,7 @@ function update(updatedUser: Partial<User>): Promise<User> {
 
 export const userService = {
   getAll,
+  getTrainers,
   getOneById,
   getProfile,
   update,

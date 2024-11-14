@@ -1,7 +1,7 @@
 export interface ScheduleTraining {
   id: number;
   type: string;
-  instructorId: string;
+  instructor: any;
   maxCapacity: string;
   day: string;
   time: string;

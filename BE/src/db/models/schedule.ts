@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ISchedule extends Document {
   type: string;
-  instructorId: mongoose.Types.ObjectId;
+  instructor: mongoose.Types.ObjectId;
   maxCapacity: number;
   day: string;
   time: string;
@@ -16,7 +16,7 @@ const ScheduleSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    instructorId: {
+    instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,

@@ -15,7 +15,9 @@ const normalize = ({
 };
 
 const getAllActive = async () => {
-  return User.find({ activationToken: null }).populate('abonements');
+  return User.find({ activationToken: null })
+    .select('-activationToken -password -settings')
+    .populate('abonements');
 };
 
 const getUserByIdentifier = async (identifier: string) => {
