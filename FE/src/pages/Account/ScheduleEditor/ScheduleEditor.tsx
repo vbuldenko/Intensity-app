@@ -99,17 +99,15 @@ const ScheduleEditor: React.FC = () => {
       {notification && <Notification message={notification} />}
       {error && <Notification message={error} type="error" />}
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4 mt-2">
-        <div className="relative flex-1 flex items-center justify-center">
+        <label className="flex-1 flex items-center justify-between w-full">
+          <span className="px-2 w-max text-gray-500">Select a date</span>
           <input
             type="date"
-            className="text-teal-600 bg-gray-100 py-1 px-6 rounded-xl w-full"
+            className="flex-1 bg-gray-100 py-1 px-6 rounded-xl"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
           />
-          {!selectedDate && (
-            <label className="absolute text-gray-500">Select a date</label>
-          )}
-        </div>
+        </label>
 
         <div className="card-element flex-1 p-1 text-center bg-teal-500 text-white">
           <button
