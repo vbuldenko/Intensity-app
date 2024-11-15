@@ -5,14 +5,14 @@ function getSchedule(): Promise<ScheduleTraining[]> {
   return axiosClient.get("/schedule");
 }
 
-function addTraining(newTraining: ScheduleTraining): Promise<void> {
+function addTraining(newTraining: ScheduleTraining): Promise<ScheduleTraining> {
   return axiosClient.post(`/schedule`, newTraining);
 }
 
 function updateTraining(
   trainingId: number,
   updatedTraining: Partial<ScheduleTraining>
-): Promise<void> {
+): Promise<ScheduleTraining> {
   return axiosClient.put(`/schedule/${trainingId}`, updatedTraining);
 }
 

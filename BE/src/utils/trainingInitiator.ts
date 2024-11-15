@@ -14,7 +14,7 @@ export async function initializePredefinedSchedule() {
       return schedule[day as keyof typeof schedule].map(
         (session: ISchedule) => ({
           type: session.type,
-          instructor: session.instructorId,
+          instructor: session.instructor,
           maxCapacity: session.maxCapacity,
           day,
           time: session.time,
