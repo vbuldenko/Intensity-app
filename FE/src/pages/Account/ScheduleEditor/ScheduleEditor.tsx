@@ -99,7 +99,7 @@ const ScheduleEditor: React.FC = () => {
       {notification && <Notification message={notification} />}
       {error && <Notification message={error} type="error" />}
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4 mt-2">
-        <div className="relative flex-1">
+        <div className="relative flex-1 flex items-center justify-center">
           <input
             type="date"
             className="text-teal-600 bg-gray-100 py-1 px-6 rounded-xl w-full"
@@ -107,9 +107,7 @@ const ScheduleEditor: React.FC = () => {
             onChange={(e) => setSelectedDate(e.target.value)}
           />
           {!selectedDate && (
-            <label className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
-              Select a date
-            </label>
+            <label className="absolute text-gray-500">Select a date</label>
           )}
         </div>
 
