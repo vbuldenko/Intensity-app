@@ -16,6 +16,7 @@ export interface IUser extends Document {
   phone: string;
   password: string;
   role: 'client' | 'trainer' | 'admin';
+  trainings: any[];
   settings: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;

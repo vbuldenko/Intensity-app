@@ -9,7 +9,10 @@ export const getAll = async (): Promise<ITraining[]> => {
       path: 'instructor',
       select: 'firstName lastName',
     })
-    .populate('visitors');
+    .populate({
+      path: 'visitors',
+      select: 'firstName lastName',
+    });
 };
 
 export const getById = async (id: string): Promise<ITraining | null> => {
@@ -50,6 +53,6 @@ export const removeAll = async () => {
   await Training.deleteMany({});
 };
 
-export const initializeWeek = async (day?: number) => {
-  await initializeTrainingsForWeek(day);
+export const initializeWeek = async (day?: number, month?: number) => {
+  await initializeTrainingsForWeek(day, month);
 };

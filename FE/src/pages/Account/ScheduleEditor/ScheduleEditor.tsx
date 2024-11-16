@@ -73,7 +73,8 @@ const ScheduleEditor: React.FC = () => {
       try {
         const startDate = new Date(selectedDate);
         const day = startDate.getDate();
-        await trainingService.initializeWeek(day);
+        const month = startDate.getMonth() + 1;
+        await trainingService.initializeWeek(day, month);
         setNotification("Successfully initialized week");
       } catch (error) {
         setError(getErrorMessage(error) || "error occured");

@@ -12,6 +12,7 @@ import {
   // UserMinusIcon,
   ArrowRightStartOnRectangleIcon,
   AdjustmentsHorizontalIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { User } from "../../../types/User";
 import { logOut } from "../../../features/auth/authThunk";
@@ -56,7 +57,7 @@ function Settings() {
     return <Loader />;
   }
 
-  const { firstName, email, phone, settings } = user as User;
+  const { firstName, lastName, email, phone, settings } = user as User;
 
   return (
     <div className="settings">
@@ -87,10 +88,21 @@ function Settings() {
         <h3 className="settings__title">{t("settings.personal")}</h3>
         <div className="settings__info card-element">
           <div className="settings__info-item">
+            <div className="settings__info-label w-full">
+              <UserIcon className="icon icon--small" />
+              <p className="text text--small">ID</p>
+              <span className="text-amber-600 bg-amber-100 px-4 rounded-xl ml-auto">
+                {user.id}
+              </span>
+            </div>
+          </div>
+          <div className="settings__info-item">
             <div className="settings__info-label">
               <IdentificationIcon className="icon icon--small" />
               <p className="text text--small">{t("settings.name")}</p>
-              <p className="text text--highlighted">{firstName}</p>
+              <p className="text text--highlighted">
+                {firstName} {lastName}
+              </p>
             </div>
             <button className="button button--icon">
               <PencilSquareIcon className="icon icon--small" />

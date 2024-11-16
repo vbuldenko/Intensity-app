@@ -1,5 +1,6 @@
 import Abonement, { IAbonement } from '../db/models/abonement';
 import Training, { ITraining } from '../db/models/training';
+import User, { IUser } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { canTrainingProceed } from '../utils';
 
@@ -36,20 +37,25 @@ export const updateReservation = async (
     throw ApiError.BadRequest('Invalid abonement owner');
   }
 
+  const trainer = await User.findById(training.instructor.id);
+  if (!trainer) {
+    throw ApiError.BadRequest('Invalid training instructor');
+  }
+
   try {
     switch (updateType) {
       case 'reservation':
-        await handleReservation(abonement, training);
+        await handleReservation(abonement, training, trainer);
         break;
       case 'cancellation':
-        await handleCancellation(abonement, training);
+        await handleCancellation(abonement, training, trainer);
         break;
       default:
         throw ApiError.BadRequest('Invalid updateType');
     }
 
     // Reload the models to get the updated data without re-fetching everything
-    await Promise.all([abonement.save(), training.save()]);
+    await Promise.all([abonement.save(), training.save(), trainer.save()]);
 
     return {
       updatedAbonement: abonement,
@@ -60,7 +66,11 @@ export const updateReservation = async (
   }
 };
 
-const handleReservation = async (abonement: any, training: any) => {
+const handleReservation = async (
+  abonement: any,
+  training: any,
+  trainer: any,
+) => {
   // Check if the user has already reserved the training
   if (isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest(
@@ -79,6 +89,7 @@ const handleReservation = async (abonement: any, training: any) => {
   // Add training to visitedTrainings and user to visitors
   abonement.visitedTrainings.push(training._id);
   training.visitors.push(abonement.user);
+  trainer.trainings.push(training._id);
 
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
@@ -86,11 +97,16 @@ const handleReservation = async (abonement: any, training: any) => {
     abonement.status = 'ended';
   }
 
-  await abonement.save();
-  await training.save();
+  // await abonement.save();
+  // await training.save();
+  // await trainer.save();
 };
 
-const handleCancellation = async (abonement: any, training: any) => {
+const handleCancellation = async (
+  abonement: any,
+  training: any,
+  trainer: any,
+) => {
   // Check if the user has a reservation for the training
   if (!isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
@@ -102,6 +118,7 @@ const handleCancellation = async (abonement: any, training: any) => {
     training._id,
   );
   training.visitors = removeVisitor(training.visitors, abonement.user);
+  trainer.trainings = removeTraining(trainer.trainings, training._id);
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
@@ -109,12 +126,17 @@ const handleCancellation = async (abonement: any, training: any) => {
     abonement.status = 'active';
   }
 
-  await abonement.save();
-  await training.save();
+  // await abonement.save();
+  // await training.save();
+  // await trainer.save();
 };
 
 const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
   const training = (await Training.findById(trainingId)) as ITraining;
+  const trainer = (await User.findById(training.instructor.id)) as IUser;
+  if (!trainer) {
+    throw ApiError.BadRequest('Invalid training instructor');
+  }
 
   // Remove the training from visitedTrainings and user from visitors
   abonement.visitedTrainings = removeTraining(
@@ -122,6 +144,7 @@ const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
     trainingId,
   );
   training.visitors = removeVisitor(training.visitors, userId);
+  trainer.trainings = removeTraining(trainer.trainings, training);
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;

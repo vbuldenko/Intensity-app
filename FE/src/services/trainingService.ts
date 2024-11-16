@@ -2,8 +2,8 @@ import axiosClient from "../api/axiosClient";
 import { Abonement } from "../types/Abonement";
 import { Training } from "../types/Training";
 
-function initializeWeek(day: number): Promise<void> {
-  return axiosClient.post("/trainings/initialization", { day });
+function initializeWeek(day: number, month?: number): Promise<void> {
+  return axiosClient.post("/trainings/initialization", { day, month });
 }
 function getAll(): Promise<Training[]> {
   return axiosClient.get("/trainings");
