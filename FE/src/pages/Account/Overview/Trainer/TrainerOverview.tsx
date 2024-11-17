@@ -8,6 +8,7 @@ import {
 import "./TrainerOverview.scss";
 import { User } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
+import HistoryElement from "../../../../components/Elements/HistoryElement";
 
 interface TrainerOverviewProps {
   user: User;
@@ -91,13 +92,19 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
       </div>
 
       <div className="trainer-overview__trainings-section card-element">
-        <h3 className="trainer-overview__title text-gray-300">
+        <h3 className="trainer-overview__title">
           {t("trainerOverview.history")}
         </h3>
         <div className="trainer-overview__trainings-list">
-          <p className="text-gray-300 text-center">
-            {t("trainerOverview.noHistory")}
-          </p>
+          {currentMonthTrainings.length > 0 ? (
+            currentMonthTrainings.map((el) => (
+              <HistoryElement key={el.id} data={el} trainer={false} />
+            ))
+          ) : (
+            <p className="text-gray-300 text-center">
+              {t("trainerOverview.noHistory")}
+            </p>
+          )}
         </div>
       </div>
     </div>

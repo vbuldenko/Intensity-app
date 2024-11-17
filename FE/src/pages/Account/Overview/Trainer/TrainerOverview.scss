@@ -30,8 +30,8 @@
 
   &__trainings-list {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 }
 

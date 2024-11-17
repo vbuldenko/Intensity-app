@@ -1,7 +1,7 @@
 import { Training } from "../types/Training";
 
 export function getSalaryPerTraining(visitors: number): number {
-  return visitors <= 3 ? 300 : 300 + (visitors - 3) * 50;
+  return visitors <= 3 ? 350 : 350 + (visitors - 3) * 50;
 }
 
 export function getCurrentWage(trainings: Training[]): number {
