@@ -1,37 +1,37 @@
-import Schedule from '../db/models/Schedule';
-import { ApiError } from '../exceptions/api.error';
+import Schedule from '../db/models/Schedule.js';
+import { ApiError } from '../exceptions/api.error.js';
 class ScheduleService {
-    async createOne(scheduleData) {
-        const newSchedule = new Schedule(scheduleData);
-        await newSchedule.save();
-        return newSchedule;
+  async createOne(scheduleData) {
+    const newSchedule = new Schedule(scheduleData);
+    await newSchedule.save();
+    return newSchedule;
+  }
+  async getAll() {
+    return await Schedule.find();
+  }
+  async getOneById(id) {
+    return await Schedule.findById(id);
+  }
+  async updateOne(id, scheduleData) {
+    const session = await this.getOneById(id);
+    if (session) {
+      Object.assign(session, scheduleData);
+      await session.save();
+      return session;
     }
-    async getAll() {
-        return await Schedule.find();
+    throw ApiError.NotFound({
+      error: 'Training session not found',
+    });
+  }
+  async deleteOne(id) {
+    const session = await this.getOneById(id);
+    if (session) {
+      await session.deleteOne();
+      return session;
     }
-    async getOneById(id) {
-        return await Schedule.findById(id);
-    }
-    async updateOne(id, scheduleData) {
-        const session = await this.getOneById(id);
-        if (session) {
-            Object.assign(session, scheduleData);
-            await session.save();
-            return session;
-        }
-        throw ApiError.NotFound({
-            error: 'Training session not found',
-        });
-    }
-    async deleteOne(id) {
-        const session = await this.getOneById(id);
-        if (session) {
-            await session.deleteOne();
-            return session;
-        }
-        throw ApiError.NotFound({
-            error: 'Training session not found',
-        });
-    }
+    throw ApiError.NotFound({
+      error: 'Training session not found',
+    });
+  }
 }
 export default new ScheduleService();

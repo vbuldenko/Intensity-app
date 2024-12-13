@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import * as abonementController from '../controllers/abonement.controller';
-import { catchError } from '../utils/catchError';
-import { Path } from '../configs/RoutePath';
+import * as abonementController from '../controllers/abonement.controller.js';
+import { catchError } from '../utils/catchError.js';
+import { Path } from '../configs/RoutePath.js';
 const router = Router();
 router.get(Path.abonements, catchError(abonementController.getAll));
 router.get(Path.userAbonements, catchError(abonementController.getAllByUserId));

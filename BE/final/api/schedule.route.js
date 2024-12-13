@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import scheduleController from '../controllers/schedule.controller';
-import { catchError } from '../utils/catchError';
+import scheduleController from '../controllers/schedule.controller.js';
+import { catchError } from '../utils/catchError.js';
 const router = Router();
 router.post('/', catchError(scheduleController.createOne));
 router.get('/', catchError(scheduleController.getAll)); // Get all schedules
