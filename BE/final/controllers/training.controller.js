@@ -55,7 +55,7 @@ export const removeMany = async (req, res, next) => {
 export const initializeCurrentWeek = async (req, res) => {
   const user = getUserFromRequest(req);
   checkAdminRole(user);
-  const { day } = req.body;
-  await trainingService.initializeWeek(day);
+  const { day, month } = req.body;
+  await trainingService.initializeWeek(day, month);
   res.status(201).json({ message: 'Success' });
 };

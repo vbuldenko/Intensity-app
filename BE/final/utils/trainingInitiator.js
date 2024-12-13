@@ -62,7 +62,7 @@ export async function initializeTrainingsForWeek(day, month, year) {
       trainingDate.setHours(hours, 0, 0, 0);
       return {
         type: session.type,
-        instructor: session.instructorId,
+        instructor: session.instructor,
         capacity: session.maxCapacity,
         date: trainingDate.toISOString(),
         day: session.day,

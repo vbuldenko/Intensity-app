@@ -7,7 +7,10 @@ class ScheduleService {
     return newSchedule;
   }
   async getAll() {
-    return await Schedule.find();
+    return await Schedule.find().populate({
+      path: 'instructor',
+      select: 'firstName lastName',
+    });
   }
   async getOneById(id) {
     return await Schedule.findById(id);
@@ -17,7 +20,10 @@ class ScheduleService {
     if (session) {
       Object.assign(session, scheduleData);
       await session.save();
-      return session;
+      return session.populate({
+        path: 'instructor',
+        select: 'firstName lastName',
+      });
     }
     throw ApiError.NotFound({
       error: 'Training session not found',

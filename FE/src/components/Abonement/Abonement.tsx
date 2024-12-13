@@ -1,12 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import "./Abonement.scss";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { checkTrainingReturn } from "../../features/trainings/trainingThunk";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
+import { selectUser } from "../../features/user/userSlice";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -14,6 +15,7 @@ interface AbonementProps {
 }
 
 export default function Abonement({ abonement, userRole }: AbonementProps) {
+  const { data: user } = useAppSelector(selectUser);
   const { t } = useTranslation();
   const [freeze, setFreeze] = useState<boolean>(abonement.paused);
   const dispatch = useAppDispatch();
@@ -44,14 +46,23 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   return (
     <div className="abonement">
       <div className="abonement__info">
-        <div
-          className={classNames("abonement__status status", {
-            status: abonement.status === "active",
-            "status--red": abonement.status === "ended",
-          })}
-        >
-          {abonement.status}
+        <div className="flex items-center justify-between">
+          <div
+            className={classNames("abonement__status status", {
+              status: abonement.status === "active",
+              "status--red": abonement.status === "ended",
+            })}
+          >
+            {abonement.status}
+          </div>
+
+          {user?.role === "admin" && (
+            <div>
+              id: <span className="text-amber-600">{abonement.id}</span>
+            </div>
+          )}
         </div>
+
         <div className="abonement__container">
           <div>
             <b>{t("abonement.amount")}</b> {abonement.amount}
