@@ -1,5 +1,4 @@
 import { Abonement } from "../types/Abonement";
-import { User } from "../types/User";
 import { isTomorrow } from "./utils";
 
 export type ViewOption = "all" | "active" | "expired" | "inactive";
@@ -72,37 +71,6 @@ export function getCurrentAbonement(
   }
 
   return earliestActiveAbonement || inactiveAbonement || recentlyEnded || null;
-}
-
-export function getAbonement(user: User): Abonement | null {
-  if (!user) {
-    return null;
-  }
-
-  let activeAbonement: Abonement | null = null;
-  let inactiveAbonement: Abonement | null = null;
-  let recentlyEnded: Abonement | null = null;
-
-  const now = new Date();
-
-  for (const a of user.abonements || []) {
-    if (a.status === "active") {
-      activeAbonement = a;
-      break; // Stop when an active abonement is found
-    }
-    if (a.status === "inactive" && !inactiveAbonement) {
-      inactiveAbonement = a; // Store inactive if no active is found
-    }
-    if (
-      a.status === "ended" &&
-      !recentlyEnded &&
-      new Date(a.expiratedAt) > now
-    ) {
-      recentlyEnded = a; // Store the ended abonement if it's not expired
-    }
-  }
-
-  return activeAbonement || inactiveAbonement || recentlyEnded || null;
 }
 
 export function isCancellationForbidden(

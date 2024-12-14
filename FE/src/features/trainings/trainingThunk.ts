@@ -62,7 +62,10 @@ export const checkTrainingReturn = createAsyncThunk<
     try {
       const updatedData =
         await trainingService.checkAndCancelNotHeld(abonementId);
-      dispatch(fetchUserData());
+
+      if (updatedData) {
+        dispatch(fetchUserData());
+      }
 
       return updatedData;
     } catch (error: any) {

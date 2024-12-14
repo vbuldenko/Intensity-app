@@ -33,6 +33,13 @@ export const updateReservation = async (
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
   }
+
+  if (new Date(abonement.expiratedAt) < new Date()) {
+    abonement.status = 'expired';
+    await abonement.save();
+    throw ApiError.BadRequest('Abonement has expired!');
+  }
+
   try {
     switch (updateType) {
       case 'reservation':
@@ -44,8 +51,7 @@ export const updateReservation = async (
       default:
         throw ApiError.BadRequest('Invalid updateType');
     }
-    // Reload the models to get the updated data without re-fetching everything
-    await Promise.all([abonement.save(), training.save()]);
+
     return {
       updatedAbonement: abonement,
       updatedTraining: training,
@@ -61,9 +67,11 @@ const handleReservation = async (abonement, training) => {
       'Already reserved: You have already reserved your place!',
     );
   }
+
   if (!isAbonementActive(abonement)) {
     throw ApiError.BadRequest('Abonement has ended!');
   }
+
   if (abonement.status === 'inactive') {
     activateAbonement(abonement);
   }
@@ -152,7 +160,7 @@ export const cancelNotHeldTrainings = async abonementId => {
         select: 'firstName lastName',
       },
     ]);
-    await abonement.save();
+
     return { abonement, trainings };
   }
   return null;

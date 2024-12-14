@@ -36,12 +36,7 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
     if (isNotExpired && hasVisitedTrainings) {
       dispatch(checkTrainingReturn(abonement.id));
     }
-  }, [
-    abonement.expiratedAt,
-    abonement.visitedTrainings,
-    abonement.id,
-    dispatch,
-  ]);
+  }, [abonement.visitedTrainings.length, dispatch]);
 
   return (
     <div className="abonement">
@@ -50,7 +45,8 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
           <div
             className={classNames("abonement__status status", {
               status: abonement.status === "active",
-              "status--red": abonement.status === "ended",
+              "status--red":
+                abonement.status === "ended" || abonement.status === "expired",
             })}
           >
             {abonement.status}
