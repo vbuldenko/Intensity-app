@@ -1,7 +1,7 @@
 export interface Abonement {
   id: number;
   userId: number;
-  status: "active" | "ended" | "inactive";
+  status: "active" | "ended" | "expired" | "inactive";
   type: "group" | "personal" | "split" | "kids";
   amount: number;
   price: number;
