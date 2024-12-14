@@ -9,14 +9,14 @@
     justify-content: space-between;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.3rem 0.5rem;
     line-height: 1;
     background-color: $color-background;
     border: 1px solid $color-element;
     border-radius: $standard-br;
     cursor: pointer;
     text-align: left;
-    text-transform: capitalize;
+    text-transform: uppercase;
     color: black;
 
     &:focus {
@@ -41,10 +41,11 @@
   }
 
   &__option {
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.5rem;
     cursor: pointer;
     color: black;
-    text-transform: capitalize;
+    text-transform: uppercase;
+    line-height: 1;
 
     &:hover {
       background-color: #e5e7eb;

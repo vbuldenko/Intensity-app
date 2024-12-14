@@ -3,8 +3,8 @@
   backdrop-filter: blur(50px);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.5rem;
   width: 100%;
   box-shadow: $shadow3;
   border-radius: 0;
@@ -24,35 +24,34 @@
 
   @include on-tablet {
     box-shadow: none;
-    justify-content: flex-start;
-    padding: 2rem 1rem;
     flex-direction: column;
+    padding: 2rem 1rem;
     gap: 2rem;
     border-radius: 1rem 0 0 1rem;
   }
 
   &__link {
-    min-width: max-content;
+    min-width: 140px;
     text-align: center;
+    padding-block: 0.25rem;
+    padding-inline: 1rem;
 
     &:hover {
       color: $color-green;
     }
 
-    &:active {
-      border-radius: $big-br;
-      padding: 0.3rem 0.25rem;
-      box-shadow:
-        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
-        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
-    }
+    // &:active {
+    //   border-radius: $big-br;
+    //   padding: 0.3rem 0.25rem;
+    //   box-shadow:
+    //     inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+    //     inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+    // }
   }
 
   & .selected {
     background-color: $color-background;
     color: $color-green;
-    padding-block: 0.25rem;
-    padding-inline: 1rem;
     border: 1px solid $color-middle-green;
     border-radius: $big-br;
     box-shadow:

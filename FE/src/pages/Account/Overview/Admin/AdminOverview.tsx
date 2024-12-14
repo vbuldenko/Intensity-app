@@ -45,7 +45,7 @@ const AdminDashboard: React.FC = () => {
   const monthlyProfit = currentMonthIncome - totalExpenses;
 
   const generalStats = {
-    abonementsSold: abonements?.length || 0,
+    abonementsSold: currentMonthAbonements?.length || 0,
     // totalIncome: totalIncome.toFixed(1),
     dailyIncome: dailyIncome.toFixed(1),
     monthlyIncome: currentMonthIncome.toFixed(1),

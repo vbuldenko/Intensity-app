@@ -43,7 +43,7 @@ export const Header = () => {
           options={["ua", "en"]}
           onChange={handleChangeLanguage}
         />
-        <Toggler />
+        {/* <Toggler /> */}
         <MenuButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
       </div>
     </header>
