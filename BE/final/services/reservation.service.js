@@ -21,7 +21,7 @@ export const updateReservation = async (
       },
       {
         path: 'visitors',
-        select: 'firstName lastName',
+        // select: 'firstName lastName',
       },
     ]),
   ]);
@@ -139,6 +139,7 @@ export const cancelNotHeldTrainings = async abonementId => {
         training.date,
         training.visitors.length,
       );
+
       if (!canProceed) {
         await handleReturn(abonement, training._id, abonement.user);
         updatedTrainings.push(training._id);
@@ -152,7 +153,7 @@ export const cancelNotHeldTrainings = async abonementId => {
       _id: { $in: updatedTrainings },
     }).populate([
       {
-        path: 'instructorId',
+        path: 'instructor',
         select: 'firstName lastName',
       },
       {
@@ -167,9 +168,13 @@ export const cancelNotHeldTrainings = async abonementId => {
 };
 // Helper functions
 const isTrainingReserved = (abonement, training) => {
-  return abonement.visitedTrainings.some(
-    visitedTraining =>
-      visitedTraining._id.toString() === training._id.toString(),
+  // return abonement.visitedTrainings.some(
+  //   visitedTraining =>
+  //     visitedTraining._id.toString() === training._id.toString(),
+  // );
+
+  return training.visitors.some(
+    visitor => visitor.id.toString() === abonement.user.toString(),
   );
 };
 const isAbonementActive = abonement => {
