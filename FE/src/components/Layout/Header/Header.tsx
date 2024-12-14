@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigation } from "../../Navigation";
 import { Logo } from "../../Elements/Logo";
-import { Toggler } from "../../Elements/Toggler";
+// import { Toggler } from "../../Elements/Toggler";
 import { MenuButton } from "../../Elements/MenuButton";
 import "./Header.scss";
 import { useTheme } from "../../../contexts/ThemeContext";
