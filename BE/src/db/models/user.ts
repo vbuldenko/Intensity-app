@@ -54,9 +54,10 @@ const UserSchema: Schema = new Schema(
       required: true,
     },
     settings: {
-      type: Map,
-      of: Schema.Types.Mixed,
-      default: { fontSize: 16 },
+      fontSize: {
+        type: Number,
+        default: 16,
+      },
     },
     abonements: [
       {
