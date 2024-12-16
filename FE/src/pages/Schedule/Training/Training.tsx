@@ -36,11 +36,11 @@ export default function Training({ training }: { training: TrainingType }) {
   );
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
-  const reservedPlaces = training.visitors.length;
+  const reservedPlaces = training.reservations.length;
 
   const isReserved = useMemo(
     () =>
-      abonement?.visitedTrainings.some((t) => t.id === training.id) || false,
+      abonement?.reservations.some((t) => t.training === training.id) || false,
     [abonement]
   );
 

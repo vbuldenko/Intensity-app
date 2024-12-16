@@ -56,7 +56,9 @@ export const updateReservation = async (
 
   const trainer = await User.findById(training.instructor.id);
   if (!trainer) {
-    throw ApiError.BadRequest('Invalid training instructor');
+    throw ApiError.BadRequest(
+      'Invalid training instructor, ask admin for help',
+    );
   }
 
   try {
@@ -112,15 +114,13 @@ const handleReservation = async (
   // Add training to visitedTrainings and user to visitors
   abonement.reservations.push(newReservation._id);
   training.reservations.push(newReservation._id);
-  // Ensure training._id is an ObjectId
-  const trainingId = mongoose.Types.ObjectId(training._id);
 
   if (
     !trainer.trainings.some((id: mongoose.Types.ObjectId) =>
-      id.equals(trainingId),
+      id.equals(training._id),
     )
   ) {
-    trainer.trainings.push(trainingId);
+    trainer.trainings.push(training._id);
   }
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
@@ -147,6 +147,17 @@ const handleCancellation = async (
     training: training._id,
   });
 
+  if (!reservation) {
+    throw ApiError.BadRequest('Reservation not found');
+  }
+
+  abonement.reservations = abonement.reservations.filter(
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+  );
+  training.reservations = training.reservations.filter(
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+  );
+
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
   }
@@ -161,20 +172,25 @@ const handleCancellation = async (
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
-const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
-  const training = await Training.findById(trainingId);
-  const trainer = await User.findById(training.instructor.id);
+const handleReturn = async (reservation: any, abonement: any) => {
+  // const resrvnObj = await Reservation.findById(reservation.id);
+  // resrvnObj.status = 'cancelled';
+  const training = (await Training.findById(reservation.training.id)) as any;
+  const trainer = await User.findById(reservation.training.instructor);
   if (!trainer) {
     throw ApiError.BadRequest('Invalid training instructor');
   }
 
   // Remove the training from visitedTrainings and user from visitors
-  abonement.visitedTrainings = removeTraining(
-    abonement.visitedTrainings,
-    trainingId,
+  abonement.reservations = abonement.reservations.filter(
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
   );
-  training.visitors = removeVisitor(training.visitors, userId);
-  trainer.trainings = removeTraining(trainer.trainings, training);
+  training.reservations = training.reservations.filter(
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+  );
+  if (training.reservations.length < 2) {
+    trainer.trainings = removeTraining(trainer.trainings, training.id);
+  }
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
@@ -183,15 +199,20 @@ const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
   }
 
   // Reload the models to get the updated data without re-fetching everything
-  await Promise.all([abonement.save(), training.save(), trainer.save()]);
+  await Promise.all([
+    abonement.save(),
+    training.save(),
+    trainer.save(),
+    // resrvnObj.save(),
+  ]);
 };
 
 export const cancelNotHeldTrainings = async (abonementId: string) => {
   const abonement = (await Abonement.findById(abonementId).populate({
-    path: 'visitedTrainings',
+    path: 'reservations',
     populate: {
-      path: 'visitors',
-      select: 'firstName lastName',
+      path: 'training',
+      // select: 'firstName lastName',
     },
   })) as IAbonement;
 
@@ -202,14 +223,14 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
   const updatedTrainings: string[] = [];
 
   try {
-    for (const training of abonement.visitedTrainings) {
+    for (const reservation of abonement.reservations) {
       const canProceed = canTrainingProceed(
-        training.date,
-        training.visitors.length,
+        reservation.training.date,
+        reservation.traiinig.reservations.length,
       );
       if (!canProceed) {
-        await handleReturn(abonement, training._id, abonement.user);
-        updatedTrainings.push(training._id);
+        await handleReturn(reservation, abonement);
+        updatedTrainings.push(reservation.training.id);
       }
     }
   } catch (error) {
@@ -225,8 +246,8 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
         select: 'firstName lastName',
       },
       {
-        path: 'visitors',
-        select: 'firstName lastName',
+        path: 'reservations',
+        // select: 'firstName lastName',
       },
     ]);
 

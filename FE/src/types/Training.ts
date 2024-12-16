@@ -9,5 +9,6 @@ export interface Training {
   day: string;
   time: string;
   visitors: User[];
+  reservations: any[];
   instructor?: User;
 }

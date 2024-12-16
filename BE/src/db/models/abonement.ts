@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IAbonement extends Document {
   user: mongoose.Types.ObjectId;
-  status: 'active' | 'ended' | 'inactive';
+  status: 'active' | 'ended' | 'expired' | 'inactive';
   type: string;
   amount: number;
   price: number;
@@ -12,7 +12,7 @@ export interface IAbonement extends Document {
   expiratedAt: Date;
   createdAt: Date;
   updatedAt: Date;
-  visitedTrainings: any[];
+  reservations: any[];
 }
 
 const AbonementSchema: Schema = new Schema(

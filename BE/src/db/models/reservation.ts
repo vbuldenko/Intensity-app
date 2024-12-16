@@ -54,20 +54,20 @@ const ReservationSchema: Schema = new Schema(
 );
 
 // Middleware to remove the reservation ID from Abonement and Training.reservations
-ReservationSchema.pre('findOneAndDelete', async function (next) {
-  const reservation = await this.model.findOne(this.getFilter());
-  if (reservation) {
-    await Abonement.updateOne(
-      { _id: reservation.abonement },
-      { $pull: { reservations: reservation._id } },
-    );
-    await Training.updateOne(
-      { _id: reservation.training },
-      { $pull: { reservations: reservation._id } },
-    );
-  }
-  next();
-});
+// ReservationSchema.pre('findOneAndDelete', async function (next) {
+//   const reservation = await this.model.findOne(this.getFilter());
+//   if (reservation) {
+//     await Abonement.updateOne(
+//       { _id: reservation.abonement },
+//       { $pull: { reservations: reservation._id } },
+//     );
+//     await Training.updateOne(
+//       { _id: reservation.training },
+//       { $pull: { reservations: reservation._id } },
+//     );
+//   }
+//   next();
+// });
 
 const Reservation = mongoose.model<IReservation>(
   'Reservation',

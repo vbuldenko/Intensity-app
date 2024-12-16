@@ -10,8 +10,8 @@ export const getAll = async (): Promise<ITraining[]> => {
       select: 'firstName lastName',
     })
     .populate({
-      path: 'visitors',
-      select: 'firstName lastName',
+      path: 'reservations',
+      // select: 'firstName lastName',
     });
 };
 
