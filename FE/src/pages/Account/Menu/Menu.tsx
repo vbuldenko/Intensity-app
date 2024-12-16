@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Path } from "../../../types/Path";
 import "./Menu.scss";
 import { useAppSelector } from "../../../app/hooks";
-import { selectUser } from "../../../features/user/userSlice";
+import { selectUser } from "../../../app/features/user/userSlice";
 import { useTheme } from "../../../contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 

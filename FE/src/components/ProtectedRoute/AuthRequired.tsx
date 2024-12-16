@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../features/auth/authSlice";
+import { selectAuth } from "../../app/features/auth/authSlice";
 import { Path } from "../../types/Path";
 
 const AuthRequired: React.FC = () => {

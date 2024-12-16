@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../features/auth/authSlice";
-import { login } from "../../features/auth/authThunk";
+import { selectAuth } from "../../app/features/auth/authSlice";
+import { login } from "../../app/features/auth/authThunk";
 import { Path } from "../../types/Path";
 import "./Auth.scss";
 import Notification from "../../components/Elements/Notification";

@@ -1,9 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "../features/user/userSlice";
-import authReducer from "../features/auth/authSlice";
-import trainingReducer from "../features/trainings/trainingSlice";
-import abonementReducer from "../features/abonements/abonementSlice";
+import userReducer from "./features/user/userSlice";
+import authReducer from "./features/auth/authSlice";
+import trainingReducer from "./features/trainings/trainingSlice";
+import abonementReducer from "./features/abonements/abonementSlice";
 
 export const store = configureStore({
   reducer: {

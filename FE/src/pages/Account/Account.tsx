@@ -3,9 +3,9 @@ import Menu from "./Menu";
 import "./Account.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useEffect } from "react";
-import { fetchUserData } from "../../features/user/userThunk";
-import { selectUser } from "../../features/user/userSlice";
-import { checkAuth } from "../../features/auth/authThunk";
+import { fetchUserData } from "../../app/features/user/userThunk";
+import { selectUser } from "../../app/features/user/userSlice";
+import { checkAuth } from "../../app/features/auth/authThunk";
 
 export default function Account() {
   const { data, error } = useAppSelector(selectUser);

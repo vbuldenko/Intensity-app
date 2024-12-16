@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { trainingService } from "../../services/trainingService";
-import { ErrorResponse } from "../../types/Error";
-import { Training } from "../../types/Training";
-import { getErrorMessage } from "../../utils/utils";
-import { Abonement } from "../../types/Abonement";
+import { trainingService } from "../../../services/trainingService";
+import { ErrorResponse } from "../../../types/Error";
+import { Training } from "../../../types/Training";
+import { getErrorMessage } from "../../../utils/utils";
+import { Abonement } from "../../../types/Abonement";
 import { fetchUserData } from "../user/userThunk";
 
 export const fetchTrainings = createAsyncThunk<

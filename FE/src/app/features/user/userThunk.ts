@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { userService } from "../../services/userService";
-import { User } from "../../types/User";
-import { ErrorResponse } from "../../types/Error";
+import { userService } from "../../../services/userService";
+import { User } from "../../../types/User";
+import { ErrorResponse } from "../../../types/Error";
 
 export const fetchUserData = createAsyncThunk<
   User, // Return type of the successful request

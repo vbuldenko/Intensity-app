@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authService } from "../../services/authService";
-import { accessTokenService } from "../../services/accessTokenService";
+import { authService } from "../../../services/authService";
+import { accessTokenService } from "../../../services/accessTokenService";
 import { fetchUserData } from "../user/userThunk";
-import { ErrorResponse } from "../../types/Error";
+import { ErrorResponse } from "../../../types/Error";
 import { setError } from "./authSlice";
-import { getErrorMessage } from "../../utils/utils";
+import { getErrorMessage } from "../../../utils/utils";
 
 export const checkAuth = createAsyncThunk<
   void, // Return type of the successful request

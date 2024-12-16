@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { activate } from "../../features/auth/authThunk";
-import { selectAuth } from "../../features/auth/authSlice";
+import { activate } from "../../app/features/auth/authThunk";
+import { selectAuth } from "../../app/features/auth/authSlice";
 import Loader from "../../components/Elements/Loader";
 import { Path } from "../../types/Path";
 

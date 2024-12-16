@@ -1,6 +1,6 @@
 // import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectUser } from "../../../features/user/userSlice";
+import { selectUser } from "../../../app/features/user/userSlice";
 import "./Settings.scss";
 
 import {
@@ -15,9 +15,9 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { User } from "../../../types/User";
-import { logOut } from "../../../features/auth/authThunk";
+import { logOut } from "../../../app/features/auth/authThunk";
 import Loader from "../../../components/Elements/Loader";
-import { updateUserData } from "../../../features/user/userThunk";
+import { updateUserData } from "../../../app/features/user/userThunk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

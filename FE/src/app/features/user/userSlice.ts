@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store";
+import type { RootState } from "../../store";
 import { fetchUserData, updateUserData } from "./userThunk";
-import { User } from "../../types/User";
-import { ErrorResponse } from "../../types/Error";
+import { User } from "../../../types/User";
+import { ErrorResponse } from "../../../types/Error";
 
 // Define a type for the slice state
 export interface UserState {

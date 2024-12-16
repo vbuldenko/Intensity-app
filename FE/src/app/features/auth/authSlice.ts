@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { accessTokenService } from "../../services/accessTokenService";
+import { accessTokenService } from "../../../services/accessTokenService";
 import { activate, checkAuth, login, logOut } from "./authThunk";
-import { RootState } from "../../app/store";
-import { ErrorResponse } from "../../types/Error";
+import { RootState } from "../../store";
+import { ErrorResponse } from "../../../types/Error";
 
 export interface AuthState {
   isAuthenticated: boolean;

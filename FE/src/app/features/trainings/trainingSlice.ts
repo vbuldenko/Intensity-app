@@ -1,69 +1,74 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store";
-import { fetchAbonements } from "./abonementThunk";
-import { ErrorResponse } from "../../types/Error";
-import { Abonement } from "../../types/Abonement";
+import type { RootState } from "../../store";
 import {
   checkTrainingReturn,
+  fetchTrainings,
   reserveTraining,
-} from "../trainings/trainingThunk";
-import { Training } from "../../types/Training";
+} from "./trainingThunk";
+import { ErrorResponse } from "../../../types/Error";
+import { Training } from "../../../types/Training";
+import { Abonement } from "../../../types/Abonement";
 
 // Define a type for the slice state
-export interface AbonementState {
+export interface TrainingState {
   loading: boolean;
-  data: Abonement[] | null;
+  data: Training[];
   error: string | null;
 }
 
 // Define the initial state using that type
-const initialState: AbonementState = {
+const initialState: TrainingState = {
   loading: false,
-  data: null,
+  data: [],
   error: null,
 };
 
-export const abonementSlice = createSlice({
-  name: "abonements",
+export const trainingSlice = createSlice({
+  name: "trainings",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAbonements.pending, (state) => {
+      .addCase(fetchTrainings.pending, (state) => {
         state.loading = true;
       })
       .addCase(
-        fetchAbonements.fulfilled,
-        (state, action: PayloadAction<Abonement[]>) => {
+        fetchTrainings.fulfilled,
+        (state, action: PayloadAction<Training[]>) => {
           state.data = action.payload;
           state.loading = false;
           state.error = null; // Clear the error on success
         }
       )
       .addCase(
-        fetchAbonements.rejected,
+        fetchTrainings.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";
         }
       )
+      .addCase(reserveTraining.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(
         reserveTraining.fulfilled,
-        (state, action: PayloadAction<{ updatedAbonement: Abonement }>) => {
-          const { updatedAbonement } = action.payload;
-          if (state.data) {
-            const index = state.data.findIndex(
-              (a) => a.id === updatedAbonement.id
-            );
-            if (index !== -1) {
-              state.data[index] = updatedAbonement;
-            }
+        (state, action: PayloadAction<{ updatedTraining: Training }>) => {
+          // Update the specific training in the state after reservation
+          const { updatedTraining } = action.payload;
+          const index = state.data.findIndex(
+            (t) => t.id === updatedTraining.id
+          );
+          if (index !== -1) {
+            state.data[index] = updatedTraining;
           }
+          state.loading = false;
+          state.error = null; // Clear error on success
         }
       )
       .addCase(
         reserveTraining.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";
         }
       )
@@ -80,13 +85,15 @@ export const abonementSlice = createSlice({
           } | null>
         ) => {
           if (action.payload) {
-            const { abonement } = action.payload;
-            if (state.data) {
-              const index = state.data.findIndex((a) => a.id === abonement.id);
+            const { trainings } = action.payload;
+            trainings.forEach((updatedTraining) => {
+              const index = state.data.findIndex(
+                (t) => t.id === updatedTraining.id
+              );
               if (index !== -1) {
-                state.data[index] = abonement;
+                state.data[index] = updatedTraining;
               }
-            }
+            });
           }
           state.loading = false;
           state.error = null;
@@ -95,6 +102,7 @@ export const abonementSlice = createSlice({
       .addCase(
         checkTrainingReturn.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";
         }
       );
@@ -102,8 +110,8 @@ export const abonementSlice = createSlice({
 });
 
 // export const {
-// } = abonementSlice.actions;
+// } = trainingSlice.actions;
 
-export const selectAbonements = (state: RootState) => state.abonements.data;
+export const selectTrainings = (state: RootState) => state.trainings;
 
-export default abonementSlice.reducer;
+export default trainingSlice.reducer;

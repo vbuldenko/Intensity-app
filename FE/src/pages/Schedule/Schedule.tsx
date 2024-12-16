@@ -16,8 +16,8 @@ import "./Schedule.scss";
 import WeekDaysNames from "./elements/WeekDays/WeekDays";
 import CalendarNavbar from "./elements/Navbar/CalendarNavbar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectTrainings } from "../../features/trainings/trainingSlice";
-import { fetchTrainings } from "../../features/trainings/trainingThunk";
+import { selectTrainings } from "../../app/features/trainings/trainingSlice";
+import { fetchTrainings } from "../../app/features/trainings/trainingThunk";
 import Loader from "../../components/Elements/Loader";
 import { useTranslation } from "react-i18next";
 

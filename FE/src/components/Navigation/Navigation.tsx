@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { getLinkClass } from "../../utils/utils";
 import { NavBarLinks } from "../../types/NavBarLinks";
 import { useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../features/auth/authSlice";
+import { selectAuth } from "../../app/features/auth/authSlice";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import "./Navigation.scss";
 import { Path } from "../../types/Path";

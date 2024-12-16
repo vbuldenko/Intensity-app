@@ -3,7 +3,7 @@ import { useState } from "react";
 import Selector from "../../../components/Elements/Selector";
 import { membership } from "../../../assets/purchaseData";
 import { useAppSelector } from "../../../app/hooks";
-import { selectUser } from "../../../features/user/userSlice";
+import { selectUser } from "../../../app/features/user/userSlice";
 import "./Purchases.scss";
 import { abonementService } from "../../../services/abonementService";
 import { getErrorMessage } from "../../../utils/utils";

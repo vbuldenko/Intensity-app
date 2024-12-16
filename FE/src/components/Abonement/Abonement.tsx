@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
 import StateToggler from "../Elements/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
-import { checkTrainingReturn } from "../../features/trainings/trainingThunk";
+import { checkTrainingReturn } from "../../app/features/trainings/trainingThunk";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
-import { selectUser } from "../../features/user/userSlice";
+import { selectUser } from "../../app/features/user/userSlice";
 
 interface AbonementProps {
   abonement: AbonementType;
