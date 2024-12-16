@@ -40,6 +40,11 @@ export const updateReservation = async (
     throw ApiError.BadRequest('Abonement has expired!');
   }
 
+  const trainer = await User.findById(training.instructor.id);
+  if (!trainer) {
+    throw ApiError.BadRequest('Invalid training instructor');
+  }
+
   try {
     switch (updateType) {
       case 'reservation':
@@ -60,7 +65,7 @@ export const updateReservation = async (
     throw error;
   }
 };
-const handleReservation = async (abonement, training) => {
+const handleReservation = async (abonement, training, trainer) => {
   // Check if the user has already reserved the training
   if (isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest(
@@ -78,15 +83,16 @@ const handleReservation = async (abonement, training) => {
   // Add training to visitedTrainings and user to visitors
   abonement.visitedTrainings.push(training._id);
   training.visitors.push(abonement.user);
+  trainer.trainings.push(training._id);
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
   if (abonement.left === 0) {
     abonement.status = 'ended';
   }
-  await abonement.save();
-  await training.save();
+
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
-const handleCancellation = async (abonement, training) => {
+const handleCancellation = async (abonement, training, trainer) => {
   // Check if the user has a reservation for the training
   if (!isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
@@ -97,29 +103,35 @@ const handleCancellation = async (abonement, training) => {
     training._id,
   );
   training.visitors = removeVisitor(training.visitors, abonement.user);
+  trainer.trainings = removeTraining(trainer.trainings, training._id);
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
     abonement.status = 'active';
   }
-  await abonement.save();
-  await training.save();
+  // Reload the models to get the updated data without re-fetching everything
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 const handleReturn = async (abonement, trainingId, userId) => {
   const training = await Training.findById(trainingId);
+  const trainer = await User.findById(training.instructor.id);
+  if (!trainer) {
+    throw ApiError.BadRequest('Invalid training instructor');
+  }
   // Remove the training from visitedTrainings and user from visitors
   abonement.visitedTrainings = removeTraining(
     abonement.visitedTrainings,
     trainingId,
   );
   training.visitors = removeVisitor(training.visitors, userId);
+  trainer.trainings = removeTraining(trainer.trainings, training);
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
     abonement.status = 'active';
   }
-  await abonement.save();
-  await training.save();
+  // Reload the models to get the updated data without re-fetching everything
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 export const cancelNotHeldTrainings = async abonementId => {
   const abonement = await Abonement.findById(abonementId).populate({

@@ -37,6 +37,12 @@ export const updateReservation = async (
     throw ApiError.BadRequest('Invalid abonement owner');
   }
 
+  if (new Date(abonement.expiratedAt) < new Date()) {
+    abonement.status = 'expired';
+    await abonement.save();
+    throw ApiError.BadRequest('Abonement has expired!');
+  }
+
   const trainer = await User.findById(training.instructor.id);
   if (!trainer) {
     throw ApiError.BadRequest('Invalid training instructor');
@@ -53,9 +59,6 @@ export const updateReservation = async (
       default:
         throw ApiError.BadRequest('Invalid updateType');
     }
-
-    // Reload the models to get the updated data without re-fetching everything
-    await Promise.all([abonement.save(), training.save(), trainer.save()]);
 
     return {
       updatedAbonement: abonement,
@@ -97,9 +100,8 @@ const handleReservation = async (
     abonement.status = 'ended';
   }
 
-  // await abonement.save();
-  // await training.save();
-  // await trainer.save();
+  // Reload the models to get the updated data without re-fetching everything
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
 const handleCancellation = async (
@@ -126,14 +128,13 @@ const handleCancellation = async (
     abonement.status = 'active';
   }
 
-  // await abonement.save();
-  // await training.save();
-  // await trainer.save();
+  // Reload the models to get the updated data without re-fetching everything
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
 const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
-  const training = (await Training.findById(trainingId)) as ITraining;
-  const trainer = (await User.findById(training.instructor.id)) as IUser;
+  const training = await Training.findById(trainingId);
+  const trainer = await User.findById(training.instructor.id);
   if (!trainer) {
     throw ApiError.BadRequest('Invalid training instructor');
   }
@@ -152,7 +153,8 @@ const handleReturn = async (abonement: any, trainingId: any, userId: any) => {
     abonement.status = 'active';
   }
 
-  await training.save();
+  // Reload the models to get the updated data without re-fetching everything
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
 export const cancelNotHeldTrainings = async (abonementId: string) => {
@@ -199,7 +201,6 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
       },
     ]);
 
-    await abonement.save();
     return { abonement, trainings };
   }
 
