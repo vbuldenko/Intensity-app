@@ -22,10 +22,6 @@ const AbonementSchema = new Schema(
       type: Number,
       required: true,
     },
-    paused: {
-      type: Boolean,
-      default: false,
-    },
     activatedAt: {
       type: Date,
     },

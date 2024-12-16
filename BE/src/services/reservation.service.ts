@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import Abonement, { IAbonement } from '../db/models/abonement';
+import Reservation from '../db/models/reservation';
 import Training, { ITraining } from '../db/models/training';
 import User, { IUser } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
@@ -13,8 +15,10 @@ export const updateReservation = async (
   // Fetch relevant data with necessary associations
   const [abonement, training] = await Promise.all([
     Abonement.findById(abonementId).populate({
-      path: 'visitedTrainings',
-      select: '-capacity',
+      path: 'reservations',
+      // populate: {
+      //   path: 'training',
+      // },
     }),
     Training.findById(trainingId).populate([
       {
@@ -22,8 +26,15 @@ export const updateReservation = async (
         select: 'firstName lastName',
       },
       {
-        path: 'visitors',
-        select: 'firstName lastName',
+        path: 'reservations',
+        // populate: [
+        //   {
+        //     path: 'user',
+        //   },
+        //   {
+        //     path: 'abonement',
+        //   },
+        // ],
       },
     ]),
   ]);
@@ -81,7 +92,7 @@ const handleReservation = async (
     );
   }
 
-  if (!isAbonementActive(abonement)) {
+  if (abonement.status === 'ended') {
     throw ApiError.BadRequest('Abonement has ended!');
   }
 
@@ -89,11 +100,28 @@ const handleReservation = async (
     activateAbonement(abonement);
   }
 
-  // Add training to visitedTrainings and user to visitors
-  abonement.visitedTrainings.push(training._id);
-  training.visitors.push(abonement.user);
-  trainer.trainings.push(training._id);
+  const reservation = new Reservation({
+    training: training._id,
+    user: abonement.user,
+    abonement: abonement._id,
+    status: 'active',
+  });
 
+  const newReservation = await reservation.save();
+
+  // Add training to visitedTrainings and user to visitors
+  abonement.reservations.push(newReservation._id);
+  training.reservations.push(newReservation._id);
+  // Ensure training._id is an ObjectId
+  const trainingId = mongoose.Types.ObjectId(training._id);
+
+  if (
+    !trainer.trainings.some((id: mongoose.Types.ObjectId) =>
+      id.equals(trainingId),
+    )
+  ) {
+    trainer.trainings.push(trainingId);
+  }
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
   if (abonement.left === 0) {
@@ -114,13 +142,14 @@ const handleCancellation = async (
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
   }
 
-  // Remove the training from visitedTrainings and user from visitors
-  abonement.visitedTrainings = removeTraining(
-    abonement.visitedTrainings,
-    training._id,
-  );
-  training.visitors = removeVisitor(training.visitors, abonement.user);
-  trainer.trainings = removeTraining(trainer.trainings, training._id);
+  const reservation = await Reservation.findOneAndDelete({
+    abonement: abonement._id,
+    training: training._id,
+  });
+
+  if (training.reservations.length < 2) {
+    trainer.trainings = removeTraining(trainer.trainings, training._id);
+  }
 
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
@@ -209,14 +238,10 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
 
 // Helper functions
 const isTrainingReserved = (abonement: any, training: any) => {
-  return abonement.visitedTrainings.some(
-    (visitedTraining: any) =>
-      visitedTraining._id.toString() === training._id.toString(),
+  return training.reservations.some(
+    (reservation: any) =>
+      reservation.user.toString() === abonement.user.toString(),
   );
-};
-
-const isAbonementActive = (abonement: any) => {
-  return abonement.status === 'inactive' || abonement.status === 'active';
 };
 
 const activateAbonement = (abonement: any) => {
@@ -230,17 +255,8 @@ const activateAbonement = (abonement: any) => {
 };
 
 const removeTraining = (trainings: any[], trainingId: any) => {
-  return trainings.filter((visitedTraining: any) => {
-    const visitedTrainingId = visitedTraining._id
-      ? visitedTraining._id.toString()
-      : visitedTraining.toString();
-    return visitedTrainingId !== trainingId.toString();
-  });
-};
-
-const removeVisitor = (visitors: any[], userId: any) => {
-  return visitors.filter((visitor: any) => {
-    const visitorId = visitor._id ? visitor._id.toString() : visitor.toString();
-    return visitorId !== userId.toString();
+  return trainings.filter((t: any) => {
+    const tId = t._id ? t._id.toString() : t.toString();
+    return tId !== trainingId.toString();
   });
 };

@@ -19,7 +19,7 @@ const AbonementSchema: Schema = new Schema(
   {
     status: {
       type: String,
-      enum: ['active', 'ended', 'inactive'],
+      enum: ['active', 'ended', 'expired', 'inactive'],
       required: true,
     },
     type: {
@@ -38,10 +38,6 @@ const AbonementSchema: Schema = new Schema(
       type: Number,
       required: true,
     },
-    paused: {
-      type: Boolean,
-      default: false,
-    },
     activatedAt: {
       type: Date,
     },
@@ -53,10 +49,10 @@ const AbonementSchema: Schema = new Schema(
       ref: 'User',
       required: true,
     },
-    visitedTrainings: [
+    reservations: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Training',
+        ref: 'Reservation',
       },
     ],
   },

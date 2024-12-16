@@ -39,10 +39,10 @@ const TrainingSchema: Schema = new Schema(
       ref: 'User',
       required: true,
     },
-    visitors: [
+    reservations: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Reservation',
       },
     ],
   },
