@@ -32,20 +32,11 @@ export default function Training({ training }: { training: TrainingType }) {
   const [notification, setNotification] = useState<NotificationState>(null);
   const { data: user, loading } = useAppSelector(selectUser);
   const abonements = useAppSelector(selectAbonements);
-  let abonement = null;
-  if (abonements) {
-    abonement = getCurrentAbonement(abonements);
-  }
+  const abonement = abonements ? getCurrentAbonement(abonements) : null;
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
   const reservedPlaces = training.reservations.length;
   const reservation = training.reservations.find((r) => r.user === user?.id);
-
-  const isReserved = useMemo(
-    () =>
-      training.reservations.some((r) => r.user === abonement?.user) || false,
-    [abonement]
-  );
 
   const hoursDiff = calculateHoursDiff(trainingTime);
   const access = reservationAccess(
@@ -88,8 +79,7 @@ export default function Training({ training }: { training: TrainingType }) {
     const isForbidden = isCancellationForbidden(
       updateType,
       hoursDiff,
-      trainingTime,
-      new Date().getHours()
+      trainingTime
     );
     if (isForbidden) {
       return handleNotification(t("training.cancel_forbidden_rule"), "error");
@@ -103,7 +93,7 @@ export default function Training({ training }: { training: TrainingType }) {
           abonementId: reservation ? reservation.abonement : abonement.id,
           updateType,
         })
-      ).unwrap();
+      );
     } catch (error) {
       handleNotification(getErrorMessage(error), "error");
     } finally {
@@ -150,11 +140,11 @@ export default function Training({ training }: { training: TrainingType }) {
         {user && (
           <ReservationButton
             access={access}
-            isReserved={isReserved}
+            isReserved={reservation ? true : false}
             isSubmitting={isSubmitting}
             isDataUpdating={loading}
             onClick={() =>
-              handleAction(isReserved ? "cancellation" : "reservation")
+              handleAction(reservation ? "cancellation" : "reservation")
             }
           />
         )}

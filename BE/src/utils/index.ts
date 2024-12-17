@@ -82,6 +82,16 @@ export function calculateHoursDiff(
   return (trainingTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
 }
 
+export function isTomorrow(dateToCheck: Date) {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return (
+    tomorrow.getDate() === dateToCheck.getDate() &&
+    tomorrow.getMonth() === dateToCheck.getMonth() &&
+    tomorrow.getFullYear() === dateToCheck.getFullYear()
+  );
+}
+
 export const canTrainingProceed = (
   trainingDate: string,
   visitorsCount: number,
@@ -90,16 +100,16 @@ export const canTrainingProceed = (
   const trainingDateTime = new Date(trainingDate);
   const timeDifference = calculateHoursDiff(trainingDateTime, currentTime);
 
-  const isEarlyMorningTraining = [9, 10, 11].includes(
-    trainingDateTime.getHours(),
-  );
+  const isTrainingForTomorrowMorning =
+    isTomorrow(trainingDateTime) &&
+    [9, 10, 11].includes(trainingDateTime.getHours());
 
   if (timeDifference < 3 && visitorsCount < 2) {
     return false; // Return training to user's subscription
   }
   if (
     currentTime.getHours() >= 21 &&
-    isEarlyMorningTraining &&
+    isTrainingForTomorrowMorning &&
     visitorsCount < 2
   ) {
     return false; // Return training to user's subscription

@@ -1,5 +1,5 @@
 import { Abonement } from "../types/Abonement";
-import { isTomorrow } from "./utils";
+import { isToday, isTomorrow } from "./utils";
 
 export type ViewOption = "all" | "active" | "expired" | "inactive";
 
@@ -35,60 +35,49 @@ export function filterAbonements(
 export function getCurrentAbonement(
   abonements: Abonement[] | undefined
 ): Abonement | null {
-  if (!abonements || abonements.length === 0) {
-    return null;
-  }
+  if (!abonements || abonements.length === 0) return null;
 
-  let earliestActiveAbonement: Abonement | null = null;
-  let inactiveAbonement: Abonement | null = null;
-  let recentlyEnded: Abonement | null = null;
+  // Step 1: Get active
+  const activeAbonements = abonements
+    .filter((abonement) => abonement.status === "active")
+    .sort(
+      (a, b) =>
+        new Date(b.activatedAt).getTime() - new Date(a.activatedAt).getTime()
+    ); // Most recent active first
 
-  const now = new Date();
+  if (activeAbonements.length > 0) return activeAbonements[0];
 
-  for (const a of abonements) {
-    if (a.status === "active") {
-      if (
-        !earliestActiveAbonement ||
-        new Date(a.createdAt) < new Date(earliestActiveAbonement.createdAt)
-      ) {
-        earliestActiveAbonement = a; // Store the earliest purchased active abonement
-      }
-    }
-    if (a.status === "inactive" && !inactiveAbonement) {
-      inactiveAbonement = a; // Store inactive if no active is found
-    }
-    if (a.status === "ended") {
-      const expiratedAt = new Date(a.expiratedAt);
-      if (expiratedAt > now) {
-        if (
-          !recentlyEnded ||
-          expiratedAt > new Date(recentlyEnded.expiratedAt)
-        ) {
-          recentlyEnded = a; // Store the most recent ended abonement that is not expired
-        }
-      }
-    }
-  }
+  // Step 2: Get inactive
+  const inactiveAbonement = abonements.find(
+    (abonement) => abonement.status === "inactive"
+  );
+  if (inactiveAbonement) return inactiveAbonement;
 
-  return earliestActiveAbonement || inactiveAbonement || recentlyEnded || null;
+  // Step 3: Get ended
+  const endedAbonements = abonements
+    .filter((abonement) => abonement.status === "ended")
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    ); // Most recent ended first
+
+  return endedAbonements.length > 0 ? endedAbonements[0] : null;
 }
 
 export function isCancellationForbidden(
   updateType: string,
   hoursDiff: number,
-  trainingTime: Date,
-  currentHour: number
+  trainingTime: Date
 ): boolean {
-  const trainingHour = trainingTime.getHours();
-
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
+  const currentHour = new Date().getHours();
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
-  const isEarlyReservationUpdate = currentHour < 8 && isEarlyMorningTraining;
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
 
   return (
     updateType === "cancellation" &&
     (hoursDiff < 3 ||
       (isLateReservationUpdate && isEarlyMorningTraining) ||
-      isEarlyReservationUpdate)
+      (isEarlyReservationUpdate && isEarlyMorningTraining))
   );
 }

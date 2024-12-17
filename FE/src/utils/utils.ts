@@ -127,6 +127,14 @@ export function isTomorrow(dateToCheck: Date) {
     tomorrow.getFullYear() === dateToCheck.getFullYear()
   );
 }
+export function isToday(dateToCheck: Date) {
+  const today = new Date();
+  return (
+    today.getDate() === dateToCheck.getDate() &&
+    today.getMonth() === dateToCheck.getMonth() &&
+    today.getFullYear() === dateToCheck.getFullYear()
+  );
+}
 
 export function reservationAccess(
   currentDateTime: Date,
