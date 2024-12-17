@@ -5,7 +5,7 @@ interface Data {
   date: string;
   time: string;
   type: string;
-  visitors: Array<any>; // Replace 'any' with the actual type if available
+  reservations: Array<any>; // Replace 'any' with the actual type if available
   // instructor: { lastName: string };
   deducted?: boolean;
   deduction_reason?: string;
@@ -31,7 +31,7 @@ export default function HistoryElement({ data }: HistoryItemProps) {
       </div>
       <div className="history-element__item">
         <p className="history-element__label">{t("history.visitors")}</p>
-        <p className="history-element__value">{data.visitors.length}</p>
+        <p className="history-element__value">{data.reservations.length}</p>
       </div>
       {/* {!trainer && (
         <div className="history-element__item">

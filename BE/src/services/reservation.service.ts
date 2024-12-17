@@ -73,9 +73,24 @@ export const updateReservation = async (
         throw ApiError.BadRequest('Invalid updateType');
     }
 
+    const [updatedAbonement, updatedTraining] = await Promise.all([
+      Abonement.findById(abonementId).populate({
+        path: 'reservations',
+      }),
+      Training.findById(trainingId).populate([
+        {
+          path: 'instructor',
+          select: 'firstName lastName',
+        },
+        {
+          path: 'reservations',
+        },
+      ]),
+    ]);
+
     return {
-      updatedAbonement: abonement,
-      updatedTraining: training,
+      updatedAbonement,
+      updatedTraining,
     };
   } catch (error) {
     throw error;
@@ -226,7 +241,7 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
     for (const reservation of abonement.reservations) {
       const canProceed = canTrainingProceed(
         reservation.training.date,
-        reservation.traiinig.reservations.length,
+        reservation.training.reservations.length,
       );
       if (!canProceed) {
         await handleReturn(reservation, abonement);

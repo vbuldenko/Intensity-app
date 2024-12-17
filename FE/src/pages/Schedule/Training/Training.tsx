@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { reserveTraining } from "../../../features/trainings/trainingThunk";
+import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
 import { reservationAccess, getErrorMessage } from "../../../utils/utils";
 import {
   getCurrentAbonement,
@@ -9,7 +9,7 @@ import {
 import { calculateHoursDiff } from "../../../utils/trainings";
 import "./Training.scss";
 
-import { selectUser } from "../../../features/user/userSlice";
+import { selectUser } from "../../../app/features/user/userSlice";
 import classNames from "classnames";
 import { Training as TrainingType } from "../../../types/Training";
 
@@ -37,10 +37,11 @@ export default function Training({ training }: { training: TrainingType }) {
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
   const reservedPlaces = training.reservations.length;
+  const reservation = training.reservations.find((r) => r.user === user?.id);
 
   const isReserved = useMemo(
     () =>
-      abonement?.reservations.some((t) => t.training === training.id) || false,
+      training.reservations.some((r) => r.user === abonement?.user) || false,
     [abonement]
   );
 
@@ -97,11 +98,10 @@ export default function Training({ training }: { training: TrainingType }) {
       await dispatch(
         reserveTraining({
           trainingId: training.id,
-          abonementId: abonement.id,
+          abonementId: reservation ? reservation.abonement : abonement.id,
           updateType,
         })
       ).unwrap();
-      handleNotification("Success");
     } catch (error) {
       handleNotification(getErrorMessage(error), "error");
     } finally {

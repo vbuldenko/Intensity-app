@@ -31,12 +31,12 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
 
   useEffect(() => {
     const isNotExpired = new Date(abonement.expiratedAt) > new Date();
-    const hasVisitedTrainings = abonement.visitedTrainings.length > 0;
+    const hasReservations = abonement.reservations.length > 0;
 
-    if (isNotExpired && hasVisitedTrainings) {
+    if (isNotExpired && hasReservations) {
       dispatch(checkTrainingReturn(abonement.id));
     }
-  }, [abonement.visitedTrainings.length, dispatch]);
+  }, [abonement.reservations.length, dispatch]);
 
   return (
     <div className="abonement">
@@ -98,9 +98,9 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
           {t("abonement.history")}
         </h2>
         <div className="abonement__container">
-          {abonement.visitedTrainings.length > 0 ? (
-            abonement.visitedTrainings.map((el) => (
-              <HistoryElement key={el.id} data={el} trainer={false} />
+          {abonement.reservations.length > 0 ? (
+            abonement.reservations.map((el) => (
+              <HistoryElement key={el.id} data={el.training} trainer={false} />
             ))
           ) : (
             <p className="flex-1 text-gray-300">{t("abonement.noHistory")}</p>

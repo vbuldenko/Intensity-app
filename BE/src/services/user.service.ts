@@ -51,6 +51,9 @@ const getById = async (id: string) => {
       path: 'abonements',
       populate: {
         path: 'reservations',
+        populate: {
+          path: 'training',
+        },
       },
     })
     .populate({
