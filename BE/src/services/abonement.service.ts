@@ -16,9 +16,9 @@ export const getAll = async () => {
 
 export const getAllByUserId = async (userId: string) => {
   return Abonement.find({ user: userId }).populate({
-    path: 'visitedTrainings',
+    path: 'reservations',
     populate: {
-      path: 'visitors',
+      path: 'training',
     },
   });
 };
@@ -29,10 +29,9 @@ export const getOne = async (id: number) => {
 
 export const getById = async (id: string) => {
   return Abonement.findById(id).populate({
-    path: 'visitedTrainings',
+    path: 'reservations',
     populate: {
-      path: 'visitors',
-      model: 'User',
+      path: 'training',
     },
   });
 };

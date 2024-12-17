@@ -16,6 +16,7 @@ import { Training as TrainingType } from "../../../types/Training";
 import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
 import { useTranslation } from "react-i18next";
+import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
 
 type NotificationType = "error" | "notification" | undefined;
 
@@ -30,10 +31,11 @@ export default function Training({ training }: { training: TrainingType }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState<NotificationState>(null);
   const { data: user, loading } = useAppSelector(selectUser);
-  const abonement = useMemo(
-    () => getCurrentAbonement(user?.abonements),
-    [user?.abonements]
-  );
+  const abonements = useAppSelector(selectAbonements);
+  let abonement = null;
+  if (abonements) {
+    abonement = getCurrentAbonement(abonements);
+  }
 
   const trainingTime = useMemo(() => new Date(training.date), [training.date]);
   const reservedPlaces = training.reservations.length;

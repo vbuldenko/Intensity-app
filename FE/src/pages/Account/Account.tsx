@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { fetchUserData } from "../../app/features/user/userThunk";
 import { selectUser } from "../../app/features/user/userSlice";
 import { checkAuth } from "../../app/features/auth/authThunk";
+import { fetchAbonements } from "../../app/features/abonements/abonementThunk";
 
 export default function Account() {
   const { data, error } = useAppSelector(selectUser);
@@ -16,6 +17,7 @@ export default function Account() {
       dispatch(checkAuth());
     } else if (!data) {
       dispatch(fetchUserData());
+      dispatch(fetchAbonements());
     } else {
       document.documentElement.style.setProperty(
         "--root-font-size",
