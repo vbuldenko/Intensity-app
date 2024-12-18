@@ -11,10 +11,5 @@ export interface Abonement {
   updatedAt: string;
   activatedAt: string;
   expiratedAt: string;
-  // createdAt: Date;
-  // updatedAt: Date;
-  // activatedAt: Date;
-  // expiratedAt: Date;
-  visitedTrainings: any[];
   reservations: any[];
 }

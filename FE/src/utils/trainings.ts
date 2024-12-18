@@ -19,10 +19,10 @@ export const filterByInstructor = (
 
 export const filterByVisitors = (
   trainings: Training[],
-  minVisitors: number
+  minVisitorsAmount: number
 ) => {
   return trainings.filter(
-    (training) => training.visitors.length >= minVisitors
+    (training) => training.reservations.length >= minVisitorsAmount
   );
 };
 
