@@ -1,5 +1,7 @@
 import Abonement from '../db/models/Abonement.js';
+import Reservation from '../db/models/Reservation.js';
 import Training from '../db/models/Training.js';
+import User from '../db/models/User.js';
 import { ApiError } from '../exceptions/api.error.js';
 import { canTrainingProceed } from '../utils/index.js';
 export const updateReservation = async (
@@ -8,11 +10,9 @@ export const updateReservation = async (
   userId,
   updateType,
 ) => {
-  // Fetch relevant data with necessary associations
   const [abonement, training] = await Promise.all([
     Abonement.findById(abonementId).populate({
-      path: 'visitedTrainings',
-      select: '-capacity',
+      path: 'reservations',
     }),
     Training.findById(trainingId).populate([
       {
@@ -20,8 +20,7 @@ export const updateReservation = async (
         select: 'firstName lastName',
       },
       {
-        path: 'visitors',
-        // select: 'firstName lastName',
+        path: 'reservations',
       },
     ]),
   ]);
@@ -33,33 +32,45 @@ export const updateReservation = async (
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
   }
-
   if (new Date(abonement.expiratedAt) < new Date()) {
     abonement.status = 'expired';
     await abonement.save();
     throw ApiError.BadRequest('Abonement has expired!');
   }
-
   const trainer = await User.findById(training.instructor.id);
   if (!trainer) {
-    throw ApiError.BadRequest('Invalid training instructor');
+    throw ApiError.BadRequest(
+      'Invalid training instructor, ask admin for help',
+    );
   }
-
   try {
     switch (updateType) {
       case 'reservation':
-        await handleReservation(abonement, training);
+        await handleReservation(abonement, training, trainer);
         break;
       case 'cancellation':
-        await handleCancellation(abonement, training);
+        await handleCancellation(abonement, training, trainer);
         break;
       default:
         throw ApiError.BadRequest('Invalid updateType');
     }
-
+    const [updatedAbonement, updatedTraining] = await Promise.all([
+      Abonement.findById(abonementId).populate({
+        path: 'reservations',
+      }),
+      Training.findById(trainingId).populate([
+        {
+          path: 'instructor',
+          select: 'firstName lastName',
+        },
+        {
+          path: 'reservations',
+        },
+      ]),
+    ]);
     return {
-      updatedAbonement: abonement,
-      updatedTraining: training,
+      updatedAbonement,
+      updatedTraining,
     };
   } catch (error) {
     throw error;
@@ -72,24 +83,30 @@ const handleReservation = async (abonement, training, trainer) => {
       'Already reserved: You have already reserved your place!',
     );
   }
-
-  if (!isAbonementActive(abonement)) {
+  if (abonement.status === 'ended') {
     throw ApiError.BadRequest('Abonement has ended!');
   }
-
   if (abonement.status === 'inactive') {
     activateAbonement(abonement);
   }
+  const reservation = new Reservation({
+    training: training._id,
+    user: abonement.user,
+    abonement: abonement._id,
+  });
+  const newReservation = await reservation.save();
   // Add training to visitedTrainings and user to visitors
-  abonement.visitedTrainings.push(training._id);
-  training.visitors.push(abonement.user);
-  trainer.trainings.push(training._id);
+  abonement.reservations.push(newReservation._id);
+  training.reservations.push(newReservation._id);
+  if (!trainer.trainings.some(id => id.equals(training._id))) {
+    trainer.trainings.push(training._id);
+  }
   // Update the Abonement: decrement left count, set status if needed
   abonement.left -= 1;
   if (abonement.left === 0) {
     abonement.status = 'ended';
   }
-
+  // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 const handleCancellation = async (abonement, training, trainer) => {
@@ -97,13 +114,22 @@ const handleCancellation = async (abonement, training, trainer) => {
   if (!isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
   }
-  // Remove the training from visitedTrainings and user from visitors
-  abonement.visitedTrainings = removeTraining(
-    abonement.visitedTrainings,
-    training._id,
+  const reservation = await Reservation.findOneAndDelete({
+    abonement: abonement._id,
+    training: training._id,
+  });
+  if (!reservation) {
+    throw ApiError.BadRequest('Reservation not found');
+  }
+  abonement.reservations = abonement.reservations.filter(
+    resId => !resId.equals(reservation.id),
   );
-  training.visitors = removeVisitor(training.visitors, abonement.user);
-  trainer.trainings = removeTraining(trainer.trainings, training._id);
+  training.reservations = training.reservations.filter(
+    resId => !resId.equals(reservation.id),
+  );
+  if (training.reservations.length < 2) {
+    trainer.trainings = removeTraining(trainer.trainings, training._id);
+  }
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
@@ -112,19 +138,22 @@ const handleCancellation = async (abonement, training, trainer) => {
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
-const handleReturn = async (abonement, trainingId, userId) => {
-  const training = await Training.findById(trainingId);
-  const trainer = await User.findById(training.instructor.id);
+const handleReturn = async (reservation, abonement) => {
+  const training = await Training.findById(reservation.training.id);
+  const trainer = await User.findById(reservation.training.instructor);
   if (!trainer) {
     throw ApiError.BadRequest('Invalid training instructor');
   }
   // Remove the training from visitedTrainings and user from visitors
-  abonement.visitedTrainings = removeTraining(
-    abonement.visitedTrainings,
-    trainingId,
+  abonement.reservations = abonement.reservations.filter(
+    resId => !resId.equals(reservation.id),
   );
-  training.visitors = removeVisitor(training.visitors, userId);
-  trainer.trainings = removeTraining(trainer.trainings, training);
+  training.reservations = training.reservations.filter(
+    resId => !resId.equals(reservation.id),
+  );
+  if (training.reservations.length < 2) {
+    trainer.trainings = removeTraining(trainer.trainings, training.id);
+  }
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
@@ -135,10 +164,10 @@ const handleReturn = async (abonement, trainingId, userId) => {
 };
 export const cancelNotHeldTrainings = async abonementId => {
   const abonement = await Abonement.findById(abonementId).populate({
-    path: 'visitedTrainings',
+    path: 'reservations',
     populate: {
-      path: 'visitors',
-      select: 'firstName lastName',
+      path: 'training',
+      // select: 'firstName lastName',
     },
   });
   if (!abonement) {
@@ -146,15 +175,14 @@ export const cancelNotHeldTrainings = async abonementId => {
   }
   const updatedTrainings = [];
   try {
-    for (const training of abonement.visitedTrainings) {
+    for (const reservation of abonement.reservations) {
       const canProceed = canTrainingProceed(
-        training.date,
-        training.visitors.length,
+        reservation.training.date,
+        reservation.training.reservations.length,
       );
-
       if (!canProceed) {
-        await handleReturn(abonement, training._id, abonement.user);
-        updatedTrainings.push(training._id);
+        await handleReturn(reservation, abonement);
+        updatedTrainings.push(reservation.training.id);
       }
     }
   } catch (error) {
@@ -169,28 +197,18 @@ export const cancelNotHeldTrainings = async abonementId => {
         select: 'firstName lastName',
       },
       {
-        path: 'visitors',
-        select: 'firstName lastName',
+        path: 'reservations',
       },
     ]);
-
     return { abonement, trainings };
   }
   return null;
 };
 // Helper functions
 const isTrainingReserved = (abonement, training) => {
-  // return abonement.visitedTrainings.some(
-  //   visitedTraining =>
-  //     visitedTraining._id.toString() === training._id.toString(),
-  // );
-
-  return training.visitors.some(
-    visitor => visitor.id.toString() === abonement.user.toString(),
+  return training.reservations.some(
+    reservation => reservation.user.toString() === abonement.user.toString(),
   );
-};
-const isAbonementActive = abonement => {
-  return abonement.status === 'inactive' || abonement.status === 'active';
 };
 const activateAbonement = abonement => {
   const currentDate = new Date();
@@ -201,16 +219,8 @@ const activateAbonement = abonement => {
   abonement.status = 'active';
 };
 const removeTraining = (trainings, trainingId) => {
-  return trainings.filter(visitedTraining => {
-    const visitedTrainingId = visitedTraining._id
-      ? visitedTraining._id.toString()
-      : visitedTraining.toString();
-    return visitedTrainingId !== trainingId.toString();
-  });
-};
-const removeVisitor = (visitors, userId) => {
-  return visitors.filter(visitor => {
-    const visitorId = visitor._id ? visitor._id.toString() : visitor.toString();
-    return visitorId !== userId.toString();
+  return trainings.filter(t => {
+    const tId = t._id ? t._id.toString() : t.toString();
+    return tId !== trainingId.toString();
   });
 };

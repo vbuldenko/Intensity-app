@@ -34,7 +34,7 @@ export function validatePassword(password) {
   if (!password) {
     return 'Password is required';
   }
-  if (password.length < 6) {
+  if (password.length < 4) {
     return 'Should be at least 6 characters';
   }
 }
@@ -93,6 +93,11 @@ export const getUserFromRequest = req => {
   return user;
 };
 export const checkAdminRole = user => {
+  if (user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+};
+export const isAdmin = user => {
   if (user.role !== 'admin') {
     throw ApiError.Unauthorized();
   }

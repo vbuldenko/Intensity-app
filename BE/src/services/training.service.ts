@@ -16,7 +16,7 @@ export const getAll = async (): Promise<ITraining[]> => {
 };
 
 export const getById = async (id: string): Promise<ITraining | null> => {
-  return Training.findById(id).populate('instructor').populate('visitors');
+  return Training.findById(id).populate('instructor').populate('reservations');
 };
 
 export const create = async (body: ITraining) => {

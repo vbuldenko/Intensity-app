@@ -1,6 +1,6 @@
 import { ApiError } from '../exceptions/api.error';
 import Abonement from '../db/models/abonement';
-import User from '../db/models/user';
+import User, { IUser } from '../db/models/user';
 
 interface Payload {
   updateType: string;
@@ -39,7 +39,7 @@ export const getById = async (id: string) => {
 export const create = async (payload: any, user: any) => {
   const { role } = user;
 
-  const client =
+  const client: IUser | null =
     role === 'admin'
       ? await User.findById(payload.clientId)
       : await User.findById(user.id);

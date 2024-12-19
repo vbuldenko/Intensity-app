@@ -35,16 +35,16 @@ const getById = async id => {
     .populate({
       path: 'abonements',
       populate: {
-        path: 'visitedTrainings',
+        path: 'reservations',
         populate: {
-          path: 'visitors',
+          path: 'training',
         },
       },
     })
     .populate({
       path: 'trainings',
       populate: {
-        path: 'visitors',
+        path: 'reservations',
       },
     });
 };

@@ -6,29 +6,17 @@ export const getAll = async () => {
       path: 'instructor',
       select: 'firstName lastName',
     })
-    .populate('visitors');
+    .populate('reservations');
 };
 export const getById = async id => {
-  return Training.findById(id).populate('instructor').populate('visitors');
+  return Training.findById(id).populate('instructor').populate('reservations');
 };
 export const create = async body => {
   const newTraining = new Training(body);
   await newTraining.save();
   return newTraining;
 };
-// export const update = async (
-//   trainingId: string,
-//   userId: string,
-// ) => {
-//   const training = await Training.findById(trainingId);
-//   const user = await User.findById(userId);
-//   if (!user || !training) {
-//     throw ApiError.NotFound({
-//       error: 'User or Training not found.',
-//     });
-//   }
-//   return training;
-// };
+
 export const remove = async trainingId => {
   const training = await Training.findById(trainingId);
   if (!training) {

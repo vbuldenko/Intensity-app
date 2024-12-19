@@ -121,7 +121,6 @@ const handleReservation = async (
     training: training._id,
     user: abonement.user,
     abonement: abonement._id,
-    status: 'active',
   });
 
   const newReservation = await reservation.save();

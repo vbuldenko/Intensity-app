@@ -46,7 +46,7 @@ export function validatePassword(password: string): string | undefined {
     return 'Password is required';
   }
 
-  if (password.length < 6) {
+  if (password.length < 4) {
     return 'Should be at least 6 characters';
   }
 }

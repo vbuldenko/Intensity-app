@@ -9,7 +9,7 @@ export interface ITraining extends Document {
   time: string;
   createdAt: Date;
   updatedAt: Date;
-  visitors: any[];
+  reservations: any[];
 }
 
 const TrainingSchema: Schema = new Schema(

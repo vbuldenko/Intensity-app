@@ -33,10 +33,10 @@ const AbonementSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    visitedTrainings: [
+    reservations: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Training',
+        ref: 'Reservation',
       },
     ],
   },
