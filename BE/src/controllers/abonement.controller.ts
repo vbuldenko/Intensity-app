@@ -5,21 +5,13 @@ import { getUserFromRequest } from '../utils';
 
 export async function getAll(req: Request, res: Response): Promise<void> {
   const user = getUserFromRequest(req);
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
+  if (user.role === 'admin') {
+    const abonements = await abonementService.getAll();
+    res.send(abonements);
+  } else {
+    const abonements = await abonementService.getAllByUserId(user.id);
+    res.send(abonements);
   }
-
-  const abonements = await abonementService.getAll();
-  res.send(abonements);
-}
-
-export async function getAllByUserId(
-  req: Request,
-  res: Response,
-): Promise<void> {
-  const user = getUserFromRequest(req);
-  const abonements = await abonementService.getAllByUserId(user.id);
-  res.send(abonements);
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {

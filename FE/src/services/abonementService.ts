@@ -8,9 +8,6 @@ interface Abonement extends OriginalAbonement {
 function getAll(): Promise<Abonement[]> {
   return axiosClient.get("/abonements");
 }
-function getAllByUser(): Promise<Abonement[]> {
-  return axiosClient.get("/abonements/user");
-}
 
 function add(newAbonement: Partial<Abonement>): Promise<OriginalAbonement> {
   return axiosClient.post(`/abonements`, newAbonement);
@@ -18,6 +15,5 @@ function add(newAbonement: Partial<Abonement>): Promise<OriginalAbonement> {
 
 export const abonementService = {
   getAll,
-  getAllByUser,
   add,
 };

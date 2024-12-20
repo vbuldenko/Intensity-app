@@ -6,16 +6,11 @@ import { Abonement } from "../../../types/Abonement";
 
 export const fetchAbonements = createAsyncThunk<
   Abonement[], // Return type of the successful request
-  "admin" | void, // Argument type
+  void, // Argument type
   { rejectValue: ErrorResponse } // Type for rejected value
->("abonements/fetchAbonements", async (role, { rejectWithValue }) => {
+>("abonements/fetchAbonements", async (_, { rejectWithValue }) => {
   try {
-    const abonements =
-      role === "admin"
-        ? await abonementService.getAll()
-        : await abonementService.getAllByUser();
-
-    return abonements;
+    return await abonementService.getAll();
   } catch (error: any) {
     const message = getErrorMessage(error) || "Unexpected error occurred";
     return rejectWithValue({ message });

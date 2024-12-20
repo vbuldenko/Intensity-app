@@ -29,7 +29,7 @@ export const login = createAsyncThunk<
   try {
     const { accessToken } = await authService.login(credentials);
     accessTokenService.save(accessToken);
-    dispatch(fetchUserData());
+    // dispatch(fetchUserData());
   } catch (error: any) {
     const message = getErrorMessage(error) || "Unexpected error occurred";
 

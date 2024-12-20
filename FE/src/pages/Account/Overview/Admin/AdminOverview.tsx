@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./AdminOverview.scss";
 import { studioStats } from "../../../../assets/mockData";
 // import classNames from "classnames";
-import { abonementService } from "../../../../services/abonementService";
-import { Abonement } from "../../../../types/Abonement";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectAbonements } from "../../../../app/features/abonements/abonementSlice";
 // import { User } from "../../../../types/User";
 
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [abonements, setAbonements] = useState<Abonement[]>([]);
+  const abonements = useAppSelector(selectAbonements);
   const data = studioStats;
   const [expenses, setExpenses] = useState(data.expenses);
-
-  useEffect(() => {
-    abonementService.getAll().then(setAbonements);
-  }, []);
 
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
