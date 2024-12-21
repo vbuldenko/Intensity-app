@@ -5,15 +5,12 @@ export async function getAll(req, res) {
   const user = getUserFromRequest(req);
   if (user.role !== 'admin') {
     throw ApiError.Unauthorized();
+  } else {
+    const abonements = await abonementService.getAllByUserId(user.id);
+    res.send(abonements);
   }
-  const abonements = await abonementService.getAll();
-  res.send(abonements);
 }
-export async function getAllByUserId(req, res) {
-  const user = getUserFromRequest(req);
-  const abonements = await abonementService.getAllByUserId(user.id);
-  res.send(abonements);
-}
+
 export async function getById(req, res) {
   const abonement = await abonementService.getById(req.params.id);
   if (abonement) {
