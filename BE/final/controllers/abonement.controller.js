@@ -3,8 +3,9 @@ import * as abonementService from '../services/abonement.service.js';
 import { getUserFromRequest } from '../utils/index.js';
 export async function getAll(req, res) {
   const user = getUserFromRequest(req);
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
+  if (user.role === 'admin') {
+    const abonements = await abonementService.getAll();
+    res.send(abonements);
   } else {
     const abonements = await abonementService.getAllByUserId(user.id);
     res.send(abonements);
