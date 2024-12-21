@@ -17,7 +17,7 @@ interface TrainerOverviewProps {
 const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
   const { t } = useTranslation();
   const currentDate = new Date();
-  const trainerTrainings = filterByVisitors(user.trainings, 2);
+  const trainerTrainings = filterByVisitors(user.trainings);
 
   const currentMonthTrainings = filterTrainingsByDate(
     trainerTrainings,

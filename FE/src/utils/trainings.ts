@@ -5,8 +5,8 @@ export function getSalaryPerTraining(visitors: number): number {
 }
 
 export function getCurrentWage(trainings: Training[]): number {
-  return trainings.reduce((totalSalary, { visitors }) => {
-    return totalSalary + getSalaryPerTraining(visitors.length);
+  return trainings.reduce((totalSalary, { reservations }) => {
+    return totalSalary + getSalaryPerTraining(reservations.length);
   }, 0);
 }
 
@@ -19,7 +19,7 @@ export const filterByInstructor = (
 
 export const filterByVisitors = (
   trainings: Training[],
-  minVisitorsAmount: number
+  minVisitorsAmount: number = 2
 ) => {
   return trainings.filter(
     (training) => training.reservations.length >= minVisitorsAmount

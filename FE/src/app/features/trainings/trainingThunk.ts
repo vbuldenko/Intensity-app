@@ -4,7 +4,6 @@ import { ErrorResponse } from "../../../types/Error";
 import { Training } from "../../../types/Training";
 import { getErrorMessage } from "../../../utils/utils";
 import { Abonement } from "../../../types/Abonement";
-import { fetchUserData } from "../user/userThunk";
 
 export const fetchTrainings = createAsyncThunk<
   Training[], // Return type of the successful request
@@ -12,8 +11,7 @@ export const fetchTrainings = createAsyncThunk<
   { rejectValue: ErrorResponse } // Type for rejected value
 >("trainings/fetchTrainings", async (_, { rejectWithValue }) => {
   try {
-    const trainings = await trainingService.getAll();
-    return trainings;
+    return await trainingService.getAll();
   } catch (error: any) {
     const message = getErrorMessage(error) || "Unexpected error occurred";
     return rejectWithValue({ message });
@@ -21,7 +19,7 @@ export const fetchTrainings = createAsyncThunk<
 });
 
 export const reserveTraining = createAsyncThunk<
-  { updatedAbonement: Abonement; updatedTraining: Training }, // Return type of successful request
+  { updatedAbonement: Abonement; updatedTraining: Training },
   {
     trainingId: number;
     abonementId: number;
@@ -30,10 +28,7 @@ export const reserveTraining = createAsyncThunk<
   { rejectValue: ErrorResponse } // Rejected value type
 >(
   "trainings/reserveTraining", // Action type
-  async (
-    { trainingId, abonementId, updateType },
-    { dispatch, rejectWithValue }
-  ) => {
+  async ({ trainingId, abonementId, updateType }, { rejectWithValue }) => {
     try {
       // Make sure you're passing the correct parameters to the service
       const updatedData = await trainingService.reserveTraining(
@@ -41,7 +36,6 @@ export const reserveTraining = createAsyncThunk<
         abonementId,
         updateType
       );
-      dispatch(fetchUserData());
 
       return updatedData;
     } catch (error: any) {
@@ -56,21 +50,11 @@ export const checkTrainingReturn = createAsyncThunk<
   { abonement: Abonement; trainings: Training[] } | null,
   number, // Argument type (abonementId)
   { rejectValue: ErrorResponse }
->(
-  "trainings/checkReturn",
-  async (abonementId, { dispatch, rejectWithValue }) => {
-    try {
-      const updatedData =
-        await trainingService.checkAndCancelNotHeld(abonementId);
-
-      if (updatedData) {
-        dispatch(fetchUserData());
-      }
-
-      return updatedData;
-    } catch (error: any) {
-      const message = getErrorMessage(error) || "Unexpected error occurred";
-      return rejectWithValue({ message });
-    }
+>("trainings/checkReturn", async (abonementId, { rejectWithValue }) => {
+  try {
+    return trainingService.checkAndCancelNotHeld(abonementId);
+  } catch (error: any) {
+    const message = getErrorMessage(error) || "Unexpected error occurred";
+    return rejectWithValue({ message });
   }
-);
+});

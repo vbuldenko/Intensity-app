@@ -4,18 +4,16 @@ import { filterAbonements, ViewOption } from "../../../../utils/abonement";
 import { sortByParam } from "../../../../utils/utils";
 import Abonement from "../../../../components/Abonement";
 import "./ClientOverview.scss";
-import { User } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
+import { Abonement as AType } from "../../../../types/Abonement";
 
 interface ClientOverviewProps {
-  user: User;
+  abonements: AType[];
 }
 
-const ClientOverview: React.FC<ClientOverviewProps> = ({ user }) => {
+const ClientOverview: React.FC<ClientOverviewProps> = ({ abonements }) => {
   const { t } = useTranslation();
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
-
-  const abonements = user?.abonements || [];
 
   const filteredAbonements = useMemo(
     () => filterAbonements(abonements, abonementView),

@@ -41,7 +41,7 @@ export default function User() {
               btnName={t("adminDashboard.addAbonement")}
               data={<Purchases clientId={user.id} />}
             />
-            <ClientOverview user={user} />
+            <ClientOverview abonements={user.abonements} />
           </div>
         ) : (
           <TrainerOverview user={user} />
