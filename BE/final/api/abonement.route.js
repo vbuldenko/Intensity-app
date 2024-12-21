@@ -4,7 +4,6 @@ import { catchError } from '../utils/catchError.js';
 import { Path } from '../configs/RoutePath.js';
 const router = Router();
 router.get(Path.abonements, catchError(abonementController.getAll));
-router.get(Path.userAbonements, catchError(abonementController.getAllByUserId));
 router.get(Path.abonement, catchError(abonementController.getById));
 router.post(Path.abonements, catchError(abonementController.create));
 // router.patch(Path.abonement, catchError(abonementController.update));

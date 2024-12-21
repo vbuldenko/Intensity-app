@@ -57,6 +57,9 @@ export const updateReservation = async (
     const [updatedAbonement, updatedTraining] = await Promise.all([
       Abonement.findById(abonementId).populate({
         path: 'reservations',
+        populate: {
+          path: 'training',
+        },
       }),
       Training.findById(trainingId).populate([
         {
