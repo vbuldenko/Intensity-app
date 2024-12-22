@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectAuth } from "../../app/features/auth/authSlice";
 import { login } from "../../app/features/auth/authThunk";
@@ -16,24 +16,21 @@ const Login = () => {
   const { isAuthenticated, error } = useAppSelector(selectAuth);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const path = location.state?.from || "/account";
+  // const location = useLocation();
+  // const path = location.state?.from || "/account";
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
     await dispatch(login({ identifier, password }));
     setIsSubmitting(false);
-    // setIdentifier("");
-    // setPassword("");
-    // navigate(path, { replace: true });
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(path, { replace: true });
+      navigate("/account", { replace: true });
     }
-  }, [isAuthenticated, navigate, path]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="auth__form-wrapper card-element">
