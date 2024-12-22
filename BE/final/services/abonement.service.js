@@ -29,7 +29,9 @@ export const getById = async id => {
 export const create = async (payload, user) => {
   const { role } = user;
   const client =
-    role === 'admin' ? await User.findById(payload.clientId) : user;
+    role === 'admin'
+      ? await User.findById(payload.clientId)
+      : await User.findById(user.id);
   if (!client) {
     throw ApiError.NotFound({ user: 'User not found' });
   }
@@ -53,6 +55,9 @@ export const create = async (payload, user) => {
     price: payload.price,
     left: payload.amount,
   });
+  if (client.role === 'admin') {
+    newAbonement.paymentMethod = payload.paymentMethod;
+  }
   const savedAbonement = await newAbonement.save();
   client.abonements = client.abonements.concat(savedAbonement._id);
   await client.save();

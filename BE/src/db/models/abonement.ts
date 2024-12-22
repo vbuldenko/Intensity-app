@@ -13,6 +13,7 @@ export interface IAbonement extends Document {
   createdAt: Date;
   updatedAt: Date;
   reservations: any[];
+  paymentMethod: 'card' | 'cash';
 }
 
 const AbonementSchema: Schema = new Schema(
@@ -55,6 +56,11 @@ const AbonementSchema: Schema = new Schema(
         ref: 'Reservation',
       },
     ],
+    paymentMethod: {
+      type: String,
+      enum: ['card', 'cash'],
+      default: 'card',
+    },
   },
   {
     timestamps: true,

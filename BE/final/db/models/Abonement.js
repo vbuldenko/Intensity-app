@@ -39,6 +39,11 @@ const AbonementSchema = new Schema(
         ref: 'Reservation',
       },
     ],
+    paymentMethod: {
+      type: String,
+      enum: ['card', 'cash'],
+      default: 'card',
+    },
   },
   {
     timestamps: true,

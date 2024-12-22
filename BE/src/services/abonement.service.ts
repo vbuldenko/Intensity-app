@@ -72,6 +72,10 @@ export const create = async (payload: any, user: any) => {
     left: payload.amount,
   });
 
+  if (client.role === 'admin') {
+    newAbonement.paymentMethod = payload.paymentMethod;
+  }
+
   const savedAbonement = await newAbonement.save();
 
   client.abonements = client.abonements.concat(savedAbonement._id);
