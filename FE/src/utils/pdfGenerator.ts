@@ -1,6 +1,19 @@
 import jsPDF from "jspdf";
 
-export const generatePDF = (abonements) => {
+interface User {
+  firstName: string;
+  lastName: string;
+}
+
+interface Abonement {
+  user: User;
+  price: number;
+  paymentMethod: "cash" | "card";
+  createdAt: string;
+  amount: number;
+}
+
+export const generatePDF = (abonements: Abonement[]): void => {
   const doc = new jsPDF();
 
   // Calculate total income
@@ -24,14 +37,14 @@ export const generatePDF = (abonements) => {
 
   // Draw rounded border blocks for Cash Income and Card Income
   doc.setDrawColor(0, 0, 0); // Black color for border
-  doc.roundedRect(-10, 13, 80, 13, 3, 3); // x, y, width, height, rx, ry
-  doc.roundedRect(140, 13, 80, 13, 3, 3); // x, y, width, height, rx, ry
+  doc.roundedRect(10, 13, 80, 13, 3, 3); // x, y, width, height, rx, ry
+  doc.roundedRect(120, 13, 80, 13, 3, 3); // x, y, width, height, rx, ry
 
   // Add cash and card income on a separate line
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0); // Black color
-  doc.text(`Cash Income: ${cashIncome} UAH`, 10, 20);
-  doc.text(`Card Income: ${cardIncome} UAH`, 153, 20);
+  doc.text(`Cash Income: ${cashIncome} UAH`, 15, 20);
+  doc.text(`Card Income: ${cardIncome} UAH`, 125, 20);
 
   // Add a gap after the title
   let yOffset = 40; // Start the yOffset after the title with a gap
@@ -82,7 +95,7 @@ export const generatePDF = (abonements) => {
 
     // Draw a gray, dotted line at the bottom to separate abonements
     doc.line(10, currentYOffset + 20, 200, currentYOffset + 20);
-    doc.setLineDashPattern([], 0); // Reset line dash to avoid uintended dotted lines if there is content below
+    doc.setLineDashPattern([], 0); // Reset line dash to avoid unintended dotted lines if there is content below
   });
 
   doc.save("abonement-details.pdf");
