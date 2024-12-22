@@ -5,6 +5,7 @@ import { studioStats } from "../../../../assets/mockData";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectAbonements } from "../../../../app/features/abonements/abonementSlice";
+import { generatePDF } from "../../../../utils/pdfGenerator";
 // import { User } from "../../../../types/User";
 
 const AdminDashboard: React.FC = () => {
@@ -67,6 +68,13 @@ const AdminDashboard: React.FC = () => {
         expenses={expenses}
         onExpenseChange={handleExpenseChange}
       />
+
+      <button
+        onClick={() => generatePDF(abonements)}
+        className="text-white bg-green-500 w-max py-1 px-4 my-1 rounded-full"
+      >
+        Generate PDF
+      </button>
       {/* <TrainersSection trainers={data.topTrainersByAttendance} /> */}
     </div>
   );
