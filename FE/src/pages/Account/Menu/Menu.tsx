@@ -6,6 +6,12 @@ import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../app/features/user/userSlice";
 import { useTheme } from "../../../contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
+import {
+  HomeIcon,
+  CalendarDaysIcon,
+  CogIcon,
+  UsersIcon,
+} from "@heroicons/react/24/solid";
 
 interface MenuProps {
   className: string;
@@ -49,7 +55,21 @@ const Menu = ({ className }: MenuProps) => {
         getLinks(user.role).map(({ to, label }) => (
           //"end" used to handle isActive prop for index route
           <NavLink key={to} to={to} end={to === "."} className={getLinkClass}>
-            {label}
+            <div className="flex items-center gap-2">
+              {label === t("menu.overview") && (
+                <HomeIcon className="menu__icon" />
+              )}
+              {label === t("menu.schedule") && (
+                <CalendarDaysIcon className="menu__icon" />
+              )}
+              {label === t("menu.settings") && (
+                <CogIcon className="menu__icon" />
+              )}
+              {label === t("menu.users") && (
+                <UsersIcon className="menu__icon" />
+              )}
+              <span className="menu__link-label">{label}</span>
+            </div>
           </NavLink>
         ))}
     </nav>

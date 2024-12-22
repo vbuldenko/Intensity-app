@@ -23,6 +23,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     "group" | "personal" | "split" | "kids"
   >("group");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "cash">("card");
 
   const selectedAbonementData: { amount: number; price: number }[] =
     membership[selectedType] || [];
@@ -33,9 +34,10 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     try {
       if (user && user.role === "admin" && clientId) {
         await abonementService.add({
-          ...selectedAbonement,
-          type: selectedType,
           clientId,
+          paymentMethod,
+          type: selectedType,
+          ...selectedAbonement,
         });
         setNotification({
           message: `Abonement for ${selectedAbonement.amount} trainings was added`,
@@ -73,6 +75,9 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     setSelectedType(type);
     setSelectedAmountIndex(0); // Reset selected amount index when type changes
   };
+  const handlePaymentMethodChange = (method: typeof paymentMethod) => {
+    setPaymentMethod(method);
+  };
 
   if (!user) {
     return null;
@@ -83,6 +88,10 @@ export default function Purchases({ clientId }: { clientId?: number }) {
     { value: "personal", label: t("prices.categories.individual") },
     { value: "split", label: t("prices.categories.split") },
     // { value: "kids", label: t("prices.categories.children") },
+  ];
+  const paymentMethodButtonNames = [
+    { value: "card", label: t("prices.card") },
+    { value: "cash", label: t("prices.cash") },
   ];
 
   return (
@@ -98,6 +107,14 @@ export default function Purchases({ clientId }: { clientId?: number }) {
         handleSelection={handleTypeChange}
         buttonNames={buttonNames}
       />
+      {user && user.role === "admin" && (
+        <Selector
+          selection={paymentMethod}
+          handleSelection={handlePaymentMethodChange}
+          buttonNames={paymentMethodButtonNames}
+        />
+      )}
+
       <div className="purchases__container card-element">
         <div className="purchases__info">
           {selectedAbonement && (

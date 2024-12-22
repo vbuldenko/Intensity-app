@@ -3,7 +3,6 @@
   backdrop-filter: blur(50px);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 0.5rem;
   width: 100%;
   box-shadow: $shadow3;
@@ -17,27 +16,56 @@
   }
 
   @include on-mobile {
+    padding: 0.5rem;
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    box-shadow: none;
     overflow-x: scroll;
     -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     scrollbar-width: none; /* Hide scrollbar for Firefox */
+    justify-content: space-around;
+
+    & :first-child {
+      order: 1;
+    }
+    & :last-child {
+      order: 1;
+    }
   }
 
   @include on-tablet {
     box-shadow: none;
     flex-direction: column;
-    padding: 2rem 1rem;
+    align-items: flex-start;
+    padding: 1.2rem 1rem;
     gap: 2rem;
     border-radius: 1rem 0 0 1rem;
   }
 
   &__link {
-    min-width: 140px;
+    display: flex;
+    width: 100%;
     text-align: center;
     padding-block: 0.25rem;
     padding-inline: 1rem;
 
+    @include on-mobile {
+      width: min-content;
+      padding: 0.35rem 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+
     &:hover {
       color: $color-green;
+    }
+
+    &-label {
+      display: none;
+
+      @include on-tablet {
+        display: block;
+      }
     }
 
     // &:active {
@@ -49,16 +77,21 @@
     // }
   }
 
+  &__icon {
+    min-width: 1.5rem;
+    height: 1.5rem;
+  }
+
   & .selected {
-    background-color: $color-background;
+    // background-color: $color-background;
     color: $color-green;
     border: 1px solid $color-middle-green;
     border-radius: $big-br;
-    box-shadow:
-      5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-      /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
-        4px 0px rgba(0, 0, 0, 0.1) inset;
-    transition: box-shadow 0.3s ease;
+    // box-shadow:
+    //   5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+    //   /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+    //     4px 0px rgba(0, 0, 0, 0.1) inset;
+    // transition: box-shadow 0.3s ease;
 
     // &:hover {
     //   background-color: white;

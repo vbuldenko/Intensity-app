@@ -1,6 +1,6 @@
 export interface Abonement {
   id: number;
-  user: number;
+  user: any;
   status: "active" | "ended" | "expired" | "inactive";
   type: "group" | "personal" | "split" | "kids";
   amount: number;
@@ -12,4 +12,5 @@ export interface Abonement {
   activatedAt: string;
   expiratedAt: string;
   reservations: any[];
+  paymentMethod: "cash" | "card";
 }

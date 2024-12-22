@@ -166,7 +166,10 @@
       "split": "Split",
       "children": "Children"
     },
-    "choose": "Choose the type and a number of trainings"
+    "choose": "Choose the type and a number of trainings",
+    "method": "Choose the payment method",
+    "card": "Card",
+    "cash": "Cash"
   },
   "contacts": {
     "header": "Our Contacts",
