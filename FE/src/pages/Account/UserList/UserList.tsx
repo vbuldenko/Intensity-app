@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchInput from "../../../components/Elements/Search/Search";
 import "./UserList.scss";
 import { userService } from "../../../services/userService";
@@ -10,13 +10,30 @@ import { useTranslation } from "react-i18next";
 
 export default function UserList() {
   const { t } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const initialUserType = queryParams.get("userType") || "client";
+  const initialSearchQuery = queryParams.get("searchQuery") || "";
+
   const [data, setData] = useState<User[]>([]);
-  const [userType, setUserType] = useState<"client" | "trainer">("client");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [userType, setUserType] = useState<"client" | "trainer">(
+    initialUserType as "client" | "trainer"
+  );
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery);
 
   useEffect(() => {
     userService.getAll().then(setData);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("userType", userType);
+    if (searchQuery) {
+      params.set("searchQuery", searchQuery);
+    }
+    navigate({ search: params.toString() }, { replace: true });
+  }, [userType, searchQuery]);
 
   const users = useMemo(
     () => data.filter((user) => user.role === userType),
