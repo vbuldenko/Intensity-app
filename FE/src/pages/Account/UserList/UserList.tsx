@@ -7,6 +7,7 @@ import Selector from "../../../components/Elements/Selector";
 import classNames from "classnames";
 import { User } from "../../../types/User";
 import { useTranslation } from "react-i18next";
+import Loader from "../../../components/Elements/Loader"; // Import the Loader component
 
 export default function UserList() {
   const { t } = useTranslation();
@@ -17,13 +18,17 @@ export default function UserList() {
   const initialSearchQuery = queryParams.get("searchQuery") || "";
 
   const [data, setData] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Add loading state
   const [userType, setUserType] = useState<"client" | "trainer">(
     initialUserType as "client" | "trainer"
   );
   const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery);
 
   useEffect(() => {
-    userService.getAll().then(setData);
+    userService.getAll().then((users) => {
+      setData(users);
+      setLoading(false); // Set loading to false after data is fetched
+    });
   }, []);
 
   useEffect(() => {
@@ -85,65 +90,69 @@ export default function UserList() {
           <SearchInput value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>
-      <div className="users__list">
-        {filteredUsers.map((user) => {
-          const {
-            id,
-            firstName,
-            lastName,
-            phone,
-            email,
-            abonements,
-            trainings,
-          } = user;
-          const status = getStatus(
-            userType,
-            abonements?.length,
-            trainings?.length
-          );
+      {loading ? ( // Conditionally render the loader spinner
+        <Loader />
+      ) : (
+        <div className="users__list">
+          {filteredUsers.map((user) => {
+            const {
+              id,
+              firstName,
+              lastName,
+              phone,
+              email,
+              abonements,
+              trainings,
+            } = user;
+            const status = getStatus(
+              userType,
+              abonements?.length,
+              trainings?.length
+            );
 
-          return (
-            <Link key={id} to={`${id}`} className="users__item card-element">
-              <div className="users__title">
-                <p className="users__name">
-                  {firstName} {lastName}
-                </p>
-
-                <div
-                  className={classNames("status", {
-                    status: status === t("userList.active"),
-                    "status--gray": status === t("userList.inactive"),
-                  })}
-                >
-                  {status}
-                </div>
-              </div>
-              <div className="users__content">
-                <div className="users__data items-center">
-                  <p>ID</p>
-                  <p className="bg-teal-100 text-teal-600 px-2 py-1 rounded-md">
-                    {id}
+            return (
+              <Link key={id} to={`${id}`} className="users__item card-element">
+                <div className="users__title">
+                  <p className="users__name">
+                    {firstName} {lastName}
                   </p>
-                </div>
-                <div className="users__data">
-                  <p>{t("userList.phone")}</p>
-                  <p className="px-2 py-1">{phone}</p>
-                </div>
-                <div className="users__data">
-                  <p>{t("userList.email")}</p>
-                  <p className="px-2 py-1">{email}</p>
-                </div>
-                {userType === "client" && (
-                  <div className="users__data">
-                    <p>{t("userList.abonement")}</p>
-                    <p className="px-2 py-1">{abonements?.length}</p>
+
+                  <div
+                    className={classNames("status", {
+                      status: status === t("userList.active"),
+                      "status--gray": status === t("userList.inactive"),
+                    })}
+                  >
+                    {status}
                   </div>
-                )}
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+                </div>
+                <div className="users__content">
+                  <div className="users__data items-center">
+                    <p>ID</p>
+                    <p className="bg-teal-100 text-teal-600 px-2 py-1 rounded-md">
+                      {id}
+                    </p>
+                  </div>
+                  <div className="users__data">
+                    <p>{t("userList.phone")}</p>
+                    <p className="px-2 py-1">{phone}</p>
+                  </div>
+                  <div className="users__data">
+                    <p>{t("userList.email")}</p>
+                    <p className="px-2 py-1">{email}</p>
+                  </div>
+                  {userType === "client" && (
+                    <div className="users__data">
+                      <p>{t("userList.abonement")}</p>
+                      <p className="px-2 py-1">{abonements?.length}</p>
+                    </div>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

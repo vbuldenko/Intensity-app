@@ -8,20 +8,29 @@ import { userService } from "../../../../services/userService";
 import TrainerOverview from "../../Overview/Trainer/TrainerOverview";
 import { User as UserType } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
+import Loader from "../../../../components/Elements/Loader";
 
 export default function User() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserType | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    userService.getOneById(id as string).then(setUser);
+    userService.getOneById(id as string).then((userData) => {
+      setUser(userData);
+      setLoading(false); // Set loading to false after data is fetched
+    });
   }, []);
 
   const handleBackClick = () => {
     navigate(-1);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     user && (
