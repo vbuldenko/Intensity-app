@@ -56,10 +56,6 @@ const WeekView: React.FC<Props> = ({
               !isEqual(day, selectedDay) && isToday(day) && "text-red-500",
               !isEqual(day, selectedDay) &&
                 !isToday(day) &&
-                isSameMonth(day, selectedDay) &&
-                "text-gray-900",
-              !isEqual(day, selectedDay) &&
-                !isToday(day) &&
                 !isSameMonth(day, selectedDay) &&
                 "text-gray-400",
               isEqual(day, selectedDay) && isToday(day) && "bg-red-500",

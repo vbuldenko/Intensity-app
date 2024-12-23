@@ -28,7 +28,7 @@ export default function Schedule() {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  const [scheduleView, setScheduleView] = useState<"month" | "week">("month");
+  const [scheduleView, setScheduleView] = useState<"month" | "week">("week");
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   const days = eachDayOfInterval({
@@ -47,14 +47,24 @@ export default function Schedule() {
     setScheduleView(value);
   }
 
-  function previousMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  function previousPeriod() {
+    if (scheduleView === "month") {
+      const firstDayPreviousMonth = add(firstDayCurrentMonth, { months: -1 });
+      setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
+    } else {
+      const previousWeek = add(selectedDay, { weeks: -1 });
+      setSelectedDay(previousWeek);
+    }
   }
 
-  function nextMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  function nextPeriod() {
+    if (scheduleView === "month") {
+      const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+      setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+    } else {
+      const nextWeek = add(selectedDay, { weeks: 1 });
+      setSelectedDay(nextWeek);
+    }
   }
 
   useEffect(() => {
@@ -68,8 +78,8 @@ export default function Schedule() {
       <div className="schedule__calendar calendar card-element">
         <CalendarNavbar
           firstDayCurrentMonth={firstDayCurrentMonth}
-          previousMonth={previousMonth}
-          nextMonth={nextMonth}
+          previousMonth={previousPeriod}
+          nextMonth={nextPeriod}
           view={scheduleView}
           handleViewChange={handleViewChange}
         />
@@ -83,6 +93,7 @@ export default function Schedule() {
           />
         ) : (
           <WeekView
+            // weekDays={weekDays}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
             trainings={trainings}
