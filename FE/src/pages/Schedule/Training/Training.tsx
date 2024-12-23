@@ -55,6 +55,12 @@ export default function Training({ training }: { training: TrainingType }) {
   };
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
+    console.log(
+      "| training hours | current hours |",
+      trainingTime.getHours(),
+      new Date().getHours()
+    );
+
     const updatedAccess = reservationAccess(
       new Date(),
       trainingTime,

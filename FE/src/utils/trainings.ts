@@ -52,7 +52,8 @@ export const filterTrainingsByDate = (
 export function calculateHoursDiff(trainingTime: Date): number {
   const currentTime = new Date();
   const diffInMilliseconds = trainingTime.getTime() - currentTime.getTime();
-  return diffInMilliseconds / (1000 * 60 * 60);
+  const diffInHours = diffInMilliseconds / (1000 * 60 * 60);
+  return diffInHours;
 }
 
 export const canTrainingProceed = (
