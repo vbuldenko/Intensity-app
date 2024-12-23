@@ -68,22 +68,36 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
           {t("trainerOverview.todayTrainings")}
         </h3>
         <div className="trainer-overview__trainings-list">
-          {currentDayTrainings.map((training) => (
-            <div key={training.id} className="training">
-              <p className="training__time">{training.time}</p>
-              <CheckCircleIcon className="training__check-icon" />
-              <div className="training__card">
-                <div>
-                  <p className="training__type">{training.type}</p>
+          {currentDayTrainings.length > 0 ? (
+            currentDayTrainings.map((training) => (
+              <div key={training.id} className="training">
+                <div className="flex gap-2 items-center">
+                  <p className="training__time">{training.time}</p>
+                  <CheckCircleIcon className="training__check-icon" />
                 </div>
-                <div>
-                  <p className="training__visitors">
-                    {t("history.visitors")}: {training.reservations.length}
-                  </p>
+                <div className="training__card">
+                  <div className="flex">
+                    <p className="training__type">{training.type}</p>
+                  </div>
+                  <div className="flex text-sm text-gray-500">
+                    <p>
+                      {t("history.visitors")}: {training.reservations.length}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="training__visitors">
+                  {training.reservations.length > 0
+                    ? training.reservations.map((el) => (
+                        <span key={el.id}>
+                          {`${el.user.firstName} ${el.user.lastName}`}
+                        </span>
+                      ))
+                    : null}
                 </div>
               </div>
-            </div>
-          )).length > 0 || (
+            ))
+          ) : (
             <p className="text-gray-500 text-center">
               {t("trainerOverview.noTrainings")}
             </p>

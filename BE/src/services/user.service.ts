@@ -60,6 +60,10 @@ const getById = async (id: string) => {
       path: 'trainings',
       populate: {
         path: 'reservations',
+        populate: {
+          path: 'user',
+          select: 'firstName lastName',
+        },
       },
     });
 };
