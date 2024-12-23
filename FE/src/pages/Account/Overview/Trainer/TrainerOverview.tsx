@@ -78,7 +78,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
                 </div>
                 <div>
                   <p className="training__visitors">
-                    {t("history.visitors")}: {training.visitors.length}
+                    {t("history.visitors")}: {training.reservations.length}
                   </p>
                 </div>
               </div>
