@@ -7,13 +7,15 @@ enum WeekDays {
   SAT = "SAT",
   SUN = "SUN",
 }
+import { useTranslation } from "react-i18next";
 import "./WeekDays.scss";
 
 export default function WeekDaysNames() {
+  const { t } = useTranslation();
   return (
     <div className="calendar__weekdays">
       {Object.values(WeekDays).map((day) => (
-        <div key={day}>{day}</div>
+        <div key={day}>{t(`weekdays.${day}`)}</div>
       ))}
     </div>
   );
