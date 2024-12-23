@@ -93,9 +93,14 @@ export default function Training({ training }: { training: TrainingType }) {
           abonementId: reservation ? reservation.abonement : abonement.id,
           updateType,
         })
-      );
+      ).unwrap();
     } catch (error) {
-      handleNotification(getErrorMessage(error), "error");
+      handleNotification(
+        getErrorMessage(error) === "Abonement has expired!"
+          ? t("training.abonement_expired")
+          : getErrorMessage(error),
+        "error"
+      );
     } finally {
       setIsSubmitting(false);
     }

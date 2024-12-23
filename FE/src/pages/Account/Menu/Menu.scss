@@ -24,13 +24,6 @@
     -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     scrollbar-width: none; /* Hide scrollbar for Firefox */
     justify-content: space-around;
-
-    & :first-child {
-      order: 1;
-    }
-    & :last-child {
-      order: 1;
-    }
   }
 
   @include on-tablet {

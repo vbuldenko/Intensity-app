@@ -183,6 +183,7 @@
     "reservation_period_passed": "The reservation period has passed!",
     "no_abonement": "No abonement, buy one to proceed!",
     "no_trainings_left": "No trainings left, buy a new abonement!",
+    "abonement_expired": "Abonement has expired! Buy a new one to proceed!",
     "cancel_forbidden_rule": "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
     "trainer": "Trainer",
     "left": "Places left:"
