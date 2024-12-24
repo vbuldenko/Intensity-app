@@ -1,4 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { toZonedTime, format } from 'date-fns-tz';
+
+const timeZone = 'Europe/Kiev';
 
 export interface ITraining extends Document {
   type: string;
@@ -66,6 +69,24 @@ const TrainingSchema: Schema = new Schema(
     },
   },
 );
+
+const convertToTimeZone = (date: Date, timeZone: string) => {
+  const zonedDate = toZonedTime(date, timeZone);
+  return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone });
+};
+
+// Middleware to convert date to the specified timezone after finding a document
+TrainingSchema.post('find', function (docs) {
+  docs.forEach((doc: any) => {
+    doc.date = convertToTimeZone(doc.date, timeZone);
+  });
+});
+
+TrainingSchema.post('findOne', function (doc) {
+  if (doc) {
+    doc.date = convertToTimeZone(doc.date, timeZone);
+  }
+});
 
 const Training = mongoose.model<ITraining>('Training', TrainingSchema);
 

@@ -1,37 +1,15 @@
-import { format, toZonedTime } from 'date-fns-tz';
 import Training from '../db/models/Training.js';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator.js';
-const timeZone = 'Europe/Kiev';
 
-const convertToTimeZone = (date, timeZone) => {
-  const zonedDate = toZonedTime(date, timeZone);
-  return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone });
-};
-
-// export const getAll = async () => {
-//   return await Training.find()
-//     .populate({
-//       path: 'instructor',
-//       select: 'firstName lastName',
-//     })
-//     .populate('reservations');
-// };
 export const getAll = async () => {
-  const trainings = await Training.find()
+  return await Training.find()
     .populate({
       path: 'instructor',
       select: 'firstName lastName',
     })
-    .populate({
-      path: 'reservations',
-      // select: 'firstName lastName',
-    });
-
-  return trainings.map(training => ({
-    ...training.toObject(),
-    date: convertToTimeZone(training.date, timeZone),
-  }));
+    .populate('reservations');
 };
+
 export const getById = async id => {
   return Training.findById(id).populate('instructor').populate('reservations');
 };
