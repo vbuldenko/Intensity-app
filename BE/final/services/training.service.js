@@ -1,3 +1,4 @@
+import { format, toZonedTime } from 'date-fns-tz';
 import Training from '../db/models/Training.js';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator.js';
 const timeZone = 'Europe/Kiev';
