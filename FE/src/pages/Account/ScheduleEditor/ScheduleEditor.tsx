@@ -104,7 +104,7 @@ const ScheduleEditor: React.FC = () => {
           <span className="px-2 w-max text-gray-500">Select a date</span>
           <input
             type="date"
-            className="flex-1 bg-gray-100 py-1 px-6 rounded-xl"
+            className="flex-1 bg-gray-100 text-teal-400 py-1 px-6 rounded-xl"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
           />
