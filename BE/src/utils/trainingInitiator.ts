@@ -2,6 +2,7 @@ import { schedule } from '../data/predefined_schedule';
 import Schedule, { ISchedule } from '../db/models/schedule';
 import Training from '../db/models/training';
 import { startOfWeek, addDays, set, endOfWeek } from 'date-fns';
+import { toZonedTime, format } from 'date-fns-tz';
 import scheduleService from '../services/schedule.service';
 import { ApiError } from '../exceptions/api.error';
 
@@ -77,11 +78,21 @@ export async function initializeTrainingsForWeek(
       let trainingDate = addDays(startDate, dayIndex);
       trainingDate.setHours(hours, 0, 0, 0);
 
+      // Convert the trainingDate to the specified time zone
+      const timeZone = 'Europe/Kiev';
+      const trainingDateZoned = toZonedTime(trainingDate, timeZone);
+      // Format the date to UTC
+      const trainingDateUtc = format(
+        trainingDateZoned,
+        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+        { timeZone: 'UTC' },
+      );
+
       return {
         type: session.type,
         instructor: session.instructor,
         capacity: session.maxCapacity,
-        date: trainingDate.toISOString(),
+        date: trainingDateUtc,
         day: session.day,
         time: session.time,
       };

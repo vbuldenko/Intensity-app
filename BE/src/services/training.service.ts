@@ -1,10 +1,30 @@
+import { format, toZonedTime } from 'date-fns-tz';
 import Training, { ITraining } from '../db/models/training';
 import User from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { initializeTrainingsForWeek } from '../utils/trainingInitiator';
 
+const timeZone = 'Europe/Kiev';
+
+const convertToTimeZone = (date: Date, timeZone: string) => {
+  const zonedDate = toZonedTime(date, timeZone);
+  return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone });
+};
+
+// export const getAll = async (): Promise<ITraining[]> => {
+//   return await Training.find()
+//     .populate({
+//       path: 'instructor',
+//       select: 'firstName lastName',
+//     })
+//     .populate({
+//       path: 'reservations',
+//       // select: 'firstName lastName',
+//     });
+// };
+
 export const getAll = async (): Promise<ITraining[]> => {
-  return await Training.find()
+  const trainings = await Training.find()
     .populate({
       path: 'instructor',
       select: 'firstName lastName',
@@ -13,6 +33,11 @@ export const getAll = async (): Promise<ITraining[]> => {
       path: 'reservations',
       // select: 'firstName lastName',
     });
+
+  return trainings.map(training => ({
+    ...training.toObject(),
+    date: convertToTimeZone(training.date, timeZone),
+  }));
 };
 
 export const getById = async (id: string): Promise<ITraining | null> => {
