@@ -2,12 +2,12 @@ import { schedule } from '../data/predefined_schedule.js';
 import Schedule from '../db/models/Schedule.js';
 import Training from '../db/models/Training.js';
 import { startOfWeek, addDays, endOfWeek } from 'date-fns';
-import { zonedTimeToUtc, format } from 'date-fns-tz';
+import { fromZonedTime, format } from 'date-fns-tz';
 import scheduleService from '../services/schedule.service.js';
 import { ApiError } from '../exceptions/api.error.js';
 const timeZone = 'Europe/Kiev';
 const convertToUtc = (date, timeZone) => {
-  const zonedDate = zonedTimeToUtc(date, timeZone);
+  const zonedDate = fromZonedTime(date, timeZone);
   return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone: 'UTC' });
 };
 export async function initializePredefinedSchedule() {
