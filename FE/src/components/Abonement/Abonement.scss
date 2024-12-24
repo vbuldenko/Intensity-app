@@ -55,7 +55,9 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1.25rem 1rem;
-    background-color: white;
+    // background-color: rgb(237, 255, 215);
+    background-color: rgb(243, 255, 228);
+    // background-color: rgb(255, 239, 194);
     border-radius: 0 0 $big-br $big-br;
   }
 
@@ -87,7 +89,7 @@
 
       width: 20px;
       height: 20px;
-      box-shadow: -10px 10px 0 white;
+      box-shadow: -10px 10px 0 rgb(243, 255, 228);
     }
   }
 }
