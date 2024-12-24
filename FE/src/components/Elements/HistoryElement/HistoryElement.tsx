@@ -20,18 +20,18 @@ export default function HistoryElement({ data }: HistoryItemProps) {
   const { t } = useTranslation();
   return (
     <div className="history-element card-element flex-1">
-      <p className="history-element__title">{data.type}</p>
+      <p className="history-element__title">{data?.type}</p>
       <div className="history-element__item">
         <p className="history-element__label">{t("history.date")}</p>
-        <p className="history-element__value">{data.date.slice(0, 10)}</p>
+        <p className="history-element__value">{data?.date.slice(0, 10)}</p>
       </div>
       <div className="history-element__item">
         <p className="history-element__label">{t("history.time")}</p>
-        <p className="history-element__value">{data.time}</p>
+        <p className="history-element__value">{data?.time}</p>
       </div>
       <div className="history-element__item">
         <p className="history-element__label">{t("history.visitors")}</p>
-        <p className="history-element__value">{data.reservations.length}</p>
+        <p className="history-element__value">{data?.reservations.length}</p>
       </div>
       {/* {!trainer && (
         <div className="history-element__item">
