@@ -47,8 +47,10 @@ export default function UserList() {
 
   const filteredUsers = useMemo(
     () =>
-      users.filter((client) =>
-        client.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+      users.filter((user) =>
+        `${user.firstName} ${user.lastName}`
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
       ),
     [users, searchQuery]
   );
@@ -76,7 +78,7 @@ export default function UserList() {
       <div className="users__header">
         <div className="users__info items-center justify-around flex-1">
           <div className="flex">
-            <p>{t("userList.total")}:</p> <p>{users.length}</p>
+            <p>{t("userList.total")}:</p> <p>{filteredUsers.length}</p>
           </div>
           <Selector
             selection={userType}

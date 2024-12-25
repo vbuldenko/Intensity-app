@@ -2,7 +2,7 @@
   display: flex;
   gap: 1rem;
   border-radius: 2rem;
-  background: $gray-color-4;
+  background: $color-element-dark;
   box-shadow:
     1px 1.5px 4px 0px rgba(0, 0, 0, 0.1) inset,
     1px 1.5px 4px 0px rgba(0, 0, 0, 0.08) inset,
@@ -19,6 +19,9 @@
     min-width: 200px;
     background: transparent;
     outline: none;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
 
     &::placeholder {
       color: white;

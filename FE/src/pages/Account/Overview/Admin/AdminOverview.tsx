@@ -70,7 +70,7 @@ const AdminDashboard: React.FC = () => {
       />
 
       <button
-        onClick={() => generatePDF(abonements)}
+        onClick={() => abonements && generatePDF(abonements)}
         className="text-white bg-green-500 w-max py-1 px-4 my-1 rounded-full"
       >
         Generate PDF

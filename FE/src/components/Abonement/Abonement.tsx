@@ -64,11 +64,19 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
             <b>{t("abonement.amount")}</b> {abonement.amount}
           </div>
           <div>
-            <div>
-              <b>{t("abonement.left")}</b>{" "}
-              <span className="abonement__left-trainings">
-                {abonement.left}
-              </span>
+            <div className="abonement__left">
+              <div className="flex items-center gap-4">
+                <b>{t("abonement.left")}</b>{" "}
+                <span className="abonement__left-trainings font-bold text-amber-600 text-6xl">
+                  {abonement.left}
+                </span>
+              </div>
+              <div>
+                <b>{t("abonement.to")}</b>{" "}
+                {abonement.expiratedAt
+                  ? abonement.expiratedAt.slice(0, 10)
+                  : null}
+              </div>
             </div>
             {userRole === "admin" && (
               <div className="abonement__freeze-container">
@@ -79,18 +87,18 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
           </div>
         </div>
         <div className="abonement__container">
+          {/* <div>
+            <b>{t("abonement.purchaseDate")}</b>{" "}
+            {abonement.createdAt.slice(0, 10)}
+          </div> */}
           <div>
             <b>{t("abonement.from")}</b>{" "}
             {abonement.activatedAt ? abonement.activatedAt.slice(0, 10) : null}
           </div>
-          <div>
+          {/* <div>
             <b>{t("abonement.to")}</b>{" "}
             {abonement.expiratedAt ? abonement.expiratedAt.slice(0, 10) : null}
-          </div>
-          <div>
-            <b>{t("abonement.purchaseDate")}</b>{" "}
-            {abonement.createdAt.slice(0, 10)}
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="abonement__history">

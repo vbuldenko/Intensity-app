@@ -23,10 +23,7 @@ export const Footer = () => {
         </ul>
 
         <button className="footer__button" onClick={scrollToTop}>
-          Back to top
-          <span className="footer__button-icon icon ">
-            <ArrowUpIcon className="icon--arrow-up" />
-          </span>
+          <ArrowUpIcon className="footer__button-icon" />
         </button>
       </div>
     </footer>
