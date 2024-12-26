@@ -1,4 +1,5 @@
 import jsPDF from "jspdf";
+import "../assets/Roboto/robotoRegularConverted.js";
 
 interface User {
   firstName: string;
@@ -15,6 +16,9 @@ interface Abonement {
 
 export const generatePDF = (abonements: Abonement[]): void => {
   const doc = new jsPDF();
+
+  // Set the custom font
+  doc.setFont("Roboto-Regular");
 
   // Calculate total income
   const totalIncome = abonements.reduce(
