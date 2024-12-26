@@ -54,55 +54,49 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
 
           {user?.role === "admin" && (
             <div>
-              id: <span className="text-amber-600">{abonement.id}</span>
+              id: <span className="text-pink-800">{abonement.id}</span>
             </div>
           )}
         </div>
 
         <div className="abonement__container">
-          <div>
-            <b>{t("abonement.amount")}</b> {abonement.amount}
-          </div>
-          <div>
-            <div className="abonement__left">
-              <div className="flex items-center gap-4">
-                <b>{t("abonement.left")}</b>{" "}
-                <span className="abonement__left-trainings font-bold text-amber-600 text-6xl">
-                  {abonement.left}
-                </span>
-              </div>
-              <div>
-                <b>{t("abonement.to")}</b>{" "}
-                {abonement.expiratedAt
-                  ? abonement.expiratedAt.slice(0, 10)
-                  : null}
-              </div>
+          <div className="flex flex-col gap-2">
+            <div>
+              <b>{t("abonement.amount")}</b> {abonement.amount}
             </div>
-            {userRole === "admin" && (
-              <div className="abonement__freeze-container">
-                Freeze
-                <StateToggler state={freeze} handleClick={handleClick} />
-              </div>
-            )}
+
+            <div>
+              <b>{t("abonement.from")}</b>{" "}
+              {abonement.activatedAt
+                ? abonement.activatedAt.slice(0, 10)
+                : null}
+            </div>
           </div>
-        </div>
-        <div className="abonement__container">
-          {/* <div>
-            <b>{t("abonement.purchaseDate")}</b>{" "}
-            {abonement.createdAt.slice(0, 10)}
-          </div> */}
-          <div>
-            <b>{t("abonement.from")}</b>{" "}
-            {abonement.activatedAt ? abonement.activatedAt.slice(0, 10) : null}
+
+          <div className="abonement__left">
+            <div className="flex items-center gap-4">
+              <b>{t("abonement.left")}</b>{" "}
+              <span className="abonement__left-trainings">
+                {abonement.left}
+              </span>
+            </div>
+            <div>
+              <b>{t("abonement.to")}</b>{" "}
+              {abonement.expiratedAt
+                ? abonement.expiratedAt.slice(0, 10)
+                : null}
+            </div>
           </div>
-          {/* <div>
-            <b>{t("abonement.to")}</b>{" "}
-            {abonement.expiratedAt ? abonement.expiratedAt.slice(0, 10) : null}
-          </div> */}
+          {userRole === "admin" && (
+            <div className="abonement__freeze-container">
+              Freeze
+              <StateToggler state={freeze} handleClick={handleClick} />
+            </div>
+          )}
         </div>
       </div>
       <div className="abonement__history">
-        <h2 className="abonement__title abonement__history-title">
+        <h2 className="abonement__title abonement__history-title bg-pink-700">
           {t("abonement.history")}
         </h2>
         <div className="abonement__container">
@@ -111,7 +105,9 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
               <HistoryElement key={el.id} data={el.training} trainer={false} />
             ))
           ) : (
-            <p className="flex-1 text-gray-300">{t("abonement.noHistory")}</p>
+            <p className="flex-1 text-gray-300 text-center">
+              {t("abonement.noHistory")}
+            </p>
           )}
         </div>
       </div>
