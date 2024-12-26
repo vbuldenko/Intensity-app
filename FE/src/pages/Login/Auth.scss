@@ -24,7 +24,6 @@
     position: absolute;
     padding: 1rem;
     text-align: center;
-    // backdrop-filter: blur(70px);
   }
 
   &__input-wrapper {
@@ -32,12 +31,13 @@
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
 
     & input {
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
-      border: 1px solid $color-element;
       border-radius: 0.5rem;
       color: $color-primary;
     }
@@ -48,28 +48,16 @@
     align-items: center;
     justify-content: center;
     min-height: 3rem;
-    // background-color: $account-background;
-    background-color: $gray-color-9;
-    color: $color-green;
-    // color: rgb(0, 190, 162);
+    background-color: $color-green;
+    color: $color-white;
     padding: 0.75rem 1.5rem;
     font-weight: bold;
     cursor: pointer;
     border: none;
     border-radius: 0.5rem;
-    box-shadow:
-      5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-      /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
-        4px 0px rgba(0, 0, 0, 0.1) inset;
-    transition:
-      // transform 0.1s ease-in-out,
-      box-shadow 0.3s ease-in-out;
 
     &:active {
-      box-shadow:
-        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
-        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
-      // transform: scale(0.98);
+      background-color: $color-middle-green;
     }
   }
 

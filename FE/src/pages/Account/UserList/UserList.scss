@@ -39,6 +39,7 @@
   &__title {
     display: flex;
     justify-content: space-between;
+    color: $color-green;
   }
 
   &__name {
@@ -55,12 +56,13 @@
     gap: 0.5rem;
     font-size: 0.85rem;
     padding-top: 0.75rem;
-    border-top: 1px solid $color-element;
+    border-top: 1px dotted $color-element;
   }
 
   &__data {
     display: flex;
     justify-content: space-between;
     gap: 0.25rem;
+    color: $gray-color-4;
   }
 }

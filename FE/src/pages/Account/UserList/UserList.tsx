@@ -131,7 +131,7 @@ export default function UserList() {
                 <div className="users__content">
                   <div className="users__data items-center">
                     <p>ID</p>
-                    <p className="bg-teal-100 text-teal-600 px-2 py-1 rounded-md">
+                    <p className="bg-gray-700 text-amber-500 px-2 py-1 rounded-md">
                       {id}
                     </p>
                   </div>

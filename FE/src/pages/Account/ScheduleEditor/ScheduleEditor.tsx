@@ -8,6 +8,7 @@ import "./ScheduleEditor.scss";
 import Notification from "../../../components/Elements/Notification";
 import { User } from "../../../types/User";
 import { userService } from "../../../services/userService";
+import classNames from "classnames";
 
 const ScheduleEditor: React.FC = () => {
   const [trainers, setTrainers] = useState<User[]>([]);
@@ -99,8 +100,8 @@ const ScheduleEditor: React.FC = () => {
     <>
       {notification && <Notification message={notification} />}
       {error && <Notification message={error} type="error" />}
-      <div className="flex flex-wrap items-center justify-between mb-4 gap-4 mt-2">
-        <label className="flex-1 flex items-center justify-between w-full">
+      <div className="flex flex-wrap items-center justify-between my-4 gap-4">
+        <label className="flex-1 flex gap-4 items-center justify-between w-full">
           <span className="px-2 w-max text-gray-500">Select a date</span>
           <input
             type="date"
@@ -110,7 +111,7 @@ const ScheduleEditor: React.FC = () => {
           />
         </label>
 
-        <div className="card-element flex-1 p-1 text-center bg-teal-500 text-white">
+        <div className="min-w-max flex-1 p-2 text-center bg-teal-500 text-white rounded-xl">
           <button
             className="init w-full flex items-center justify-center min-h-6"
             onClick={handleInitialization}
@@ -143,88 +144,93 @@ const ScheduleEditor: React.FC = () => {
               </span>
             </div>
             <div
-              className={`schedule-editor__day-content ${expandedDay === daySchedule.day ? "schedule-editor__day-content--expanded" : ""}`}
+              className={classNames("schedule-editor__day-content", {
+                "schedule-editor__day-content--expanded":
+                  expandedDay === daySchedule.day,
+              })}
             >
-              {daySchedule.trainings.map((training) => (
-                <div
-                  className="schedule-editor__training card-element text-sm"
-                  key={training.id}
-                >
-                  {editableTraining?.id === training.id ? (
-                    <div className="schedule-editor__edit-form">
-                      <label>
-                        Type:
-                        <input
-                          type="text"
-                          name="type"
-                          value={editableTraining.type}
-                          onChange={handleChange}
-                        />
-                      </label>
-                      <label>
-                        Instructor:
-                        <select
-                          name="instructor"
-                          value={editableTraining.instructor}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select a trainer</option>
-                          {trainers.map((trainer) => (
-                            <option key={trainer.id} value={trainer.id}>
-                              {trainer.firstName} {trainer.lastName}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      <label>
-                        Max Capacity:
-                        <input
-                          type="text"
-                          name="maxCapacity"
-                          value={editableTraining.maxCapacity}
-                          onChange={handleChange}
-                        />
-                      </label>
-                      <label>
-                        Time:
-                        <input
-                          type="text"
-                          name="time"
-                          value={editableTraining.time}
-                          onChange={handleChange}
-                        />
-                      </label>
-                      <div className="flex gap-4">
+              <div className="schedule-editor__trainings">
+                {daySchedule.trainings.map((training) => (
+                  <div
+                    className="schedule-editor__training card-element text-sm"
+                    key={training.id}
+                  >
+                    {editableTraining?.id === training.id ? (
+                      <div className="schedule-editor__edit-form">
+                        <label>
+                          Type:
+                          <input
+                            type="text"
+                            name="type"
+                            value={editableTraining.type}
+                            onChange={handleChange}
+                          />
+                        </label>
+                        <label>
+                          Instructor:
+                          <select
+                            name="instructor"
+                            value={editableTraining.instructor}
+                            onChange={handleChange}
+                          >
+                            <option value="">Select a trainer</option>
+                            {trainers.map((trainer) => (
+                              <option key={trainer.id} value={trainer.id}>
+                                {trainer.firstName} {trainer.lastName}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                        <label>
+                          Max Capacity:
+                          <input
+                            type="text"
+                            name="maxCapacity"
+                            value={editableTraining.maxCapacity}
+                            onChange={handleChange}
+                          />
+                        </label>
+                        <label>
+                          Time:
+                          <input
+                            type="text"
+                            name="time"
+                            value={editableTraining.time}
+                            onChange={handleChange}
+                          />
+                        </label>
+                        <div className="flex gap-4">
+                          <button
+                            className="schedule-editor__save-btn bg-lime-500"
+                            onClick={handleSave}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="schedule-editor__save-btn bg-teal-500"
+                            onClick={() => setEditableTraining(null)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="schedule-editor__info">
+                        <p>Type: {training.type}</p>
+                        <p>Instructor: {training.instructor?.firstName}</p>
+                        <p>Max Capacity: {training.maxCapacity}</p>
+                        <p>Time: {training.time}</p>
                         <button
-                          className="schedule-editor__save-btn bg-lime-500"
-                          onClick={handleSave}
+                          className="schedule-editor__edit-btn bg-blue-400"
+                          onClick={() => handleEdit(training)}
                         >
-                          Save
-                        </button>
-                        <button
-                          className="schedule-editor__save-btn bg-teal-500"
-                          onClick={() => setEditableTraining(null)}
-                        >
-                          Cancel
+                          Edit
                         </button>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="schedule-editor__info">
-                      <p>Type: {training.type}</p>
-                      <p>Instructor: {training.instructor?.firstName}</p>
-                      <p>Max Capacity: {training.maxCapacity}</p>
-                      <p>Time: {training.time}</p>
-                      <button
-                        className="schedule-editor__edit-btn bg-blue-400"
-                        onClick={() => handleEdit(training)}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ))}
