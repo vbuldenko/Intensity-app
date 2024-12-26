@@ -44,7 +44,7 @@ export const generatePDF = (abonements: Abonement[]): void => {
   );
 
   // Add a margin after the title
-  let yOffset = 20; // Adjust the yOffset to create a margin after the title
+  let yOffset = 25; // Adjust the yOffset to create a margin after the title
 
   // Draw rounded border blocks for Cash Income and Card Income
   doc.setDrawColor(0, 0, 0); // Black color for border
@@ -70,7 +70,7 @@ export const generatePDF = (abonements: Abonement[]): void => {
     // Check if we need to add a new page
     if (yOffset + abonementHeight > maxYOffset) {
       doc.addPage();
-      yOffset = margin;
+      yOffset = margin + 20; // Add a gap at the top of each new page
     }
 
     // Draw a gray, dotted line at the top to separate abonements
