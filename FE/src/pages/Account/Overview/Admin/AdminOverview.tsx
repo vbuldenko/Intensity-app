@@ -5,8 +5,6 @@ import { studioStats } from "../../../../assets/mockData";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectAbonements } from "../../../../app/features/abonements/abonementSlice";
-import { generatePDF } from "../../../../utils/pdfGenerator";
-// import { User } from "../../../../types/User";
 
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -58,6 +56,15 @@ const AdminDashboard: React.FC = () => {
     }));
   };
 
+  const handleGeneratePDF = async () => {
+    const { default: generatePDF } = await import(
+      "../../../../utils/pdfGenerator"
+    );
+    if (abonements) {
+      generatePDF(abonements);
+    }
+  };
+
   return (
     <div className="admin-dashboard">
       <StatisticsSection
@@ -70,7 +77,7 @@ const AdminDashboard: React.FC = () => {
       />
 
       <button
-        onClick={() => abonements && generatePDF(abonements)}
+        onClick={handleGeneratePDF}
         className="text-white bg-green-500 w-max py-1 px-4 my-1 rounded-full"
       >
         Generate PDF

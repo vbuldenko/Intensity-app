@@ -14,7 +14,7 @@ interface Abonement {
   amount: number;
 }
 
-export const generatePDF = (abonements: Abonement[]): void => {
+const generatePDF = (abonements: Abonement[]): void => {
   const doc = new jsPDF();
 
   // Set the custom font
@@ -119,3 +119,5 @@ export const generatePDF = (abonements: Abonement[]): void => {
 
   doc.save("abonement-details.pdf");
 };
+
+export default generatePDF;
