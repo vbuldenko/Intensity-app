@@ -13,6 +13,23 @@
   max-width: max-content;
   margin-inline: auto;
 
+  &__button {
+    padding: 0.75rem 2rem;
+    border-radius: $big-br;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      background-color: rgba(190, 24, 93, 0.644);
+    }
+
+    &:active {
+      box-shadow:
+        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+    }
+  }
+
   &__close-button {
     background-color: $color-red;
     border-radius: 0 1rem;

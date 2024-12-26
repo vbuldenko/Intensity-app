@@ -26,3 +26,103 @@ html {
 body {
   background-color: $color-black-dark;
 }
+
+.status {
+  color: $color-green;
+  border: 1px solid $color-green;
+  border-radius: $big-br;
+  padding: 0 1rem;
+
+  &--green {
+    border: 1px solid $color-green;
+    color: $color-green;
+  }
+  &--red {
+    border: 1px solid $color-red;
+    color: $color-red;
+  }
+
+  &--gray {
+    border: 1px solid $gray-color-3;
+    color: $gray-color-3;
+  }
+}
+
+.action-button {
+  background-color: $gray-color-10;
+  color: $color-green;
+  padding: 0.75rem 2rem;
+  border: 1px solid $gray-color-10;
+  border-radius: $big-br;
+  box-shadow:
+    5px 5px 10px 0px rgba(174, 174, 192, 0.2),
+    /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
+      4px 0px rgba(0, 0, 0, 0.1) inset;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: var(--primary-hover-color);
+  }
+
+  &:active {
+    box-shadow:
+      inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
+      inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.container {
+  @include content-padding-inline;
+}
+
+main {
+  overflow: hidden;
+  margin-block: 75px;
+  padding-block: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin-bottom: auto;
+
+  @include on-tablet {
+    gap: 64px;
+  }
+
+  @include on-desktop {
+    gap: 80px;
+  }
+}
+
+.accent-label-primary {
+  background: $color-green;
+  color: #fff;
+  border: 1px solid $color-green;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 0.1rem 1rem;
+}
+
+.card-element {
+  background: $card-background;
+  min-width: 250px;
+  box-shadow: $shadow3;
+  border-radius: $big-br;
+  border: 1px solid $card-background;
+}
+
+.small-card-element {
+  background: $card-background;
+  box-shadow: $shadow3;
+  border-radius: $big-br;
+  border: 1px solid $card-background;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dark {
+  background-color: $color-black-dark;
+  color: $color-white;
+}

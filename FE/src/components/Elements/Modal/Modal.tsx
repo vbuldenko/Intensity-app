@@ -17,7 +17,7 @@ export default function Modal({ btnName, data }: ModalProps) {
     <>
       <button
         onClick={toggleModal}
-        className="action-button"
+        className="modal__button bg-pink-800 text-white"
         aria-expanded={isOpen}
       >
         {btnName}

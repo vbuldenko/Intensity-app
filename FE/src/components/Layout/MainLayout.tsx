@@ -1,9 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-
 import { useTheme } from "../../contexts/ThemeContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import "./MainLayout.scss";
 import { Path } from "../../types/Path";
 
 const MainLayout = () => {
