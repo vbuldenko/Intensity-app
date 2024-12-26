@@ -1,12 +1,12 @@
 .account {
-  // max-width: 70rem;
   width: 100%;
   min-width: min-content;
-  min-height: 75vh;
+  min-height: max-content;
 
   @include page-grid;
 
   @include on-tablet {
+    min-height: 75vh;
     background: $card-background;
     box-shadow: $shadow3;
     border-radius: $big-br;
@@ -32,9 +32,6 @@
   &__content {
     grid-column: 1/-1;
 
-    @include on-mobile {
-      margin-bottom: 3rem;
-    }
     @include on-tablet {
       padding: 1rem;
       grid-column: 4/-1;
