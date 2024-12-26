@@ -27,6 +27,23 @@ body {
   background-color: $color-black-dark;
 }
 
+main {
+  overflow: hidden;
+  padding-block: 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin-bottom: auto;
+
+  @include on-tablet {
+    gap: 64px;
+  }
+
+  @include on-desktop {
+    gap: 80px;
+  }
+}
+
 .status {
   color: $color-green;
   border: 1px solid $color-green;
@@ -73,24 +90,6 @@ body {
 
 .container {
   @include content-padding-inline;
-}
-
-main {
-  overflow: hidden;
-  margin-block: 75px;
-  padding-block: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
-  margin-bottom: auto;
-
-  @include on-tablet {
-    gap: 64px;
-  }
-
-  @include on-desktop {
-    gap: 80px;
-  }
 }
 
 .accent-label-primary {

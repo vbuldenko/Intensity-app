@@ -20,6 +20,7 @@ import Loader from "../../../components/Elements/Loader";
 import { updateUserData } from "../../../app/features/user/userThunk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import CustomSelect from "../../../components/Elements/CustomSelect";
 
 function Settings() {
   const { t } = useTranslation();
@@ -29,13 +30,12 @@ function Settings() {
   const dispatch = useAppDispatch();
   // const navigate = useNavigate();
 
-  const handleFontSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newFontSize = parseInt(event.target.value, 10);
+  const handleFontSize = (fontSize: number | string) => {
     document.documentElement.style.setProperty(
       "--root-font-size",
-      `${newFontSize}px`
+      `${fontSize}px`
     );
-    dispatch(updateUserData({ updateType: "fontSize", fontSize: newFontSize }));
+    dispatch(updateUserData({ updateType: "fontSize", fontSize }));
   };
 
   const handleLogOut = async () => {
@@ -69,18 +69,12 @@ function Settings() {
               <AdjustmentsHorizontalIcon className="icon icon--small" />
               <p className="text text--small">{t("settings.fontSize")}</p>
             </div>
-            <select
-              id="fontSize"
-              className="select select--small"
-              onChange={handleFontSize}
+
+            <CustomSelect
               value={settings.fontSize}
-            >
-              {[10, 12, 14, 16, 18, 20].map((size) => (
-                <option key={size} value={size}>
-                  {size}px
-                </option>
-              ))}
-            </select>
+              options={[10, 12, 14, 16, 18, 20]}
+              onChange={handleFontSize}
+            />
           </div>
         </div>
       </div>

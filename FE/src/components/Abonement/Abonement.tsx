@@ -47,6 +47,7 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
               status: abonement.status === "active",
               "status--red":
                 abonement.status === "ended" || abonement.status === "expired",
+              "status--gray": abonement.status === "inactive",
             })}
           >
             {abonement.status}
