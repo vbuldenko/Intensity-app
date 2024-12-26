@@ -5,7 +5,7 @@ import "./CustomSelect.scss";
 interface CustomSelectProps {
   value: string | number;
   options: string[] | number[];
-  onChange: (value: string | number) => void;
+  onChange: (value: any) => void;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
