@@ -1,12 +1,15 @@
 import { useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
-import { reservationAccess, getErrorMessage } from "../../../utils/utils";
+import { getErrorMessage } from "../../../utils/utils";
 import {
   getCurrentAbonement,
   isCancellationForbidden,
 } from "../../../utils/abonement";
-import { calculateHoursDiff } from "../../../utils/trainings";
+import {
+  calculateHoursDiff,
+  reservationAccess,
+} from "../../../utils/trainings";
 import "./Training.scss";
 
 import { selectUser } from "../../../app/features/user/userSlice";
@@ -34,13 +37,16 @@ export default function Training({ training }: { training: TrainingType }) {
   const abonements = useAppSelector(selectAbonements);
   const abonement = abonements ? getCurrentAbonement(abonements) : null;
 
-  const trainingTime = useMemo(() => new Date(training.date), [training.date]);
+  const currentTime = new Date();
+  const trainingTime = useMemo(() => new Date(training.date), []);
+
   const reservedPlaces = training.reservations.length;
   const reservation = training.reservations.find((r) => r.user === user?.id);
 
-  const hoursDiff = calculateHoursDiff(trainingTime);
+  const hoursDiff = calculateHoursDiff(currentTime, trainingTime);
+
   const access = reservationAccess(
-    new Date(),
+    currentTime,
     trainingTime,
     reservedPlaces,
     hoursDiff
@@ -55,17 +61,19 @@ export default function Training({ training }: { training: TrainingType }) {
   };
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
+    const currentTime = new Date();
+
     console.log(
-      "| training hours | current hours |",
-      trainingTime.getHours(),
-      new Date().getHours()
+      "current hours | training hours",
+      currentTime.getHours(),
+      trainingTime.getHours()
     );
 
     const updatedAccess = reservationAccess(
-      new Date(),
+      currentTime,
       trainingTime,
       reservedPlaces,
-      calculateHoursDiff(trainingTime)
+      calculateHoursDiff(currentTime, trainingTime)
     );
     if (!updatedAccess) {
       return handleNotification(

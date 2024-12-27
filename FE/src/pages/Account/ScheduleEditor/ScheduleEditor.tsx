@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { ScheduleTraining } from "../../../types/Schedule";
 import { scheduleService } from "../../../services/scheduleService";
-import { getErrorMessage, groupTrainingsByDay } from "../../../utils/utils";
+import { getErrorMessage } from "../../../utils/utils";
 import { trainingService } from "../../../services/trainingService";
 import "./ScheduleEditor.scss";
 import Notification from "../../../components/Elements/Notification";
 import { User } from "../../../types/User";
 import { userService } from "../../../services/userService";
 import classNames from "classnames";
+import { groupTrainingsByDay } from "../../../utils/trainings";
 
 const ScheduleEditor: React.FC = () => {
   const [trainers, setTrainers] = useState<User[]>([]);
