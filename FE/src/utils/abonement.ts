@@ -1,5 +1,4 @@
 import { Abonement } from "../types/Abonement";
-import { isToday, isTomorrow } from "./utils";
 
 export type ViewOption = "all" | "active" | "expired" | "inactive";
 
@@ -62,22 +61,4 @@ export function getCurrentAbonement(
     ); // Most recent ended first
 
   return endedAbonements.length > 0 ? endedAbonements[0] : null;
-}
-
-export function isCancellationForbidden(
-  updateType: string,
-  hoursDiff: number,
-  trainingTime: Date
-): boolean {
-  const currentHour = new Date().getHours();
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
-  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
-  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
-
-  return (
-    updateType === "cancellation" &&
-    (hoursDiff < 3 ||
-      (isLateReservationUpdate && isEarlyMorningTraining) ||
-      (isEarlyReservationUpdate && isEarlyMorningTraining))
-  );
 }

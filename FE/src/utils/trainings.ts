@@ -1,6 +1,6 @@
 import { ScheduleTraining } from "../types/Schedule";
 import { Training } from "../types/Training";
-import { isTomorrow } from "./utils";
+import { isToday, isTomorrow } from "./utils";
 
 export function getSalaryPerTraining(visitors: number): number {
   return visitors <= 3 ? 350 : 350 + (visitors - 3) * 50;
@@ -84,13 +84,6 @@ export function reservationAccess(
     return false;
   }
 
-  // Rule 3: Client cannot reserve less than 3 hours before scheduled training
-  if (hoursDiff <= 3) {
-    if (reservedPlaces < 2) {
-      return false; // Not allowed to reserve less than 3 hours before if there are less than two places reserved
-    }
-  }
-
   if (
     currentDateTime.getDate() === scheduledTime.getDate() &&
     currentHour < 8 &&
@@ -100,8 +93,34 @@ export function reservationAccess(
     return false; // Not allowed to reserve morning trainings if there are less than two places reserved
   }
 
+  // Rule 3: Client cannot reserve less than 3 hours before scheduled training
+  if (hoursDiff <= 3) {
+    if (reservedPlaces < 2) {
+      return false; // Not allowed to reserve less than 3 hours before if there are less than two places reserved
+    }
+  }
+
   // If none of the above conditions are met, reservation is allowed
   return true;
+}
+
+export function isCancellationForbidden(
+  updateType: string,
+  hoursDiff: number,
+  currentTime: Date,
+  trainingTime: Date
+): boolean {
+  const currentHour = currentTime.getHours();
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+
+  return (
+    updateType === "cancellation" &&
+    (hoursDiff < 3 ||
+      (isLateReservationUpdate && isEarlyMorningTraining) ||
+      (isEarlyReservationUpdate && isEarlyMorningTraining))
+  );
 }
 
 export function groupTrainingsByDay(trainings: ScheduleTraining[]) {
