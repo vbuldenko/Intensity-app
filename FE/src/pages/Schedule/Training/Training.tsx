@@ -2,13 +2,11 @@ import { useState, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
 import { getErrorMessage } from "../../../utils/utils";
-import {
-  getCurrentAbonement,
-  isCancellationForbidden,
-} from "../../../utils/abonement";
+import { getCurrentAbonement } from "../../../utils/abonement";
 import {
   calculateHoursDiff,
   reservationAccess,
+  isCancellationForbidden,
 } from "../../../utils/trainings";
 import "./Training.scss";
 
@@ -43,13 +41,11 @@ export default function Training({ training }: { training: TrainingType }) {
   const reservedPlaces = training.reservations.length;
   const reservation = training.reservations.find((r) => r.user === user?.id);
 
-  const hoursDiff = calculateHoursDiff(currentTime, trainingTime);
-
   const access = reservationAccess(
     currentTime,
     trainingTime,
     reservedPlaces,
-    hoursDiff
+    calculateHoursDiff(currentTime, trainingTime)
   );
 
   const handleNotification = (
@@ -62,6 +58,7 @@ export default function Training({ training }: { training: TrainingType }) {
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
     const currentTime = new Date();
+    const hoursDiff = calculateHoursDiff(currentTime, trainingTime);
 
     console.log(
       "current hours | training hours",
@@ -73,7 +70,7 @@ export default function Training({ training }: { training: TrainingType }) {
       currentTime,
       trainingTime,
       reservedPlaces,
-      calculateHoursDiff(currentTime, trainingTime)
+      hoursDiff
     );
     if (!updatedAccess) {
       return handleNotification(
@@ -93,6 +90,7 @@ export default function Training({ training }: { training: TrainingType }) {
     const isForbidden = isCancellationForbidden(
       updateType,
       hoursDiff,
+      currentTime,
       trainingTime
     );
     if (isForbidden) {
