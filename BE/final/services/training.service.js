@@ -1,5 +1,9 @@
+import { fromZonedTime } from 'date-fns-tz';
 import Training from '../db/models/Training.js';
-import { initializeTrainingsForWeek } from '../utils/trainingInitiator.js';
+import {
+  initializeTrainingsForWeek,
+  timeZone,
+} from '../utils/trainingInitiator.js';
 
 export const getAll = async () => {
   return await Training.find()
@@ -13,10 +17,21 @@ export const getAll = async () => {
 export const getById = async id => {
   return Training.findById(id).populate('instructor').populate('reservations');
 };
-export const create = async body => {
-  const newTraining = new Training(body);
-  await newTraining.save();
-  return newTraining;
+export const create = async training => {
+  const hours = Number(training.time.slice(0, 2));
+  const date = `${training.date}T${String(hours).padStart(2, '0')}:00:00`;
+  console.log('localTrainingDate', date);
+  // const date = new Date(training.date);
+  // date.setHours(hours);
+  // console.log('trainingDate2', date);
+
+  const trainingDateUtc = fromZonedTime(date, timeZone);
+  console.log('trainingDateUtc', trainingDateUtc);
+
+  training.date = trainingDateUtc;
+  // throw new Error('Not implemented');
+  const newTraining = new Training(training);
+  return await newTraining.save();
 };
 
 export const remove = async trainingId => {

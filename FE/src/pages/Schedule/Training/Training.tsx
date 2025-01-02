@@ -1,4 +1,6 @@
 import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
 import { getErrorMessage } from "../../../utils/utils";
@@ -9,28 +11,18 @@ import {
   isCancellationForbidden,
 } from "../../../utils/trainings";
 import "./Training.scss";
-
 import { selectUser } from "../../../app/features/user/userSlice";
-import classNames from "classnames";
 import { Training as TrainingType } from "../../../types/Training";
-
 import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
-import { useTranslation } from "react-i18next";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
-
-type NotificationType = "error" | "notification" | undefined;
-
-type NotificationState = {
-  message: string;
-  type: NotificationType;
-} | null;
+import { useNotification } from "../../../hooks/useNotification";
 
 export default function Training({ training }: { training: TrainingType }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [notification, setNotification] = useState<NotificationState>(null);
+  const { notification, handleNotification } = useNotification();
   const { data: user, loading } = useAppSelector(selectUser);
   const abonements = useAppSelector(selectAbonements);
   const abonement = abonements ? getCurrentAbonement(abonements) : null;
@@ -47,14 +39,6 @@ export default function Training({ training }: { training: TrainingType }) {
     reservedPlaces,
     calculateHoursDiff(currentTime, trainingTime)
   );
-
-  const handleNotification = (
-    message: string,
-    type?: "error" | "notification"
-  ) => {
-    setNotification({ message, type });
-    setTimeout(() => setNotification(null), 3000);
-  };
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
     const currentTime = new Date();
