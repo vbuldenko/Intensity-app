@@ -5,7 +5,7 @@ import { startOfWeek, addDays, endOfWeek } from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
 import scheduleService from '../services/schedule.service.js';
 import { ApiError } from '../exceptions/api.error.js';
-const timeZone = 'Europe/Kiev';
+export const timeZone = 'Europe/Kiev';
 
 export async function initializePredefinedSchedule() {
   const daysOfWeek = Object.keys(schedule); // ['Monday', 'Tuesday', ...]
