@@ -10,6 +10,8 @@ import { User } from "../../../types/User";
 import { userService } from "../../../services/userService";
 import classNames from "classnames";
 import { groupTrainingsByDay } from "../../../utils/trainings";
+import { Training } from "../../../types/Training";
+import { WeekDays } from "../../../types/WeekDays";
 
 const ScheduleEditor: React.FC = () => {
   const [trainers, setTrainers] = useState<User[]>([]);
@@ -21,6 +23,15 @@ const ScheduleEditor: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [newTraining, setNewTraining] = useState<Partial<Training>>({
+    type: "",
+    instructor: "",
+    capacity: 8,
+    day: "",
+    date: "",
+    time: "",
+  });
 
   useEffect(() => {
     const fetchScheduleData = async () => {
@@ -66,6 +77,11 @@ const ScheduleEditor: React.FC = () => {
         ...editableTraining,
         [e.target.name]: e.target.value,
       });
+    } else {
+      setNewTraining({
+        ...newTraining,
+        [e.target.name]: e.target.value,
+      });
     }
   };
 
@@ -93,6 +109,46 @@ const ScheduleEditor: React.FC = () => {
     setTimeout(() => {
       setError(null);
     }, 5000);
+  };
+
+  const handleCreateTraining = async () => {
+    if (
+      newTraining.type &&
+      newTraining.instructor &&
+      newTraining.capacity &&
+      newTraining.date &&
+      newTraining.time
+    ) {
+      setIsSubmitting(true);
+      try {
+        await trainingService.addTraining(newTraining);
+        // setSchedule((prev) => [...prev, createdTraining]);
+        setNotification("Successfully created training");
+        setNewTraining({
+          type: "",
+          instructor: "",
+          capacity: 8,
+          day: "",
+          date: "",
+          time: "",
+        });
+        setIsFormOpen(false);
+      } catch (error) {
+        setError(getErrorMessage(error) || "error occured");
+      } finally {
+        setIsSubmitting(false);
+
+        setTimeout(() => {
+          setError(null);
+          setNotification(null);
+        }, 5000);
+      }
+    } else {
+      setError("Please fill in all fields");
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
+    }
   };
 
   const groupedSchedule = groupTrainingsByDay(schedule);
@@ -235,6 +291,99 @@ const ScheduleEditor: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="schedule-editor__training card-element">
+        <button
+          className="schedule-editor__create-btn bg-pink-800 text-white py-1 px-4 rounded-xl"
+          onClick={() => setIsFormOpen(!isFormOpen)}
+        >
+          {isFormOpen ? "Close Form" : "Create New Training"}
+        </button>
+        {isFormOpen && (
+          <div className="schedule-editor__create-form schedule-editor__edit-form mt-4">
+            <label>
+              Type:
+              <input
+                type="text"
+                name="type"
+                value={newTraining.type}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Instructor:
+              <select
+                name="instructor"
+                value={newTraining.instructor}
+                onChange={handleChange}
+              >
+                <option value="">Select a trainer</option>
+                {trainers.map((trainer) => (
+                  <option key={trainer.id} value={trainer.id}>
+                    {trainer.firstName} {trainer.lastName}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Capacity:
+              <input
+                type="text"
+                name="maxCapacity"
+                value={newTraining.capacity}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Day:
+              <select
+                name="day"
+                value={newTraining.day}
+                onChange={handleChange}
+              >
+                <option value="">Select a weekday</option>
+                {Object.values(WeekDays).map((day) => (
+                  <option key={day} value={day}>
+                    {day}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Date:
+              <input
+                type="date"
+                name="date"
+                value={newTraining.date}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Time:
+              <input
+                type="text"
+                name="time"
+                value={newTraining.time}
+                onChange={handleChange}
+              />
+            </label>
+            <div className="flex gap-4">
+              <button
+                className="schedule-editor__save-btn bg-lime-500"
+                onClick={handleCreateTraining}
+              >
+                Create
+              </button>
+              <button
+                className="schedule-editor__save-btn bg-teal-500"
+                onClick={() => setIsFormOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -9,7 +9,7 @@ function getAll(): Promise<Training[]> {
   return axiosClient.get("/trainings");
 }
 
-function addTraining(newTraining: Training): Promise<void> {
+function addTraining(newTraining: Partial<Training>): Promise<Training> {
   return axiosClient.post(`/trainings`, newTraining);
 }
 

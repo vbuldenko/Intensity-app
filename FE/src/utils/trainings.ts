@@ -1,6 +1,7 @@
 import { ScheduleTraining } from "../types/Schedule";
 import { Training } from "../types/Training";
 import { isTomorrow } from "./utils";
+import { WeekDays } from "../types/WeekDays";
 
 export function getSalaryPerTraining(visitors: number): number {
   return visitors <= 3 ? 350 : 350 + (visitors - 3) * 50;
@@ -14,9 +15,9 @@ export function getCurrentWage(trainings: Training[]): number {
 
 export const filterByInstructor = (
   trainings: Training[],
-  instructorId: number
+  instructorId: string
 ) => {
-  return trainings.filter((training) => training.instructorId === instructorId);
+  return trainings.filter((training) => training.instructor === instructorId);
 };
 
 export const filterByVisitors = (
@@ -105,16 +106,7 @@ export function reservationAccess(
 }
 
 export function groupTrainingsByDay(trainings: ScheduleTraining[]) {
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  return daysOfWeek.map((day) => ({
+  return Object.values(WeekDays).map((day) => ({
     day,
     trainings: trainings.filter((training) => training.day === day),
   }));

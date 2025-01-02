@@ -2,19 +2,11 @@ import { schedule } from '../data/predefined_schedule';
 import Schedule, { ISchedule } from '../db/models/schedule';
 import Training from '../db/models/training';
 import { startOfWeek, addDays, endOfWeek } from 'date-fns';
-import { format, fromZonedTime } from 'date-fns-tz';
+import { fromZonedTime } from 'date-fns-tz';
 import scheduleService from '../services/schedule.service';
 import { ApiError } from '../exceptions/api.error';
 
-const timeZone = 'Europe/Kiev';
-interface IConvertToUtc {
-  (date: Date, timeZone: string): string;
-}
-
-const convertToUtc: IConvertToUtc = (date, timeZone) => {
-  const zonedDate = fromZonedTime(date, timeZone);
-  return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", { timeZone: 'UTC' });
-};
+export const timeZone = 'Europe/Kiev';
 
 export async function initializePredefinedSchedule() {
   const daysOfWeek = Object.keys(schedule); // ['Monday', 'Tuesday', ...]
@@ -89,7 +81,7 @@ export async function initializeTrainingsForWeek(
       trainingDate.setHours(hours, 0, 0, 0);
 
       // Convert the trainingDate to UTC directly, interpreting it as Kyiv timezone
-      const trainingDateUtc = convertToUtc(trainingDate, timeZone);
+      const trainingDateUtc = fromZonedTime(trainingDate, timeZone);
 
       return {
         type: session.type,
