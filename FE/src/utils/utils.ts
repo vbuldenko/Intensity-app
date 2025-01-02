@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { ScheduleTraining } from "../types/Schedule";
 
 export const getLinkClass = ({ isActive }: { isActive: boolean }) =>
   classNames("nav__link", {
