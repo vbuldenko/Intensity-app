@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error';
 import { Request } from 'express';
 import { UserDTO } from '../db/models/user';
+import { toZonedTime } from 'date-fns-tz';
+import { timeZone } from './trainingInitiator';
 
 export function validateIdentifier(identifier: string): string | undefined {
   if (identifier.includes('@')) {
@@ -97,8 +99,12 @@ export const canTrainingProceed = (
   visitorsCount: number,
 ): boolean => {
   const currentTime = new Date();
+  // Convert the current time to the Kyiv timezone
+  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
+  console.log('kyivCurrentTime', kyivCurrentTime);
+
   const trainingDateTime = new Date(trainingDate);
-  const timeDifference = calculateHoursDiff(trainingDateTime, currentTime);
+  const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
 
   const isTrainingForTomorrowMorning =
     isTomorrow(trainingDateTime) &&
