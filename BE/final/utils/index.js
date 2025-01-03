@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
+import { timeZone } from './trainingInitiator.js';
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
     return validateEmail(identifier);
@@ -66,8 +67,11 @@ export function isTomorrow(dateToCheck) {
 }
 export const canTrainingProceed = (trainingDate, visitorsCount) => {
   const currentTime = new Date();
+  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
+  console.log('kyivCurrentTime', kyivCurrentTime);
   const trainingDateTime = new Date(trainingDate);
-  const timeDifference = calculateHoursDiff(trainingDateTime, currentTime);
+  const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
+
   const isTrainingForTomorrowMorning =
     isTomorrow(trainingDateTime) &&
     [9, 10, 11].includes(trainingDateTime.getHours());
