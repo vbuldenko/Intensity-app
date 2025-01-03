@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
 import { timeZone } from './trainingInitiator.js';
+import { toZonedTime } from 'date-fns-tz';
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
     return validateEmail(identifier);
