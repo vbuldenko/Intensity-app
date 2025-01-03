@@ -1,6 +1,8 @@
 {
-  "welcome_to": "Welcome to",
-  "fitness_studio": "fitness studio!",
+  "welcome": "Welcome to fitness studio",
+  "gen": {
+    "info": "Information"
+  },
   "login": {
     "title": "Log in",
     "identifierPlaceholder": "Email or Phone Number",
@@ -104,10 +106,6 @@
         "description": "Cardio-strength intensive training within time frames. 20 seconds - exercises, 10 seconds - rest. For those who want to lose weight and burn more calories during the workout."
       },
       {
-        "title": "ABS",
-        "description": "Strength training. A set of exercises for the muscles of the abdomen, thighs, buttocks, and lower back."
-      },
-      {
         "title": "Healthy Back",
         "description": "Low-intensity training aimed at developing back mobility, light stretching, and safe strengthening of the muscle corset. Corrective and preventive training direction."
       },
@@ -116,11 +114,7 @@
         "description": "Comprehensive training aimed at developing and strengthening muscles. Includes elements of static positions, strength exercises, stretching, and detailed work on deep muscles."
       },
       {
-        "title": "Yoga",
-        "description": "A set of asanas (poses) that combine moderately dynamic and static positions, breathing exercises, and stretching. Practices awaken, energize, and set you up for a productive day."
-      },
-      {
-        "title": "Stretching",
+        "title": "Split and Posture",
         "description": "A direction for stretching the muscles of the whole body. Increases range of motion, relaxes. Perfect for compensating for strength training."
       },
       {
@@ -128,12 +122,8 @@
         "description": "Stretching on hammocks. A combination of balance exercises to engage deep muscles along with classic stretching."
       },
       {
-        "title": "Yoga Stretching",
-        "description": "A set of yoga asanas aimed at conscious stretching of the muscles of the whole body, improving mobility. Working with breathing."
-      },
-      {
-        "title": "Heels",
-        "description": "Dance direction on heels. To release and discover femininity, sexuality, and grace."
+        "title": "TRX",
+        "description": "Strength training using TRX loops. It is aimed at developing strength, balance, and coordination. Suitable for all levels of training."
       }
     ],
     "trainings": [
@@ -148,10 +138,6 @@
       {
         "title": "Split Training",
         "description": "Training for two."
-      },
-      {
-        "title": "Children's Groups",
-        "description": "Training for children and teenagers."
       }
     ]
   },
@@ -172,12 +158,15 @@
     "cash": "Cash"
   },
   "contacts": {
+    "title": "Contacts",
     "header": "Our Contacts",
     "phone": "+38(097)-99-100-70",
     "email": "in10sity.trainer@gmail.com",
     "address": "Volodymyra Ivasiuka Ave, 24, Kyiv, 04210",
     "schedule": "Working Schedule",
-    "working_hours": "Mon-Fri: 9:00 AM - 6:00 PM"
+    "working_title": "Working Hours",
+    "working_hours": "Mon-Fri: 9:00 AM - 6:00 PM",
+    "followus": "Follow us"
   },
   "training": {
     "reservation_period_passed": "The reservation period has passed!",

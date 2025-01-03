@@ -11,7 +11,7 @@ export const Logo: React.FC<Props> = ({ className }) => {
     <div className={className ? `logo ${className}` : "logo"}>
       <Link to={`/`}>
         {/* <img src="./icons/Logo.svg" alt="Logo" className="logo__image" /> */}
-        Intensity
+        FSI
       </Link>
     </div>
   );

@@ -66,10 +66,6 @@
       @include on-tablet {
         bottom: -0.8rem;
       }
-
-      @include on-desktop {
-        bottom: -1.125rem;
-      }
     }
 
     &:hover::after {

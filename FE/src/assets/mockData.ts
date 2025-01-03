@@ -103,7 +103,7 @@ export const studioStats: TrainingStats = {
   expenses: {
     rent: 30000,
     utilities: 1500,
-    taxes: 1420,
+    taxes: 1600 + 800 + 1760,
     wages: 2400,
   },
   income: {
