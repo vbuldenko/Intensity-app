@@ -114,7 +114,7 @@ export const canTrainingProceed = (
     return false; // Return training to user's subscription
   }
   if (
-    currentTime.getHours() >= 21 &&
+    kyivCurrentTime.getHours() >= 21 &&
     isTrainingForTomorrowMorning &&
     visitorsCount < 2
   ) {

@@ -82,7 +82,7 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
   }
 
   if (
-    currentTime.getHours() >= 21 &&
+    kyivCurrentTime.getHours() >= 21 &&
     isTrainingForTomorrowMorning &&
     visitorsCount < 2
   ) {

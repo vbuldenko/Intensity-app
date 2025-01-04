@@ -5,6 +5,8 @@ import Training, { ITraining } from '../db/models/training';
 import User, { IUser } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { canTrainingProceed } from '../utils';
+import { toZonedTime } from 'date-fns-tz';
+import { timeZone } from '../utils/trainingInitiator';
 
 export const updateReservation = async (
   abonementId: string,
@@ -44,11 +46,12 @@ export const updateReservation = async (
       error: 'Abonement, or Training not found.',
     });
   }
+
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
   }
 
-  if (new Date(abonement.expiratedAt) < new Date()) {
+  if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
     abonement.status = 'expired';
     await abonement.save();
     throw ApiError.BadRequest('Abonement has expired!');
@@ -283,7 +286,7 @@ const isTrainingReserved = (abonement: any, training: any) => {
 };
 
 const activateAbonement = (abonement: any) => {
-  const currentDate = new Date();
+  const currentDate = toZonedTime(new Date(), timeZone);
   const expirationDate = new Date(currentDate);
   expirationDate.setMonth(currentDate.getMonth() + 1);
 
