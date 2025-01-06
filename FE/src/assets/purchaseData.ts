@@ -17,9 +17,4 @@ export const membership = {
     { amount: 5, price: 4500 },
     { amount: 10, price: 8000 },
   ],
-  kids: [
-    { amount: 1, price: 250 },
-    { amount: 8, price: 1000 },
-    { amount: 12, price: 1500 },
-  ],
 };
