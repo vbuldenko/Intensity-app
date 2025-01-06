@@ -31,7 +31,7 @@ const InfoImage: React.FC<InfoImageProps> = ({
                 className="info-image__image"
               />
             )}
-            <h3 className="info-image__title text-pink-100">{item.title}</h3>
+            <h3 className="info-image__title">{item.title}</h3>
             <p className="info-image__text">{item.description}</p>
           </div>
         ))}
