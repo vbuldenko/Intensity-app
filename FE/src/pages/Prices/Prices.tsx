@@ -25,7 +25,7 @@ export default function PricesPage() {
                     <p className="prices__element">{price.amount}</p>
                     <p className="prices__element">₴ {price.price}</p>
                     <p className="prices__element">
-                      ₴ {price.price / price.amount}
+                      ₴ {(price.price / price.amount).toFixed()}
                     </p>
                   </div>
                 ))}
