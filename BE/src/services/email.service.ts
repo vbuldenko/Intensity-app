@@ -24,17 +24,17 @@ export const sendActivationLink = (
   email: string,
   token: string,
 ): Promise<void> => {
-  const link = `${process.env.CLIENT_URL}/activate/${token}`;
+  const link = `${process.env.CLIENT_HOST}/activate/${token}`;
 
   return send({
     email,
     subject: 'Account Activation',
     html: `
-      <h1>Welcome to [Your Company Name]!</h1>
+      <h1>Welcome to Intensity!</h1>
       <p>Dear ${name[0].toUpperCase() + name.slice(1)}, to activate your account, please click the link below:</p>
       <a href="${link}">${link}</a>
       <p>If you did not sign up for this account, please ignore this email.</p>
-      <p>Best regards,<br/>The [Your Company Name] Team</p>
+      <p>Best regards,<br/>The Intensity Team</p>
     `,
   });
 };
