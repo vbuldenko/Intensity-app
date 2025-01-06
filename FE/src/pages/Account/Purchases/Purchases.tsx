@@ -20,7 +20,7 @@ export default function Purchases({ clientId }: { clientId?: number }) {
   const { data: user } = useAppSelector(selectUser);
   // const dispatch = useAppDispatch();
   const [selectedType, setSelectedType] = useState<
-    "group" | "personal" | "split" | "kids"
+    "group" | "personal" | "split"
   >("group");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<"card" | "cash">("card");
