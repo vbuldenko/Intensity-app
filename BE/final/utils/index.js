@@ -121,7 +121,7 @@ export function isCancellationForbidden(trainingDate) {
   console.log('trainingTime', trainingTime);
   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
   const currentHour = kyivCurrentTime.getHours();
-
+  console.log('trainingHour', trainingTime.getHours());
   const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
