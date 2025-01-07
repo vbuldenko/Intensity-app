@@ -76,8 +76,10 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
   const currentTime = new Date();
   const kyivCurrentTime = toZonedTime(currentTime, timeZone);
   console.log('kyivCurrentTime', kyivCurrentTime);
-  const trainingDateTime = new Date(trainingDate);
+  const trainingDateTime = toZonedTime(trainingDate, timeZone);
+  console.log('trainingDateTime', trainingDateTime);
   const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
+  console.log('trainingDateTime.getHours()', trainingDateTime.getHours());
 
   const isTrainingForTomorrowMorning =
     isTomorrow(trainingDateTime) &&

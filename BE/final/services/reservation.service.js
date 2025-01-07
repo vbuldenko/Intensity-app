@@ -126,6 +126,8 @@ const handleCancellation = async (abonement, training, trainer) => {
     abonement: abonement._id,
     training: training._id,
   });
+  console.log('reservation', reservation);
+  console.log('abonement', abonement);
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
@@ -138,6 +140,7 @@ const handleCancellation = async (abonement, training, trainer) => {
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
   }
+  console.log('abonement', abonement);
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
@@ -208,7 +211,14 @@ export const cancelNotHeldTrainings = async abonementId => {
         path: 'reservations',
       },
     ]);
-    return { abonement, trainings };
+    const updatedAbonement = Abonement.findById(abonementId).populate({
+      path: 'reservations',
+      populate: {
+        path: 'training',
+      },
+    });
+
+    return { abonement: updatedAbonement, trainings };
   }
   return null;
 };

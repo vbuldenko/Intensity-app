@@ -170,16 +170,20 @@ const handleCancellation = async (
     training: training._id,
   });
 
+  console.log('reservation', reservation);
+  console.log('abonement', abonement);
+
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
 
   abonement.reservations = abonement.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation._id),
   );
   training.reservations = training.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation._id),
   );
+  console.log('abonement', abonement);
 
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
@@ -274,7 +278,14 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
       },
     ]);
 
-    return { abonement, trainings };
+    const updatedAbonement = Abonement.findById(abonementId).populate({
+      path: 'reservations',
+      populate: {
+        path: 'training',
+      },
+    });
+
+    return { abonement: updatedAbonement, trainings };
   }
 
   return null;
