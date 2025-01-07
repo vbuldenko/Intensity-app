@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
 import { timeZone } from './trainingInitiator.js';
 import { toZonedTime } from 'date-fns-tz';
+import { isToday } from 'date-fns';
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
     return validateEmail(identifier);
@@ -54,8 +55,13 @@ export function hashPassword(password, saltRounds = 10) {
 export const comparePasswords = (plainPWD, userPWDHash) => {
   return bcrypt.compare(plainPWD, userPWDHash);
 };
-export function calculateHoursDiff(trainingTime, currentTime = new Date()) {
-  return (trainingTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
+export function calculateHoursDiff(
+  trainingTime,
+  currentTime = toZonedTime(new Date(), timeZone),
+) {
+  const diffInMilliseconds = trainingTime.getTime() - currentTime.getTime();
+  const diffInHours = diffInMilliseconds / (1000 * 60 * 60);
+  return diffInHours;
 }
 export function isTomorrow(dateToCheck) {
   const tomorrow = new Date();
@@ -107,3 +113,22 @@ export const isAdmin = user => {
     throw ApiError.Unauthorized();
   }
 };
+
+export function isCancellationForbidden(trainingDate) {
+  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+  console.log('kyivCurrentTime', kyivCurrentTime);
+  const trainingTime = toZonedTime(trainingDate, timeZone);
+  console.log('trainingTime', trainingTime);
+  const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+  const currentHour = kyivCurrentTime.getHours();
+
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+
+  return (
+    hoursDiff < 3 ||
+    (isLateReservationUpdate && isEarlyMorningTraining) ||
+    (isEarlyReservationUpdate && isEarlyMorningTraining)
+  );
+}

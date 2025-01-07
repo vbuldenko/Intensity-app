@@ -4,6 +4,7 @@ import { Request } from 'express';
 import { UserDTO } from '../db/models/user';
 import { toZonedTime } from 'date-fns-tz';
 import { timeZone } from './trainingInitiator';
+import { isToday } from 'date-fns';
 
 export function validateIdentifier(identifier: string): string | undefined {
   if (identifier.includes('@')) {
@@ -79,9 +80,11 @@ export const comparePasswords = (
 
 export function calculateHoursDiff(
   trainingTime: Date,
-  currentTime: Date = new Date(),
+  currentTime: Date = toZonedTime(new Date(), timeZone),
 ): number {
-  return (trainingTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60);
+  const diffInMilliseconds = trainingTime.getTime() - currentTime.getTime();
+  const diffInHours = diffInMilliseconds / (1000 * 60 * 60);
+  return diffInHours;
 }
 
 export function isTomorrow(dateToCheck: Date) {
@@ -136,3 +139,22 @@ export const checkAdminRole = (user: UserDTO): void => {
     throw ApiError.Unauthorized();
   }
 };
+
+export function isCancellationForbidden(trainingDate: Date): boolean {
+  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+  console.log('kyivCurrentTime', kyivCurrentTime);
+  const trainingTime = toZonedTime(trainingDate, timeZone);
+  console.log('trainingTime', trainingTime);
+  const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+  const currentHour = kyivCurrentTime.getHours();
+
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+
+  return (
+    hoursDiff < 3 ||
+    (isLateReservationUpdate && isEarlyMorningTraining) ||
+    (isEarlyReservationUpdate && isEarlyMorningTraining)
+  );
+}

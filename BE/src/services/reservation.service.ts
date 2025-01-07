@@ -4,7 +4,7 @@ import Reservation from '../db/models/reservation';
 import Training, { ITraining } from '../db/models/training';
 import User, { IUser } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
-import { canTrainingProceed } from '../utils';
+import { canTrainingProceed, isCancellationForbidden } from '../utils';
 import { toZonedTime } from 'date-fns-tz';
 import { timeZone } from '../utils/trainingInitiator';
 
@@ -160,6 +160,9 @@ const handleCancellation = async (
   // Check if the user has a reservation for the training
   if (!isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest('Not reserved: You have not reserved a place!');
+  }
+  if (isCancellationForbidden(training.date)) {
+    throw ApiError.BadRequest('Cancel forbidden!');
   }
 
   const reservation = await Reservation.findOneAndDelete({
