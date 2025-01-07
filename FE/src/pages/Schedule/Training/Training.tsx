@@ -8,7 +8,6 @@ import { getCurrentAbonement } from "../../../utils/abonement";
 import {
   calculateHoursDiff,
   reservationAccess,
-  isCancellationForbidden,
 } from "../../../utils/trainings";
 import "./Training.scss";
 import { selectUser } from "../../../app/features/user/userSlice";
@@ -67,20 +66,6 @@ export default function Training({ training }: { training: TrainingType }) {
       return handleNotification(t("training.no_abonement"), "error");
     }
 
-    if (updateType === "reservation" && abonement.left === 0) {
-      return handleNotification(t("training.no_trainings_left"), "error");
-    }
-
-    const isForbidden = isCancellationForbidden(
-      updateType,
-      hoursDiff,
-      currentTime,
-      trainingTime
-    );
-    if (isForbidden) {
-      return handleNotification(t("training.cancel_forbidden_rule"), "error");
-    }
-
     try {
       setIsSubmitting(true);
       await dispatch(
@@ -92,9 +77,18 @@ export default function Training({ training }: { training: TrainingType }) {
       ).unwrap();
     } catch (error) {
       handleNotification(
-        getErrorMessage(error) === "Abonement has expired!"
-          ? t("training.abonement_expired")
-          : getErrorMessage(error),
+        (() => {
+          switch (getErrorMessage(error)) {
+            case "Abonement has expired!":
+              return t("training.abonement_expired");
+            case "Abonement has ended!":
+              return t("training.no_trainings_left");
+            case "Cancel forbidden!":
+              return t("training.cancel_forbidden_rule");
+            default:
+              return getErrorMessage(error);
+          }
+        })(),
         "error"
       );
     } finally {

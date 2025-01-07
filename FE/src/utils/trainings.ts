@@ -1,6 +1,6 @@
 import { ScheduleTraining } from "../types/Schedule";
 import { Training } from "../types/Training";
-import { isToday, isTomorrow } from "./utils";
+import { isTomorrow } from "./utils";
 import { WeekDays } from "../types/WeekDays";
 
 export function getSalaryPerTraining(visitors: number): number {
@@ -104,42 +104,9 @@ export function reservationAccess(
   return true;
 }
 
-export function isCancellationForbidden(
-  updateType: string,
-  hoursDiff: number,
-  currentTime: Date,
-  trainingTime: Date
-): boolean {
-  const currentHour = currentTime.getHours();
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
-  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
-  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
-
-  return (
-    updateType === "cancellation" &&
-    (hoursDiff < 3 ||
-      (isLateReservationUpdate && isEarlyMorningTraining) ||
-      (isEarlyReservationUpdate && isEarlyMorningTraining))
-  );
-}
-
 export function groupTrainingsByDay(trainings: ScheduleTraining[]) {
   return Object.values(WeekDays).map((day) => ({
     day,
     trainings: trainings.filter((training) => training.day === day),
   }));
 }
-
-export const canTrainingProceed = (
-  currentTime: Date,
-  trainingDate: string,
-  visitorsCount: number
-): boolean => {
-  const trainingDateTime = new Date(trainingDate);
-  const timeDifference = calculateHoursDiff(currentTime, trainingDateTime);
-
-  if (timeDifference < 3 && visitorsCount < 2) {
-    return false;
-  }
-  return true;
-};
