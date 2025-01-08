@@ -59,10 +59,6 @@ export const updateReservation = async (
     throw ApiError.BadRequest('Invalid abonement owner');
   }
 
-  if (abonement.status === 'ended') {
-    throw ApiError.BadRequest('Abonement has ended!');
-  }
-
   if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
     abonement.status = 'expired';
     await abonement.save();
@@ -124,6 +120,10 @@ const handleReservation = async (
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
     );
+  }
+
+  if (abonement.status === 'ended') {
+    throw ApiError.BadRequest('Abonement has ended!');
   }
 
   if (!reservationAccess(training.date, training.reservations.length)) {
