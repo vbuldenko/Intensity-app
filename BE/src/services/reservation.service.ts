@@ -189,12 +189,10 @@ const handleCancellation = async (
   }
 
   abonement.reservations = abonement.reservations.filter(
-    (resId: mongoose.Types.ObjectId) =>
-      resId.toString() !== reservation.id.toString(),
+    res => res.id.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    (resId: mongoose.Types.ObjectId) =>
-      resId.toString() !== reservation.id.toString(),
+    res => res.id.toString() !== reservation.id.toString(),
   );
 
   if (training.reservations.length < 2) {

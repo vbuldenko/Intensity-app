@@ -147,10 +147,10 @@ const handleCancellation = async (abonement, training, trainer) => {
     throw ApiError.BadRequest('Reservation not found');
   }
   abonement.reservations = abonement.reservations.filter(
-    resId => resId.toString() !== reservation.id.toString(),
+    res => res.id.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    resId => resId.toString() !== reservation.id.toString(),
+    res => res.id.toString() !== reservation.id.toString(),
   );
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
