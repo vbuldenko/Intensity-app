@@ -181,6 +181,8 @@ export const cancelNotHeldTrainings = async abonementId => {
       // select: 'firstName lastName',
     },
   });
+
+  console.log('abonement before CANCEL', abonement);
   if (!abonement) {
     throw ApiError.NotFound({ error: 'Abonement not found.' });
   }
@@ -211,14 +213,10 @@ export const cancelNotHeldTrainings = async abonementId => {
         path: 'reservations',
       },
     ]);
-    const updatedAbonement = Abonement.findById(abonementId).populate({
-      path: 'reservations',
-      populate: {
-        path: 'training',
-      },
-    });
 
-    return { abonement: updatedAbonement, trainings };
+    console.log('abonement AFTER CANCEL', abonement);
+
+    return { abonement, trainings };
   }
   return null;
 };
