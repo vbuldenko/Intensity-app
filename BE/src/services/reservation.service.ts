@@ -4,7 +4,11 @@ import Reservation from '../db/models/reservation';
 import Training, { ITraining } from '../db/models/training';
 import User, { IUser } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
-import { canTrainingProceed, isCancellationForbidden } from '../utils';
+import {
+  canTrainingProceed,
+  isCancellationForbidden,
+  reservationAccess,
+} from '../utils';
 import { toZonedTime } from 'date-fns-tz';
 import { timeZone } from '../utils/trainingInitiator';
 
@@ -14,7 +18,6 @@ export const updateReservation = async (
   userId: string,
   updateType: 'reservation' | 'cancellation',
 ) => {
-  // Fetch relevant data with necessary associations
   const [abonement, training] = await Promise.all([
     Abonement.findById(abonementId).populate({
       path: 'reservations',
@@ -41,14 +44,23 @@ export const updateReservation = async (
     ]),
   ]);
 
-  if (!abonement || !training) {
+  if (!abonement) {
     throw ApiError.NotFound({
-      error: 'Abonement, or Training not found.',
+      error: 'Abonement not found.',
+    });
+  }
+  if (!training) {
+    throw ApiError.NotFound({
+      error: 'Training not found.',
     });
   }
 
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
+  }
+
+  if (abonement.status === 'ended') {
+    throw ApiError.BadRequest('Abonement has ended!');
   }
 
   if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
@@ -108,15 +120,14 @@ const handleReservation = async (
   training: any,
   trainer: any,
 ) => {
-  // Check if the user has already reserved the training
   if (isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
     );
   }
 
-  if (abonement.status === 'ended') {
-    throw ApiError.BadRequest('Abonement has ended!');
+  if (!reservationAccess(training.date, training.reservations.length)) {
+    throw ApiError.BadRequest('Reservation period has passed!');
   }
 
   if (abonement.status === 'inactive') {
@@ -170,20 +181,21 @@ const handleCancellation = async (
     training: training._id,
   });
 
-  console.log('reservation', reservation);
-  console.log('abonement', abonement);
+  console.log('reservation that was deleted', reservation);
+  console.log('current abonement', abonement);
 
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
 
   abonement.reservations = abonement.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation._id),
+    (resId: mongoose.Types.ObjectId) =>
+      resId.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation._id),
+    (resId: mongoose.Types.ObjectId) =>
+      resId.toString() !== reservation.id.toString(),
   );
-  console.log('abonement', abonement);
 
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
@@ -195,13 +207,13 @@ const handleCancellation = async (
     abonement.status = 'active';
   }
 
+  console.log('abonement after reservation deletion', abonement);
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
+  console.log('abonement after reservation deletion save', abonement);
 };
 
 const handleReturn = async (reservation: any, abonement: any) => {
-  // const resrvnObj = await Reservation.findById(reservation.id);
-  // resrvnObj.status = 'cancelled';
   const training = (await Training.findById(reservation.training.id)) as any;
   const trainer = await User.findById(reservation.training.instructor);
   if (!trainer) {
@@ -226,12 +238,7 @@ const handleReturn = async (reservation: any, abonement: any) => {
   }
 
   // Reload the models to get the updated data without re-fetching everything
-  await Promise.all([
-    abonement.save(),
-    training.save(),
-    trainer.save(),
-    // resrvnObj.save(),
-  ]);
+  await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
 export const cancelNotHeldTrainings = async (abonementId: string) => {

@@ -40,38 +40,18 @@ export default function Training({ training }: { training: TrainingType }) {
   );
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
-    const currentTime = new Date();
-    const hoursDiff = calculateHoursDiff(currentTime, trainingTime);
-
     console.log(
       "current hours | training hours",
-      currentTime.getHours(),
+      new Date(),
       trainingTime.getHours()
     );
-
-    const updatedAccess = reservationAccess(
-      currentTime,
-      trainingTime,
-      reservedPlaces,
-      hoursDiff
-    );
-    if (!updatedAccess) {
-      return handleNotification(
-        t("training.reservation_period_passed"),
-        "error"
-      );
-    }
-
-    if (!abonement) {
-      return handleNotification(t("training.no_abonement"), "error");
-    }
 
     try {
       setIsSubmitting(true);
       await dispatch(
         reserveTraining({
           trainingId: training.id,
-          abonementId: reservation ? reservation.abonement : abonement.id,
+          abonementId: reservation ? reservation.abonement : abonement?.id,
           updateType,
         })
       ).unwrap();
@@ -79,12 +59,16 @@ export default function Training({ training }: { training: TrainingType }) {
       handleNotification(
         (() => {
           switch (getErrorMessage(error)) {
+            case "Abonement not found!":
+              return t("training.no_abonement");
             case "Abonement has expired!":
               return t("training.abonement_expired");
             case "Abonement has ended!":
               return t("training.no_trainings_left");
             case "Cancel forbidden!":
               return t("training.cancel_forbidden_rule");
+            case "Reservation period has passed!":
+              return t("training.reservation_period_passed");
             default:
               return getErrorMessage(error);
           }

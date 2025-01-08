@@ -73,13 +73,9 @@ export function isTomorrow(dateToCheck) {
   );
 }
 export const canTrainingProceed = (trainingDate, visitorsCount) => {
-  const currentTime = new Date();
-  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
-  console.log('kyivCurrentTime', kyivCurrentTime);
+  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
   const trainingDateTime = toZonedTime(trainingDate, timeZone);
-  console.log('trainingDateTime', trainingDateTime);
   const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
-  console.log('trainingDateTime.getHours()', trainingDateTime.getHours());
 
   const isTrainingForTomorrowMorning =
     isTomorrow(trainingDateTime) &&
@@ -118,12 +114,9 @@ export const isAdmin = user => {
 
 export function isCancellationForbidden(trainingDate) {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
-  console.log('kyivCurrentTime', kyivCurrentTime);
   const trainingTime = toZonedTime(trainingDate, timeZone);
-  console.log('trainingTime', trainingTime);
   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
   const currentHour = kyivCurrentTime.getHours();
-  console.log('trainingHour', trainingTime.getHours());
   const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
@@ -133,4 +126,58 @@ export function isCancellationForbidden(trainingDate) {
     (isLateReservationUpdate && isEarlyMorningTraining) ||
     (isEarlyReservationUpdate && isEarlyMorningTraining)
   );
+}
+
+export function reservationAccess(scheduledDate, reservedPlaces) {
+  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+  const scheduledTime = toZonedTime(scheduledDate, timeZone);
+  console.log(
+    'current time: ',
+    kyivCurrentTime,
+    'scheduled time: ',
+    scheduledTime,
+  );
+  // Rule 1
+  if (kyivCurrentTime >= scheduledTime) {
+    console.log('Scheduled time is in the past');
+    return false;
+  }
+  const currentHour = kyivCurrentTime.getHours();
+  const hoursDiff = calculateHoursDiff(scheduledTime, kyivCurrentTime);
+  const isEarlyMorningReservation = [9, 10, 11].includes(
+    scheduledTime.getHours(),
+  );
+  const isLateReservationUpdate =
+    currentHour >= 21 && isTomorrow(scheduledTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(scheduledTime);
+
+  // Rule 2
+  if (
+    isLateReservationUpdate &&
+    isEarlyMorningReservation &&
+    reservedPlaces <= 1
+  ) {
+    console.log('Late reservation update for early morning training');
+    return false;
+  }
+
+  // Rule 3
+  if (
+    isEarlyReservationUpdate &&
+    isEarlyMorningReservation &&
+    reservedPlaces <= 1
+  ) {
+    console.log('Early reservation update for early morning training');
+    return false;
+  }
+
+  // Rule 4
+  if (hoursDiff <= 3) {
+    console.log('Less than 3 hours before training');
+    if (reservedPlaces < 2) {
+      return false;
+    }
+  }
+
+  return true;
 }

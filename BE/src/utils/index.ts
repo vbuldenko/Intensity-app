@@ -143,12 +143,9 @@ export const checkAdminRole = (user: UserDTO): void => {
 
 export function isCancellationForbidden(trainingDate: Date): boolean {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
-  console.log('kyivCurrentTime', kyivCurrentTime);
   const trainingTime = toZonedTime(trainingDate, timeZone);
-  console.log('trainingTime', trainingTime);
   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
   const currentHour = kyivCurrentTime.getHours();
-  console.log('trainingHour', trainingTime.getHours());
   const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
@@ -158,4 +155,49 @@ export function isCancellationForbidden(trainingDate: Date): boolean {
     (isLateReservationUpdate && isEarlyMorningTraining) ||
     (isEarlyReservationUpdate && isEarlyMorningTraining)
   );
+}
+
+export function reservationAccess(scheduledDate: Date, reservedPlaces: number) {
+  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+  const scheduledTime = toZonedTime(scheduledDate, timeZone);
+  // Rule 1: If scheduled time has passed, reservation is closed
+  if (kyivCurrentTime >= scheduledTime) {
+    return false;
+  }
+  const currentHour = kyivCurrentTime.getHours();
+  const hoursDiff = calculateHoursDiff(scheduledTime, kyivCurrentTime);
+  const isEarlyMorningReservation = [9, 10, 11].includes(
+    scheduledTime.getHours(),
+  );
+  const isLateReservationUpdate =
+    currentHour >= 21 && isTomorrow(scheduledTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(scheduledTime);
+
+  // Rule 2: Client cannot reserve next day trainings scheduled at 9 a.m, 10 a.m, and 11 a.m after 9 p.m of the current day
+  if (
+    isLateReservationUpdate &&
+    isEarlyMorningReservation &&
+    reservedPlaces <= 1
+  ) {
+    return false;
+  }
+
+  // Rule 3: Not allowed to reserve morning trainings if there are less than two places reserved
+  if (
+    isEarlyReservationUpdate &&
+    isEarlyMorningReservation &&
+    reservedPlaces <= 1
+  ) {
+    return false;
+  }
+
+  // Rule 4: Client cannot reserve less than 3 hours before scheduled training
+  if (hoursDiff <= 3) {
+    if (reservedPlaces < 2) {
+      return false; // Not allowed to reserve less than 3 hours before if there are less than two places reserved
+    }
+  }
+
+  // If none of the above conditions are met, reservation is allowed
+  return true;
 }

@@ -4,7 +4,11 @@ import Reservation from '../db/models/Reservation.js';
 import Training from '../db/models/Training.js';
 import User from '../db/models/User.js';
 import { ApiError } from '../exceptions/api.error.js';
-import { canTrainingProceed, isCancellationForbidden } from '../utils/index.js';
+import {
+  canTrainingProceed,
+  isCancellationForbidden,
+  reservationAccess,
+} from '../utils/index.js';
 import { timeZone } from '../utils/trainingInitiator.js';
 export const updateReservation = async (
   abonementId,
@@ -26,13 +30,21 @@ export const updateReservation = async (
       },
     ]),
   ]);
-  if (!abonement || !training) {
+  if (!abonement) {
     throw ApiError.NotFound({
-      error: 'Abonement, or Training not found.',
+      error: 'Abonement not found!',
+    });
+  }
+  if (!training) {
+    throw ApiError.NotFound({
+      error: 'Training not found!',
     });
   }
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
+  }
+  if (abonement.status === 'ended') {
+    throw ApiError.BadRequest('Abonement has ended!');
   }
   if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
     abonement.status = 'expired';
@@ -82,15 +94,16 @@ export const updateReservation = async (
   }
 };
 const handleReservation = async (abonement, training, trainer) => {
-  // Check if the user has already reserved the training
   if (isTrainingReserved(abonement, training)) {
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
     );
   }
-  if (abonement.status === 'ended') {
-    throw ApiError.BadRequest('Abonement has ended!');
+
+  if (!reservationAccess(training.date, training.reservations.length)) {
+    throw ApiError.BadRequest('Reservation period has passed!');
   }
+
   if (abonement.status === 'inactive') {
     activateAbonement(abonement);
   }
@@ -126,28 +139,31 @@ const handleCancellation = async (abonement, training, trainer) => {
     abonement: abonement._id,
     training: training._id,
   });
-  console.log('reservation', reservation);
-  console.log('abonement', abonement);
+  console.log('reservation that was deleted', reservation);
+  console.log('current abonement', abonement);
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
   abonement.reservations = abonement.reservations.filter(
-    resId => !resId.equals(reservation._id),
+    resId => resId.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    resId => !resId.equals(reservation._id),
+    resId => resId.toString() !== reservation.id.toString(),
   );
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training._id);
   }
-  console.log('abonement', abonement);
+
   // Update the Abonement: increment left count, set status if needed
   abonement.left += 1;
   if (abonement.left > 0 && abonement.status === 'ended') {
     abonement.status = 'active';
   }
+
+  console.log('abonement after reservation deletion', abonement);
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
+  console.log('abonement after reservation deletion save', abonement);
 };
 const handleReturn = async (reservation, abonement) => {
   const training = await Training.findById(reservation.training.id);
