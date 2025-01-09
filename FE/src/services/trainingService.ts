@@ -26,7 +26,7 @@ function reserveTraining(
   updateType: string
 ): Promise<{ updatedAbonement: Abonement; updatedTraining: Training }> {
   return axiosClient.patch(
-    `/trainings?abonementId=${abonementId}&trainingId=${trainingId}`,
+    `/trainings?abonementId=${abonementId || ""}&trainingId=${trainingId}`,
     { updateType }
   );
 }

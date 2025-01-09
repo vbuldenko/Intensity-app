@@ -5,10 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
 import { getErrorMessage } from "../../../utils/utils";
 import { getCurrentAbonement } from "../../../utils/abonement";
-import {
-  calculateHoursDiff,
-  reservationAccess,
-} from "../../../utils/trainings";
+import { reservationAccess } from "../../../utils/trainings";
 import "./Training.scss";
 import { selectUser } from "../../../app/features/user/userSlice";
 import { Training as TrainingType } from "../../../types/Training";
@@ -26,18 +23,12 @@ export default function Training({ training }: { training: TrainingType }) {
   const abonements = useAppSelector(selectAbonements);
   const abonement = abonements ? getCurrentAbonement(abonements) : null;
 
-  const currentTime = new Date();
   const trainingTime = useMemo(() => new Date(training.date), []);
 
   const reservedPlaces = training.reservations.length;
   const reservation = training.reservations.find((r) => r.user === user?.id);
 
-  const access = reservationAccess(
-    currentTime,
-    trainingTime,
-    reservedPlaces,
-    calculateHoursDiff(currentTime, trainingTime)
-  );
+  const access = reservationAccess(trainingTime, reservedPlaces);
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
     console.log(

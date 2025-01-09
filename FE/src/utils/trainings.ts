@@ -61,13 +61,10 @@ export function calculateHoursDiff(
   return diffInHours;
 }
 
-export function reservationAccess(
-  currentDateTime: Date,
-  scheduledTime: Date,
-  reservedPlaces: number,
-  hoursDiff: number
-) {
+export function reservationAccess(scheduledTime: Date, reservedPlaces: number) {
+  const currentDateTime = new Date();
   const currentHour = currentDateTime.getHours();
+  const hoursDiff = calculateHoursDiff(currentDateTime, scheduledTime);
 
   // Rule 1: If scheduled time has passed, reservation is closed
   if (currentDateTime >= scheduledTime) {
