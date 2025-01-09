@@ -185,7 +185,6 @@ const handleCancellation = async (
     training: training._id,
   });
 
-  console.log('reservation that was deleted', reservation);
   console.log('current abonement', abonement);
 
   if (!reservation) {
@@ -193,10 +192,10 @@ const handleCancellation = async (
   }
 
   abonement.reservations = abonement.reservations.filter(
-    res => res.id.toString() !== reservation.id.toString(),
+    (res: any) => res.id.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    res => res.id.toString() !== reservation.id.toString(),
+    (res: any) => res.id.toString() !== reservation.id.toString(),
   );
 
   if (training.reservations.length < 2) {
@@ -209,7 +208,6 @@ const handleCancellation = async (
     abonement.status = 'active';
   }
 
-  console.log('abonement after reservation deletion', abonement);
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
   console.log('abonement after reservation deletion save', abonement);
@@ -224,10 +222,10 @@ const handleReturn = async (reservation: any, abonement: any) => {
 
   // Remove the training from visitedTrainings and user from visitors
   abonement.reservations = abonement.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+    (res: any) => res.id.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    (resId: mongoose.Types.ObjectId) => !resId.equals(reservation.id),
+    (res: any) => res.toString() !== reservation.id.toString(),
   );
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training.id);
@@ -238,6 +236,9 @@ const handleReturn = async (reservation: any, abonement: any) => {
   if (abonement.left > 0 && abonement.status === 'ended') {
     abonement.status = 'active';
   }
+
+  // Delete the reservation itself
+  await Reservation.deleteOne({ _id: reservation.id });
 
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
@@ -287,14 +288,7 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
       },
     ]);
 
-    const updatedAbonement = Abonement.findById(abonementId).populate({
-      path: 'reservations',
-      populate: {
-        path: 'training',
-      },
-    });
-
-    return { abonement: updatedAbonement, trainings };
+    return { abonement, trainings };
   }
 
   return null;

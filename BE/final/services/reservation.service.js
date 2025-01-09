@@ -178,10 +178,10 @@ const handleReturn = async (reservation, abonement) => {
   }
   // Remove the training from visitedTrainings and user from visitors
   abonement.reservations = abonement.reservations.filter(
-    resId => !resId.equals(reservation.id),
+    res => res.id.toString() !== reservation.id.toString(),
   );
   training.reservations = training.reservations.filter(
-    resId => !resId.equals(reservation.id),
+    res => res.toString() !== reservation.id.toString(),
   );
   if (training.reservations.length < 2) {
     trainer.trainings = removeTraining(trainer.trainings, training.id);
@@ -191,6 +191,9 @@ const handleReturn = async (reservation, abonement) => {
   if (abonement.left > 0 && abonement.status === 'ended') {
     abonement.status = 'active';
   }
+
+  // Delete the reservation itself
+  await Reservation.deleteOne({ _id: reservation.id });
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
