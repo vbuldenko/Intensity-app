@@ -21,7 +21,6 @@ export const updateReservation = async (
   if (!abonementId) {
     throw ApiError.BadRequest('Abonement Id is required!');
   }
-  console.log('abonementId', abonementId);
 
   const [abonement, training] = await Promise.all([
     Abonement.findById(abonementId).populate({
