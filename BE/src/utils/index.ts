@@ -97,17 +97,28 @@ export function isTomorrow(dateToCheck: Date) {
   );
 }
 
+export const getUserFromRequest = (req: Request): UserDTO => {
+  const user = req.user as UserDTO;
+  if (!user) {
+    throw ApiError.Unauthorized();
+  }
+  return user;
+};
+
+export const checkAdminRole = (user: UserDTO): void => {
+  if (user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+};
+
 export const canTrainingProceed = (
   trainingDate: string,
   visitorsCount: number,
 ): boolean => {
   const currentTime = new Date();
-  // Convert the current time to the Kyiv timezone
+  // Convert time to the Kyiv timezone
   const kyivCurrentTime = toZonedTime(currentTime, timeZone);
-  console.log('kyivCurrentTime', kyivCurrentTime);
-
   const trainingDateTime = toZonedTime(trainingDate, timeZone);
-  console.log('trainingDateTime', trainingDateTime);
   const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
 
   const isTrainingForTomorrowMorning =
@@ -125,20 +136,6 @@ export const canTrainingProceed = (
     return false; // Return training to user's subscription
   }
   return true;
-};
-
-export const getUserFromRequest = (req: Request): UserDTO => {
-  const user = req.user as UserDTO;
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
-  return user;
-};
-
-export const checkAdminRole = (user: UserDTO): void => {
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
 };
 
 export function isCancellationForbidden(trainingDate: Date): boolean {
@@ -192,10 +189,8 @@ export function reservationAccess(scheduledDate: Date, reservedPlaces: number) {
   }
 
   // Rule 4: Client cannot reserve less than 3 hours before scheduled training
-  if (hoursDiff <= 3) {
-    if (reservedPlaces < 2) {
-      return false; // Not allowed to reserve less than 3 hours before if there are less than two places reserved
-    }
+  if (hoursDiff <= 3 && reservedPlaces < 2) {
+    return false;
   }
 
   // If none of the above conditions are met, reservation is allowed
