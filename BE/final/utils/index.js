@@ -76,6 +76,7 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
   const trainingDateTime = toZonedTime(trainingDate, timeZone);
   const timeDifference = calculateHoursDiff(trainingDateTime, kyivCurrentTime);
+  console.log('Time difference', timeDifference);
 
   const isTrainingForTomorrowMorning =
     isTomorrow(trainingDateTime) &&
@@ -131,12 +132,7 @@ export function isCancellationForbidden(trainingDate) {
 export function reservationAccess(scheduledDate, reservedPlaces) {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
   const scheduledTime = toZonedTime(scheduledDate, timeZone);
-  console.log(
-    'current time: ',
-    kyivCurrentTime,
-    'scheduled time: ',
-    scheduledTime,
-  );
+
   // Rule 1
   if (kyivCurrentTime >= scheduledTime) {
     console.log('Scheduled time is in the past');
