@@ -1,6 +1,6 @@
 export const info = (...params) => {
   if (process.env.NODE_ENV === 'production') {
-    return console.log('Production Mode: ', ...params);
+    return console.log('PROD Mode: ', ...params);
   }
   if (process.env.NODE_ENV === 'development') {
     return console.log('DEV Mode: ', ...params);
