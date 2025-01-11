@@ -22,44 +22,38 @@ describe("--- calculateHoursDiff ---", () => {
 
 describe("--- reservationAccess ---", () => {
   it("should return false if the scheduled time has passed", () => {
-    const currentTime = new Date("2023-10-10T13:00:00Z");
     const trainingTime = new Date("2023-10-10T10:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 5, -3);
+    const access = reservationAccess(trainingTime, 5);
     expect(access).toBe(false);
   });
 
   it("should return false if trying to reserve next day training at 9 a.m. after 9 p.m. of the current day", () => {
-    const currentTime = new Date("2024-12-30T21:30:00Z");
     const trainingTime = new Date("2024-12-31T09:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 1, 11.5);
+    const access = reservationAccess(trainingTime, 1);
     expect(access).toBe(false);
   });
 
   it("should return false if trying to reserve less than 3 hours before the scheduled training with less than two places reserved", () => {
-    const currentTime = new Date("2023-10-10T07:00:00Z");
     const trainingTime = new Date("2023-10-10T09:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 1, 2);
+    const access = reservationAccess(trainingTime, 1);
     expect(access).toBe(false);
   });
 
   it("should return false if trying to reserve morning training before 8 a.m. with less than two places reserved", () => {
-    const currentTime = new Date("2023-10-10T07:00:00Z");
     const trainingTime = new Date("2023-10-10T09:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 1, 2);
+    const access = reservationAccess(trainingTime, 1);
     expect(access).toBe(false);
   });
 
   it("should return true if hours diff <= 3 and reserved places >= 2", () => {
-    const currentTime = new Date("2023-10-10T07:00:00Z");
     const trainingTime = new Date("2023-10-10T09:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 2, 2);
+    const access = reservationAccess(trainingTime, 2);
     expect(access).toBe(true);
   });
 
   it("should return true if none of the conditions are met", () => {
-    const currentTime = new Date("2023-10-10T07:00:00Z");
     const trainingTime = new Date("2023-10-10T10:00:00Z");
-    const access = reservationAccess(currentTime, trainingTime, 5, 3);
+    const access = reservationAccess(trainingTime, 5);
     expect(access).toBe(true);
   });
 });
