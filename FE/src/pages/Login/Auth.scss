@@ -77,13 +77,17 @@
       font-size: 1rem;
 
       &:hover {
-        color: $color-green;
+        color: $color-white;
       }
     }
 
     &__link--accent {
       font-size: 1.25rem;
       font-weight: bold;
+      color: $color-green;
+      border: 1px dotted $color-green;
+      padding: 0.2rem 0.75rem;
+      border-radius: $standard-br;
     }
   }
 }
