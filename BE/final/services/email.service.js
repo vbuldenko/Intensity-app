@@ -34,7 +34,7 @@ export const sendResetLink = (name, email, token) => {
       <p>If you did not request this change, please ignore this email. The link will expire in an hour.
       If you need any assistance, please contact our support team.
       Best regards,
-      [Company Name]</p>
+      Intensity fitness studio</p>
     `,
   });
 };
