@@ -23,7 +23,7 @@
     "roleClient": "Client",
     "roleTrainer": "Trainer",
     "loginQuestion": "Already have an account?",
-    "loginLink": "Log in"
+    "login": "Log in"
   },
   "forgotPassword": {
     "title": "Forgot Password",
