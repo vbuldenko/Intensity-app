@@ -19,11 +19,10 @@
     "phonePlaceholder": "Phone",
     "passwordPlaceholder": "Password",
     "submitButton": "Sign Up",
-    "roleQuestion": "What role do you want to sign up for?",
-    "roleClient": "Client",
-    "roleTrainer": "Trainer",
     "loginQuestion": "Already have an account?",
-    "login": "Log in"
+    "login": "Log in",
+    "checkEmailTitle": "Check your email",
+    "checkEmailText": "We've sent you an email with an activation link. Please click the link in the email to activate your account!"
   },
   "forgotPassword": {
     "title": "Forgot Password",

@@ -26,12 +26,11 @@
     "emailPlaceholder": "Електронна пошта",
     "phonePlaceholder": "Телефон",
     "passwordPlaceholder": "Пароль",
-    "roleQuestion": "Тип облікового запису",
-    "roleClient": "Клієнт",
-    "roleTrainer": "Тренер",
     "submitButton": "Зареєструватися",
     "loginQuestion": "Вже є створений акаунт?",
-    "login": "Увійти"
+    "login": "Увійти",
+    "checkEmailTitle": "Перевірте електронну пошту",
+    "checkEmailText": "Ми надіслали листа на вашу електронну адресу. Будь ласка, відкрийте його та перейдіть за посиланням, для активації вашого аккаунту!"
   },
   "forgotPassword": {
     "title": "Забули пароль",

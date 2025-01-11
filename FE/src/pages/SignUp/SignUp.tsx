@@ -18,7 +18,7 @@ const SignUp = () => {
     role: "client",
   };
   const [notification, setNotification] = useState<string | null>(null);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [signUpData, setSignUpData] = useState(defaultUserData);
   const navigate = useNavigate();
 
@@ -39,11 +39,15 @@ const SignUp = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      setIsSubmitting(true);
       await authService.register(signUpData);
+
       setSignUpData(defaultUserData);
       navigate(`/${Path.CheckEmail}`, { replace: true });
     } catch (error: any) {
       handleNotification(getErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -129,8 +133,10 @@ const SignUp = () => {
             </label>
           </div>
         </div> */}
-        <button id="login-button" type="submit" className="auth__button">
-          {t("signup.submitButton")}
+
+        <button type="submit" className="auth__button" disabled={isSubmitting}>
+          {isSubmitting && <div className="reservation-btn__spinner"></div>}
+          {!isSubmitting && t("signup.submitButton")}
         </button>
       </form>
       <div className="auth__subsection">

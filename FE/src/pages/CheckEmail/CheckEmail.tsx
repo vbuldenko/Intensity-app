@@ -1,13 +1,13 @@
 // import { Link } from "react-router-dom";
 
+import { useTranslation } from "react-i18next";
+
 const CheckEmail = () => {
+  const { t } = useTranslation();
   return (
-    <div className="check-email card-element flex flex-col p-4 gap-5 items-center">
-      <h1 className="font-bold">Check Your Email</h1>
-      <p>
-        We've sent you an email with an activation link. Please click the link
-        in the email to activate your account.
-      </p>
+    <div className="check-email card-element flex flex-col py-6 px-2 gap-5 items-center text-center">
+      <h2 className="text-2xl text-green-400">{t("signup.checkEmailTitle")}</h2>
+      <p className="text-teal-100">{t("signup.checkEmailText")}</p>
       {/* <p className="flex gap-4 items-center">
         Didn't receive the email?{" "}
         <Link
