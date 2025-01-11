@@ -72,6 +72,25 @@ export function isTomorrow(dateToCheck) {
     tomorrow.getFullYear() === dateToCheck.getFullYear()
   );
 }
+
+export const getUserFromRequest = req => {
+  const user = req.user;
+  if (!user) {
+    throw ApiError.Unauthorized();
+  }
+  return user;
+};
+export const checkAdminRole = user => {
+  if (user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+};
+export const isAdmin = user => {
+  if (user.role !== 'admin') {
+    throw ApiError.Unauthorized();
+  }
+};
+
 export const canTrainingProceed = (trainingDate, visitorsCount) => {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
   const trainingDateTime = toZonedTime(trainingDate, timeZone);
@@ -94,23 +113,6 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
   }
   return true;
 };
-export const getUserFromRequest = req => {
-  const user = req.user;
-  if (!user) {
-    throw ApiError.Unauthorized();
-  }
-  return user;
-};
-export const checkAdminRole = user => {
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
-};
-export const isAdmin = user => {
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
-};
 
 export function isCancellationForbidden(trainingDate) {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
@@ -131,12 +133,7 @@ export function isCancellationForbidden(trainingDate) {
 export function reservationAccess(scheduledDate, reservedPlaces) {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
   const scheduledTime = toZonedTime(scheduledDate, timeZone);
-  console.log(
-    'current time: ',
-    kyivCurrentTime,
-    'scheduled time: ',
-    scheduledTime,
-  );
+
   // Rule 1
   if (kyivCurrentTime >= scheduledTime) {
     console.log('Scheduled time is in the past');
@@ -172,11 +169,9 @@ export function reservationAccess(scheduledDate, reservedPlaces) {
   }
 
   // Rule 4
-  if (hoursDiff <= 3) {
-    console.log('Less than 3 hours before training');
-    if (reservedPlaces < 2) {
-      return false;
-    }
+  if (hoursDiff <= 3 && reservedPlaces < 2) {
+    console.log('Less than 3 hours left for training');
+    return false;
   }
 
   return true;
