@@ -3,28 +3,34 @@ import { useNavigate, useParams } from "react-router-dom";
 import { authService } from "../../services/authService";
 import Notification from "../../components/Elements/Notification";
 import { getErrorMessage } from "../../utils/utils";
+import { useTranslation } from "react-i18next";
 
 const ResetPassword = () => {
+  const { t } = useTranslation();
   const { resetToken } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const { message } = await authService.resetPassword({
+      setIsSubmitting(true);
+      await authService.resetPassword({
         password,
         passwordConfirm,
         resetToken,
       });
-      setNotification(message);
+
+      setNotification(t("resetPassword.success"));
       setTimeout(() => navigate("/sign-in", { replace: true }), 5000); //path - to redirect to the page where user came from or default. replace - to delete sign in path from history stack
     } catch (error) {
-      setError(getErrorMessage(error) || "error occured");
+      setError(getErrorMessage(error) || t("resetPassword.error"));
     } finally {
+      setIsSubmitting(false);
       setPassword("");
       setPasswordConfirm("");
       setTimeout(() => {
@@ -37,7 +43,7 @@ const ResetPassword = () => {
   return (
     <div className="auth__form-wrapper card-element">
       <form className="auth__form border-b-0" onSubmit={handleSubmit}>
-        <h2 className="text-center">Reset Password</h2>
+        <h2 className="text-center">{t("resetPassword.title")}</h2>
         {notification && <Notification message={notification} />}
         {error && <Notification message={error} type="error" />}
         <div className="auth__input-wrapper">
@@ -46,7 +52,7 @@ const ResetPassword = () => {
             type="password"
             value={password}
             name="password"
-            placeholder="Enter new password"
+            placeholder={t("resetPassword.password")}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
@@ -56,12 +62,13 @@ const ResetPassword = () => {
             type="password"
             value={passwordConfirm}
             name="passwordConfirm"
-            placeholder="Confirm new password"
+            placeholder={t("resetPassword.passwordConfirm")}
             onChange={({ target }) => setPasswordConfirm(target.value)}
           />
         </div>
-        <button type="submit" className="auth__button">
-          Reset Password
+        <button type="submit" className="auth__button" disabled={isSubmitting}>
+          {isSubmitting && <div className="reservation-btn__spinner"></div>}
+          {!isSubmitting && t("resetPassword.submitButton")}
         </button>
       </form>
     </div>

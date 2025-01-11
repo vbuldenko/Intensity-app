@@ -8,6 +8,7 @@ const NOTIFICATION_TIMEOUT = 5000;
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [notification, setNotification] = useState<{
     message: string;
@@ -17,7 +18,9 @@ const ForgotPassword = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      setIsSubmitting(true);
       await authService.requestRestore(email);
+      setIsSubmitting(false);
       setEmail("");
       setNotification({
         message: t("forgotPassword.successMessage"),
@@ -56,8 +59,13 @@ const ForgotPassword = () => {
                 onChange={({ target }) => setEmail(target.value)}
               />
             </div>
-            <button type="submit" className="auth__button">
-              {t("forgotPassword.submitButton")}
+            <button
+              type="submit"
+              className="auth__button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting && <div className="reservation-btn__spinner"></div>}
+              {!isSubmitting && t("forgotPassword.submitButton")}
             </button>
           </>
         )}

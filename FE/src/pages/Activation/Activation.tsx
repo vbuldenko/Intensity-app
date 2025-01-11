@@ -5,8 +5,10 @@ import { activate } from "../../app/features/auth/authThunk";
 import { selectAuth } from "../../app/features/auth/authSlice";
 import Loader from "../../components/Elements/Loader";
 import { Path } from "../../types/Path";
+import { useTranslation } from "react-i18next";
 
 const AccountActivation = () => {
+  const { t } = useTranslation();
   const { activationToken } = useParams();
   const { loading, error, isAuthenticated } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
@@ -24,20 +26,22 @@ const AccountActivation = () => {
 
   return (
     <div className="card-element p-4 flex flex-col items-center">
-      <h1 className="title text-center">Account activation</h1>
+      <h2 className="text-center text-xl mb-4">{t("activation.title")}</h2>
       {loading ? (
         <>
           <Loader />
-          <p className="bg-gray-100 p-2 rounded-lg mt-4">
-            Activation in progress...
+          <p className="p-2 rounded-lg mt-4 text-green-500">
+            {t("activation.progress")}
           </p>
         </>
       ) : error ? (
-        <p className="bg-red-100 p-2 rounded-lg text-red-500">{error}</p>
+        <p className="bg-red-100 py-2 px-6 rounded-lg text-red-500 m-4 text-center">
+          {error}
+        </p>
       ) : (
         isAuthenticated && (
-          <p className="bg-green-100 p-2 rounded-lg text-green-500">
-            Account activated! Redirecting in 5 seconds...
+          <p className="bg-green-100 py-2 px-6 rounded-lg text-green-500 m-4 text-center">
+            {t("activation.success")}
           </p>
         )
       )}

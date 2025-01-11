@@ -21,9 +21,13 @@ const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
   view,
   handleViewChange,
 }) => {
-  const { i18n } = useTranslation();
-
+  const { i18n, t } = useTranslation();
   const locale = i18n.language === "ua" ? ukCustom : enUS;
+
+  const buttonNames = [
+    { value: "month", label: t("calendar.month") },
+    { value: "week", label: t("calendar.week") },
+  ];
 
   return (
     <div className="calendar__navbar">
@@ -40,7 +44,7 @@ const CalendarNavbar: React.FC<CalendarNavbarProps> = ({
       </button>
       <CustomSelect
         value={view}
-        options={["month", "week"]}
+        options={buttonNames}
         onChange={handleViewChange}
       />
     </div>

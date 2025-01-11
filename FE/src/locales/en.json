@@ -32,6 +32,14 @@
     "successMessage": "A password reset link has been sent to your email.",
     "errorMessage": "An error occurred"
   },
+  "resetPassword": {
+    "title": "Reset Password",
+    "password": "Enter a new password",
+    "passwordConfirm": "Confirm the new password",
+    "submitButton": "Submit",
+    "success": "A password reset successfully!",
+    "error": "An error occurred"
+  },
   "nav": {
     "home": "Home",
     "services": "Services",
@@ -269,5 +277,20 @@
     "FRI": "FRI",
     "SAT": "SAT",
     "SUN": "SUN"
+  },
+  "calendar": {
+    "month": "Month",
+    "week": "Week"
+  },
+  "reserveBtn": {
+    "reserve": "Reserve",
+    "cancel": "Cancel",
+    "closed": "Closed"
+  },
+  "activation": {
+    "title": "Account Activation",
+    "success": "Account has been activated successfully! Redirect in 3 seconds...",
+    "error": "An error occurred while activating the account.",
+    "progress": "Account activation is in progress..."
   }
 }

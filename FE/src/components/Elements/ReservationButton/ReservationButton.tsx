@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import "./ReservationButton.scss";
+import { useTranslation } from "react-i18next";
 
 interface ButtonProps {
   access: boolean;
@@ -17,6 +18,8 @@ const ReservationButton: React.FC<ButtonProps> = ({
   isDataUpdating,
   onClick,
 }) => {
+  const { t } = useTranslation();
+
   const buttonClass = classNames("reservation-btn mt-2", {
     "reservation-btn--disabled": !access,
     "reservation-btn--reserve": access && !isReserved && !isSubmitting,
@@ -31,7 +34,11 @@ const ReservationButton: React.FC<ButtonProps> = ({
       disabled={!access || isSubmitting || isDataUpdating} // Disable button if no access or during submission
     >
       {isSubmitting && <div className="reservation-btn__spinner"></div>}
-      {!access ? "Closed" : isReserved ? "Cancel" : "Reserve"}
+      {!access
+        ? t("reserveBtn.closed")
+        : isReserved
+          ? t("reserveBtn.cancel")
+          : t("reserveBtn.reserve")}
     </button>
   );
 };
