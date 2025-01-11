@@ -22,7 +22,7 @@ export const sendActivationLink = (name, email, token) => {
   });
 };
 export const sendResetLink = (name, email, token) => {
-  const link = `${process.env.CLIENT_URL}/reset-password/${token}`;
+  const link = `${process.env.CLIENT_HOST}/reset-password/${token}`;
   return send({
     email,
     subject: 'Password Reset Request',
