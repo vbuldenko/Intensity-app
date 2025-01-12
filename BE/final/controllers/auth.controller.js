@@ -49,7 +49,9 @@ export const activate = async (req, res) => {
   const { activationToken } = req.params;
   const user = await userService.getByToken(activationToken);
   if (!user) {
-    throw ApiError.NotFound({ user: 'User does not exist' });
+    throw ApiError.NotFound({
+      user: 'User does not exist or was activated already!',
+    });
   }
   user.activationToken = null;
   await user.save();
