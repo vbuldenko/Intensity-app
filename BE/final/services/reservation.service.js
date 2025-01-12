@@ -144,8 +144,7 @@ const handleCancellation = async (abonement, training, trainer) => {
     abonement: abonement._id,
     training: training._id,
   });
-  console.log('reservation that was deleted', reservation);
-  console.log('current abonement', abonement);
+
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
@@ -165,7 +164,6 @@ const handleCancellation = async (abonement, training, trainer) => {
     abonement.status = 'active';
   }
 
-  console.log('abonement after reservation deletion', abonement);
   // Reload the models to get the updated data without re-fetching everything
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
   console.log('abonement after reservation deletion save', abonement);
@@ -206,7 +204,6 @@ export const cancelNotHeldTrainings = async abonementId => {
     },
   });
 
-  console.log('abonement before CANCEL', abonement);
   if (!abonement) {
     throw ApiError.NotFound({ error: 'Abonement not found.' });
   }

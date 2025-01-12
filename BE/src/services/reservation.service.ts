@@ -185,8 +185,6 @@ const handleCancellation = async (
     training: training._id,
   });
 
-  console.log('current abonement', abonement);
-
   if (!reservation) {
     throw ApiError.BadRequest('Reservation not found');
   }
