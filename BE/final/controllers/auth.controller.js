@@ -94,7 +94,7 @@ export const refresh = async (req, res) => {
     throw ApiError.Unauthorized('invalid token');
   }
   const user = await userService.getById(userData.id);
-  if (!user || token.userId !== user.id) {
+  if (!user || token.userId.toString() !== user.id.toString()) {
     res.clearCookie('refreshToken');
     throw ApiError.Unauthorized('user not found');
   }

@@ -24,7 +24,7 @@ export function createApp() {
   const app = express();
   app.use(
     cors({
-      origin: process.env.CLIENT_URL,
+      origin: process.env.CLIENT_HOST,
       credentials: true,
     }),
   );
