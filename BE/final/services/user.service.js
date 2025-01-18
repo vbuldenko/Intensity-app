@@ -43,6 +43,7 @@ const getById = async id => {
     })
     .populate({
       path: 'trainings',
+      options: { sort: { date: 1 } },
       populate: {
         path: 'reservations',
         populate: {

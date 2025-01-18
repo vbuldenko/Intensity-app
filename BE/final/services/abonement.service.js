@@ -55,7 +55,7 @@ export const create = async (payload, user) => {
     price: payload.price,
     left: payload.amount,
   });
-  if (client.role === 'admin') {
+  if (role === 'admin') {
     newAbonement.paymentMethod = payload.paymentMethod;
   }
   const savedAbonement = await newAbonement.save();

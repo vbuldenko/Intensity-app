@@ -1,5 +1,3 @@
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
-// import HistoryElement from "../../../../components/Elements/HistoryElement";
 import {
   filterByVisitors,
   filterTrainingsByDate,
@@ -8,7 +6,8 @@ import {
 import "./TrainerOverview.scss";
 import { User } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
-import HistoryElement from "../../../../components/Elements/HistoryElement";
+import TrainerTrainingCard from "./TrainerTrainingCard";
+import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
 
 interface TrainerOverviewProps {
   user: User;
@@ -70,32 +69,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
         <div className="trainer-overview__trainings-list">
           {currentDayTrainings.length > 0 ? (
             currentDayTrainings.map((training) => (
-              <div key={training.id} className="training">
-                <div className="flex gap-2 items-center">
-                  <p className="training__time">{training.time}</p>
-                  <CheckCircleIcon className="training__check-icon" />
-                </div>
-                <div className="training__card">
-                  <div className="flex">
-                    <p className="training__type">{training.type}</p>
-                  </div>
-                  <div className="flex text-sm text-gray-500">
-                    <p>
-                      {t("history.visitors")}: {training.reservations.length}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="training__visitors">
-                  {training.reservations.length > 0
-                    ? training.reservations.map((el) => (
-                        <span key={el.id}>
-                          {`${el.user.firstName} ${el.user.lastName}`}
-                        </span>
-                      ))
-                    : null}
-                </div>
-              </div>
+              <TrainerTrainingCard key={training.id} training={training} />
             ))
           ) : (
             <p className="text-gray-500 text-center">
@@ -112,7 +86,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
         <div className="trainer-overview__trainings-list">
           {currentMonthTrainings.length > 0 ? (
             currentMonthTrainings.map((el) => (
-              <HistoryElement key={el.id} data={el} trainer={false} />
+              <TrainerTrainingHistoryCard key={el.id} training={el} />
             ))
           ) : (
             <p className="text-gray-300 text-center">

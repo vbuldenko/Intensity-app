@@ -72,7 +72,7 @@ export const create = async (payload: any, user: any) => {
     left: payload.amount,
   });
 
-  if (client.role === 'admin') {
+  if (role === 'admin') {
     newAbonement.paymentMethod = payload.paymentMethod;
   }
 
