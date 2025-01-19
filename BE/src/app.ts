@@ -31,7 +31,7 @@ export function createApp() {
 
   app.use(
     cors({
-      origin: process.env.CLIENT_HOST,
+      origin: process.env.CLIENT_HOST2,
       credentials: true,
     }),
   );
