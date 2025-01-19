@@ -5,7 +5,9 @@ export const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     active: isActive,
   });
 
-export const scrollToTop = () => window.scrollTo(0, 0);
+export const scrollToTop = () =>
+  window.scrollTo({ top: 0, behavior: "smooth" });
+// export const scrollToTop = () => window.scrollTo(0, 0);
 // export const scrollOnTop = (point = 0) =>
 //   window.scrollTo({ top: point, behavior: 'smooth' });
 

@@ -1,11 +1,11 @@
-import { ArrowUpIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../../../contexts/ThemeContext";
 import { NavBarLinks } from "../../../types/NavBarLinks";
-import { getLinkClass, scrollToTop } from "../../../utils/utils";
+import { getLinkClass } from "../../../utils/utils";
 import { Logo } from "../../Elements/Logo";
 import "./Footer.scss";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import ScrollToTopButton from "../../Elements/ScrollToTopBtn/ScrollToTopButton";
 
 export const Footer = () => {
   const { theme } = useTheme();
@@ -94,9 +94,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <button className="footer__button" onClick={scrollToTop}>
-          <ArrowUpIcon className="footer__button-icon" />
-        </button>
+        <ScrollToTopButton />
       </div>
     </footer>
   );

@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { User } from "../../../types/User";
 import { useTranslation } from "react-i18next";
 import Loader from "../../../components/Elements/Loader"; // Import the Loader component
+import ScrollToTopButton from "../../../components/Elements/ScrollToTopBtn/ScrollToTopButton";
 
 export default function UserList() {
   const { t } = useTranslation();
@@ -155,6 +156,8 @@ export default function UserList() {
           })}
         </div>
       )}
+
+      <ScrollToTopButton />
     </div>
   );
 }

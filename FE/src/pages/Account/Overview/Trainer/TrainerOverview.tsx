@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
 import TrainerSalaryStats from "./SalaryStats";
 import ScheduledTrainings from "./ScheduledTrainings";
+import ScrollToTopButton from "../../../../components/Elements/ScrollToTopBtn/ScrollToTopButton";
 
 interface TrainerOverviewProps {
   user: User;
@@ -44,12 +45,10 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
         currentMonthTrainings={currentMonthTrainings}
         currentDayTrainings={currentDayTrainings}
       />
-
       <ScheduledTrainings
         title={t("trainerOverview.todayTrainings")}
         trainings={currentDayTrainings}
       />
-
       <ScheduledTrainings
         title={t("trainerOverview.tomorrowTrainings")}
         trainings={tomorrowTrainings}
@@ -71,6 +70,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
           )}
         </div>
       </div>
+      <ScrollToTopButton />
     </div>
   );
 };

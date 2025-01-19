@@ -1,0 +1,19 @@
+.scroll-top-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 1rem;
+  padding: 0.5rem;
+  border: 1px solid $gray-color-1;
+  border-radius: 50%;
+  display: flex;
+  background-color: $color-light-green;
+  color: $gray-color-3;
+  cursor: pointer;
+
+  @include hover(color, $color-hoverBG);
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+  }
+}

@@ -1,5 +1,6 @@
 export const membership = {
   group: [
+    { amount: 1, price: 250 },
     { amount: 1, price: 400 },
     { amount: 4, price: 1400 },
     { amount: 6, price: 2000 },
