@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./Buying.scss";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 const PaymentDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +42,6 @@ const Buying = () => {
     <div className="buying">
       <h1 className="buying__header">{t("prices.paymentDetails")}</h1>
       <p className="buying__description">{t("prices.explanation")}</p>
-      {/* <div className="buying__dotted-line"></div> */}
       <div className="flex flex-col gap-2 buying__notes">
         <span className="buying__note ">{t("prices.IBAN_note")}</span>
         <span className="buying__note text-yellow-300">
@@ -58,7 +56,6 @@ const Buying = () => {
       </div>
       <div className="buying__dotted-line"></div>
       <div className="buying__option">
-        {/* <CheckCircleIcon className="buying__icon" /> */}
         <p className="buying__description">{t("prices.linkDescription")}</p>
         <a
           href="https://bank.gov.ua/qr/QkNECjAwMgoyClVDVAoK1M7PIMzu8O7n7uLgIMDt5uXr4CDC4Ovl8LO_4u3gClVBNTYzMjIwMDEwMDAwMDI2MDA4MzMwMTEwODYxClVBSDAKMzQ2NjcxMjI4MgoKCs7v6-Dy4CDn4CDg4e7t5ezl7fIKCg"
@@ -71,7 +68,6 @@ const Buying = () => {
       </div>
       <div className="buying__dotted-line"></div>
       <div className="buying__option">
-        {/* <CheckCircleIcon className="buying__icon" /> */}
         <p className="buying__description">{t("prices.qrCodeDescription")}</p>
         <div className="buying__qr-code">
           <img
