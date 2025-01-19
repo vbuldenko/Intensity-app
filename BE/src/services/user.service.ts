@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import User, { IUser, UserDTO } from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
 import { hashPassword } from '../utils';
@@ -79,7 +79,7 @@ const create = async (user: IUser) => {
   }
 
   const hash = await hashPassword(user.password);
-  const activationToken = bcrypt.genSaltSync(1);
+  const activationToken = crypto.randomBytes(32).toString('hex');
 
   const newUser = new User({
     ...user,
