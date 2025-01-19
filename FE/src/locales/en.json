@@ -164,7 +164,14 @@
     "card": "Card",
     "cash": "Cash",
     "paymentDetails": "Payment Details",
-    "paymentLink": "Open payment link"
+    "methods": "Currently, the following methods are available:",
+    "paymentLink": "Open payment link",
+    "explanation": "TTo sign up for a training session, please purchase a subscription. This is required even for a trial session. After making the payment, send a screenshot of the receipt to the administrator, who will then add the subscription to your account. Once this is done, you’ll be able to reserve a spot for the training sessions.",
+    "directPaymentDescription": "Manually: using IBAN information given below",
+    "qrCodeDescription": "Below, you will find a QR code that can be scanned with your phone's camera to open the banking app for payment.",
+    "linkDescription": "You can also try using the link that serves the same purpose.",
+    "IBAN_note": "When using the QR code and the link button, the details should be filled in automatically; all you need to do is enter the amount and confirm the payment.",
+    "buyingNote": "The QR code and the payment link via IBAN may not work if you don't have any mobile banking app installed on your phone."
   },
   "contacts": {
     "title": "Contacts",
