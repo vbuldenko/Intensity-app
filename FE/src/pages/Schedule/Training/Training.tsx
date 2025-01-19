@@ -60,6 +60,8 @@ export default function Training({ training }: { training: TrainingType }) {
               return t("training.cancel_forbidden_rule");
             case "Reservation period has passed!":
               return t("training.reservation_period_passed");
+            case "Abonement Id is required!":
+              return t("training.no_abonement2");
             default:
               return getErrorMessage(error);
           }

@@ -12,6 +12,7 @@ import {
   CogIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 interface MenuProps {
   className: string;
@@ -41,8 +42,8 @@ const Menu = ({ className }: MenuProps) => {
       links.splice(
         1,
         0,
-        { to: Path.Schedule, label: t("menu.schedule") }
-        // { to: Path.Purchases, label: t("menu.purchases")}
+        { to: Path.Schedule, label: t("menu.schedule") },
+        { to: Path.Buying, label: t("menu.buying") }
       );
     }
 
@@ -61,6 +62,9 @@ const Menu = ({ className }: MenuProps) => {
               )}
               {label === t("menu.schedule") && (
                 <CalendarDaysIcon className="menu__icon" />
+              )}
+              {label === t("menu.buying") && (
+                <ShoppingBagIcon className="menu__icon" />
               )}
               {label === t("menu.settings") && (
                 <CogIcon className="menu__icon" />

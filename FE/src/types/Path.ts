@@ -12,6 +12,7 @@ export enum Path {
   ResetPassword = "reset-password",
   Account = "account",
   Purchases = "purchases",
+  Buying = "buying",
   Users = "users",
   SelectedUser = "users/:id",
   Team = "team",

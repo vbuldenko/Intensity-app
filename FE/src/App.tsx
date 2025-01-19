@@ -22,6 +22,7 @@ import User from "./pages/Account/UserList/User";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AccountActivation from "./pages/Activation/Activation";
+import Buying from "./pages/Account/Buying";
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
             <Route path={Path.Settings} element={<Settings />} />
             <Route path={Path.Schedule} element={<Schedule />} />
             <Route path={Path.Purchases} element={<Purchases />} />
+            <Route path={Path.Buying} element={<Buying />} />
             <Route path={Path.Users} element={<UserList />} />
             <Route path={Path.SelectedUser} element={<User />} />
             <Route path={Path.ScheduleEditor} element={<ScheduleEditor />} />
