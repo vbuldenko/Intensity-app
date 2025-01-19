@@ -58,7 +58,7 @@ const getById = async (id: string) => {
     })
     .populate({
       path: 'trainings',
-      options: { sort: { date: -1 } }, // Sort trainings by date in asc (1) or desc (-1) order
+      options: { sort: { date: 1 } }, // Sort trainings by date in asc (1) or desc (-1) order
       populate: {
         path: 'reservations',
         populate: {

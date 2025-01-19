@@ -1,13 +1,13 @@
 import {
   filterByVisitors,
   filterTrainingsByDate,
-  getCurrentWage,
 } from "../../../../utils/trainings";
 import "./TrainerOverview.scss";
 import { User } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
-import TrainerTrainingCard from "./TrainerTrainingCard";
 import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
+import TrainerSalaryStats from "./SalaryStats";
+import ScheduledTrainings from "./ScheduledTrainings";
 
 interface TrainerOverviewProps {
   user: User;
@@ -29,55 +29,31 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
     "day"
   );
 
+  // Calculate tomorrow's date
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(currentDate.getDate() + 1);
+  const tomorrowTrainings = filterTrainingsByDate(
+    trainerTrainings,
+    tomorrowDate,
+    "day"
+  );
+
   return (
     <div className="trainer-overview">
-      <div className="trainer-overview__salary-section card-element">
-        <h3 className="trainer-overview__title">
-          {t("trainerOverview.salary")}
-        </h3>
+      <TrainerSalaryStats
+        currentMonthTrainings={currentMonthTrainings}
+        currentDayTrainings={currentDayTrainings}
+      />
 
-        <div className="trainer-overview__result">
-          <p className="trainer-overview__label">
-            {t("trainerOverview.currentTotal")}
-          </p>
-          <span className="trainer-overview__value text-teal-600">
-            {getCurrentWage(currentMonthTrainings)} ₴
-          </span>
-        </div>
-        <div className="trainer-overview__result">
-          <p className="trainer-overview__label">
-            {t("trainerOverview.today")}
-          </p>
-          <span className="trainer-overview__value text-teal-600">
-            {getCurrentWage(currentDayTrainings)} ₴
-          </span>
-        </div>
-        <div className="trainer-overview__result">
-          <p className="trainer-overview__label">
-            {t("trainerOverview.monthTrainings")}
-          </p>
-          <span className="trainer-overview__value">
-            {currentMonthTrainings.length}
-          </span>
-        </div>
-      </div>
+      <ScheduledTrainings
+        title={t("trainerOverview.todayTrainings")}
+        trainings={currentDayTrainings}
+      />
 
-      <div className="trainer-overview__trainings-section card-element">
-        <h3 className="trainer-overview__title">
-          {t("trainerOverview.todayTrainings")}
-        </h3>
-        <div className="trainer-overview__trainings-list">
-          {currentDayTrainings.length > 0 ? (
-            currentDayTrainings.map((training) => (
-              <TrainerTrainingCard key={training.id} training={training} />
-            ))
-          ) : (
-            <p className="text-gray-500 text-center">
-              {t("trainerOverview.noTrainings")}
-            </p>
-          )}
-        </div>
-      </div>
+      <ScheduledTrainings
+        title={t("trainerOverview.tomorrowTrainings")}
+        trainings={tomorrowTrainings}
+      />
 
       <div className="trainer-overview__trainings-section card-element">
         <h3 className="trainer-overview__title">

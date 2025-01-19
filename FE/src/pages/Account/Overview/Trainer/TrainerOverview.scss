@@ -40,6 +40,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid $color-green;
+  border-bottom: 1px solid $color-green;
 
   &__time {
     font-size: 1rem;
@@ -83,8 +85,12 @@
       font-size: 0.75rem;
       border-bottom: 1px dotted $color-green;
     }
-    & :first-child {
-      border-top: 1px dotted $color-green;
+    // & :first-child {
+    //   border-top: 1px dotted $color-green;
+    // }
+    & :last-child {
+      // border-top: 1px dotted $color-green;
+      border-bottom: none;
     }
   }
 }
