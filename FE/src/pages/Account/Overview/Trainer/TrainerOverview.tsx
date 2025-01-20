@@ -9,6 +9,7 @@ import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
 import TrainerSalaryStats from "./SalaryStats";
 import ScheduledTrainings from "./ScheduledTrainings";
 import ScrollToTopButton from "../../../../components/Elements/ScrollToTopBtn/ScrollToTopButton";
+// import Selector from "../../../../components/Elements/Selector";
 
 interface TrainerOverviewProps {
   user: User;
@@ -66,6 +67,11 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
         <h3 className="trainer-overview__title">
           {t("trainerOverview.history")}
         </h3>
+        {/* <Selector
+          selection={abonementView}
+          handleSelection={handleViewChange}
+          buttonNames={buttonNames}
+        /> */}
         <div className="trainer-overview__trainings-list">
           {currentMonthTrainings.length > 0 ? (
             currentMonthTrainings.map((el) => (
