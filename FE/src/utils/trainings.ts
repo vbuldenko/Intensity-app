@@ -32,7 +32,8 @@ export const filterByVisitors = (
 export const filterTrainingsByDate = (
   trainings: Training[],
   currentDate: Date,
-  filterType: "month" | "day"
+  filterType: "month" | "day",
+  upToCurrentMoment: boolean = false
 ) => {
   return trainings.filter((training) => {
     const trainingDate = new Date(training.date);
@@ -40,12 +41,18 @@ export const filterTrainingsByDate = (
     const isSameMonth = trainingDate.getMonth() === currentDate.getMonth();
 
     if (filterType === "month") {
-      return isSameYear && isSameMonth;
+      if (isSameYear && isSameMonth) {
+        return upToCurrentMoment ? trainingDate <= currentDate : true;
+      }
     }
 
     if (filterType === "day") {
       const isSameDay = trainingDate.getDate() === currentDate.getDate();
-      return isSameYear && isSameMonth && isSameDay;
+      if (isSameYear && isSameMonth && isSameDay) {
+        return upToCurrentMoment
+          ? trainingDate.getHours() >= currentDate.getHours()
+          : true;
+      }
     }
 
     return false;

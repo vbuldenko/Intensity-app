@@ -22,12 +22,14 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
   const currentMonthTrainings = filterTrainingsByDate(
     trainerTrainings,
     currentDate,
-    "month"
+    "month",
+    true
   );
   const currentDayTrainings = filterTrainingsByDate(
     trainerTrainings,
     currentDate,
-    "day"
+    "day",
+    true
   );
 
   // Calculate tomorrow's date
