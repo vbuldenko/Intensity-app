@@ -28,6 +28,12 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
   const currentDayTrainings = filterTrainingsByDate(
     trainerTrainings,
     currentDate,
+    "day"
+  );
+
+  const todayLeftTrainings = filterTrainingsByDate(
+    currentDayTrainings,
+    currentDate,
     "day",
     true
   );
@@ -49,7 +55,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
       />
       <ScheduledTrainings
         title={t("trainerOverview.todayTrainings")}
-        trainings={currentDayTrainings}
+        trainings={todayLeftTrainings}
       />
       <ScheduledTrainings
         title={t("trainerOverview.tomorrowTrainings")}

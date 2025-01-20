@@ -15,19 +15,30 @@ const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="trainer-overview__salary-section card-element">
-      <h3 className="trainer-overview__title">{t("trainerOverview.salary")}</h3>
-
+    <div className="trainer-overview__salary-section card-element ">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="trainer-overview__title m-0">
+          {t("trainerOverview.salary")}
+        </h3>
+        <div>
+          <span className="text-green-500 text-xs border border-green-500 rounded-full px-2 py-0.5 ml-2">
+            month
+          </span>
+          <span className="text-green-500 text-xs border border-green-500 rounded-full px-2 py-0.5 ml-2">
+            group
+          </span>
+        </div>
+      </div>
       <div className="trainer-overview__result">
         <p className="trainer-overview__label">
-          {t("trainerOverview.currentTotal")}
+          {t("trainerOverview.currentTotal")}{" "}
         </p>
         <span className="trainer-overview__value text-teal-600">
           {getCurrentWage(currentMonthTrainings)} ₴
         </span>
       </div>
       <div className="trainer-overview__result">
-        <p className="trainer-overview__label">{t("trainerOverview.today")}</p>
+        <p className="trainer-overview__label">{t("trainerOverview.today")} </p>
         <span className="trainer-overview__value text-teal-600">
           {getCurrentWage(currentDayTrainings)} ₴
         </span>
