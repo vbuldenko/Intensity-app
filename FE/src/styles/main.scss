@@ -21,15 +21,16 @@
 
 html {
   font-size: var(--root-font-size);
-}
-
-body {
   background-color: $color-black-dark;
 }
 
+// body {
+//   background-color: $color-black-dark;
+// }
+
 main {
   overflow: hidden;
-  padding-block: 4.5rem 1.5rem;
+  padding-block: 4.5rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 56px;
