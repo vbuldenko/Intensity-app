@@ -48,16 +48,16 @@ export const create = async (payload: any, user: any) => {
     throw ApiError.NotFound({ user: 'User not found' });
   }
 
-  const abonements = await Abonement.find({
-    user: client._id,
-    status: { $in: ['active', 'inactive'] },
-  });
+  // const abonements = await Abonement.find({
+  //   user: client._id,
+  //   status: { $in: ['active', 'inactive'] },
+  // });
 
-  if (abonements.length > 0) {
-    throw ApiError.BadRequest('Existing element', {
-      abonement: 'was already created',
-    });
-  }
+  // if (abonements.length > 0) {
+  //   throw ApiError.BadRequest('Existing element', {
+  //     abonement: 'was already created',
+  //   });
+  // }
 
   if (!payload.amount || payload.amount === 0) {
     throw ApiError.BadRequest('Validation error', { amount: 'Required field' });
