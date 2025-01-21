@@ -1,5 +1,5 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
+import { UsersIcon } from "@heroicons/react/24/solid";
 import { getCurrentWage } from "../../../../../utils/trainings";
 import { Training } from "../../../../../types/Training";
 
@@ -15,7 +15,7 @@ const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="trainer-overview__salary-section card-element ">
+    <div className="trainer-overview__salary-section card-element flex flex-col gap-2">
       <div className="flex items-center justify-between mb-4">
         <h3 className="trainer-overview__title m-0">
           {t("trainerOverview.salary")}
@@ -47,9 +47,24 @@ const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
         <p className="trainer-overview__label">
           {t("trainerOverview.monthTrainings")}
         </p>
-        <span className="trainer-overview__value">
-          {currentMonthTrainings.length}
-        </span>
+        <div className="flex items-center">
+          <span className="trainer-overview__value mr-2">
+            {currentMonthTrainings.length}
+          </span>
+
+          <div className="border border-green-500 rounded-full px-2 py-1.5 flex items-center gap-1">
+            <span className="bg-green-100 bg-opacity-200 text-green-500 text-xs rounded-full px-3 py-0.5">
+              today {currentDayTrainings.length}
+            </span>
+            <span className="bg-green-100 bg-opacity-200 text-green-500 text-xs rounded-full px-3 py-0.5 flex items-center gap-1">
+              <UsersIcon className="w-4" />{" "}
+              {currentDayTrainings.reduce(
+                (acc, el) => acc + el.reservations.length,
+                0
+              )}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

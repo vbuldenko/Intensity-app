@@ -10,7 +10,7 @@ import {
   HomeIcon,
   CalendarDaysIcon,
   CogIcon,
-  UsersIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
@@ -70,7 +70,7 @@ const Menu = ({ className }: MenuProps) => {
                 <CogIcon className="menu__icon" />
               )}
               {label === t("menu.users") && (
-                <UsersIcon className="menu__icon" />
+                <UserGroupIcon className="menu__icon" />
               )}
               <span className="menu__link-label">{label}</span>
             </div>
