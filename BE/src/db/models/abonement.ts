@@ -3,7 +3,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface IAbonement extends Document {
   user: mongoose.Types.ObjectId;
   status: 'active' | 'ended' | 'expired' | 'inactive';
-  type: string;
+  type: 'group' | 'personal' | 'split';
   amount: number;
   price: number;
   left: number;
@@ -25,6 +25,7 @@ const AbonementSchema: Schema = new Schema(
     },
     type: {
       type: String,
+      enum: ['group', 'personal', 'split'],
       required: true,
     },
     amount: {

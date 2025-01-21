@@ -41,20 +41,21 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   return (
     <div className="abonement">
       <div className="abonement__info">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <div
-            className={classNames("abonement__status status", {
-              status: abonement.status === "active",
-              "status--red":
+            className={classNames("abonement__status status-absolute", {
+              "status-absolute--green": abonement.status === "active",
+              "status-absolute--red":
                 abonement.status === "ended" || abonement.status === "expired",
-              "status--gray": abonement.status === "inactive",
+              "status-absolute--gray": abonement.status === "inactive",
             })}
           >
             {abonement.status}
           </div>
+          <div className="status-absolute">{abonement.type}</div>
 
           {user?.role === "admin" && (
-            <div>
+            <div className="mb-4">
               id: <span className="text-pink-800">{abonement.id}</span>
             </div>
           )}

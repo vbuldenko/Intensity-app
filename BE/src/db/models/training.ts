@@ -5,6 +5,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ITraining extends Document {
   type: string;
+  format: 'group' | 'personal' | 'split';
   instructor: mongoose.Types.ObjectId;
   capacity: number;
   date: Date;
@@ -20,6 +21,11 @@ const TrainingSchema: Schema = new Schema(
     type: {
       type: String,
       required: true,
+    },
+    format: {
+      type: String,
+      enum: ['group', 'personal', 'split'],
+      default: 'group',
     },
     capacity: {
       type: Number,

@@ -8,6 +8,11 @@ const TrainingSchema = new Schema(
       type: String,
       required: true,
     },
+    format: {
+      type: String,
+      enum: ['group', 'personal', 'split'],
+      default: 'group',
+    },
     capacity: {
       type: Number,
       required: true,

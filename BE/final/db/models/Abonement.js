@@ -8,6 +8,7 @@ const AbonementSchema = new Schema(
     },
     type: {
       type: String,
+      enum: ['group', 'personal', 'split'],
       required: true,
     },
     amount: {

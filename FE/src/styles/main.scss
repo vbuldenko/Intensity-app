@@ -85,6 +85,79 @@ main {
   }
 }
 
+.status-absolute {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1;
+  // background: rgb(255, 111, 171);
+  background: white;
+  padding: 0.5rem 1.25rem;
+  min-width: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(160, 0, 77);
+  color: $color-red;
+  border-radius: 0 $big-br;
+
+  &--green {
+    right: auto;
+    left: 0;
+    border-radius: $big-br 0;
+    background: $color-green;
+    color: $color-white;
+  }
+
+  &--red {
+    right: auto;
+    left: 0;
+    border-radius: $big-br 0;
+    background: $color-red;
+    color: $color-white;
+  }
+
+  &--gray {
+    right: auto;
+    left: 0;
+    border-radius: $big-br 0;
+    background: $gray-color-3;
+    color: $color-white;
+  }
+
+  &--void {
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: 1px solid $color-red;
+    border-radius: $big-br;
+
+    &-green {
+      right: auto;
+      left: 0;
+      margin-left: 0.25rem;
+      border: 1px solid $color-green;
+      color: $color-green;
+    }
+    &-red {
+      right: auto;
+      left: 0;
+      margin-left: 0.25rem;
+      border: 1px solid $color-red;
+      color: $color-red;
+    }
+
+    &-gray {
+      right: auto;
+      left: 0;
+      margin-left: 0.25rem;
+      border: 1px solid $gray-color-3;
+      color: $gray-color-3;
+    }
+  }
+}
+
 .action-button {
   background-color: $gray-color-10;
   color: $color-green;
