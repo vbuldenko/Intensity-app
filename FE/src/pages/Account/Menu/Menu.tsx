@@ -11,6 +11,7 @@ import {
   CalendarDaysIcon,
   CogIcon,
   UserGroupIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/24/solid";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
@@ -36,7 +37,8 @@ const Menu = ({ className }: MenuProps) => {
         1,
         0,
         { to: Path.Users, label: t("menu.users") },
-        { to: Path.ScheduleEditor, label: t("menu.schedule") }
+        { to: Path.ScheduleEditor, label: t("menu.scheduleEditor") },
+        { to: Path.Schedule, label: t("menu.schedule") }
       );
     } else if (role === "client") {
       links.splice(
@@ -59,6 +61,9 @@ const Menu = ({ className }: MenuProps) => {
             <div className="flex items-center gap-2">
               {label === t("menu.overview") && (
                 <HomeIcon className="menu__icon" />
+              )}
+              {label === t("menu.scheduleEditor") && (
+                <PencilSquareIcon className="menu__icon" />
               )}
               {label === t("menu.schedule") && (
                 <CalendarDaysIcon className="menu__icon" />
