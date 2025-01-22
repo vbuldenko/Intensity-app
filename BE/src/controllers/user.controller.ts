@@ -9,7 +9,6 @@ import {
   validatePassword,
   comparePasswords,
   getUserFromRequest,
-  checkAdminRole,
 } from '../utils';
 import { UserDTO } from '../db/models/user';
 
@@ -25,15 +24,7 @@ export const getOneById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const userData = getUserFromRequest(req);
-  checkAdminRole(userData);
-
   const user = await userService.getById(req.params.id);
-
-  if (!user) {
-    throw ApiError.NotFound();
-  }
-
   res.send(user);
 };
 

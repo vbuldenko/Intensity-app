@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import * as trainingService from '../services/training.service';
-import { ApiError } from '../exceptions/api.error';
-import { checkAdminRole, getUserFromRequest } from '../utils';
 
 export const getAll = async (req: Request, res: Response) => {
   const trainingSessions = await trainingService.getAll();
@@ -10,17 +8,10 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const getById = async (req: Request, res: Response) => {
   const training = await trainingService.getById(req.params.id);
-  if (training) {
-    res.json(training);
-  } else {
-    throw ApiError.NotFound({ training: 'Not found' });
-  }
+  res.json(training);
 };
 
 export const create = async (req: Request, res: Response) => {
-  const user = getUserFromRequest(req);
-  checkAdminRole(user);
-
   const newTraining = await trainingService.create(req.body);
   res.status(201).json(newTraining);
 };
@@ -51,9 +42,6 @@ export const create = async (req: Request, res: Response) => {
 // };
 
 export const remove = async (req: Request, res: Response) => {
-  const user = getUserFromRequest(req);
-  checkAdminRole(user);
-
   await trainingService.remove(req.params.id);
   res.status(204).end();
 };
@@ -63,18 +51,12 @@ export const removeMany = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const user = getUserFromRequest(req);
-  checkAdminRole(user);
-
   await trainingService.removeAll();
   res.status(204).end();
 };
 
 export const initializeCurrentWeek = async (req: Request, res: Response) => {
-  const user = getUserFromRequest(req);
-  checkAdminRole(user);
   const { day, month } = req.body;
-
   await trainingService.initializeWeek(day, month);
   res.status(201).json({ message: 'Success' });
 };

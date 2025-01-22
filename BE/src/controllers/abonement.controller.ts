@@ -43,9 +43,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 }
 
 export async function remove(req: Request, res: Response): Promise<void> {
-  const user = getUserFromRequest(req);
   const abonementId = req.params.id;
-
-  await abonementService.remove(abonementId, user);
+  await abonementService.remove(abonementId);
   res.sendStatus(204);
 }

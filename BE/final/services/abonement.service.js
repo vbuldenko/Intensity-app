@@ -89,18 +89,13 @@ export const create = async (payload, user) => {
 //     },
 //   });
 // };
-export const remove = async (abonementId, user) => {
+export const remove = async abonementId => {
   const abonement = await Abonement.findById(abonementId);
   if (!abonement) {
-    throw new Error('Abonement not found');
+    throw ApiError.NotFound({ abonement: 'Not found' });
   }
   if (abonement.status !== 'inactive') {
-    throw new Error('Abonement should be inactive');
-  }
-  if (user.role !== 'admin') {
-    throw new Error(
-      'Unauthorized: You are not authorized to perform this operation.',
-    );
+    throw ApiError.BadRequest('Abonement should be inactive');
   }
   await Abonement.deleteOne({ _id: abonementId });
 };

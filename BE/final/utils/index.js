@@ -80,16 +80,6 @@ export const getUserFromRequest = req => {
   }
   return user;
 };
-export const checkAdminRole = user => {
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
-};
-export const isAdmin = user => {
-  if (user.role !== 'admin') {
-    throw ApiError.Unauthorized();
-  }
-};
 
 export const canTrainingProceed = (trainingDate, visitorsCount) => {
   const kyivCurrentTime = toZonedTime(new Date(), timeZone);

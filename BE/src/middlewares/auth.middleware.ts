@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../exceptions/api.error';
 import { validateAccessToken } from '../services/token.service';
 import { UserDTO } from '../db/models/user';
+import { getUserFromRequest } from '../utils';
 
 export function authMiddleware(
   req: Request,
@@ -26,3 +27,17 @@ export function authMiddleware(
 
   next();
 }
+
+// User must be an admin
+export const adminCheckerMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const user = getUserFromRequest(req);
+  if (user && user.role === 'admin') {
+    next();
+  } else {
+    throw ApiError.Unauthorized('User is not an admin');
+  }
+};

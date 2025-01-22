@@ -15,21 +15,22 @@ export const getAll = async () => {
 };
 
 export const getById = async id => {
-  return Training.findById(id).populate('instructor').populate('reservations');
+  const training = Training.findById(id)
+    .populate('instructor')
+    .populate('reservations');
+
+  if (training) {
+    return training;
+  } else {
+    throw ApiError.NotFound({ training: 'Not found' });
+  }
 };
 export const create = async training => {
   const hours = Number(training.time.slice(0, 2));
   const date = `${training.date}T${String(hours).padStart(2, '0')}:00:00`;
-  console.log('localTrainingDate', date);
-  // const date = new Date(training.date);
-  // date.setHours(hours);
-  // console.log('trainingDate2', date);
-
   const trainingDateUtc = fromZonedTime(date, timeZone);
-  console.log('trainingDateUtc', trainingDateUtc);
-
   training.date = trainingDateUtc;
-  // throw new Error('Not implemented');
+
   const newTraining = new Training(training);
   return await newTraining.save();
 };

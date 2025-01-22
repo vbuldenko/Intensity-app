@@ -45,7 +45,7 @@ const getByToken = async (activationToken: string) => {
 };
 
 const getById = async (id: string) => {
-  return User.findById(id)
+  const user = User.findById(id)
     .select('-activationToken -password')
     .populate({
       path: 'abonements',
@@ -67,6 +67,11 @@ const getById = async (id: string) => {
         },
       },
     });
+
+  if (!user) {
+    throw ApiError.NotFound();
+  }
+  return user;
 };
 
 const create = async (user: IUser) => {

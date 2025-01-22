@@ -8,19 +8,13 @@ import {
   validatePassword,
   comparePasswords,
   getUserFromRequest,
-  checkAdminRole,
 } from '../utils/index.js';
 export const getAllActive = async (req, res) => {
   const users = await userService.getAllActive();
   res.send(users);
 };
 export const getOneById = async (req, res) => {
-  const userData = getUserFromRequest(req);
-  checkAdminRole(userData);
   const user = await userService.getById(req.params.id);
-  if (!user) {
-    throw ApiError.NotFound();
-  }
   res.send(user);
 };
 export const getProfile = async (req, res) => {

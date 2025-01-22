@@ -36,8 +36,7 @@ export async function create(req, res) {
   res.status(201).json(newAbonement);
 }
 export async function remove(req, res) {
-  const user = getUserFromRequest(req);
   const abonementId = req.params.id;
-  await abonementService.remove(abonementId, user);
+  await abonementService.remove(abonementId);
   res.sendStatus(204);
 }
