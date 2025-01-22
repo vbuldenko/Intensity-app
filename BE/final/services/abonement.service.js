@@ -94,6 +94,9 @@ export const remove = async (abonementId, user) => {
   if (!abonement) {
     throw new Error('Abonement not found');
   }
+  if (abonement.status !== 'inactive') {
+    throw new Error('Abonement should be inactive');
+  }
   if (user.role !== 'admin') {
     throw new Error(
       'Unauthorized: You are not authorized to perform this operation.',
