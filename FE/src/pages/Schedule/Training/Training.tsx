@@ -68,6 +68,10 @@ export default function Training({ training }: { training: TrainingType }) {
     }
   };
 
+  const handleTrainingAbort = () => {
+    handleNotification("IN DEVELOPMENT", "error");
+  };
+
   return (
     <li className="schedule__training card-element relative">
       {notification && (
@@ -120,11 +124,18 @@ export default function Training({ training }: { training: TrainingType }) {
             btnName={t("training.cancelTraining")}
             data={
               <div className="flex flex-col items-center">
+                {notification && (
+                  <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    className="absolute top-0 w-full"
+                  />
+                )}
                 <p className="py-2">{t("gen.ensure")}</p>
 
                 <button
                   className="bg-teal-500 rounded-xl py-1 px-6"
-                  onClick={() => console.log("confirmed")}
+                  onClick={handleTrainingAbort}
                 >
                   {t("gen.confirm")}
                 </button>

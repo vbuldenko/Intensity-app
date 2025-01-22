@@ -48,7 +48,7 @@ export const reserveTraining = createAsyncThunk<
 
 export const checkTrainingReturn = createAsyncThunk<
   { abonement: Abonement; trainings: Training[] } | null,
-  number, // Argument type (abonementId)
+  number | string, // Argument type (abonementId)
   { rejectValue: ErrorResponse }
 >("trainings/checkReturn", async (abonementId, { rejectWithValue }) => {
   try {

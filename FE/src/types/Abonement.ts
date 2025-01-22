@@ -1,5 +1,5 @@
 export interface Abonement {
-  id: number;
+  id: number | string;
   user: any;
   status: "active" | "ended" | "expired" | "inactive";
   type: "group" | "personal" | "split" | "kids";

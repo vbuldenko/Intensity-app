@@ -31,7 +31,7 @@ function reserveTraining(
   );
 }
 function checkAndCancelNotHeld(
-  abonementId: number
+  abonementId: number | string
 ): Promise<{ abonement: Abonement; trainings: Training[] } | null> {
   return axiosClient.patch(`/trainings/cancel-unheld`, { abonementId });
 }

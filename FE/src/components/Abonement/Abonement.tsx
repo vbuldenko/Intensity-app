@@ -144,7 +144,7 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
                   <Notification
                     message={notification.message}
                     type={notification.type}
-                    className="w-60"
+                    className="w-60 mt-2"
                   />
                 )}
                 <p className="py-2">{t("gen.ensure")}</p>

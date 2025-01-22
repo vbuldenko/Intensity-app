@@ -1,25 +1,25 @@
 .menu {
   z-index: 1;
-  backdrop-filter: blur(50px);
+  // backdrop-filter: blur(50px);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  box-shadow: $shadow3;
+  // box-shadow: $shadow3;
   border-radius: 0;
   padding: 1rem;
-  background: $account-background;
+  // background: $account-background;
 
   &.dark {
     background-color: $color-black-dark;
-    border-top: 1px solid $color-element-dark;
   }
 
   @include on-mobile {
+    border-top: 1px solid $color-element-dark;
     padding: 0.8rem 0.5rem 1.5rem;
-    background-color: transparent;
-    backdrop-filter: blur(10px);
-    box-shadow: none;
+    // background-color: transparent;
+    // backdrop-filter: blur(10px);
+    // box-shadow: none;
     overflow-x: scroll;
     -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     scrollbar-width: none; /* Hide scrollbar for Firefox */

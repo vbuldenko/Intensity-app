@@ -12,7 +12,7 @@ function getAll(): Promise<Abonement[]> {
 function add(newAbonement: Partial<Abonement>): Promise<OriginalAbonement> {
   return axiosClient.post(`/abonements`, newAbonement);
 }
-function remove(abonementId: string) {
+function remove(abonementId: number | string) {
   return axiosClient.delete(`/abonements/${abonementId}`);
 }
 
