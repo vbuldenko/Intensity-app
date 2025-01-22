@@ -11,7 +11,10 @@ import trainingRouter from './api/training.route';
 import scheduleRouter from './api/schedule.route';
 import { passport } from './services/passport';
 import { requestLogger } from './middlewares/logger.middleware';
-import { authMiddleware } from './middlewares/auth.middleware';
+import {
+  adminCheckerMiddleware,
+  authMiddleware,
+} from './middlewares/auth.middleware';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { unknownEndpoint } from './middlewares/helper.middleware';
 import connectToDB from './db/db';
@@ -46,7 +49,7 @@ export function createApp() {
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', trainingRouter);
-  app.use('/schedule', authMiddleware, scheduleRouter);
+  app.use('/schedule', authMiddleware, adminCheckerMiddleware, scheduleRouter);
 
   // Serve the React app for any other route
   app.get('*', (req, res) => {

@@ -10,7 +10,10 @@ import trainingRouter from './api/training.route.js';
 import scheduleRouter from './api/schedule.route.js';
 import { passport } from './services/passport.js';
 import { requestLogger } from './middlewares/logger.middleware.js';
-import { authMiddleware } from './middlewares/auth.middleware.js';
+import {
+  adminCheckerMiddleware,
+  authMiddleware,
+} from './middlewares/auth.middleware.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { unknownEndpoint } from './middlewares/helper.middleware.js';
 import connectToDB from './db/db.js';
@@ -37,7 +40,7 @@ export function createApp() {
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', trainingRouter);
-  app.use('/schedule', authMiddleware, scheduleRouter);
+  app.use('/schedule', authMiddleware, adminCheckerMiddleware, scheduleRouter);
   // Serve the React app for any other route
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../ui', 'index.html'));
