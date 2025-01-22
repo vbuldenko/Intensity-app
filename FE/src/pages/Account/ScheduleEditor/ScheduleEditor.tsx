@@ -12,8 +12,10 @@ import classNames from "classnames";
 import { groupTrainingsByDay } from "../../../utils/trainings";
 import { Training } from "../../../types/Training";
 import { WeekDays } from "../../../types/WeekDays";
+import { useTranslation } from "react-i18next";
 
 const ScheduleEditor: React.FC = () => {
+  const { t } = useTranslation();
   const [trainers, setTrainers] = useState<User[]>([]);
   const [schedule, setSchedule] = useState<ScheduleTraining[]>([]);
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
@@ -159,7 +161,9 @@ const ScheduleEditor: React.FC = () => {
       {error && <Notification message={error} type="error" />}
       <div className="flex flex-wrap items-center justify-between my-4 gap-4">
         <label className="flex-1 flex gap-4 items-center justify-between w-full">
-          <span className="px-2 w-max text-gray-500">Select a date</span>
+          <span className="px-2 w-max text-gray-500">
+            {t("scheduleEditor.selectDate")}
+          </span>
           <input
             type="date"
             className="flex-1 bg-gray-100 text-teal-400 py-1 px-6 rounded-xl"
@@ -174,7 +178,7 @@ const ScheduleEditor: React.FC = () => {
             onClick={handleInitialization}
           >
             {isSubmitting && <div className="reservation-btn__spinner"></div>}
-            {!isSubmitting && "Initialize from selected date"}
+            {!isSubmitting && t("scheduleEditor.initBtn")}
           </button>
         </div>
       </div>
@@ -298,7 +302,9 @@ const ScheduleEditor: React.FC = () => {
           className="schedule-editor__create-btn bg-pink-800 text-white py-1 px-4 rounded-xl"
           onClick={() => setIsFormOpen(!isFormOpen)}
         >
-          {isFormOpen ? "Close Form" : "Create New Training"}
+          {isFormOpen
+            ? t("scheduleEditor.closeCreateForm")
+            : t("scheduleEditor.createTraining")}
         </button>
         {isFormOpen && (
           <div className="schedule-editor__create-form schedule-editor__edit-form mt-4">

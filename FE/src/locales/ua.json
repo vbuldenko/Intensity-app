@@ -285,6 +285,12 @@
     "inactive": "Неактивний",
     "unknown": "Невідомо"
   },
+  "scheduleEditor": {
+    "selectDate": "Оберіть дату",
+    "initBtn": "Ініціалізувати розклад з обраної дати",
+    "createTraining": "Створити окреме тренування",
+    "closeCreateForm": "Закрити форму створення тренування"
+  },
   "search": {
     "placeholder": "Ім'я користувача..."
   },

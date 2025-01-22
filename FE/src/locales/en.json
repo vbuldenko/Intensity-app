@@ -281,6 +281,12 @@
     "inactive": "Inactive",
     "unknown": "Unknown"
   },
+  "scheduleEditor": {
+    "selectDate": "Select date",
+    "initBtn": "Initialize from selected date",
+    "createTraining": "Create new training",
+    "closeCreateForm": "Close Form"
+  },
   "search": {
     "placeholder": "User name..."
   },
