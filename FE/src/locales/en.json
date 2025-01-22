@@ -1,7 +1,9 @@
 {
   "welcome": "Welcome to fitness studio",
   "gen": {
-    "info": "Information"
+    "info": "Information",
+    "ensure": "Are you sure?",
+    "confirm": "Confirm"
   },
   "login": {
     "title": "Log in",
@@ -192,7 +194,8 @@
     "abonement_expired": "Abonement has expired! Buy a new one to proceed!",
     "cancel_forbidden_rule": "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
     "trainer": "Trainer",
-    "left": "Places left:"
+    "left": "Places left:",
+    "cancelTraining": "Cancel Training"
   },
   "menu": {
     "overview": "Overview",

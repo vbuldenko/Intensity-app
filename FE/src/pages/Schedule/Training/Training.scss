@@ -1,6 +1,7 @@
 .schedule__training {
   width: 100%;
   flex: 1;
+  overflow: hidden;
 
   &-data {
     display: flex;
@@ -24,5 +25,17 @@
 }
 
 .training__content {
+  display: flex;
   padding: 1rem;
+
+  &--open {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  &--closed {
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }

@@ -13,6 +13,7 @@ import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
 import { useNotification } from "../../../hooks/useNotification";
+import Modal from "../../../components/Elements/Modal";
 
 export default function Training({ training }: { training: TrainingType }) {
   const { t } = useTranslation();
@@ -31,12 +32,6 @@ export default function Training({ training }: { training: TrainingType }) {
   const access = reservationAccess(trainingTime, reservedPlaces);
 
   const handleAction = async (updateType: "reservation" | "cancellation") => {
-    console.log(
-      "current hours | training hours",
-      new Date(),
-      trainingTime.getHours()
-    );
-
     try {
       setIsSubmitting(true);
       await dispatch(
@@ -74,7 +69,7 @@ export default function Training({ training }: { training: TrainingType }) {
   };
 
   return (
-    <li className="schedule__training relative">
+    <li className="schedule__training card-element relative">
       {notification && (
         <Notification
           message={notification.message}
@@ -83,9 +78,9 @@ export default function Training({ training }: { training: TrainingType }) {
         />
       )}
       <div
-        className={classNames("training__content card-element", {
-          "flex items-center justify-center flex-wrap gap-4": !user,
-          "flex flex-col gap-1": user,
+        className={classNames("training__content", {
+          "training__content--closed": !user,
+          "training__content--open": user,
         })}
       >
         <div className="schedule__training-data--accent">
@@ -109,7 +104,7 @@ export default function Training({ training }: { training: TrainingType }) {
           </div>
         }
 
-        {user && (
+        {user?.role === "client" && (
           <ReservationButton
             access={access}
             isReserved={reservation ? true : false}
@@ -117,6 +112,23 @@ export default function Training({ training }: { training: TrainingType }) {
             isDataUpdating={loading}
             onClick={() =>
               handleAction(reservation ? "cancellation" : "reservation")
+            }
+          />
+        )}
+        {user?.role === "admin" && (
+          <Modal
+            btnName={t("training.cancelTraining")}
+            data={
+              <div className="flex flex-col items-center">
+                <p className="py-2">{t("gen.ensure")}</p>
+
+                <button
+                  className="bg-teal-500 rounded-xl py-1 px-6"
+                  onClick={() => console.log("confirmed")}
+                >
+                  {t("gen.confirm")}
+                </button>
+              </div>
             }
           />
         )}
