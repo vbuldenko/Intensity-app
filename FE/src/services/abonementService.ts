@@ -12,8 +12,12 @@ function getAll(): Promise<Abonement[]> {
 function add(newAbonement: Partial<Abonement>): Promise<OriginalAbonement> {
   return axiosClient.post(`/abonements`, newAbonement);
 }
+function remove(abonementId: string) {
+  return axiosClient.delete(`/abonements/${abonementId}`);
+}
 
 export const abonementService = {
   getAll,
   add,
+  remove,
 };

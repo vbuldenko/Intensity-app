@@ -8,6 +8,11 @@ import { checkTrainingReturn } from "../../app/features/trainings/trainingThunk"
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { selectUser } from "../../app/features/user/userSlice";
+import Modal from "../Elements/Modal";
+import { abonementService } from "../../services/abonementService";
+import { getErrorMessage } from "../../utils/utils";
+import Notification from "../Elements/Notification";
+import { useNotification } from "../../hooks/useNotification";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -18,6 +23,8 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
   const { data: user } = useAppSelector(selectUser);
   const { t } = useTranslation();
   const [freeze, setFreeze] = useState<boolean>(abonement.paused);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { notification, handleNotification } = useNotification();
   const dispatch = useAppDispatch();
 
   const handleClick = useCallback(() => {
@@ -28,6 +35,20 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
       // dispatch(updateAbonement(abonement.id, { updateType: "freeze" }));
     }
   }, [abonement.paused]);
+
+  const handleDelete = async () => {
+    try {
+      setIsSubmitting(true);
+      await abonementService.remove(abonement.id);
+      handleNotification(
+        `Abonement with id: ${abonement.id} was successfully deleted`
+      );
+    } catch (error) {
+      handleNotification(getErrorMessage(error), "error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const isNotExpired = new Date(abonement.expiratedAt) > new Date();
@@ -113,6 +134,35 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
           )}
         </div>
       </div>
+      {user?.role === "admin" && (
+        <div className="flex justify-center py-4">
+          <Modal
+            btnName={t("abonement.remove")}
+            data={
+              <div className="flex flex-col items-center">
+                {notification && (
+                  <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    className="w-60"
+                  />
+                )}
+                <p className="py-2">{t("gen.ensure")}</p>
+
+                <button
+                  className="bg-teal-500 rounded-xl py-1 px-6 min-w-60 min-h-10 flex items-center justify-center"
+                  onClick={handleDelete}
+                >
+                  {isSubmitting && (
+                    <div className="reservation-btn__spinner"></div>
+                  )}
+                  {!isSubmitting && t("gen.confirm")}
+                </button>
+              </div>
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }

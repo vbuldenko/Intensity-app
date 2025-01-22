@@ -224,7 +224,8 @@
     "noHistory": "No history found!",
     "active": "Active",
     "expired": "Expired",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "remove": "Remove Abonement"
   },
   "history": {
     "date": "Date",
