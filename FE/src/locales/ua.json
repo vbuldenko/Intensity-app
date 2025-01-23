@@ -257,6 +257,8 @@
     "totalIncome": "Загальний дохід",
     "dailyIncome": "Щоденний дохід",
     "monthlyIncome": "Місячний дохід",
+    "cardIncome": "IBAN",
+    "cashIncome": "Готівка",
     "dailyProfit": "Щоденний прибуток",
     "monthlyProfit": "Місячний прибуток",
     "rent": "Оренда",

@@ -253,6 +253,8 @@
     "totalIncome": "Total Income",
     "dailyIncome": "Daily Income",
     "monthlyIncome": "Monthly Income",
+    "cardIncome": "Card Income",
+    "cashIncome": "Cash Income",
     "dailyProfit": "Daily Profit",
     "monthlyProfit": "Monthly Profit",
     "rent": "Rent",

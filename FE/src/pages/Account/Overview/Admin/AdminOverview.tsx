@@ -44,6 +44,12 @@ const AdminDashboard: React.FC = () => {
     // totalIncome: totalIncome.toFixed(1),
     dailyIncome: dailyIncome.toFixed(1),
     monthlyIncome: currentMonthIncome.toFixed(1),
+    cardIncome: currentMonthAbonements
+      .filter((abonement) => abonement.paymentMethod === "card")
+      .reduce((sum, abonement) => sum + abonement.price, 0),
+    cashIncome: currentMonthAbonements
+      .filter((abonement) => abonement.paymentMethod === "cash")
+      .reduce((sum, abonement) => sum + abonement.price, 0),
     dailyProfit: dailyProfit.toFixed(1),
     monthlyProfit: monthlyProfit.toFixed(1),
   };
@@ -61,7 +67,7 @@ const AdminDashboard: React.FC = () => {
       "../../../../utils/pdfGenerator"
     );
     if (abonements) {
-      generatePDF(abonements);
+      generatePDF(currentMonthAbonements);
     }
   };
 

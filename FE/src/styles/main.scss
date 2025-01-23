@@ -26,13 +26,13 @@ html {
 
 body {
   background-color: $color-black-dark;
-  overscroll-behavior: none;
+  // overscroll-behavior: none;
 }
 
 /* Apply the background color to the #root element */
 #root {
   background-color: $color-black-dark;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 /* Optional: Apply a background color to the body::before pseudo-element to ensure that the background color is applied even during overscroll. */
