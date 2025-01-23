@@ -1,11 +1,6 @@
 import { Request, Response } from 'express';
-import * as trainingService from '../services/training.service';
-import * as abonementService from '../services/abonement.service';
+import * as reservationService from '../services/reservation.service';
 import { ApiError } from '../exceptions/api.error';
-import {
-  cancelNotHeldTrainings,
-  updateReservation,
-} from '../services/reservation.service';
 import { getUserFromRequest } from '../utils';
 
 export const reserve = async (req: Request, res: Response) => {
@@ -14,7 +9,7 @@ export const reserve = async (req: Request, res: Response) => {
   const trainingId = req.query.trainingId as string;
   const { updateType } = req.body;
 
-  const updatedData = await updateReservation(
+  const updatedData = await reservationService.updateReservation(
     abonementId,
     trainingId,
     user.id,
@@ -27,6 +22,13 @@ export const reserve = async (req: Request, res: Response) => {
 export const cancelCheck = async (req: Request, res: Response) => {
   const { abonementId } = req.body;
 
-  const data = await cancelNotHeldTrainings(abonementId);
+  const data = await reservationService.cancelNotHeldTrainings(abonementId);
   res.status(200).send(data);
+};
+
+export const cancelTraining = async (req: Request, res: Response) => {
+  const trainingId = req.params.id;
+  const updatedTraining =
+    await reservationService.cancelTrainingByAdmin(trainingId);
+  res.send(updatedTraining);
 };

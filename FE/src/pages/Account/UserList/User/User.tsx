@@ -16,13 +16,14 @@ export default function User() {
   const navigate = useNavigate();
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [updated, setUpdated] = useState<boolean>(false);
 
   useEffect(() => {
     userService.getOneById(id as string).then((userData) => {
       setUser(userData);
       setLoading(false); // Set loading to false after data is fetched
     });
-  }, []);
+  }, [updated]);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -50,7 +51,12 @@ export default function User() {
           <div className="flex flex-col gap-4">
             <Modal
               btnName={t("adminDashboard.addAbonement")}
-              data={<Purchases clientId={user.id} />}
+              data={
+                <Purchases
+                  clientId={user.id}
+                  updater={() => setUpdated(true)}
+                />
+              }
             />
             <ClientOverview abonements={user.abonements} />
           </div>

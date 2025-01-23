@@ -195,7 +195,8 @@
     "cancel_forbidden_rule": "You cannot cancel morning trainings after 9p.m or 3 hours before it starts!",
     "trainer": "Trainer",
     "left": "Places left:",
-    "cancelTraining": "Cancel Training"
+    "cancelTraining": "Cancel Training",
+    "statusCancelled": "cancelled"
   },
   "menu": {
     "overview": "Overview",

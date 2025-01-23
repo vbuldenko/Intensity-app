@@ -18,6 +18,7 @@ const Path = {
   userAbonements: '/user',
   abonement: '/:id',
   trainings: '/',
+  trainingCancel: '/cancel/:id',
   trainingsCancel: '/cancel-unheld',
   trainingsSchedule: '/initialization',
   training: '/:id',

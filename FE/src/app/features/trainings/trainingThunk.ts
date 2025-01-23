@@ -58,3 +58,16 @@ export const checkTrainingReturn = createAsyncThunk<
     return rejectWithValue({ message });
   }
 });
+
+export const cancelTrainingByAdmin = createAsyncThunk<
+  Training,
+  number | string, // Argument type (trainingId)
+  { rejectValue: ErrorResponse }
+>("trainings/adminCancel", async (trainingId, { rejectWithValue }) => {
+  try {
+    return trainingService.cancelTraining(trainingId);
+  } catch (error: any) {
+    const message = getErrorMessage(error) || "Unexpected error occurred";
+    return rejectWithValue({ message });
+  }
+});

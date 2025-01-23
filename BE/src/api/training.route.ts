@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import * as trainingController from '../controllers/training.controller';
+import * as reservationController from '../controllers/reservation.controller';
 import { catchError } from '../utils/catchError';
 import { Path } from '../configs/RoutePath';
-import { cancelCheck, reserve } from '../controllers/reservation.controller';
 import {
   adminCheckerMiddleware,
   authMiddleware,
@@ -25,8 +25,22 @@ router.post(
   catchError(trainingController.initializeCurrentWeek),
 );
 // router.patch(Path.trainings, catchError(trainingController.update));
-router.patch(Path.trainings, authMiddleware, catchError(reserve));
-router.patch(Path.trainingsCancel, authMiddleware, catchError(cancelCheck));
+router.patch(
+  Path.trainings,
+  authMiddleware,
+  catchError(reservationController.reserve),
+);
+router.patch(
+  Path.trainingCancel,
+  authMiddleware,
+  adminCheckerMiddleware,
+  catchError(reservationController.cancelTraining),
+);
+router.patch(
+  Path.trainingsCancel,
+  authMiddleware,
+  catchError(reservationController.cancelCheck),
+);
 router.delete(
   Path.training,
   authMiddleware,

@@ -7,4 +7,5 @@ export interface Training {
   time: string;
   reservations: any[];
   instructor?: any;
+  isCancelled?: boolean;
 }

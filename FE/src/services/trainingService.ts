@@ -20,6 +20,10 @@ function updateTraining(
   return axiosClient.put(`/trainings/${trainingId}`, updatedTraining);
 }
 
+function cancelTraining(trainingId: string | number): Promise<Training> {
+  return axiosClient.patch(`/trainings/cancel/${trainingId}`);
+}
+
 function reserveTraining(
   trainingId: number,
   abonementId: number,
@@ -45,6 +49,7 @@ export const trainingService = {
   getAll,
   addTraining,
   updateTraining,
+  cancelTraining,
   reserveTraining,
   checkAndCancelNotHeld,
   deleteTraining,

@@ -292,6 +292,173 @@ export const cancelNotHeldTrainings = async (abonementId: string) => {
   return null;
 };
 
+export const cancelTrainingByAdmin = async (trainingId: string) => {
+  const training = await Training.findById(trainingId).populate({
+    path: 'instructor',
+    select: 'firstName lastName',
+  });
+
+  if (!training) {
+    throw ApiError.NotFound({ training: 'Not found' });
+  }
+
+  const trainer = await User.findById(training.instructor._id);
+  if (!trainer) {
+    throw ApiError.NotFound({ trainer: 'Not found' });
+  }
+
+  const reservationIds = training.reservations.map((id: any) => id.toString());
+  const reservations = await Reservation.find({
+    _id: { $in: reservationIds },
+  });
+
+  if (reservations.length !== reservationIds.length) {
+    throw ApiError.NotFound({
+      reservation: 'Some reservations were not found',
+    });
+  }
+
+  const abonementUpdates = reservations.map(async res => {
+    const abonement = await Abonement.findById(res.abonement.toString());
+    if (abonement) {
+      abonement.reservations = abonement.reservations.filter(
+        (id: any) => id.toString() !== (res as any)._id.toString(),
+      );
+      abonement.left += 1;
+      if (abonement.left > 0 && abonement.status === 'ended') {
+        abonement.status = 'active';
+      }
+      await abonement.save();
+    }
+  });
+
+  await Promise.all(abonementUpdates);
+
+  await Reservation.deleteMany({ _id: { $in: reservationIds } });
+
+  training.reservations = [];
+  training.isCancelled = true;
+  trainer.trainings = removeTraining(trainer.trainings, trainingId);
+
+  const [updatedTraining, _] = await Promise.all([
+    training.save(),
+    trainer.save(),
+  ]);
+
+  return updatedTraining;
+};
+
+// export const cancelTrainingByAdmin = async (trainingId: string) => {
+//   const training = await Training.findById(trainingId);
+
+//   if (!training) {
+//     throw ApiError.NotFound({ training: 'Not found' });
+//   }
+
+//   const trainer = await User.findById(training.instructor.toString());
+//   if (!trainer) {
+//     throw ApiError.NotFound({ trainer: 'Not found' });
+//   }
+
+//   try {
+//     for (const reservation of training.reservations) {
+//       const reservationId = reservation.toString();
+//       const res = await Reservation.findById(reservationId);
+//       if (!res) {
+//         throw ApiError.NotFound({ reservation: 'Some were not found' });
+//       }
+//       const abonement = await Abonement.findById(res.abonement.toString());
+//       if (!abonement) {
+//         throw ApiError.NotFound({
+//           abonement: 'Not found from reservation obj',
+//         });
+//       }
+//       abonement.reservations = abonement.reservations.filter(
+//         (id: any) => id.toString() !== reservationId,
+//       );
+//       abonement.left += 1;
+//       if (abonement.left > 0 && abonement.status === 'ended') {
+//         abonement.status = 'active';
+//       }
+//       await abonement.save();
+
+//       training.reservations = training.reservations.filter(
+//         (id: any) => id.toString() !== reservationId,
+//       );
+
+//       await Reservation.deleteOne({ _id: reservationId });
+//     }
+//     training.isCancelled = true;
+//     trainer.trainings = removeTraining(trainer.trainings, trainingId);
+//     await Promise.all([training.save(), trainer.save()]);
+//   } catch (error) {
+//     throw error;
+//   }
+
+//   const updatedTraining = await Training.findById(trainingId).populate([
+//     {
+//       path: 'instructor',
+//       select: 'firstName lastName',
+//     },
+//     {
+//       path: 'reservations',
+//     },
+//   ]);
+
+//   return updatedTraining;
+// };
+
+// export const cancelTrainingByAdmin = async (trainingId: string) => {
+//   const training = await Training.findById(trainingId);
+
+//   if (!training) {
+//     throw ApiError.NotFound({ training: 'Not found' });
+//   }
+
+//   const trainer = await User.findById(training.instructor.toString());
+//   if (!trainer) {
+//     throw ApiError.NotFound({ trainer: 'Not found' });
+//   }
+
+//   try {
+//     for (const reservation of training.reservations) {
+//       const res = await Reservation.findById(reservation.toString());
+//       if (!res) {
+//         throw ApiError.NotFound({ reservation: 'Some were not found' });
+//       }
+//       const abonement = await Abonement.findById(res.abonement.toString());
+//       if (!abonement) {
+//         throw ApiError.NotFound({
+//           abonement: 'Not found from reservation obj',
+//         });
+//       }
+//       abonement.left += 1;
+//       if (abonement.left > 0 && abonement.status === 'ended') {
+//         abonement.status = 'active';
+//       }
+//       await abonement.save();
+//       await Reservation.deleteOne({ _id: res._id });
+//     }
+//     training.isCancelled = true;
+//     trainer.trainings = removeTraining(trainer.trainings, trainingId);
+//     await Promise.all([training.save(), trainer.save()]);
+//   } catch (error) {
+//     throw error;
+//   }
+
+//   const updatedTraining = await Training.findById(trainingId).populate([
+//     {
+//       path: 'instructor',
+//       select: 'firstName lastName',
+//     },
+//     {
+//       path: 'reservations',
+//     },
+//   ]);
+
+//   return updatedTraining;
+// };
+
 // Helper functions
 const isTrainingReserved = (abonement: any, training: any) => {
   return training.reservations.some(

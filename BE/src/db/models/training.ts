@@ -14,6 +14,7 @@ export interface ITraining extends Document {
   createdAt: Date;
   updatedAt: Date;
   reservations: any[];
+  isCancelled?: boolean;
 }
 
 const TrainingSchema: Schema = new Schema(
@@ -63,6 +64,9 @@ const TrainingSchema: Schema = new Schema(
         ref: 'Reservation',
       },
     ],
+    isCancelled: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,

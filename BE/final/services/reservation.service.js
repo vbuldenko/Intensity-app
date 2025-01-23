@@ -241,6 +241,63 @@ export const cancelNotHeldTrainings = async abonementId => {
   }
   return null;
 };
+
+export const cancelTrainingByAdmin = async trainingId => {
+  const training = await Training.findById(trainingId).populate({
+    path: 'instructor',
+    select: 'firstName lastName',
+  });
+
+  if (!training) {
+    throw ApiError.NotFound({ training: 'Not found' });
+  }
+
+  const trainer = await User.findById(training.instructor._id);
+  if (!trainer) {
+    throw ApiError.NotFound({ trainer: 'Not found' });
+  }
+
+  const reservationIds = training.reservations.map(id => id.toString());
+  const reservations = await Reservation.find({
+    _id: { $in: reservationIds },
+  });
+
+  if (reservations.length !== reservationIds.length) {
+    throw ApiError.NotFound({
+      reservation: 'Some reservations were not found',
+    });
+  }
+
+  const abonementUpdates = reservations.map(async res => {
+    const abonement = await Abonement.findById(res.abonement.toString());
+    if (abonement) {
+      abonement.reservations = abonement.reservations.filter(
+        id => id.toString() !== res._id.toString(),
+      );
+      abonement.left += 1;
+      if (abonement.left > 0 && abonement.status === 'ended') {
+        abonement.status = 'active';
+      }
+      await abonement.save();
+    }
+  });
+
+  await Promise.all(abonementUpdates);
+
+  await Reservation.deleteMany({ _id: { $in: reservationIds } });
+
+  training.reservations = [];
+  training.isCancelled = true;
+  trainer.trainings = removeTraining(trainer.trainings, trainingId);
+
+  const [updatedTraining, _] = await Promise.all([
+    training.save(),
+    trainer.save(),
+  ]);
+
+  return updatedTraining;
+};
+
 // Helper functions
 const isTrainingReserved = (abonement, training) => {
   return training.reservations.some(

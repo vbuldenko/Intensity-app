@@ -1,6 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import { toZonedTime, format } from 'date-fns-tz';
-const timeZone = 'Europe/Kiev';
 
 const TrainingSchema = new Schema(
   {
@@ -49,6 +47,9 @@ const TrainingSchema = new Schema(
         ref: 'Reservation',
       },
     ],
+    isCancelled: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,

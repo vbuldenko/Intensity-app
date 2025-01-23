@@ -54,7 +54,7 @@ const ReservationSchema: Schema = new Schema(
 );
 
 // Middleware to remove the reservation ID from Abonement and Training.reservations
-// ReservationSchema.pre('findOneAndDelete', async function (next) {
+// ReservationSchema.pre('deleteOne', async function (next) {
 //   const reservation = await this.model.findOne(this.getFilter());
 //   if (reservation) {
 //     await Abonement.updateOne(

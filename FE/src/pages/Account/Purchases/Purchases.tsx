@@ -9,13 +9,17 @@ import { abonementService } from "../../../services/abonementService";
 import { getErrorMessage } from "../../../utils/utils";
 import Notification from "../../../components/Elements/Notification";
 import { useTranslation } from "react-i18next";
+import { useNotification } from "../../../hooks/useNotification";
 
-export default function Purchases({ clientId }: { clientId?: number }) {
+export default function Purchases({
+  clientId,
+  updater,
+}: {
+  clientId?: number;
+  updater?: () => void;
+}) {
   const { t } = useTranslation();
-  const [notification, setNotification] = useState<{
-    message: string;
-    type: "error" | "notification";
-  } | null>(null);
+  const { notification, handleNotification } = useNotification();
 
   const { data: user } = useAppSelector(selectUser);
   // const dispatch = useAppDispatch();
@@ -39,23 +43,22 @@ export default function Purchases({ clientId }: { clientId?: number }) {
           type: selectedType,
           ...selectedAbonement,
         });
-        setNotification({
-          message: `Abonement for ${selectedAbonement.amount} trainings was added`,
-          type: "notification",
-        });
+        handleNotification(
+          `Abonement for ${selectedAbonement.amount} trainings was added`
+        );
       } else if (selectedAbonement) {
         // await abonementService.add({
         //   ...selectedAbonement,
         //   type: selectedType,
         // });
-        setNotification({ message: "In development", type: "error" });
+        handleNotification("In development", "error");
+      }
+      if (updater) {
+        updater();
       }
     } catch (error) {
-      setNotification({ message: getErrorMessage(error), type: "error" });
+      handleNotification(getErrorMessage(error), "error");
     } finally {
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
     }
   };
 

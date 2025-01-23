@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as trainingController from '../controllers/training.controller.js';
 import { catchError } from '../utils/catchError.js';
 import { Path } from '../configs/RoutePath.js';
-import { cancelCheck, reserve } from '../controllers/reservation.controller.js';
+import * as reservationController from '../controllers/reservation.controller.js';
 import {
   adminCheckerMiddleware,
   authMiddleware,
@@ -23,8 +23,22 @@ router.post(
   catchError(trainingController.initializeCurrentWeek),
 );
 // router.patch(Path.trainings, catchError(trainingController.update));
-router.patch(Path.trainings, authMiddleware, catchError(reserve));
-router.patch(Path.trainingsCancel, authMiddleware, catchError(cancelCheck));
+router.patch(
+  Path.trainings,
+  authMiddleware,
+  catchError(reservationController.reserve),
+);
+router.patch(
+  Path.trainingCancel,
+  authMiddleware,
+  adminCheckerMiddleware,
+  catchError(reservationController.cancelTraining),
+);
+router.patch(
+  Path.trainingsCancel,
+  authMiddleware,
+  catchError(reservationController.cancelCheck),
+);
 router.delete(
   Path.training,
   authMiddleware,

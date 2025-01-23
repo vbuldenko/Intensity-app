@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 import {
+  cancelTrainingByAdmin,
   checkTrainingReturn,
   fetchTrainings,
   reserveTraining,
@@ -101,6 +102,31 @@ export const trainingSlice = createSlice({
       )
       .addCase(
         checkTrainingReturn.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
+      )
+      .addCase(cancelTrainingByAdmin.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        cancelTrainingByAdmin.fulfilled,
+        (state, action: PayloadAction<Training>) => {
+          // Update the specific training in the state after reservation
+          const updatedTraining = action.payload;
+          const index = state.data.findIndex(
+            (t) => t.id === updatedTraining.id
+          );
+          if (index !== -1) {
+            state.data[index] = updatedTraining;
+          }
+          state.loading = false;
+          state.error = null; // Clear error on success
+        }
+      )
+      .addCase(
+        cancelTrainingByAdmin.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.loading = false;
           state.error = action.payload?.message || "An unknown error occurred";

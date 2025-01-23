@@ -2,7 +2,10 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { reserveTraining } from "../../../app/features/trainings/trainingThunk";
+import {
+  cancelTrainingByAdmin,
+  reserveTraining,
+} from "../../../app/features/trainings/trainingThunk";
 import { getErrorMessage } from "../../../utils/utils";
 import { getCurrentAbonement } from "../../../utils/abonement";
 import { reservationAccess } from "../../../utils/trainings";
@@ -68,8 +71,16 @@ export default function Training({ training }: { training: TrainingType }) {
     }
   };
 
-  const handleTrainingAbort = () => {
-    handleNotification("IN DEVELOPMENT", "error");
+  const handleTrainingAbort = async () => {
+    try {
+      setIsSubmitting(true);
+      await dispatch(cancelTrainingByAdmin(training.id)).unwrap();
+      handleNotification("Success");
+    } catch (error) {
+      handleNotification(getErrorMessage(error), "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -87,8 +98,13 @@ export default function Training({ training }: { training: TrainingType }) {
           "training__content--open": user,
         })}
       >
-        <div className="schedule__training-data--accent">
-          <p>{training.type.toUpperCase()}</p>
+        {training.isCancelled && (
+          <div className="status-absolute status-absolute--red">
+            {t("training.statusCancelled")}
+          </div>
+        )}
+        <div className="schedule__training-data--accent ">
+          <p>{training.type.toUpperCase()}</p>{" "}
         </div>
         {user && (
           <p className="schedule__training-data">
@@ -119,7 +135,7 @@ export default function Training({ training }: { training: TrainingType }) {
             }
           />
         )}
-        {user?.role === "admin" && (
+        {user?.role === "admin" && training.reservations.length > 0 && (
           <Modal
             btnName={t("training.cancelTraining")}
             data={
@@ -134,10 +150,13 @@ export default function Training({ training }: { training: TrainingType }) {
                 <p className="py-2">{t("gen.ensure")}</p>
 
                 <button
-                  className="bg-teal-500 rounded-xl py-1 px-6"
+                  className="bg-teal-500 rounded-xl py-1 px-6 min-w-60 min-h-10 flex items-center justify-center"
                   onClick={handleTrainingAbort}
                 >
-                  {t("gen.confirm")}
+                  {isSubmitting && (
+                    <div className="reservation-btn__spinner"></div>
+                  )}
+                  {!isSubmitting && t("gen.confirm")}
                 </button>
               </div>
             }
