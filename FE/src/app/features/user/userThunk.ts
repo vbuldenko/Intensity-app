@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userService } from "../../../services/userService";
 import { User } from "../../../types/User";
 import { ErrorResponse } from "../../../types/Error";
+import { getErrorMessage } from "../../../utils/utils";
 
 export const fetchUserData = createAsyncThunk<
   User, // Return type of the successful request
@@ -9,26 +10,20 @@ export const fetchUserData = createAsyncThunk<
   { rejectValue: ErrorResponse } // Type for rejected value
 >("user/fetchUser", async (_, { rejectWithValue }) => {
   try {
-    const user = await userService.getProfile();
-    return user;
+    return await userService.getProfile();
   } catch (error: any) {
-    const message =
-      error?.response?.data?.message || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
 export const updateUserData = createAsyncThunk<
-  User, // Return type of the successful request
-  any, // Argument type (partial user data for update)
-  { rejectValue: ErrorResponse } // Type for rejected value
+  User,
+  any,
+  { rejectValue: ErrorResponse }
 >("user/updateProfile", async (userData, { rejectWithValue }) => {
   try {
-    const updatedUser = await userService.update(userData);
-    return updatedUser;
+    return await userService.update(userData);
   } catch (error: any) {
-    const message =
-      error?.response?.data?.message || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });

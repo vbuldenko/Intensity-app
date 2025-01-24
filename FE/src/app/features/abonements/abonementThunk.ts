@@ -12,7 +12,6 @@ export const fetchAbonements = createAsyncThunk<
   try {
     return await abonementService.getAll();
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });

@@ -1,4 +1,4 @@
-.admin-dashboard {
+.dashboard {
   &__title {
     font-size: 1.5rem;
     text-align: center;
@@ -91,6 +91,65 @@
       &:last-child {
         border-bottom: none;
       }
+    }
+  }
+}
+
+.statistics {
+  &__title {
+    font-size: 1.25rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__section {
+    position: relative;
+    background: $card-background;
+    border-radius: $big-br;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 3rem 1rem 1rem;
+
+    &-title {
+      font-size: 1.125rem;
+      width: 15rem;
+      color: $color-green !important;
+    }
+
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+  }
+
+  &__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    background: $card-background;
+    border-radius: $big-br;
+    text-align: center;
+
+    &-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: $gray-color-3;
+      border-bottom: 1px dotted $color-green;
+      padding: 0.75rem;
+    }
+
+    &-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $color-green;
+      padding: 0.75rem;
     }
   }
 }

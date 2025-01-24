@@ -9,8 +9,7 @@ import { selectAbonements } from "../../../../app/features/abonements/abonementS
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
   const abonements = useAppSelector(selectAbonements);
-  const data = studioStats;
-  const [expenses, setExpenses] = useState(data.expenses);
+  const [expenses, setExpenses] = useState(studioStats.expenses);
 
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
@@ -40,18 +39,58 @@ const AdminDashboard: React.FC = () => {
   const monthlyProfit = currentMonthIncome - totalExpenses;
 
   const generalStats = {
-    abonementsSold: currentMonthAbonements?.length || 0,
-    // totalIncome: totalIncome.toFixed(1),
-    dailyIncome: dailyIncome.toFixed(1),
-    monthlyIncome: currentMonthIncome.toFixed(1),
-    cardIncome: currentMonthAbonements
-      .filter((abonement) => abonement.paymentMethod === "card")
-      .reduce((sum, abonement) => sum + abonement.price, 0),
-    cashIncome: currentMonthAbonements
-      .filter((abonement) => abonement.paymentMethod === "cash")
-      .reduce((sum, abonement) => sum + abonement.price, 0),
-    dailyProfit: dailyProfit.toFixed(1),
-    monthlyProfit: monthlyProfit.toFixed(1),
+    abonements: {
+      totalAbonementsSold: abonements?.length || 0,
+      abonementsSold: currentMonthAbonements?.length || 0,
+      abonementDurationAnalysis: {
+        one: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 1
+        ).length,
+        four: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 4
+        ).length,
+        six: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 6
+        ).length,
+        eight: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 8
+        ).length,
+        ten: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 10
+        ).length,
+        twelve: currentMonthAbonements.filter(
+          (abonement) => abonement.amount === 12
+        ).length,
+      },
+      // abonementDurationAnalysis: {
+      //   shortTerm: currentMonthAbonements.filter(
+      //     (abonement) =>
+      //       abonement.amount === 1 ||
+      //       abonement.amount === 4 ||
+      //       abonement.amount === 6
+      //   ).length,
+      //   midTerm: currentMonthAbonements.filter(
+      //     (abonement) => abonement.amount === 8
+      //   ).length,
+      //   longTerm: currentMonthAbonements.filter(
+      //     (abonement) => abonement.amount === 10 || abonement.amount === 12
+      //   ).length,
+      // },
+    },
+    income: {
+      monthlyIncome: currentMonthIncome.toFixed(1),
+      dailyIncome: dailyIncome.toFixed(1),
+      cardIncome: currentMonthAbonements
+        .filter((abonement) => abonement.paymentMethod === "card")
+        .reduce((sum, abonement) => sum + abonement.price, 0),
+      cashIncome: currentMonthAbonements
+        .filter((abonement) => abonement.paymentMethod === "cash")
+        .reduce((sum, abonement) => sum + abonement.price, 0),
+    },
+    profit: {
+      monthlyProfit: monthlyProfit.toFixed(1),
+      dailyProfit: dailyProfit.toFixed(1),
+    },
   };
 
   const handleExpenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,13 +106,13 @@ const AdminDashboard: React.FC = () => {
       "../../../../utils/pdfGenerator"
     );
     if (abonements) {
-      generatePDF(currentMonthAbonements);
+      generatePDF(abonements);
     }
   };
 
   return (
-    <div className="admin-dashboard">
-      <StatisticsSection
+    <div className="dashboard">
+      <Statistics
         title={t("adminDashboard.generalStatistics")}
         stats={generalStats}
       />
@@ -84,7 +123,7 @@ const AdminDashboard: React.FC = () => {
 
       <button
         onClick={handleGeneratePDF}
-        className="text-white bg-green-500 w-max py-1 px-4 my-1 rounded-full"
+        className="text-white bg-green-500 w-max py-1 px-4 my-4 rounded-full"
       >
         Generate PDF
       </button>
@@ -93,28 +132,62 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-const StatisticsSection: React.FC<{
+const Statistics: React.FC<{
   title: string;
-  stats: Record<string, string | number>;
+  stats: Record<string, any>;
 }> = ({ title, stats }) => {
   const { t } = useTranslation();
 
-  return (
-    <div className="admin-dashboard__section">
-      <h3 className="admin-dashboard__subtitle">{title}</h3>
-      <div className="admin-dashboard__content">
-        {Object.entries(stats).map(([key, value]) => (
-          <div className="admin-dashboard__stat" key={key}>
-            <p>{t(`adminDashboard.${key}`)}:</p>
-            <span>
-              {key !== "abonementsSold" && (
-                <b className="mr-1 text-xs text-violet-400">₴</b>
-              )}
-              {value}
-            </span>
+  const renderNestedStats = (substats: Record<string, any>) => {
+    return (
+      <div className="flex flex-wrap justify-between gap-3 p-3">
+        {Object.entries(substats).map(([subKey, subValue]) => (
+          <div
+            className="flex-1 flex gap-2 items-center min-w-15 border py-1 px-3 rounded-xl"
+            key={subKey}
+          >
+            <p className="text-sm text-yellow-400">{subKey}:</p>
+
+            <span className="">{subValue}</span>
           </div>
         ))}
       </div>
+    );
+  };
+
+  const renderSubStats = (substats: Record<string, any>) => {
+    return Object.entries(substats).map(([subKey, subValue]) => (
+      <div className="statistics__item" key={subKey}>
+        <p className="statistics__item-title">
+          {t(`adminDashboard.${subKey}`)}:
+        </p>
+
+        {typeof subValue === "object" ? (
+          renderNestedStats(subValue)
+        ) : (
+          <span className="statistics__item-value">{subValue}</span>
+        )}
+      </div>
+    ));
+  };
+
+  const renderStats = (stats: Record<string, any>) => {
+    return Object.entries(stats).map(([key, value]) => (
+      <div className="statistics__section" key={key}>
+        <p className="statistics__section-title  status-absolute">
+          {t(`adminDashboard.${key}`)}:
+        </p>
+        <div className="statistics__section-content">
+          {renderSubStats(value)}
+        </div>
+      </div>
+    ));
+  };
+
+  return (
+    <div className="statistics mb-4">
+      <h3 className="statistics__title mb-4">{title}</h3>
+      <div className="statistics__content">{renderStats(stats)}</div>
     </div>
   );
 };
@@ -142,13 +215,11 @@ const ExpensesSection: React.FC<{
   const { t } = useTranslation();
 
   return (
-    <div className="admin-dashboard__section">
-      <h3 className="admin-dashboard__subtitle">
-        {t("adminDashboard.expenses")}
-      </h3>
-      <div className="admin-dashboard__content">
+    <div className="statistics mb-4">
+      <h3 className="statistics__title mb-4">{t("adminDashboard.expenses")}</h3>
+      <div className="statistics__content">
         {Object.entries(expenses).map(([key, value]) => (
-          <div className="admin-dashboard__stat" key={key}>
+          <div className="dashboard__stat" key={key}>
             <p>{t(`adminDashboard.${key}`)}:</p>
             <span>
               <input

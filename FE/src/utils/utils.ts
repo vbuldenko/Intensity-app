@@ -85,22 +85,23 @@ export const adaptivePaginationPages = (
 };
 
 export function getErrorMessage(error: any): string {
-  const errors = error?.response?.data?.errors;
-
-  if (
-    errors &&
-    typeof errors === "object" &&
-    Object.entries(errors).length > 0
-  ) {
-    const [field, message] = Object.entries(errors)[0];
-    return `${field.toLocaleUpperCase()}: ${message}`;
+  // Check if the error is an Axios error
+  if (error.response) {
+    const { message, errors } = error.response.data || {};
+    if (message) {
+      return message;
+    }
+    if (
+      errors &&
+      typeof errors === "object" &&
+      Object.entries(errors).length > 0
+    ) {
+      const [field, errorMessage] = Object.entries(errors)[0];
+      return `${field.toUpperCase()}: ${errorMessage}`;
+    }
   }
-
-  return (
-    error?.response?.data?.message ||
-    error.message ||
-    "An unknown error occurred"
-  );
+  // Fallback
+  return error.message || "An unknown error occurred";
 }
 
 export function isTomorrow(dateToCheck: Date) {

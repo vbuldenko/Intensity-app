@@ -13,8 +13,7 @@ export const fetchTrainings = createAsyncThunk<
   try {
     return await trainingService.getAll();
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
@@ -24,50 +23,43 @@ export const reserveTraining = createAsyncThunk<
     trainingId: number;
     abonementId: number;
     updateType: string;
-  }, // Arguments passed to the thunk
-  { rejectValue: ErrorResponse } // Rejected value type
+  },
+  { rejectValue: ErrorResponse }
 >(
-  "trainings/reserveTraining", // Action type
+  "trainings/reserveTraining",
   async ({ trainingId, abonementId, updateType }, { rejectWithValue }) => {
     try {
-      // Make sure you're passing the correct parameters to the service
-      const updatedData = await trainingService.reserveTraining(
+      return await trainingService.reserveTraining(
         trainingId,
         abonementId,
         updateType
       );
-
-      return updatedData;
     } catch (error: any) {
-      // Use a utility to extract a meaningful error message
-      const message = getErrorMessage(error) || "Unexpected error occurred";
-      return rejectWithValue({ message });
+      return rejectWithValue({ message: getErrorMessage(error) });
     }
   }
 );
 
 export const checkTrainingReturn = createAsyncThunk<
   { abonement: Abonement; trainings: Training[] } | null,
-  number | string, // Argument type (abonementId)
+  number | string,
   { rejectValue: ErrorResponse }
 >("trainings/checkReturn", async (abonementId, { rejectWithValue }) => {
   try {
-    return trainingService.checkAndCancelNotHeld(abonementId);
+    return await trainingService.checkAndCancelNotHeld(abonementId);
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
 export const cancelTrainingByAdmin = createAsyncThunk<
   Training,
-  number | string, // Argument type (trainingId)
+  number | string,
   { rejectValue: ErrorResponse }
 >("trainings/adminCancel", async (trainingId, { rejectWithValue }) => {
   try {
-    return trainingService.cancelTraining(trainingId);
+    return await trainingService.cancelTraining(trainingId);
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });

@@ -1,6 +1,7 @@
 import { ApiError } from '../exceptions/api.error';
 import Abonement from '../db/models/abonement';
 import User, { IUser } from '../db/models/user';
+import { startOfYear } from 'date-fns';
 
 interface Payload {
   updateType: string;
@@ -8,7 +9,11 @@ interface Payload {
 }
 
 export const getAll = async () => {
-  return Abonement.find().populate({
+  const startOfCurrentYear = startOfYear(new Date());
+
+  return Abonement.find({
+    createdAt: { $gte: startOfCurrentYear },
+  }).populate({
     path: 'user',
     select: 'firstName lastName',
   });

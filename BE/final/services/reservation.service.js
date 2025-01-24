@@ -252,6 +252,10 @@ export const cancelTrainingByAdmin = async trainingId => {
     throw ApiError.NotFound({ training: 'Not found' });
   }
 
+  if (new Date(training.date) < new Date()) {
+    throw ApiError.BadRequest('Cannot cancel a training that is in the past');
+  }
+
   const trainer = await User.findById(training.instructor._id);
   if (!trainer) {
     throw ApiError.NotFound({ trainer: 'Not found' });

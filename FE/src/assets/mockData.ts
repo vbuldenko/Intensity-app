@@ -104,7 +104,7 @@ export const studioStats: TrainingStats = {
     rent: 30000,
     utilities: 1500,
     taxes: 1600 + 800 + 1760,
-    wages: 2400,
+    wages: 6000,
   },
   income: {
     daily: 500, // Example data - total revenue per day

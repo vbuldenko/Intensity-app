@@ -16,8 +16,7 @@ export const checkAuth = createAsyncThunk<
     accessTokenService.save(accessToken);
   } catch (error: any) {
     accessTokenService.remove();
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
@@ -29,13 +28,9 @@ export const login = createAsyncThunk<
   try {
     const { accessToken } = await authService.login(credentials);
     accessTokenService.save(accessToken);
-    // dispatch(fetchUserData());
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-
     setTimeout(() => dispatch(setError(null)), 2000);
-
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
@@ -49,9 +44,7 @@ export const activate = createAsyncThunk<
     accessTokenService.save(accessToken);
     dispatch(fetchUserData());
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
 
@@ -64,10 +57,7 @@ export const logOut = createAsyncThunk<
     accessTokenService.remove();
     await authService.logout();
   } catch (error: any) {
-    const message = getErrorMessage(error) || "Unexpected error occurred";
-
     setTimeout(() => dispatch(setError(null)), 3000);
-
-    return rejectWithValue({ message });
+    return rejectWithValue({ message: getErrorMessage(error) });
   }
 });
