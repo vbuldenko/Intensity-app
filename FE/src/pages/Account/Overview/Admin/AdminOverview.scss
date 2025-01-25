@@ -122,17 +122,17 @@
     }
 
     &-content {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
   }
 
   &__item {
-    flex: 1;
+    grid-column: span 1;
     display: flex;
     flex-direction: column;
-    min-width: 150px;
+    min-width: 125px;
     background: $card-background;
     border-radius: $big-br;
     text-align: center;
@@ -150,6 +150,24 @@
       font-weight: 600;
       color: $color-green;
       padding: 0.75rem;
+    }
+  }
+
+  &__subitem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+
+    &-element {
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
+      border-radius: $standard-br;
+      padding: 0.5rem 1.5rem;
+      flex: 1;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      min-width: 125px;
     }
   }
 }

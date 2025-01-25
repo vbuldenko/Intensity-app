@@ -29,6 +29,7 @@ const Menu = ({ className }: MenuProps) => {
   const getLinks = (role: "admin" | "trainer" | "client") => {
     const links = [
       { to: ".", label: t("menu.overview") },
+      { to: Path.Schedule, label: t("menu.schedule") },
       { to: Path.Settings, label: t("menu.settings") },
     ];
 
@@ -37,16 +38,10 @@ const Menu = ({ className }: MenuProps) => {
         1,
         0,
         { to: Path.Users, label: t("menu.users") },
-        { to: Path.ScheduleEditor, label: t("menu.scheduleEditor") },
-        { to: Path.Schedule, label: t("menu.schedule") }
+        { to: Path.ScheduleEditor, label: t("menu.scheduleEditor") }
       );
     } else if (role === "client") {
-      links.splice(
-        1,
-        0,
-        { to: Path.Schedule, label: t("menu.schedule") },
-        { to: Path.Buying, label: t("menu.buying") }
-      );
+      links.splice(2, 0, { to: Path.Buying, label: t("menu.buying") });
     }
 
     return links;

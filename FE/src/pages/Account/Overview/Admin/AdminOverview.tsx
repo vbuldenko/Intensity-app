@@ -5,6 +5,7 @@ import { studioStats } from "../../../../assets/mockData";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectAbonements } from "../../../../app/features/abonements/abonementSlice";
+import classNames from "classnames";
 
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -24,7 +25,6 @@ const AdminDashboard: React.FC = () => {
       );
     }) || [];
 
-  // const totalIncome = abonements?.reduce((acc, a) => acc + a.price, 0);
   const currentMonthIncome = currentMonthAbonements.reduce(
     (acc, a) => acc + a.price,
     0
@@ -43,9 +43,13 @@ const AdminDashboard: React.FC = () => {
       totalAbonementsSold: abonements?.length || 0,
       abonementsSold: currentMonthAbonements?.length || 0,
       abonementDurationAnalysis: {
-        one: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 1
-        ).length,
+        one: `${
+          currentMonthAbonements.filter((abonement) => abonement.amount === 1)
+            .length
+        } (${
+          currentMonthAbonements.filter((abonement) => abonement.price === 250)
+            .length
+        })`,
         four: currentMonthAbonements.filter(
           (abonement) => abonement.amount === 4
         ).length,
@@ -62,20 +66,24 @@ const AdminDashboard: React.FC = () => {
           (abonement) => abonement.amount === 12
         ).length,
       },
-      // abonementDurationAnalysis: {
-      //   shortTerm: currentMonthAbonements.filter(
-      //     (abonement) =>
-      //       abonement.amount === 1 ||
-      //       abonement.amount === 4 ||
-      //       abonement.amount === 6
-      //   ).length,
-      //   midTerm: currentMonthAbonements.filter(
-      //     (abonement) => abonement.amount === 8
-      //   ).length,
-      //   longTerm: currentMonthAbonements.filter(
-      //     (abonement) => abonement.amount === 10 || abonement.amount === 12
-      //   ).length,
-      // },
+      abonementStatusAnalysis: {
+        active: currentMonthAbonements.filter(
+          (abonement) => abonement.status === "active"
+        ).length,
+        "near-term": currentMonthAbonements.filter(
+          (abonement) =>
+            abonement.left > 0 &&
+            abonement.left <= 2 &&
+            abonement.status === "active"
+        ).length,
+        ended: currentMonthAbonements.filter(
+          (abonement) =>
+            abonement.status === "expired" || abonement.status === "ended"
+        ).length,
+        inactive: currentMonthAbonements.filter(
+          (abonement) => abonement.status === "inactive"
+        ).length,
+      },
     },
     income: {
       monthlyIncome: currentMonthIncome.toFixed(1),
@@ -140,15 +148,12 @@ const Statistics: React.FC<{
 
   const renderNestedStats = (substats: Record<string, any>) => {
     return (
-      <div className="flex flex-wrap justify-between gap-3 p-3">
+      <div className="statistics__subitem">
         {Object.entries(substats).map(([subKey, subValue]) => (
-          <div
-            className="flex-1 flex gap-2 items-center min-w-15 border py-1 px-3 rounded-xl"
-            key={subKey}
-          >
+          <div className="statistics__subitem-element" key={subKey}>
             <p className="text-sm text-yellow-400">{subKey}:</p>
 
-            <span className="">{subValue}</span>
+            <span className="min-w-max">{subValue}</span>
           </div>
         ))}
       </div>
@@ -157,7 +162,14 @@ const Statistics: React.FC<{
 
   const renderSubStats = (substats: Record<string, any>) => {
     return Object.entries(substats).map(([subKey, subValue]) => (
-      <div className="statistics__item" key={subKey}>
+      <div
+        className={classNames("statistics__item", {
+          "col-span-2":
+            subKey === "abonementDurationAnalysis" ||
+            subKey === "abonementStatusAnalysis",
+        })}
+        key={subKey}
+      >
         <p className="statistics__item-title">
           {t(`adminDashboard.${subKey}`)}:
         </p>
