@@ -60,6 +60,8 @@ export default function Training({ training }: { training: TrainingType }) {
               return t("training.reservation_period_passed");
             case "Abonement Id is required!":
               return t("training.no_abonement2");
+            case "No places left!":
+              return t("training.no_places");
             default:
               return getErrorMessage(error);
           }
