@@ -1,104 +1,14 @@
 import React, { useState } from "react";
-import "./AdminOverview.scss";
-import { studioStats } from "../../../../assets/mockData";
-import classNames from "classnames";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../../../app/hooks";
-import { selectAbonements } from "../../../../app/features/abonements/abonementSlice";
+import classNames from "classnames";
+import { studioStats } from "../../../../assets/mockData";
+import "./AdminOverview.scss";
+import { useStatistics } from "../../../../hooks/useStatistics";
 
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const abonements = useAppSelector(selectAbonements);
   const [expenses, setExpenses] = useState(studioStats.expenses);
-
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-  const currentMonthAbonements =
-    abonements?.filter((abonement) => {
-      const createdAt = new Date(abonement.createdAt);
-      return (
-        createdAt.getMonth() === currentMonth &&
-        createdAt.getFullYear() === currentYear
-      );
-    }) || [];
-
-  const currentMonthIncome = currentMonthAbonements.reduce(
-    (acc, a) => acc + a.price,
-    0
-  );
-  const dailyIncome = currentMonthIncome / daysInMonth;
-
-  const totalExpenses = Object.values(expenses).reduce(
-    (acc, expense) => acc + expense,
-    0
-  );
-  const dailyProfit = dailyIncome - totalExpenses / daysInMonth;
-  const monthlyProfit = currentMonthIncome - totalExpenses;
-
-  const generalStats = {
-    abonements: {
-      totalAbonementsSold: abonements?.length || 0,
-      abonementsSold: currentMonthAbonements?.length || 0,
-      abonementDurationAnalysis: {
-        one: `${
-          currentMonthAbonements.filter((abonement) => abonement.amount === 1)
-            .length
-        } (${
-          currentMonthAbonements.filter((abonement) => abonement.price === 250)
-            .length
-        })`,
-        four: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 4
-        ).length,
-        six: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 6
-        ).length,
-        eight: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 8
-        ).length,
-        ten: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 10
-        ).length,
-        twelve: currentMonthAbonements.filter(
-          (abonement) => abonement.amount === 12
-        ).length,
-      },
-      abonementStatusAnalysis: {
-        active: currentMonthAbonements.filter(
-          (abonement) => abonement.status === "active"
-        ).length,
-        "near-term": currentMonthAbonements.filter(
-          (abonement) =>
-            abonement.left > 0 &&
-            abonement.left <= 2 &&
-            abonement.status === "active"
-        ).length,
-        ended: currentMonthAbonements.filter(
-          (abonement) =>
-            abonement.status === "expired" || abonement.status === "ended"
-        ).length,
-        inactive: currentMonthAbonements.filter(
-          (abonement) => abonement.status === "inactive"
-        ).length,
-      },
-    },
-    income: {
-      monthlyIncome: currentMonthIncome.toFixed(1),
-      dailyIncome: dailyIncome.toFixed(1),
-      cardIncome: currentMonthAbonements
-        .filter((abonement) => abonement.paymentMethod === "card")
-        .reduce((sum, abonement) => sum + abonement.price, 0),
-      cashIncome: currentMonthAbonements
-        .filter((abonement) => abonement.paymentMethod === "cash")
-        .reduce((sum, abonement) => sum + abonement.price, 0),
-    },
-    profit: {
-      monthlyProfit: monthlyProfit.toFixed(1),
-      dailyProfit: dailyProfit.toFixed(1),
-    },
-  };
+  const { abonements, generalStats } = useStatistics(expenses);
 
   const handleExpenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -134,7 +44,6 @@ const AdminDashboard: React.FC = () => {
       >
         Generate PDF
       </button>
-      {/* <TrainersSection trainers={data.topTrainersByAttendance} /> */}
     </div>
   );
 };
@@ -202,22 +111,6 @@ const Statistics: React.FC<{
     </div>
   );
 };
-
-// const TrainersSection: React.FC<{ trainers: User[] }> = ({ trainers }) => (
-//   <div className="admin-dashboard__section">
-//     <h3 className="admin-dashboard__subtitle">Top Trainers by Attendance</h3>
-//     <ul className="admin-dashboard__list card-element">
-//       {trainers.map((trainer, i) => (
-//         <li key={trainer.id} className="admin-dashboard__list-item">
-//           <span>{trainer.firstName}:</span>
-//           <p className={classNames({ "text-teal-500": i === 0 })}>
-//             {/* {trainer.totalAttendees} attendees */}
-//           </p>
-//         </li>
-//       ))}
-//     </ul>
-//   </div>
-// );
 
 const ExpensesSection: React.FC<{
   expenses: Record<string, number>;
