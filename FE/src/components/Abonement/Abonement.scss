@@ -1,9 +1,11 @@
 .abonement {
+  position: relative;
   display: flex;
   flex-direction: column;
   box-shadow: $shadow3;
   border-radius: $big-br;
   background-color: $card-background;
+  overflow: hidden;
 
   &__title {
     font-size: 1rem;
