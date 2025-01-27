@@ -99,8 +99,15 @@ export const remove = async abonementId => {
   if (!abonement) {
     throw ApiError.NotFound({ abonement: 'Not found' });
   }
+  const user = await User.findById(abonement.user);
+  if (!user) {
+    throw ApiError.NotFound({ user: 'Not found' });
+  }
   if (abonement.status !== 'inactive') {
     throw ApiError.BadRequest('Abonement should be inactive');
   }
+
   await Abonement.deleteOne({ _id: abonementId });
+  user.abonements = user.abonements.filter(id => id.toString() !== abonementId);
+  await user.save();
 };

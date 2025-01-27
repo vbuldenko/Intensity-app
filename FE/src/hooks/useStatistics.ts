@@ -52,7 +52,6 @@ const calculateAbonementStatusAnalysis = (abonements: any[]) => {
 
 export const useStatistics = (expenses: Record<string, number>) => {
   const data = useAppSelector(selectAbonements);
-
   const abonements = data || [];
 
   const currentMonth = new Date().getMonth();
