@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import * as reservationService from '../services/reservation.service';
-import { ApiError } from '../exceptions/api.error';
 import { getUserFromRequest } from '../utils';
 
 export const reserve = async (req: Request, res: Response) => {
