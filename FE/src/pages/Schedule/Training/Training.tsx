@@ -16,7 +16,7 @@ import ReservationButton from "../../../components/Elements/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
 import { useNotification } from "../../../hooks/useNotification";
-import Modal from "../../../components/Elements/Modal";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 export default function Training({ training }: { training: TrainingType }) {
   const { t } = useTranslation();
@@ -75,13 +75,12 @@ export default function Training({ training }: { training: TrainingType }) {
 
   const handleTrainingAbort = async () => {
     try {
-      setIsSubmitting(true);
       await dispatch(cancelTrainingByAdmin(training.id)).unwrap();
       handleNotification("Success");
+      return true;
     } catch (error) {
       handleNotification(getErrorMessage(error), "error");
-    } finally {
-      setIsSubmitting(false);
+      return false;
     }
   };
 
@@ -138,30 +137,11 @@ export default function Training({ training }: { training: TrainingType }) {
           />
         )}
         {user?.role === "admin" && training.reservations.length > 0 && (
-          <Modal
-            btnName={t("training.cancelTraining")}
-            data={
-              <div className="flex flex-col items-center">
-                {notification && (
-                  <Notification
-                    message={notification.message}
-                    type={notification.type}
-                    className="absolute top-0 w-full"
-                  />
-                )}
-                <p className="py-2">{t("gen.ensure")}</p>
-
-                <button
-                  className="bg-teal-500 rounded-xl py-1 px-6 min-w-60 min-h-10 flex items-center justify-center"
-                  onClick={handleTrainingAbort}
-                >
-                  {isSubmitting && (
-                    <div className="reservation-btn__spinner"></div>
-                  )}
-                  {!isSubmitting && t("gen.confirm")}
-                </button>
-              </div>
-            }
+          <ConfirmModal
+            triggerName={t("training.cancelTraining")}
+            triggerClassName="bg-pink-800 text-white"
+            onConfirm={handleTrainingAbort}
+            notification={notification}
           />
         )}
       </div>

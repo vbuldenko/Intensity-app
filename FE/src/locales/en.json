@@ -3,7 +3,8 @@
   "gen": {
     "info": "Information",
     "ensure": "Are you sure?",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "login": {
     "title": "Log in",

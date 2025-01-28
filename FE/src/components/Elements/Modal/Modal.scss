@@ -1,18 +1,4 @@
 .modal {
-  z-index: 1;
-  // position: absolute;
-  background-color: $color-black-dark;
-  // top: 2rem;
-  // left: 0;
-  // right: 0;
-  border-radius: 1rem;
-  box-shadow: $shadow3;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 2rem;
-  max-width: max-content;
-  margin-inline: auto;
-
   &__button {
     padding: 0.75rem 2rem;
     border-radius: $big-br;
@@ -34,8 +20,6 @@
     background-color: $color-red;
     border-radius: 0 1rem;
     color: white;
-    width: 3rem;
-    height: 3rem;
   }
 }
 

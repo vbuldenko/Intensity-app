@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-interface Notification {
-  message: string;
-  type?: "error" | "notification";
-}
+import { Notification } from "../types/Notification";
 
 export const useNotification = () => {
   const [notification, setNotification] = useState<Notification | null>(null);
