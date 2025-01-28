@@ -36,6 +36,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <Notification
               message={notification.message}
               type={notification.type}
+              className="w-full"
             />
           )}
           <p className="text-center">
@@ -54,14 +55,14 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                   }, 3000);
                 }
               }}
-              className="bg-red-700 text-white px-4 py-1 rounded-md min-w-32 min-h-10 flex items-center justify-center"
+              className="bg-red-700 text-white px-4 py-1 rounded-md min-w-32 min-h-10 flex items-center justify-center w-full"
             >
               {isSubmitting && <div className="reservation-btn__spinner"></div>}
               {!isSubmitting && "Confirm"}
             </button>
             <button
               onClick={closeModal}
-              className="bg-green-700 text-white px-4 py-1 rounded-md min-w-32 min-h-10 flex items-center justify-center"
+              className="bg-green-700 text-white px-4 py-1 rounded-md min-w-32 min-h-10 flex items-center justify-center w-full"
             >
               Cancel
             </button>
