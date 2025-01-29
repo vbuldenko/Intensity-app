@@ -35,7 +35,7 @@ const calculateAbonementStatusAnalysis = (abonements: any[]) => {
   return {
     active: abonements.filter((abonement) => abonement.status === "active")
       .length,
-    nearTerm: abonements.filter(
+    "near-term": abonements.filter(
       (abonement) =>
         abonement.left > 0 &&
         abonement.left <= 2 &&
