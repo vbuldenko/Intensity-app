@@ -1,18 +1,17 @@
+import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../app/features/user/userSlice";
+import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
+import { fetchAbonements } from "../../../app/features/abonements/abonementThunk";
 import AdminDashboard from "./Admin";
 import ClientOverview from "./Client";
 import TrainerOverview from "./Trainer";
-import "./Overview.scss";
 import Loader from "../../../components/Elements/Loader";
-import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
-import { useEffect } from "react";
-import { fetchAbonements } from "../../../app/features/abonements/abonementThunk";
+import "./Overview.scss";
 
 export default function Overview() {
-  const { data: user, loading, error } = useAppSelector(selectUser);
+  const { data: user, loading } = useAppSelector(selectUser);
   const abonements = useAppSelector(selectAbonements);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,31 +24,28 @@ export default function Overview() {
     }
   }, [user, dispatch]);
 
+  const renderDashboard = useMemo(() => {
+    if (!user) return <div className="error">User not loaded</div>;
+
+    switch (user.role) {
+      case "admin":
+        return <AdminDashboard />;
+      case "trainer":
+        return <TrainerOverview user={user} />;
+      case "client":
+        return <ClientOverview abonements={abonements || []} />;
+      default:
+        return <div className="error">Unknown role</div>;
+    }
+  }, [user, abonements]);
+
   if (loading) {
     return <Loader />;
   }
 
-  if (error) {
-    return (
-      <p className="auth__error-message self-center card-element bg-red-100">
-        {error}
-      </p>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
   return (
     <div className="overview">
-      <div className="overview__body">
-        {user.role === "admin" && <AdminDashboard />}
-        {user.role === "trainer" && <TrainerOverview user={user} />}
-        {user.role === "client" && (
-          <ClientOverview abonements={abonements || []} />
-        )}
-      </div>
+      <div className="overview__body">{renderDashboard}</div>
     </div>
   );
 }
