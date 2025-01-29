@@ -1,13 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
-import { fetchUserData, updateUserData } from "./userThunk";
+import {
+  activate,
+  checkAuth,
+  fetchUserData,
+  login,
+  logOut,
+  updateUserData,
+} from "./userThunk";
 import { User } from "../../../types/User";
 import { ErrorResponse } from "../../../types/Error";
+import { accessTokenService } from "../../../services/accessTokenService";
 
 // Define a type for the slice state
 export interface UserState {
   loading: boolean;
   data: User | null;
+  isAuthenticated: boolean;
   error: string | null;
 }
 
@@ -15,44 +24,70 @@ export interface UserState {
 const initialState: UserState = {
   loading: false,
   data: null,
+  isAuthenticated: Boolean(accessTokenService.get()),
   error: null,
+};
+
+const handlePending = (state: UserState) => {
+  state.loading = true;
+  state.error = null;
+};
+
+const handleFulfilled = (
+  state: UserState,
+  action: PayloadAction<User | undefined>
+) => {
+  state.isAuthenticated = true;
+  state.data = action.payload || null;
+  state.loading = false;
+  state.error = null;
+};
+
+const handleRejected = (
+  state: UserState,
+  action: PayloadAction<ErrorResponse | undefined>
+) => {
+  state.isAuthenticated = false;
+  state.data = null;
+  state.loading = false;
+  state.error = action.payload?.message || "An unknown error occurred";
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserData.pending, (state) => {
-        state.loading = true;
+      .addCase(checkAuth.pending, handlePending)
+      .addCase(checkAuth.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.error = null;
       })
-      .addCase(
-        fetchUserData.fulfilled,
-        (state, action: PayloadAction<User>) => {
-          state.data = action.payload;
-          state.loading = false;
-          state.error = null; // Clear the error on success
-        }
-      )
-      .addCase(
-        fetchUserData.rejected,
-        (state, action: PayloadAction<ErrorResponse | undefined>) => {
-          state.loading = false;
-          state.error = action.payload?.message || "An unknown error occurred";
-        }
-      )
-      .addCase(updateUserData.pending, (state) => {
-        state.loading = true;
+      .addCase(checkAuth.rejected, handleRejected)
+      .addCase(login.pending, handlePending)
+      .addCase(login.fulfilled, handleFulfilled)
+      .addCase(login.rejected, handleRejected)
+      .addCase(activate.pending, handlePending)
+      .addCase(activate.fulfilled, handleFulfilled)
+      .addCase(activate.rejected, handleRejected)
+      .addCase(logOut.fulfilled, (state) => {
+        state.isAuthenticated = false;
+        state.loading = false;
+        state.data = null;
+        state.error = null;
       })
-      .addCase(
-        updateUserData.fulfilled,
-        (state, action: PayloadAction<User>) => {
-          state.data = action.payload;
-          state.loading = false;
-          state.error = null; // Clear the error on success
-        }
-      )
+      .addCase(logOut.rejected, handleRejected)
+      .addCase(fetchUserData.pending, handlePending)
+      .addCase(fetchUserData.fulfilled, handleFulfilled)
+      .addCase(fetchUserData.rejected, handleRejected)
+      .addCase(updateUserData.pending, handlePending)
+      .addCase(updateUserData.fulfilled, handleFulfilled)
       .addCase(
         updateUserData.rejected,
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
@@ -63,8 +98,7 @@ export const userSlice = createSlice({
   },
 });
 
-// export const {
-// } = userSlice.actions;
+export const { setError } = userSlice.actions;
 
 // Selector to access user state
 export const selectUser = (state: RootState) => state.user;

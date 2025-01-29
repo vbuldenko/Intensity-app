@@ -1,13 +1,11 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./features/user/userSlice";
-import authReducer from "./features/auth/authSlice";
 import trainingReducer from "./features/trainings/trainingSlice";
 import abonementReducer from "./features/abonements/abonementSlice";
-import { logOut } from "./features/auth/authThunk";
+import { logOut } from "./features/user/userThunk";
 
 const appReducer = combineReducers({
-  auth: authReducer,
   user: userReducer,
   trainings: trainingReducer,
   abonements: abonementReducer,

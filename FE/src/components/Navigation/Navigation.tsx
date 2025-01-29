@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 import { getLinkClass } from "../../utils/utils";
 import { NavBarLinks } from "../../types/NavBarLinks";
 import { useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../app/features/auth/authSlice";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-import "./Navigation.scss";
+import { selectUser } from "../../app/features/user/userSlice";
 import { Path } from "../../types/Path";
-import { useTranslation } from "react-i18next";
+import "./Navigation.scss";
 
 type Props = {
   className?: string;
@@ -16,7 +16,7 @@ type Props = {
 
 export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
   const { t } = useTranslation();
-  const { isAuthenticated } = useAppSelector(selectAuth);
+  const { isAuthenticated } = useAppSelector(selectUser);
 
   return (
     <nav className={className ? `nav ${className}` : "nav"}>

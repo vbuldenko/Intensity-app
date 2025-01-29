@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./components/Layout/MainLayout";
-import AuthRequired from "./components/ProtectedRoute";
+import AuthRequired from "./components/AuthRequired";
 
 import NotFound from "./pages/NotFound/NotFound";
 import HomePage from "./pages/Home";

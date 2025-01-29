@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { activate } from "../../app/features/auth/authThunk";
-import { selectAuth } from "../../app/features/auth/authSlice";
+import { selectUser } from "../../app/features/user/userSlice";
+import { activate } from "../../app/features/user/userThunk";
 import Loader from "../../components/Elements/Loader";
 import { Path } from "../../types/Path";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const AccountActivation = () => {
   const { t } = useTranslation();
   const { activationToken } = useParams();
-  const { loading, error, isAuthenticated } = useAppSelector(selectAuth);
+  const { loading, error, isAuthenticated } = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const [redirect, setRedirect] = useState(false);
 

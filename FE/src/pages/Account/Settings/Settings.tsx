@@ -1,8 +1,6 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 // import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectUser } from "../../../app/features/user/userSlice";
-import "./Settings.scss";
-
 import {
   PhoneIcon,
   AtSymbolIcon,
@@ -14,13 +12,13 @@ import {
   AdjustmentsHorizontalIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectUser } from "../../../app/features/user/userSlice";
+import { logOut, updateUserData } from "../../../app/features/user/userThunk";
 import { User } from "../../../types/User";
-import { logOut } from "../../../app/features/auth/authThunk";
 import Loader from "../../../components/Elements/Loader";
-import { updateUserData } from "../../../app/features/user/userThunk";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import CustomSelect from "../../../components/Elements/CustomSelect";
+import "./Settings.scss";
 
 function Settings() {
   const { t } = useTranslation();

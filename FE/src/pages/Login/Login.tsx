@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../app/features/auth/authSlice";
-import { login } from "../../app/features/auth/authThunk";
-import { Path } from "../../types/Path";
-import "./Auth.scss";
-import Notification from "../../components/Elements/Notification";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectUser } from "../../app/features/user/userSlice";
+import { login } from "../../app/features/user/userThunk";
+import { Path } from "../../types/Path";
+import Notification from "../../components/Elements/Notification";
+import "./Auth.scss";
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuthenticated, error } = useAppSelector(selectAuth);
+  const { isAuthenticated, error } = useAppSelector(selectUser);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
   // const location = useLocation();

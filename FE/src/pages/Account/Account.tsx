@@ -1,11 +1,10 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectUser } from "../../app/features/user/userSlice";
+import { checkAuth, fetchUserData } from "../../app/features/user/userThunk";
 import Menu from "./Menu";
 import "./Account.scss";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { useEffect } from "react";
-import { fetchUserData } from "../../app/features/user/userThunk";
-import { selectUser } from "../../app/features/user/userSlice";
-import { checkAuth } from "../../app/features/auth/authThunk";
 
 export default function Account() {
   const { data, error } = useAppSelector(selectUser);
