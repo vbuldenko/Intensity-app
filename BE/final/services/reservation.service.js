@@ -43,9 +43,7 @@ export const updateReservation = async (
       error: 'Training not found!',
     });
   }
-  if (training.reservations.length === training.capacity) {
-    throw ApiError.BadRequest('No places left!');
-  }
+
   if (abonement.user.toString() !== userId) {
     throw ApiError.BadRequest('Invalid abonement owner');
   }
@@ -102,6 +100,10 @@ const handleReservation = async (abonement, training, trainer) => {
     throw ApiError.BadRequest(
       'Already reserved: You have already reserved your place!',
     );
+  }
+
+  if (training.reservations.length === training.capacity) {
+    throw ApiError.BadRequest('No places left!');
   }
 
   if (abonement.status === 'ended') {
