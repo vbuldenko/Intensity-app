@@ -9,7 +9,6 @@ import { accessTokenService } from "../services/accessTokenService";
 import { authService } from "../services/authService";
 
 const axiosClient = createClient();
-
 axiosClient.interceptors.request.use(onRequest);
 axiosClient.interceptors.response.use(onResponseSuccess, onResponseError);
 
