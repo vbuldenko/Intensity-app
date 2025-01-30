@@ -1,43 +1,31 @@
-import { useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import React, { useMemo } from "react";
+import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../app/features/user/userSlice";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
-import { fetchAbonements } from "../../../app/features/abonements/abonementThunk";
 import AdminDashboard from "./Admin";
 import ClientOverview from "./Client";
 import TrainerOverview from "./Trainer";
 import Loader from "../../../components/Elements/Loader";
 import "./Overview.scss";
 
-export default function Overview() {
-  const { data: user, loading } = useAppSelector(selectUser);
+const Overview: React.FC = () => {
+  const { data, loading } = useAppSelector(selectUser);
   const abonements = useAppSelector(selectAbonements);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (
-      user &&
-      (user.role === "client" || user.role === "admin") &&
-      !abonements
-    ) {
-      dispatch(fetchAbonements());
-    }
-  }, [user, dispatch]);
 
   const renderDashboard = useMemo(() => {
-    if (!user) return <div className="error">User not loaded</div>;
+    if (!data) return null;
 
-    switch (user.role) {
+    switch (data.role) {
       case "admin":
         return <AdminDashboard />;
       case "trainer":
-        return <TrainerOverview user={user} />;
+        return <TrainerOverview user={data} />;
       case "client":
         return <ClientOverview abonements={abonements || []} />;
       default:
-        return <div className="error">Unknown role</div>;
+        return null;
     }
-  }, [user, abonements]);
+  }, [data, abonements]);
 
   if (loading) {
     return <Loader />;
@@ -48,4 +36,6 @@ export default function Overview() {
       <div className="overview__body">{renderDashboard}</div>
     </div>
   );
-}
+};
+
+export default Overview;
