@@ -17,11 +17,9 @@ import {
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { unknownEndpoint } from './middlewares/helper.middleware.js';
 import connectToDB from './db/db.js';
-// import { runTest } from './monoApiAcquiring/monobank.test.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export function createApp() {
-  // Connect to MongoDB
   connectToDB();
   // initializePredefinedSchedule();
   const app = express();
@@ -41,7 +39,6 @@ export function createApp() {
   app.use('/abonements', authMiddleware, abonementRouter);
   app.use('/trainings', trainingRouter);
   app.use('/schedule', authMiddleware, adminCheckerMiddleware, scheduleRouter);
-  // Serve the React app for any other route
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../ui', 'index.html'));
   });

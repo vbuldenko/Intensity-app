@@ -43,12 +43,19 @@ const handleFulfilled = (
   state.error = null;
 };
 
-const handleRejected = (
+const handleAuthRejected = (
   state: UserState,
   action: PayloadAction<ErrorResponse | undefined>
 ) => {
   state.isAuthenticated = false;
   state.data = null;
+  state.loading = false;
+  state.error = action.payload?.message || "An unknown error occurred";
+};
+const handleRejected = (
+  state: UserState,
+  action: PayloadAction<ErrorResponse | undefined>
+) => {
   state.loading = false;
   state.error = action.payload?.message || "An unknown error occurred";
 };
@@ -64,18 +71,14 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(checkAuth.pending, handlePending)
-      .addCase(checkAuth.fulfilled, (state) => {
-        state.isAuthenticated = true;
-        state.loading = false;
-        state.error = null;
-      })
-      .addCase(checkAuth.rejected, handleRejected)
+      .addCase(checkAuth.fulfilled, handleFulfilled)
+      .addCase(checkAuth.rejected, handleAuthRejected)
       .addCase(login.pending, handlePending)
       .addCase(login.fulfilled, handleFulfilled)
-      .addCase(login.rejected, handleRejected)
+      .addCase(login.rejected, handleAuthRejected)
       .addCase(activate.pending, handlePending)
       .addCase(activate.fulfilled, handleFulfilled)
-      .addCase(activate.rejected, handleRejected)
+      .addCase(activate.rejected, handleAuthRejected)
       .addCase(logOut.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.loading = false;
@@ -85,16 +88,10 @@ export const userSlice = createSlice({
       .addCase(logOut.rejected, handleRejected)
       .addCase(fetchUserData.pending, handlePending)
       .addCase(fetchUserData.fulfilled, handleFulfilled)
-      .addCase(fetchUserData.rejected, handleRejected)
+      .addCase(fetchUserData.rejected, handleAuthRejected)
       .addCase(updateUserData.pending, handlePending)
       .addCase(updateUserData.fulfilled, handleFulfilled)
-      .addCase(
-        updateUserData.rejected,
-        (state, action: PayloadAction<ErrorResponse | undefined>) => {
-          state.loading = false;
-          state.error = action.payload?.message || "An unknown error occurred";
-        }
-      );
+      .addCase(updateUserData.rejected, handleRejected);
   },
 });
 

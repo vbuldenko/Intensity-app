@@ -36,7 +36,12 @@ const Login = () => {
     <div className="auth__form-wrapper card-element">
       <form className="auth__form" onSubmit={handleLogin}>
         <h2 className="auth__title">{t("login.title")}</h2>
-        {error && <Notification message={error} type="error" />}
+        {error && (
+          <Notification
+            message={error === "Not authorized" ? t("gen.authError") : error}
+            type="error"
+          />
+        )}
         <div className="auth__input-wrapper">
           {/* <label htmlFor="identifier">Email or Phone Number</label> */}
           <input

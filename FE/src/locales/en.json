@@ -4,7 +4,8 @@
     "info": "Information",
     "ensure": "Are you sure?",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "authError": "Authentication period has passed, please log in again!"
   },
   "login": {
     "title": "Log in",
