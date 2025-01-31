@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bdev": "cd BE && npm run dev",
-    "fdev": "cd FE && npm run dev",
     "server": "cd BE && nodemon final/index.js",
     "client": "cd FE && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
