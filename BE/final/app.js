@@ -8,7 +8,7 @@ import userRouter from './api/user.route.js';
 import abonementRouter from './api/abonement.route.js';
 import trainingRouter from './api/training.route.js';
 import scheduleRouter from './api/schedule.route.js';
-import { passport } from './services/passport.js';
+// import { passport } from './services/passport.js';
 import { requestLogger } from './middlewares/logger.middleware.js';
 import {
   adminCheckerMiddleware,
@@ -33,7 +33,7 @@ export function createApp() {
   app.use(express.json());
   app.use(requestLogger);
   app.use(cookieParser());
-  app.use(passport.initialize());
+  // app.use(passport.initialize());
   app.use('/', authRouter);
   app.use('/users', authMiddleware, userRouter);
   app.use('/abonements', authMiddleware, abonementRouter);

@@ -9,7 +9,7 @@ import userRouter from './api/user.route';
 import abonementRouter from './api/abonement.route';
 import trainingRouter from './api/training.route';
 import scheduleRouter from './api/schedule.route';
-import { passport } from './services/passport';
+// import { passport } from './services/passport';
 import { requestLogger } from './middlewares/logger.middleware';
 import {
   adminCheckerMiddleware,
@@ -41,7 +41,7 @@ export function createApp() {
   app.use(requestLogger);
   app.use(cookieParser());
 
-  app.use(passport.initialize());
+  // app.use(passport.initialize());
 
   app.use('/', authRouter);
   app.use('/users', authMiddleware, userRouter);
