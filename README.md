@@ -2,10 +2,6 @@
 
 This project is a fully responsive fullstack web application for managing a fitness studio. It provides features for user interaction, data management, and localization, utilizing modern technologies for both the front-end and back-end development.
 
-# Demo
-
-- [Click here to view the demo](https://intensity-studio.onrender.com/)
-
 ---
 
 ## Table of Contents
