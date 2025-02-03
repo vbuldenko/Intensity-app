@@ -137,12 +137,18 @@ export default function Training({ training }: { training: TrainingType }) {
           />
         )}
         {user?.role === "admin" && training.reservations.length > 0 && (
-          <ConfirmModal
-            triggerName={t("training.cancelTraining")}
-            triggerClassName="bg-pink-800 text-white"
-            onConfirm={handleTrainingAbort}
-            notification={notification}
-          />
+          <div className="flex items-center gap-2">
+            <ConfirmModal
+              triggerName={t("training.cancelTraining")}
+              triggerClassName="bg-pink-800 text-white"
+              onConfirm={handleTrainingAbort}
+              notification={notification}
+            />
+
+            <button className="bg-teal-500 rounded-lg h-11 w-full">
+              show visitors
+            </button>
+          </div>
         )}
       </div>
     </li>
