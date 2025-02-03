@@ -91,17 +91,15 @@ This project is a fully responsive fullstack web application for managing a fitn
 3. **Configure environment variables:**
 
    - Rename the `.env.example` file to `.env` in both the `backend` and `frontend`.
-   - Add the following variables:
+   - Add the following variables to backend:
 
      ```env
       NODE_ENV=development
       PORT=3001
+      CLIENT_HOST=https://your-production-client-url.com
 
       MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database>?retryWrites=true&w=majority
       DEV_MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database>?retryWrites=true&w=majority
-      TEST_MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database>?retryWrites=true&w=majority
-
-      CLIENT_HOST=https://your-production-client-url.com
 
       SMTP_HOST=smtp.gmail.com
       SMTP_PORT=587
@@ -115,6 +113,11 @@ This project is a fully responsive fullstack web application for managing a fitn
 
       GOOGLE_CLIENT_ID=your-google-client-id
       GOOGLE_CLIENT_SECRET=your-google-client-secret
+     ```
+   - Add the following variable to frontend:
+
+     ```env
+      VITE_API_BASE_URL=https://your-production-server-url.com
      ```
 
 4. **Run the application:**
