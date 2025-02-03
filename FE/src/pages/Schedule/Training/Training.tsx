@@ -120,7 +120,7 @@ export default function Training({ training }: { training: TrainingType }) {
         {
           <div className="schedule__training-data">
             <p>{training.time}</p>
-            {access && user?.role !== ROLE.admin && (
+            {user?.role !== ROLE.admin && (
               <p className="m-text w-max">
                 {t("training.left")} {training.capacity - reservedPlaces}
               </p>
