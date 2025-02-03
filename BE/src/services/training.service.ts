@@ -15,7 +15,10 @@ export const getAll = async (): Promise<ITraining[]> => {
     })
     .populate({
       path: 'reservations',
-      // select: 'firstName lastName',
+      populate: {
+        path: 'user',
+        select: 'firstName lastName',
+      },
     });
 };
 

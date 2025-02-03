@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   add,
   eachDayOfInterval,
@@ -8,7 +11,6 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { useEffect, useState } from "react";
 import MonthView from "./Month";
 import WeekView from "./Week";
 import SelectedDayTrainings from "./SelectedDayTrainings/SelectedDayTrainings";
@@ -19,14 +21,20 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectTrainings } from "../../app/features/trainings/trainingSlice";
 import { fetchTrainings } from "../../app/features/trainings/trainingThunk";
 import Loader from "../../components/Elements/Loader";
-import { useTranslation } from "react-i18next";
 
 export default function Schedule() {
   const { t } = useTranslation();
   const { data: trainings, loading } = useAppSelector(selectTrainings);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useState(today);
+
+  const queryParams = new URLSearchParams(location.search);
+  const queryDate = queryParams.get("date");
+  const initialSelectedDay = queryDate ? parseISO(queryDate) : today;
+
+  const [selectedDay, setSelectedDay] = useState(initialSelectedDay);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [scheduleView, setScheduleView] = useState<"month" | "week">("week");
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
@@ -54,6 +62,7 @@ export default function Schedule() {
     } else {
       const previousWeek = add(selectedDay, { weeks: -1 });
       setSelectedDay(previousWeek);
+      updateQueryParams(previousWeek);
     }
   }
 
@@ -64,7 +73,14 @@ export default function Schedule() {
     } else {
       const nextWeek = add(selectedDay, { weeks: 1 });
       setSelectedDay(nextWeek);
+      updateQueryParams(nextWeek);
     }
+  }
+
+  function updateQueryParams(date: Date) {
+    const formattedDate = format(date, "yyyy-MM-dd");
+    queryParams.set("date", formattedDate);
+    navigate({ search: queryParams.toString() });
   }
 
   useEffect(() => {
@@ -72,6 +88,10 @@ export default function Schedule() {
       dispatch(fetchTrainings());
     }
   }, []);
+
+  useEffect(() => {
+    updateQueryParams(selectedDay);
+  }, [selectedDay]);
 
   return (
     <section className="schedule">

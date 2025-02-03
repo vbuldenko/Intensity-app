@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
@@ -17,6 +18,8 @@ import Notification from "../../../components/Elements/Notification";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
 import { useNotification } from "../../../hooks/useNotification";
 import ConfirmModal from "../../../components/ConfirmModal";
+import { ROLE } from "../../../utils/constants";
+import LocalOverlayModal from "../../../components/ConfirmModal/LocalOverlayModal";
 
 export default function Training({ training }: { training: TrainingType }) {
   const { t } = useTranslation();
@@ -117,10 +120,39 @@ export default function Training({ training }: { training: TrainingType }) {
         {
           <div className="schedule__training-data">
             <p>{training.time}</p>
-            {(access || user) && (
+            {access && user?.role !== ROLE.admin && (
               <p className="m-text w-max">
                 {t("training.left")} {training.capacity - reservedPlaces}
               </p>
+            )}
+            {user?.role === ROLE.admin && (
+              <LocalOverlayModal
+                trigger={{
+                  name: `${t("training.left")} ${training.capacity - reservedPlaces}`,
+                  className: "w-max py-1 px-4",
+                }}
+              >
+                {() => (
+                  <ul className="visitors scrollbar-hide ">
+                    {training.reservations.map(({ id, user }, index) => (
+                      <li className="visitors__item" key={id}>
+                        <div className="visitors__indicator">
+                          <div className="visitors__dot"></div>
+                          {index < training.reservations.length - 1 && (
+                            <div className="visitors__line"></div>
+                          )}
+                        </div>
+                        <Link
+                          to={`../users/${user.id}`}
+                          className="visitors__name"
+                        >
+                          {user.firstName} {user.lastName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </LocalOverlayModal>
             )}
           </div>
         }
@@ -137,18 +169,12 @@ export default function Training({ training }: { training: TrainingType }) {
           />
         )}
         {user?.role === "admin" && training.reservations.length > 0 && (
-          <div className="flex items-center gap-2">
-            <ConfirmModal
-              triggerName={t("training.cancelTraining")}
-              triggerClassName="bg-pink-800 text-white"
-              onConfirm={handleTrainingAbort}
-              notification={notification}
-            />
-
-            <button className="bg-teal-500 rounded-lg h-11 w-full">
-              show visitors
-            </button>
-          </div>
+          <ConfirmModal
+            triggerName={t("training.cancelTraining")}
+            triggerClassName="bg-pink-800 text-white mt-2"
+            onConfirm={handleTrainingAbort}
+            notification={notification}
+          />
         )}
       </div>
     </li>

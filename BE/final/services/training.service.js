@@ -11,7 +11,13 @@ export const getAll = async () => {
       path: 'instructor',
       select: 'firstName lastName',
     })
-    .populate('reservations');
+    .populate({
+      path: 'reservations',
+      populate: {
+        path: 'user',
+        select: 'firstName lastName',
+      },
+    });
 };
 
 export const getById = async id => {
