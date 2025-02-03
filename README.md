@@ -22,13 +22,16 @@ This project is a fully responsive fullstack web application for managing a fitn
 
 ## Features
 
-- **User Interface**: Built with React, styled using SCSS and Tailwind CSS.
-- **State Management**: Redux and Redux Toolkit with Async Thunks for managing application state.
-- **Routing**: React Router v6 for navigation.
-- **Localization**: Multi-language support using `react-i18next`.
-- **API Integration**: Seamless communication between the front-end and back-end.
-- **Backend Architecture**: Organized using routes, controllers, and services in Express.
-- **Database**: MongoDB integration using Mongoose for data storage.
+- **Secure Authentication**: JWT-based authentication for secure user login and session management.
+- **Password Recovery**: Secure password reset via email or OTP verification.
+- **Role-Based Access Control (RBAC)**:
+	•	Clients can book training sessions based on studio rules and available subscriptions.
+	•	Trainers manage their schedules and assigned training sessions.
+	•	Admins oversee user management, training schedules, and subscription plans.
+- **Dashboard Analytics**: Admins and trainers get insights into bookings, and revenue.
+- **UI**: Responsive design for mobile, tablet and desktop devices.
+- **Multi-language support**: (Uk, En).
+- **Data persistence**: MongoDB integration via Mongoose.
 
 ---
 
