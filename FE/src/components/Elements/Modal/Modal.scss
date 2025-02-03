@@ -1,4 +1,10 @@
-.modal {
+.popup {
+  position: relative;
+  background: $color-black-dark;
+  border-radius: $standard-br;
+  padding: 1.5rem;
+  width: 90%;
+
   &__button {
     padding: 0.75rem 2rem;
     border-radius: $big-br;
@@ -17,13 +23,18 @@
   }
 
   &__close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
+    height: 2rem;
     background-color: $color-red;
-    border-radius: 0 1rem;
+    border-radius: 0 $standard-br;
     color: white;
   }
 }
 
-.modal-container {
+.popup-container {
   position: absolute;
   left: 0;
   top: 0;
