@@ -131,16 +131,17 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
           )}
         </div>
       </div>
-      <div className="p-4">
-        {user?.role === "admin" && (
+
+      {user?.role === "admin" && (
+        <div className="p-4">
           <ConfirmModal
             triggerName={t("abonement.remove")}
             triggerClassName="bg-pink-800 text-white"
             onConfirm={handleDelete}
             notification={notification}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

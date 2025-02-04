@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectUser } from "../../app/features/user/userSlice";
@@ -16,8 +16,8 @@ const Login = () => {
   const { isAuthenticated, error } = useAppSelector(selectUser);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
-  // const location = useLocation();
-  // const path = location.state?.from || "/account";
+  const location = useLocation();
+  const path = location.state?.from || "/account";
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,7 +28,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/account", { replace: true });
+      navigate(path, { replace: true });
     }
   }, [isAuthenticated, navigate]);
 

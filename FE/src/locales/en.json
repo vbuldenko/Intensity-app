@@ -55,6 +55,7 @@
     "header": "Fitness Studio",
     "header_values": "Our Values",
     "header_rules": "Studio Rules",
+    "reserve": "Reserve a training",
     "values": [
       {
         "title": "Health",
