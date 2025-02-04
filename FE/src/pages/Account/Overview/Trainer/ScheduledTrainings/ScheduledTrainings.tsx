@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { UsersIcon } from "@heroicons/react/24/solid";
 import TrainerTrainingCard from "../TrainerTrainingCard";
 import { Training } from "../../../../../types/Training";
 
@@ -6,12 +7,14 @@ interface ScheduledTrainingsProps {
   title: string;
   trainings: Training[];
   sortOrder?: "asc" | "desc";
+  counter?: boolean;
 }
 
 const ScheduledTrainings: React.FC<ScheduledTrainingsProps> = ({
   title,
   trainings,
   sortOrder = "asc",
+  counter = true,
 }) => {
   const { t } = useTranslation();
 
@@ -23,7 +26,13 @@ const ScheduledTrainings: React.FC<ScheduledTrainingsProps> = ({
   });
 
   return (
-    <div className="trainer-overview__trainings-section card-element">
+    <div className="trainer-overview__trainings-section card-element relative">
+      {counter && (
+        <div className="people-counter">
+          <UsersIcon className="w-4" />
+          {trainings.reduce((a, b) => a + b.reservations.length, 0)}
+        </div>
+      )}
       <h3 className="trainer-overview__title">{title}</h3>
       <div className="trainer-overview__trainings-list">
         {sortedTrainings.length > 0 ? (

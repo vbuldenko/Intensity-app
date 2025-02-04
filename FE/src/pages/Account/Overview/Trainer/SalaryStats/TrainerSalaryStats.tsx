@@ -57,7 +57,7 @@ const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
               today {currentDayTrainings.length}
             </span>
             <span className="bg-green-100 bg-opacity-200 text-green-500 text-xs rounded-full px-3 py-0.5 flex items-center gap-1">
-              <UsersIcon className="w-4" />{" "}
+              <UsersIcon className="w-4" />
               {currentDayTrainings.reduce(
                 (acc, el) => acc + el.reservations.length,
                 0
