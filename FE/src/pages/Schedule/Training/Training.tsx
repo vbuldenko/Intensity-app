@@ -33,7 +33,7 @@ export default function Training({ training }: { training: TrainingType }) {
   const trainingTime = useMemo(() => new Date(training.date), []);
 
   const reservedPlaces = training.reservations.length;
-  const reservation = training.reservations.find((r) => r.user === user?.id);
+  const reservation = training.reservations.find((r) => r.user.id === user?.id);
 
   const access = reservationAccess(trainingTime, reservedPlaces);
 
