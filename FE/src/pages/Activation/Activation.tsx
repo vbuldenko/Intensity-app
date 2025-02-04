@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectUser } from "../../app/features/user/userSlice";
 import { activate } from "../../app/features/user/userThunk";
 import Loader from "../../components/Elements/Loader";
-import { Path } from "../../types/Path";
 import { useTranslation } from "react-i18next";
 
 const AccountActivation = () => {
@@ -22,7 +21,7 @@ const AccountActivation = () => {
     }
   }, [activationToken, dispatch]);
 
-  if (redirect) return <Navigate to={`/${Path.Account}`} replace />;
+  if (redirect) return <Navigate to={`/account/buying`} replace />;
 
   return (
     <div className="card-element p-4 flex flex-col items-center">
