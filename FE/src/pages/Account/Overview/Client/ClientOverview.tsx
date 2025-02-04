@@ -15,6 +15,11 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ abonements }) => {
   const { t } = useTranslation();
   const [abonementView, setAbonementView] = useState<ViewOption>("active");
 
+  const notAALength = useMemo(
+    () => filterAbonements(abonements, "inactive").length,
+    [abonements]
+  );
+
   const filteredAbonements = useMemo(
     () => filterAbonements(abonements, abonementView),
     [abonements, abonementView]
@@ -36,12 +41,13 @@ const ClientOverview: React.FC<ClientOverviewProps> = ({ abonements }) => {
   ];
 
   return (
-    <div className="client-overview">
+    <div className="client-overview relative">
       <Selector
         selection={abonementView}
         handleSelection={handleViewChange}
         buttonNames={buttonNames}
       />
+      {notAALength > 0 && <div className="counter">{notAALength}</div>}
       <div className="client-overview__content">
         {sortedAbonements.length ? (
           sortedAbonements.map((abonement) => (

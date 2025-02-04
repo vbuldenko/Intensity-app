@@ -119,7 +119,6 @@
 .buying__notes {
   border-radius: $standard-br;
   border: 2px dotted $gray-color-4;
-  animation: slideIn 1s forwards;
 }
 
 .buying__note {
@@ -137,4 +136,8 @@
   // &--green {
   //   animation: border-green 3s infinite;
   // }
+}
+
+.animation-zoomin {
+  animation: zoomIn 2s forwards;
 }

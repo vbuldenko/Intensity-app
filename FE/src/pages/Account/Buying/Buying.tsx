@@ -41,8 +41,10 @@ const Buying = () => {
   return (
     <div className="buying">
       <h1 className="buying__header">{t("prices.paymentDetails")}</h1>
-      <p className="buying__description">{t("prices.explanation")}</p>
-      <div className="flex flex-col gap-2 buying__notes">
+      <p className="buying__description animation-zoomin">
+        {t("prices.explanation")}
+      </p>
+      <div className="flex flex-col gap-2 buying__notes animation-zoomin">
         <span className="buying__note ">{t("prices.IBAN_note")}</span>
         <span className="buying__note text-yellow-300">
           {t("prices.buyingNote")}

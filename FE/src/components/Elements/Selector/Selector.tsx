@@ -18,7 +18,7 @@ const Selector: React.FC<SelectorProps> = ({
   buttonNames,
 }) => {
   return (
-    <div className="selector">
+    <div className="selector relative">
       {buttonNames.map(({ value, label }, index) => (
         <button
           key={index}

@@ -229,3 +229,19 @@ main {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $color-red;
+  border: 3px solid $color-black-dark;
+  color: $color-white;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -0.75rem;
+  right: -0.5rem;
+}
