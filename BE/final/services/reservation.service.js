@@ -84,6 +84,10 @@ export const updateReservation = async (
         },
         {
           path: 'reservations',
+          populate: {
+            path: 'user',
+            select: 'firstName lastName',
+          },
         },
       ]),
     ]);
