@@ -1,14 +1,10 @@
 .menu {
-  z-index: 1;
-  // backdrop-filter: blur(50px);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  // box-shadow: $shadow3;
   border-radius: 0;
   padding: 1rem;
-  // background: $account-background;
 
   &.dark {
     background-color: $color-black-dark;
@@ -17,17 +13,10 @@
   @include on-mobile {
     border-top: 1px solid $color-element-dark;
     padding: 0.8rem 0.5rem 1.5rem;
-    // background-color: transparent;
-    // backdrop-filter: blur(10px);
-    // box-shadow: none;
-    overflow-x: scroll;
-    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
     justify-content: space-around;
   }
 
   @include on-tablet {
-    box-shadow: none;
     flex-direction: column;
     align-items: flex-start;
     padding: 1.2rem 1rem;
@@ -80,20 +69,6 @@
     color: $color-green;
     border: 1px solid $color-middle-green;
     border-radius: $big-br;
-    // box-shadow:
-    //   5px 5px 10px 0px rgba(174, 174, 192, 0.2),
-    //   /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
-    //     4px 0px rgba(0, 0, 0, 0.1) inset;
-    // transition: box-shadow 0.3s ease;
-
-    // &:hover {
-    //   background-color: white;
-    // }
-
-    &:active {
-      box-shadow:
-        inset 5px 5px 4px 0px rgba(174, 174, 192, 0.2),
-        inset -5px -5px 4px 0px rgba(255, 255, 255, 0.3);
-    }
+    transition: box-shadow 0.3s ease;
   }
 }
