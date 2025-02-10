@@ -69,6 +69,7 @@ const create = async user => {
   const activationToken = crypto.randomBytes(32).toString('hex');
   const newUser = new User({
     ...user,
+    email: user.email.toLowerCase(),
     password: hash,
     activationToken,
   });

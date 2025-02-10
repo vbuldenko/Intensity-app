@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+// import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import "./Slider.scss";
 import useTouchSlider from "../../hooks/useTouchSlider";
 
@@ -51,12 +51,12 @@ const Slider: React.FC<SliderProps> = ({ slides, settings }) => {
       onMouseUp={handleTouchEnd}
       onMouseLeave={handleTouchEnd}
     >
-      <button
+      {/* <button
         className="slider__control slider__control--prev"
         onClick={prevSlide}
       >
         <ChevronLeftIcon className="icon icon--small" />
-      </button>
+      </button> */}
 
       <div className="slider__container">
         {slides.map((slide, index) => {
@@ -85,12 +85,12 @@ const Slider: React.FC<SliderProps> = ({ slides, settings }) => {
         })}
       </div>
 
-      <button
+      {/* <button
         className="slider__control slider__control--next"
         onClick={nextSlide}
       >
         <ChevronRightIcon className="icon icon--small" />
-      </button>
+      </button> */}
 
       <div className="slider__track">
         {slides.map((slide, index) => (

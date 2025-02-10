@@ -88,6 +88,7 @@ const create = async (user: IUser) => {
 
   const newUser = new User({
     ...user,
+    email: user.email.toLowerCase(),
     password: hash,
     activationToken,
   });

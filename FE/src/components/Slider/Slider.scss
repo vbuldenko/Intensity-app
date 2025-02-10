@@ -1,8 +1,7 @@
 .slider {
+  @include page-grid;
   row-gap: 8px;
   grid-template-rows: 1fr 24px;
-
-  @include page-grid;
 
   &__container {
     z-index: 0;
@@ -13,9 +12,9 @@
     height: 320px;
     grid-column: 1 / -1;
 
-    @include on-tablet {
-      grid-column: 2 / -2;
-    }
+    // @include on-tablet {
+    //   grid-column: 2 / -2;
+    // }
 
     @include on-desktop {
       height: 400px;
@@ -99,7 +98,7 @@
     cursor: pointer;
 
     &--active {
-      background-color: $color-primary;
+      background-color: $color-green;
     }
   }
 }

@@ -32,7 +32,7 @@ const SignUp = () => {
 
     setSignUpData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value.trim(),
     }));
   }
 

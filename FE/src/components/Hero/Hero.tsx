@@ -2,6 +2,7 @@ import Slider from "../Slider/Slider";
 import { useTranslation } from "react-i18next";
 import { slides } from "../../assets/slides";
 import "./Hero.scss";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -14,6 +15,13 @@ export const Hero = () => {
       <div className="hero__slider">
         <Slider slides={slides} settings={{ autoplay: true, speed: 10000 }} />
       </div>
+
+      <Link
+        to="/account/buying"
+        className="bg-teal-600 w-full text-center p-3 rounded-md hover:bg-teal-700"
+      >
+        {t("home.reserve")}
+      </Link>
     </div>
   );
 };
