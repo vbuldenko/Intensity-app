@@ -253,6 +253,8 @@
   "adminDashboard": {
     "generalStatistics": "General Statistics",
     "expenses": "Expenses",
+    "trainings": "Trainings",
+    "topTrainings": "Top Trainings",
     "abonements": "Abonements",
     "totalAbonementsSold": "Total Abonements Sold",
     "abonementsSold": "Abonements Sold",
@@ -260,6 +262,7 @@
     "shortTerm": "Short Term",
     "midTerm": "Medium Term",
     "longTerm": "Long Term",
+    "abonementFormatAnalysis": "Abonement Format Analysis",
     "abonementStatusAnalysis": "Abonement Status Analysis",
     "income": "Income",
     "profit": "Profit",

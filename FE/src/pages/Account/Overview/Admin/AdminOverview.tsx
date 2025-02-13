@@ -74,7 +74,9 @@ const Statistics: React.FC<{
         className={classNames("statistics__item", {
           "col-span-2":
             subKey === "abonementDurationAnalysis" ||
-            subKey === "abonementStatusAnalysis",
+            subKey === "abonementFormatAnalysis" ||
+            subKey === "abonementStatusAnalysis" ||
+            subKey === "topTrainings",
         })}
         key={subKey}
       >

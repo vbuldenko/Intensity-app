@@ -1,6 +1,70 @@
 import { useMemo } from "react";
 import { useAppSelector } from "../app/hooks";
 import { selectAbonements } from "../app/features/abonements/abonementSlice";
+import { selectTrainings } from "../app/features/trainings/trainingSlice";
+import { Training } from "../types/Training";
+import { Abonement } from "../types/Abonement";
+
+interface AggregatedTraining {
+  name: string;
+  attendance: number;
+}
+
+const aggregateTrainingsByAttendance = (
+  trainings: Training[],
+  getKey: (training: Training) => string
+): AggregatedTraining[] => {
+  const trainingMap = new Map<string, AggregatedTraining>();
+
+  trainings.forEach((training) => {
+    const key = getKey(training);
+    if (!trainingMap.has(key)) {
+      trainingMap.set(key, {
+        name: key,
+        attendance: training.reservations.length,
+      });
+    } else {
+      const existingTraining = trainingMap.get(key)!;
+      existingTraining.attendance += training.reservations.length;
+    }
+  });
+
+  return Array.from(trainingMap.values()).sort(
+    (a, b) => b.attendance - a.attendance
+  );
+};
+
+const getTopTrainingsByAttendance = (
+  trainings: Training[],
+  topN: number = 4
+) => {
+  const aggregatedTrainings = aggregateTrainingsByAttendance(
+    trainings,
+    (training) => `${training.type} - ${training.time}`
+  );
+
+  return aggregatedTrainings.slice(0, topN).reduce(
+    (acc, training) => {
+      acc[training.name] = training.attendance;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+};
+
+const getCurrentMonthTrainings = (
+  trainings: Training[],
+  currentMonth: number,
+  currentYear: number
+) => {
+  return trainings.filter((training) => {
+    const trainingDate = new Date(training.date);
+    return (
+      trainingDate.getMonth() === currentMonth &&
+      trainingDate.getFullYear() === currentYear
+    );
+  });
+};
 
 const getCurrentMonthAbonements = (
   abonements: any[],
@@ -30,6 +94,14 @@ const calculateAbonementDurationAnalysis = (abonements: any[]) => {
     twelve: abonements.filter((abonement) => abonement.amount === 12).length,
   };
 };
+const calculateAbonementFormatAnalysis = (abonements: Abonement[]) => {
+  return {
+    group: abonements.filter((abonement) => abonement.type === "group").length,
+    personal: abonements.filter((abonement) => abonement.type === "personal")
+      .length,
+    // split: abonements.filter((abonement) => abonement.type === "split").length,
+  };
+};
 
 const calculateAbonementStatusAnalysis = (abonements: any[]) => {
   return {
@@ -43,7 +115,8 @@ const calculateAbonementStatusAnalysis = (abonements: any[]) => {
     ).length,
     ended: abonements.filter(
       (abonement) =>
-        abonement.status === "expired" || abonement.status === "ended"
+        (abonement.status === "expired" || abonement.status === "ended") &&
+        new Date(abonement.updatedAt).getMonth() === new Date().getMonth()
     ).length,
     inactive: abonements.filter((abonement) => abonement.status === "inactive")
       .length,
@@ -52,12 +125,17 @@ const calculateAbonementStatusAnalysis = (abonements: any[]) => {
 
 export const useStatistics = (expenses: Record<string, number>) => {
   const data = useAppSelector(selectAbonements);
+  const { data: trainings } = useAppSelector(selectTrainings);
   const abonements = data || [];
 
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
+  const currentMonthTrainings = useMemo(
+    () => getCurrentMonthTrainings(trainings, currentMonth, currentYear),
+    [trainings]
+  );
   const currentMonthAbonements = useMemo(
     () => getCurrentMonthAbonements(abonements, currentMonth, currentYear),
     [abonements, currentMonth, currentYear]
@@ -76,17 +154,26 @@ export const useStatistics = (expenses: Record<string, number>) => {
   const dailyProfit = dailyIncome - totalExpenses / daysInMonth;
   const monthlyProfit = currentMonthIncome - totalExpenses;
 
+  const topTrainings = useMemo(
+    () => getTopTrainingsByAttendance(currentMonthTrainings),
+    [currentMonthTrainings]
+  );
+
   const generalStats = useMemo(
     () => ({
+      trainings: {
+        topTrainings,
+      },
       abonements: {
         totalAbonementsSold: abonements?.length || 0,
         abonementsSold: currentMonthAbonements?.length || 0,
         abonementDurationAnalysis: calculateAbonementDurationAnalysis(
           currentMonthAbonements
         ),
-        abonementStatusAnalysis: calculateAbonementStatusAnalysis(
+        abonementFormatAnalysis: calculateAbonementFormatAnalysis(
           currentMonthAbonements
         ),
+        abonementStatusAnalysis: calculateAbonementStatusAnalysis(abonements),
       },
       income: {
         monthlyIncome: currentMonthIncome.toFixed(1),
