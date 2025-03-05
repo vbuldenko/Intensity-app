@@ -143,7 +143,7 @@ const handleReservation = async (
   }
 
   if (abonement.status === 'inactive') {
-    activateAbonement(abonement);
+    activateAbonement(abonement, training.date);
   }
 
   const reservation = new Reservation({
@@ -479,12 +479,14 @@ const isTrainingReserved = (abonement: any, training: any) => {
   );
 };
 
-const activateAbonement = (abonement: any) => {
-  const currentDate = toZonedTime(new Date(), timeZone);
-  const expirationDate = new Date(currentDate);
-  expirationDate.setMonth(currentDate.getMonth() + 1);
-
-  abonement.activatedAt = currentDate;
+export const activateAbonement = (
+  abonement: IAbonement,
+  trainingDate: Date,
+) => {
+  const activationDate = toZonedTime(new Date(trainingDate), timeZone);
+  const expirationDate = new Date(activationDate);
+  expirationDate.setMonth(activationDate.getMonth() + 1);
+  abonement.activatedAt = activationDate;
   abonement.expiratedAt = expirationDate;
   abonement.status = 'active';
 };

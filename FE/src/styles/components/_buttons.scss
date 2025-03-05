@@ -11,3 +11,15 @@ button.secondary {
   border: 1px solid blue;
 }
 // examples for extend use
+
+.refresh-button {
+  position: fixed;
+  color: white;
+  background-color: $color-green;
+  width: 1.5rem;
+  border-radius: 50%;
+  padding: 0.3rem;
+  top: 0.75rem;
+  right: 8rem;
+  z-index: 2;
+}
