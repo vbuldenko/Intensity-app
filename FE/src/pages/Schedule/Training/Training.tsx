@@ -13,7 +13,7 @@ import { reservationAccess } from "../../../utils/trainings";
 import "./Training.scss";
 import { selectUser } from "../../../app/features/user/userSlice";
 import { Training as TrainingType } from "../../../types/Training";
-import ReservationButton from "../../../components/Elements/ReservationButton";
+import ReservationButton from "../../../components/Buttons/ReservationButton";
 import Notification from "../../../components/Elements/Notification";
 import { selectAbonements } from "../../../app/features/abonements/abonementSlice";
 import { useNotification } from "../../../hooks/useNotification";

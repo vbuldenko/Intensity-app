@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import "./Abonement.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
-import StateToggler from "../Elements/StateToggler";
+import StateToggler from "../Buttons/StateToggler";
 import { Abonement as AbonementType } from "../../types/Abonement";
 import { checkTrainingReturn } from "../../app/features/trainings/trainingThunk";
 import classNames from "classnames";

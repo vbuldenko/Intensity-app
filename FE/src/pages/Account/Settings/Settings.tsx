@@ -17,7 +17,7 @@ import { selectUser } from "../../../app/features/user/userSlice";
 import { logOut, updateUserData } from "../../../app/features/user/userThunk";
 import { User } from "../../../types/User";
 import Loader from "../../../components/Elements/Loader";
-import CustomSelect from "../../../components/Elements/CustomSelect";
+import CustomSelect from "../../../components/Buttons/CustomSelect";
 import "./Settings.scss";
 
 function Settings() {

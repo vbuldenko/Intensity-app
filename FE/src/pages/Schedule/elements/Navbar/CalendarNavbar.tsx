@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
 import React from "react";
-import CustomSelect from "../../../../components/Elements/CustomSelect";
+import CustomSelect from "../../../../components/Buttons/CustomSelect";
 import { enUS } from "date-fns/locale";
 import { useTranslation } from "react-i18next";
 import ukCustom from "../../../../locales/ukCustom";

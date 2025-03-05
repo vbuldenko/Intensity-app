@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
 import TrainerSalaryStats from "./SalaryStats";
 import ScheduledTrainings from "./ScheduledTrainings";
-import ScrollToTopButton from "../../../../components/Elements/ScrollToTopBtn/ScrollToTopButton";
+import ScrollToTopButton from "../../../../components/Buttons/ScrollToTopButton/ScrollToTopButton";
 // import Selector from "../../../../components/Elements/Selector";
 
 interface TrainerOverviewProps {

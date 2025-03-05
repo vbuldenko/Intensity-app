@@ -8,11 +8,16 @@ import { fetchAbonements } from "../../app/features/abonements/abonementThunk";
 import Notification from "../../components/Elements/Notification";
 import Menu from "./Menu";
 import "./Account.scss";
+import RefreshButton from "../../components/Buttons/RefreshButton";
 
 export default function Account() {
   const { data, error } = useAppSelector(selectUser);
   const abonements = useAppSelector(selectAbonements);
   const dispatch = useAppDispatch();
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
   useEffect(() => {
     if (error) {
@@ -35,12 +40,16 @@ export default function Account() {
   }
 
   return (
-    <section className="account">
-      <Menu className="account__menu" />
+    <div>
+      <RefreshButton handleClick={handleRefresh} className="refresh-button" />
 
-      <div className="account__content">
-        <Outlet />
-      </div>
-    </section>
+      <section className="account">
+        <Menu className="account__menu" />
+
+        <div className="account__content">
+          <Outlet />
+        </div>
+      </section>
+    </div>
   );
 }

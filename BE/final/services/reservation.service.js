@@ -44,9 +44,9 @@ export const updateReservation = async (
     });
   }
 
-  if (abonement.user.toString() !== userId) {
-    throw ApiError.BadRequest('Invalid abonement owner');
-  }
+  // if (abonement.user.toString() !== userId) {
+  //   throw ApiError.BadRequest('Invalid abonement owner');
+  // }
 
   if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
     abonement.status = 'expired';
@@ -106,20 +106,20 @@ const handleReservation = async (abonement, training, trainer) => {
     );
   }
 
-  if (training.reservations.length === training.capacity) {
-    throw ApiError.BadRequest('No places left!');
-  }
+  // if (training.reservations.length === training.capacity) {
+  //   throw ApiError.BadRequest('No places left!');
+  // }
 
   if (abonement.status === 'ended') {
     throw ApiError.BadRequest('Abonement has ended!');
   }
 
-  if (!reservationAccess(training.date, training.reservations.length)) {
-    throw ApiError.BadRequest('Reservation period has passed!');
-  }
+  // if (!reservationAccess(training.date, training.reservations.length)) {
+  //   throw ApiError.BadRequest('Reservation period has passed!');
+  // }
 
   if (abonement.status === 'inactive') {
-    activateAbonement(abonement);
+    activateAbonement(abonement, training.date);
   }
   const reservation = new Reservation({
     training: training._id,
@@ -317,11 +317,11 @@ const isTrainingReserved = (abonement, training) => {
     reservation => reservation.user.toString() === abonement.user.toString(),
   );
 };
-const activateAbonement = abonement => {
-  const currentDate = toZonedTime(new Date(), timeZone);
-  const expirationDate = new Date(currentDate);
-  expirationDate.setMonth(currentDate.getMonth() + 1);
-  abonement.activatedAt = currentDate;
+const activateAbonement = (abonement, trainingDate) => {
+  const activationDate = toZonedTime(new Date(trainingDate), timeZone);
+  const expirationDate = new Date(activationDate);
+  expirationDate.setMonth(activationDate.getMonth() + 1);
+  abonement.activatedAt = activationDate;
   abonement.expiratedAt = expirationDate;
   abonement.status = 'active';
 };

@@ -3,12 +3,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchInput from "../../../components/Elements/Search/Search";
 import "./UserList.scss";
 import { userService } from "../../../services/userService";
-import Selector from "../../../components/Elements/Selector";
+import Selector from "../../../components/Buttons/Selector";
 import classNames from "classnames";
 import { User } from "../../../types/User";
 import { useTranslation } from "react-i18next";
 import Loader from "../../../components/Elements/Loader";
-import ScrollToTopButton from "../../../components/Elements/ScrollToTopBtn/ScrollToTopButton";
+import ScrollToTopButton from "../../../components/Buttons/ScrollToTopButton/ScrollToTopButton";
 
 const useFetchedUsers = () => {
   const [data, setData] = useState<User[]>([]);

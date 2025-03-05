@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import Selector from "../../../../components/Elements/Selector";
+import Selector from "../../../../components/Buttons/Selector";
 import { filterAbonements, ViewOption } from "../../../../utils/abonement";
 import { sortByParam } from "../../../../utils/utils";
 import Abonement from "../../../../components/Abonement";

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Navigation } from "../../Navigation";
 import { Logo } from "../../Elements/Logo";
 // import { Toggler } from "../../Elements/Toggler";
-import { MenuButton } from "../../Elements/MenuButton";
+import { MenuButton } from "../../Buttons/MenuButton";
 import "./Header.scss";
 import { useTheme } from "../../../contexts/ThemeContext";
-import CustomSelect from "../../Elements/CustomSelect";
+import CustomSelect from "../../Buttons/CustomSelect";
 import { useTranslation } from "react-i18next";
 
 export const Header = () => {

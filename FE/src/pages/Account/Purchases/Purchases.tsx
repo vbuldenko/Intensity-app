@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { createAbonement } from "../../../reducers/abonementReducer";
-import Selector from "../../../components/Elements/Selector";
+import Selector from "../../../components/Buttons/Selector";
 import { membership } from "../../../assets/purchaseData";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../app/features/user/userSlice";
