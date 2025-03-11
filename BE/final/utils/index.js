@@ -124,22 +124,20 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
 
 export function isCancellationForbidden(
   trainingDate,
-  currentTime = new Date(),
+  currentDate = new Date(),
 ) {
-  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
+  const kyivCurrentTime = toZonedTime(currentDate, timeZone);
   console.log('kyivCurrentTime', kyivCurrentTime);
   const kyivTrainingTime = toZonedTime(trainingDate, timeZone);
   console.log('kyivTrainingTime', kyivTrainingTime);
 
   // Get hours in Kyiv time
-  const currentHour = Number(formatInTimeZone(currentTime, timeZone, 'HH'));
+  const currentHour = Number(formatInTimeZone(currentDate, timeZone, 'HH'));
   const trainingHour = Number(formatInTimeZone(trainingDate, timeZone, 'HH'));
-
   console.log('currentHour', currentHour);
   console.log('trainingHour', trainingHour);
 
   const hoursDiff = calculateHoursDiff(kyivTrainingTime, kyivCurrentTime);
-  console.log('hoursDiff', hoursDiff);
   const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
   console.log('isEarlyMorningTraining', isEarlyMorningTraining);
   const isLateReservationUpdate =
@@ -147,6 +145,7 @@ export function isCancellationForbidden(
   console.log('isLateReservationUpdate', isLateReservationUpdate);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingDate);
   console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
+  console.log('is training date today', isToday(trainingDate));
 
   const res =
     hoursDiff < 3 ||
