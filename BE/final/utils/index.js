@@ -132,8 +132,8 @@ export function isCancellationForbidden(
   console.log('trainingTime', trainingTime);
 
   // Get hours in Kyiv time
-  const currentHour = Number(formatInTimeZone(kyivCurrentTime, timeZone, 'HH'));
-  const trainingHour = Number(formatInTimeZone(trainingTime, timeZone, 'HH'));
+  const currentHour = Number(formatInTimeZone(currentTime, timeZone, 'HH'));
+  const trainingHour = Number(formatInTimeZone(trainingDate, timeZone, 'HH'));
 
   console.log('currentHour', currentHour);
   console.log('trainingHour', trainingHour);
