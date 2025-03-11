@@ -135,16 +135,26 @@ export function isCancellationForbidden(
   const currentHour = Number(formatInTimeZone(kyivCurrentTime, timeZone, 'HH'));
   const trainingHour = Number(formatInTimeZone(trainingTime, timeZone, 'HH'));
 
-  const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
-  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
-  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+  console.log('currentHour', currentHour);
+  console.log('trainingHour', trainingHour);
 
-  return (
+  const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+  console.log('hoursDiff', hoursDiff);
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
+  console.log('isEarlyMorningTraining', isEarlyMorningTraining);
+  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+  console.log('isLateReservationUpdate', isLateReservationUpdate);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+  console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
+
+  const res =
     hoursDiff < 3 ||
     (isEarlyMorningTraining && isEarlyReservationUpdate) ||
-    (isEarlyMorningTraining && isLateReservationUpdate)
-  );
+    (isEarlyMorningTraining && isLateReservationUpdate);
+
+  console.log('isCancellationForbidden', res);
+
+  return res;
 }
 
 export function reservationAccess(scheduledDate, reservedPlaces) {
