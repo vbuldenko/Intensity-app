@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
 import { timeZone } from './trainingInitiator.js';
-import { toZonedTime } from 'date-fns-tz';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { isToday } from 'date-fns';
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
@@ -104,19 +104,46 @@ export const canTrainingProceed = (trainingDate, visitorsCount) => {
   return true;
 };
 
-export function isCancellationForbidden(trainingDate) {
-  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+// export function isCancellationForbidden(trainingDate) {
+//   const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+//   console.log('kyivCurrentTime', kyivCurrentTime);
+//   const trainingTime = toZonedTime(trainingDate, timeZone);
+//   console.log('trainingTime', trainingTime);
+//   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+//   const currentHour = kyivCurrentTime.getHours();
+//   const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+//   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+//   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+
+//   return (
+//     hoursDiff < 3 ||
+//     (isLateReservationUpdate && isEarlyMorningTraining) ||
+//     (isEarlyReservationUpdate && isEarlyMorningTraining)
+//   );
+// }
+
+export function isCancellationForbidden(
+  trainingDate,
+  currentTime = new Date(),
+) {
+  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
+  console.log('kyivCurrentTime', kyivCurrentTime);
   const trainingTime = toZonedTime(trainingDate, timeZone);
+  console.log('trainingTime', trainingTime);
+
+  // Get hours in Kyiv time
+  const currentHour = Number(formatInTimeZone(kyivCurrentTime, timeZone, 'HH'));
+  const trainingHour = Number(formatInTimeZone(trainingTime, timeZone, 'HH'));
+
   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
-  const currentHour = kyivCurrentTime.getHours();
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
 
   return (
     hoursDiff < 3 ||
-    (isLateReservationUpdate && isEarlyMorningTraining) ||
-    (isEarlyReservationUpdate && isEarlyMorningTraining)
+    (isEarlyMorningTraining && isEarlyReservationUpdate) ||
+    (isEarlyMorningTraining && isLateReservationUpdate)
   );
 }
 
