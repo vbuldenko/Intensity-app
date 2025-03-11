@@ -128,8 +128,8 @@ export function isCancellationForbidden(
 ) {
   const kyivCurrentTime = toZonedTime(currentTime, timeZone);
   console.log('kyivCurrentTime', kyivCurrentTime);
-  const trainingTime = toZonedTime(trainingDate, timeZone);
-  console.log('trainingTime', trainingTime);
+  const kyivTrainingTime = toZonedTime(trainingDate, timeZone);
+  console.log('kyivTrainingTime', kyivTrainingTime);
 
   // Get hours in Kyiv time
   const currentHour = Number(formatInTimeZone(currentTime, timeZone, 'HH'));
@@ -138,13 +138,14 @@ export function isCancellationForbidden(
   console.log('currentHour', currentHour);
   console.log('trainingHour', trainingHour);
 
-  const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+  const hoursDiff = calculateHoursDiff(kyivTrainingTime, kyivCurrentTime);
   console.log('hoursDiff', hoursDiff);
   const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
   console.log('isEarlyMorningTraining', isEarlyMorningTraining);
-  const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+  const isLateReservationUpdate =
+    currentHour >= 21 && isTomorrow(kyivTrainingTime);
   console.log('isLateReservationUpdate', isLateReservationUpdate);
-  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingDate);
   console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
 
   const res =
