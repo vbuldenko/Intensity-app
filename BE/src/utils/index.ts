@@ -2,9 +2,9 @@ import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error';
 import { Request } from 'express';
 import { UserDTO } from '../db/models/user';
-import { toZonedTime } from 'date-fns-tz';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { timeZone } from './trainingInitiator';
-import { isToday } from 'date-fns';
+import { isToday, isTomorrow } from 'date-fns';
 
 export function validateIdentifier(identifier: string): string | undefined {
   if (identifier.includes('@')) {
@@ -87,15 +87,15 @@ export function calculateHoursDiff(
   return diffInHours;
 }
 
-export function isTomorrow(dateToCheck: Date) {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  return (
-    tomorrow.getDate() === dateToCheck.getDate() &&
-    tomorrow.getMonth() === dateToCheck.getMonth() &&
-    tomorrow.getFullYear() === dateToCheck.getFullYear()
-  );
-}
+// export function isTomorrow(dateToCheck: Date) {
+//   const tomorrow = new Date();
+//   tomorrow.setDate(tomorrow.getDate() + 1);
+//   return (
+//     tomorrow.getDate() === dateToCheck.getDate() &&
+//     tomorrow.getMonth() === dateToCheck.getMonth() &&
+//     tomorrow.getFullYear() === dateToCheck.getFullYear()
+//   );
+// }
 
 export const getUserFromRequest = (req: Request): UserDTO => {
   const user = req.user as UserDTO;
@@ -132,19 +132,45 @@ export const canTrainingProceed = (
   return true;
 };
 
-export function isCancellationForbidden(trainingDate: Date): boolean {
-  const kyivCurrentTime = toZonedTime(new Date(), timeZone);
+// export function isCancellationForbidden(
+//   trainingDate: any,
+//   currentTime: any = new Date(),
+// ): boolean {
+//   const kyivCurrentTime = toZonedTime(currentTime, timeZone);
+//   const currentHour = kyivCurrentTime.getHours();
+//   const trainingTime = toZonedTime(trainingDate, timeZone);
+//   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
+//   const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+//   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
+//   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
+
+//   return (
+//     hoursDiff < 3 ||
+//     (isEarlyMorningTraining && isEarlyReservationUpdate) ||
+//     (isEarlyMorningTraining && isLateReservationUpdate)
+//   );
+// }
+
+export function isCancellationForbidden(
+  trainingDate: any,
+  currentTime: any = new Date(),
+): boolean {
+  const kyivCurrentTime = toZonedTime(currentTime, timeZone);
   const trainingTime = toZonedTime(trainingDate, timeZone);
+
+  // Get hours in Kyiv time
+  const currentHour = Number(formatInTimeZone(kyivCurrentTime, timeZone, 'HH'));
+  const trainingHour = Number(formatInTimeZone(trainingTime, timeZone, 'HH'));
+
   const hoursDiff = calculateHoursDiff(trainingTime, kyivCurrentTime);
-  const currentHour = kyivCurrentTime.getHours();
-  const isEarlyMorningTraining = [9, 10, 11].includes(trainingTime.getHours());
+  const isEarlyMorningTraining = [9, 10, 11].includes(trainingHour);
   const isLateReservationUpdate = currentHour >= 21 && isTomorrow(trainingTime);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingTime);
 
   return (
     hoursDiff < 3 ||
-    (isLateReservationUpdate && isEarlyMorningTraining) ||
-    (isEarlyReservationUpdate && isEarlyMorningTraining)
+    (isEarlyMorningTraining && isEarlyReservationUpdate) ||
+    (isEarlyMorningTraining && isLateReservationUpdate)
   );
 }
 

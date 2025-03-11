@@ -483,7 +483,7 @@ export const activateAbonement = (
   abonement: IAbonement,
   trainingDate: Date,
 ) => {
-  const activationDate = toZonedTime(new Date(trainingDate), timeZone);
+  const activationDate = new Date(trainingDate);
   const expirationDate = new Date(activationDate);
   expirationDate.setMonth(activationDate.getMonth() + 1);
   abonement.activatedAt = activationDate;

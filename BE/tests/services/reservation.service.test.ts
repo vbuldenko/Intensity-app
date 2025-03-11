@@ -118,15 +118,12 @@ describe('activateAbonement', () => {
       activatedAt: null,
       expiratedAt: null,
       status: 'inactive',
-      user: 'userId', // Add any other required properties
-      left: 10, // Example property
+      user: 'userId',
+      left: 10,
     } as any;
 
     const trainingDate = new Date('2023-01-01T10:00:00Z');
-    const expectedActivationDate = toZonedTime(
-      new Date(trainingDate),
-      timeZone,
-    );
+    const expectedActivationDate = new Date(trainingDate);
     const expectedExpirationDate = new Date(expectedActivationDate);
     expectedExpirationDate.setMonth(expectedActivationDate.getMonth() + 1);
 

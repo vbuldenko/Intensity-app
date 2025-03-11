@@ -44,9 +44,9 @@ export const updateReservation = async (
     });
   }
 
-  // if (abonement.user.toString() !== userId) {
-  //   throw ApiError.BadRequest('Invalid abonement owner');
-  // }
+  if (abonement.user.toString() !== userId) {
+    throw ApiError.BadRequest('Invalid abonement owner');
+  }
 
   if (new Date(abonement.expiratedAt) < toZonedTime(new Date(), timeZone)) {
     abonement.status = 'expired';
@@ -106,17 +106,17 @@ const handleReservation = async (abonement, training, trainer) => {
     );
   }
 
-  // if (training.reservations.length === training.capacity) {
-  //   throw ApiError.BadRequest('No places left!');
-  // }
+  if (training.reservations.length === training.capacity) {
+    throw ApiError.BadRequest('No places left!');
+  }
 
   if (abonement.status === 'ended') {
     throw ApiError.BadRequest('Abonement has ended!');
   }
 
-  // if (!reservationAccess(training.date, training.reservations.length)) {
-  //   throw ApiError.BadRequest('Reservation period has passed!');
-  // }
+  if (!reservationAccess(training.date, training.reservations.length)) {
+    throw ApiError.BadRequest('Reservation period has passed!');
+  }
 
   if (abonement.status === 'inactive') {
     activateAbonement(abonement, training.date);
@@ -318,7 +318,7 @@ const isTrainingReserved = (abonement, training) => {
   );
 };
 const activateAbonement = (abonement, trainingDate) => {
-  const activationDate = toZonedTime(new Date(trainingDate), timeZone);
+  const activationDate = new Date(trainingDate);
   const expirationDate = new Date(activationDate);
   expirationDate.setMonth(activationDate.getMonth() + 1);
   abonement.activatedAt = activationDate;
