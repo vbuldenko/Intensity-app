@@ -126,6 +126,7 @@ export function isCancellationForbidden(
   trainingDate,
   currentDate = new Date(),
 ) {
+  console.log('currentDate', new Date());
   const kyivCurrentTime = toZonedTime(currentDate, timeZone);
   console.log('kyivCurrentTime', kyivCurrentTime);
   const kyivTrainingTime = toZonedTime(trainingDate, timeZone);
@@ -145,6 +146,7 @@ export function isCancellationForbidden(
   console.log('isLateReservationUpdate', isLateReservationUpdate);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(kyivTrainingTime);
   console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
+  console.log('isToday(currentDate)', isToday(currentDate));
   console.log(
     'is training date today',
     isToday(kyivTrainingTime),
