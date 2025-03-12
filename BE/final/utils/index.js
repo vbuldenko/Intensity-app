@@ -143,9 +143,13 @@ export function isCancellationForbidden(
   const isLateReservationUpdate =
     currentHour >= 21 && isTomorrow(kyivTrainingTime);
   console.log('isLateReservationUpdate', isLateReservationUpdate);
-  const isEarlyReservationUpdate = currentHour < 8 && isToday(trainingDate);
+  const isEarlyReservationUpdate = currentHour < 8 && isToday(kyivTrainingTime);
   console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
-  console.log('is training date today', isToday(trainingDate));
+  console.log(
+    'is training date today',
+    isToday(kyivTrainingTime),
+    isToday(trainingDate),
+  );
 
   const res =
     hoursDiff < 3 ||
