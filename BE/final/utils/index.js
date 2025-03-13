@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
-import { timeZone } from './trainingInitiator.js';
 
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
