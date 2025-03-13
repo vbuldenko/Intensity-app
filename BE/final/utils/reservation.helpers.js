@@ -73,39 +73,63 @@ export function isCancellationForbidden(
   trainingDate,
   currentDate = new Date(),
 ) {
-  console.log('currentDate', new Date());
   const kyivCurrentTime = toZonedTime(currentDate, timeZone);
-  console.log('kyivCurrentTime', kyivCurrentTime);
   const kyivTrainingTime = toZonedTime(trainingDate, timeZone);
-  console.log('kyivTrainingTime', kyivTrainingTime);
 
   // Get hours in Kyiv time
   const currentHour = Number(formatInTimeZone(currentDate, timeZone, 'HH'));
   const trainingHour = Number(formatInTimeZone(trainingDate, timeZone, 'HH'));
-  console.log('currentHour', currentHour);
-  console.log('trainingHour', trainingHour);
 
   const hoursDiff = calculateHoursDiff(kyivTrainingTime, kyivCurrentTime);
   const isEarlyMorningTraining = [9, 10, 11, 12].includes(trainingHour);
-  console.log('isEarlyMorningTraining', isEarlyMorningTraining);
   const isLateReservationUpdate =
     currentHour >= 21 && isTomorrow(kyivTrainingTime);
-  console.log('isLateReservationUpdate', isLateReservationUpdate);
   const isEarlyReservationUpdate = currentHour < 8 && isToday(kyivTrainingTime);
-  console.log('isEarlyReservationUpdate', isEarlyReservationUpdate);
-  console.log('isToday(currentDate)', isToday(currentDate));
-  console.log(
-    'is training date today',
-    isToday(kyivTrainingTime),
-    isToday(trainingDate),
-  );
 
   const res =
     hoursDiff < 3 ||
     (isEarlyMorningTraining && isEarlyReservationUpdate) ||
     (isEarlyMorningTraining && isLateReservationUpdate);
 
-  console.log('isCancellationForbidden', res);
+  // #region cancellation check log
+  console.log('\n========== CANCELLATION CHECK ==========');
+  console.log('\x1b[36m%s\x1b[0m', 'TIMES (Kyiv):');
+  console.log('Current time: \x1b[33m%s\x1b[0m', kyivCurrentTime);
+  console.log('Training time: \x1b[33m%s\x1b[0m', kyivTrainingTime);
+  console.log('\n\x1b[36m%s\x1b[0m', 'HOURS:');
+  console.log('Current hour: \x1b[33m%s\x1b[0m', currentHour);
+  console.log('Training hour: \x1b[33m%s\x1b[0m', trainingHour);
+  console.log('Hours difference: \x1b[33m%s\x1b[0m', hoursDiff.toFixed(2));
+  console.log('\n\x1b[36m%s\x1b[0m', 'CONDITIONS:');
+  console.log(
+    'Is late reservation update: \x1b[33m%s\x1b[0m',
+    isLateReservationUpdate,
+  );
+  console.log(
+    'Is early reservation update: \x1b[33m%s\x1b[0m',
+    isEarlyReservationUpdate,
+  );
+  console.log('\n\x1b[36m%s\x1b[0m', 'TODAY CHECKS:');
+  console.log('Is current date today: \x1b[33m%s\x1b[0m', isToday(currentDate));
+  console.log(
+    'Is kyiv current time today: \x1b[33m%s\x1b[0m',
+    isToday(kyivCurrentTime),
+  );
+  console.log(
+    'Is training date today: \x1b[33m%s\x1b[0m',
+    isToday(trainingDate),
+  );
+  console.log(
+    'Is kyiv training time today: \x1b[33m%s\x1b[0m',
+    isToday(kyivTrainingTime),
+  );
+  console.log('\n\x1b[36m%s\x1b[0m', 'RESULT:');
+  console.log(
+    'Cancellation forbidden: \x1b[' + (res ? '31m' : '32m') + '%s\x1b[0m',
+    res,
+  );
+  console.log('====================================\n');
+  // #endregion
 
   return res;
 }
