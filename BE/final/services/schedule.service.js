@@ -1,3 +1,4 @@
+import { schedule } from '../data/predefined_schedule.js';
 import Schedule from '../db/models/Schedule.js';
 import { ApiError } from '../exceptions/api.error.js';
 class ScheduleService {
@@ -38,6 +39,23 @@ class ScheduleService {
     throw ApiError.NotFound({
       error: 'Training session not found',
     });
+  }
+  async initializePredefinedSchedule() {
+    const daysOfWeek = Object.keys(schedule);
+
+    const trainings = daysOfWeek
+      .map(day => {
+        return schedule[day].map(session => ({
+          type: session.type,
+          instructor: session.instructor,
+          maxCapacity: session.maxCapacity,
+          day,
+          time: session.time,
+        }));
+      })
+      .flat();
+
+    await Schedule.insertMany(trainings);
   }
 }
 export default new ScheduleService();

@@ -1,5 +1,6 @@
 import Schedule, { ISchedule } from '../db/models/schedule';
 import { ApiError } from '../exceptions/api.error';
+import { schedule } from '../data/predefined_schedule';
 
 class ScheduleService {
   async createOne(scheduleData: {
@@ -58,6 +59,28 @@ class ScheduleService {
     throw ApiError.NotFound({
       error: 'Training session not found',
     });
+  }
+
+  async initializePredefinedSchedule() {
+    const daysOfWeek = Object.keys(schedule); // ['Monday', 'Tuesday', ...]
+
+    // Create trainings for each day of the week
+    const trainings = daysOfWeek
+      .map(day => {
+        return schedule[day as keyof typeof schedule].map(
+          (session: ISchedule) => ({
+            type: session.type,
+            instructor: session.instructor,
+            maxCapacity: session.maxCapacity,
+            day,
+            time: session.time,
+          }),
+        );
+      })
+      .flat();
+
+    // Save trainings to the database
+    await Schedule.insertMany(trainings);
   }
 }
 

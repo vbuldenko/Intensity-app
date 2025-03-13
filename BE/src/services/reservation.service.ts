@@ -1,16 +1,19 @@
 import mongoose from 'mongoose';
+import { toZonedTime } from 'date-fns-tz';
 import Abonement, { IAbonement } from '../db/models/abonement';
 import Reservation from '../db/models/reservation';
-import Training, { ITraining } from '../db/models/training';
-import User, { IUser } from '../db/models/user';
+import Training from '../db/models/training';
+import User from '../db/models/user';
 import { ApiError } from '../exceptions/api.error';
+import { timeZone } from '../utils';
 import {
+  activateAbonement,
+  isTrainingReserved,
+  removeTraining,
   canTrainingProceed,
   isCancellationForbidden,
   reservationAccess,
-} from '../utils';
-import { toZonedTime } from 'date-fns-tz';
-import { timeZone } from '../utils/trainingInitiator';
+} from '../utils/reservation.helpers';
 
 export const updateReservation = async (
   abonementId: string,
@@ -119,7 +122,7 @@ export const updateReservation = async (
   }
 };
 
-const handleReservation = async (
+export const handleReservation = async (
   abonement: any,
   training: any,
   trainer: any,
@@ -175,7 +178,7 @@ const handleReservation = async (
   await Promise.all([abonement.save(), training.save(), trainer.save()]);
 };
 
-const handleCancellation = async (
+export const handleCancellation = async (
   abonement: any,
   training: any,
   trainer: any,
@@ -470,30 +473,3 @@ export const cancelTrainingByAdmin = async (trainingId: string) => {
 
 //   return updatedTraining;
 // };
-
-// Helper functions
-const isTrainingReserved = (abonement: any, training: any) => {
-  return training.reservations.some(
-    (reservation: any) =>
-      reservation.user.toString() === abonement.user.toString(),
-  );
-};
-
-export const activateAbonement = (
-  abonement: IAbonement,
-  trainingDate: Date,
-) => {
-  const activationDate = new Date(trainingDate);
-  const expirationDate = new Date(activationDate);
-  expirationDate.setMonth(activationDate.getMonth() + 1);
-  abonement.activatedAt = activationDate;
-  abonement.expiratedAt = expirationDate;
-  abonement.status = 'active';
-};
-
-const removeTraining = (trainings: any[], trainingId: any) => {
-  return trainings.filter((t: any) => {
-    const tId = t._id ? t._id.toString() : t.toString();
-    return tId !== trainingId.toString();
-  });
-};

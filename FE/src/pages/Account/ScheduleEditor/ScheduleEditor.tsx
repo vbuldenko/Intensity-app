@@ -93,7 +93,7 @@ const ScheduleEditor: React.FC = () => {
       try {
         const startDate = new Date(selectedDate);
         const day = startDate.getDate();
-        const month = startDate.getMonth() + 1;
+        const month = startDate.getMonth();
         await trainingService.initializeWeek(day, month);
         setNotification("Successfully initialized week");
       } catch (error) {

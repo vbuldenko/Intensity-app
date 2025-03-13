@@ -5,11 +5,15 @@ import Training from '../db/models/Training.js';
 import User from '../db/models/User.js';
 import { ApiError } from '../exceptions/api.error.js';
 import {
+  activateAbonement,
+  isTrainingReserved,
+  removeTraining,
   canTrainingProceed,
   isCancellationForbidden,
   reservationAccess,
-} from '../utils/index.js';
-import { timeZone } from '../utils/trainingInitiator.js';
+} from '../utils/reservation.helpers.js';
+import { timeZone } from '../utils/index.js';
+
 export const updateReservation = async (
   abonementId,
   trainingId,
@@ -309,25 +313,4 @@ export const cancelTrainingByAdmin = async trainingId => {
   ]);
 
   return updatedTraining;
-};
-
-// Helper functions
-const isTrainingReserved = (abonement, training) => {
-  return training.reservations.some(
-    reservation => reservation.user.toString() === abonement.user.toString(),
-  );
-};
-const activateAbonement = (abonement, trainingDate) => {
-  const activationDate = new Date(trainingDate);
-  const expirationDate = new Date(activationDate);
-  expirationDate.setMonth(activationDate.getMonth() + 1);
-  abonement.activatedAt = activationDate;
-  abonement.expiratedAt = expirationDate;
-  abonement.status = 'active';
-};
-const removeTraining = (trainings, trainingId) => {
-  return trainings.filter(t => {
-    const tId = t._id ? t._id.toString() : t.toString();
-    return tId !== trainingId.toString();
-  });
 };
