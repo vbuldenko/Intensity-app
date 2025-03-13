@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { ApiError } from '../exceptions/api.error.js';
+import { toZonedTime } from 'date-fns-tz';
 
 export function validateIdentifier(identifier) {
   if (identifier.includes('@')) {
@@ -70,7 +71,7 @@ export function isTomorrow(dateToCheck) {
   );
 }
 export function isToday(dateToCheck) {
-  const today = new Date();
+  const today = toZonedTime(new Date(), timeZone);
   return (
     today.getDate() === dateToCheck.getDate() &&
     today.getMonth() === dateToCheck.getMonth() &&
