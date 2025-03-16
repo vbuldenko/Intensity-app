@@ -23,17 +23,17 @@ export async function getById(req: Request, res: Response): Promise<void> {
   }
 }
 
-// export async function update(req: Request, res: Response): Promise<void> {
-//   const user = getUserFromRequest(req);
-//   const abonementId = Number(req.params.id);
+export async function update(req: Request, res: Response): Promise<void> {
+  const user = getUserFromRequest(req);
+  const abonementId = req.params.id;
 
-//   const updatedAbonement = await abonementService.update(
-//     abonementId,
-//     user.id,
-//     req.body,
-//   );
-//   res.json(updatedAbonement);
-// }
+  const updatedAbonement = await abonementService.update(
+    abonementId,
+    user,
+    req.body,
+  );
+  res.json(updatedAbonement);
+}
 
 export async function create(req: Request, res: Response): Promise<void> {
   const user = getUserFromRequest(req);

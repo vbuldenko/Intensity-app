@@ -7,7 +7,7 @@ export interface IAbonement extends Document {
   amount: number;
   price: number;
   left: number;
-  paused: boolean;
+  extended: boolean;
   activatedAt: Date;
   expiratedAt: Date;
   createdAt: Date;
@@ -61,6 +61,10 @@ const AbonementSchema: Schema = new Schema(
       type: String,
       enum: ['card', 'cash'],
       default: 'card',
+    },
+    extended: {
+      type: Boolean,
+      default: false,
     },
   },
   {

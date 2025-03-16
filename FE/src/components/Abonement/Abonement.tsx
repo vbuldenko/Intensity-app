@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, memo } from "react";
 import "./Abonement.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import HistoryElement from "../Elements/HistoryElement";
@@ -12,72 +12,88 @@ import { abonementService } from "../../services/abonementService";
 import { getErrorMessage } from "../../utils/utils";
 import { useNotification } from "../../hooks/useNotification";
 import ConfirmModal from "../ConfirmModal";
+import { BarsArrowDownIcon } from "@heroicons/react/24/outline";
+import { useClientContext } from "../../pages/Account/UserList/User/User";
 
 interface AbonementProps {
   abonement: AbonementType;
-  userRole?: string;
+  className?: string;
+  // onUpdate?: (updatedAbonement: AbonementType) => void;
+  // onDelete?: (id: string) => void;
 }
 
-export default function Abonement({ abonement, userRole }: AbonementProps) {
-  const { data: user } = useAppSelector(selectUser);
-  const { t } = useTranslation();
-  const [freeze, setFreeze] = useState<boolean>(abonement.paused);
-  const { notification, handleNotification } = useNotification();
-  const dispatch = useAppDispatch();
+interface StatusBadgeProps {
+  status: string;
+  className?: string;
+}
 
-  const handleClick = useCallback(() => {
-    if (abonement.paused) {
-      console.log("Abonement was frozen already, other actions forbidden!");
-    } else {
-      setFreeze((prev) => !prev);
-      // dispatch(updateAbonement(abonement.id, { updateType: "freeze" }));
-    }
-  }, [abonement.paused]);
+interface AbonementInfoProps {
+  abonement: AbonementType;
+  isAdmin: boolean;
+  onToggleFreeze: () => void;
+}
 
-  const handleDelete = async () => {
-    try {
-      await abonementService.remove(abonement.id);
-      handleNotification(
-        `Abonement with id: ${abonement.id} was successfully deleted`
-      );
-      return true; // Indicate success
-    } catch (error) {
-      handleNotification(getErrorMessage(error), "error");
-      return false; // Indicate failure
-    }
-  };
+interface AbonementHistoryProps {
+  reservations: any[];
+}
 
-  useEffect(() => {
-    const isNotExpired = new Date(abonement.expiratedAt) > new Date();
-    const hasReservations = abonement.reservations.length > 0;
+const StatusBadge = memo(({ status, className }: StatusBadgeProps) => (
+  <div
+    className={classNames(
+      "abonement__status status status--left-border",
+      {
+        "status--green": status === "active",
+        "status--red": status === "ended" || status === "expired",
+        "status--gray": status === "inactive",
+      },
+      className
+    )}
+  >
+    {status}
+  </div>
+));
 
-    if (isNotExpired && hasReservations) {
-      dispatch(checkTrainingReturn(abonement.id));
-    }
-  }, [abonement.reservations.length, dispatch]);
+const AbonementInfo = memo(
+  ({ abonement, isAdmin, onToggleFreeze }: AbonementInfoProps) => {
+    const { t } = useTranslation();
+    const [freeze, setFreeze] = useState<boolean>(abonement.extended);
 
-  return (
-    <div className="abonement">
+    const handleFreeze = useCallback(() => {
+      if (!abonement.extended) {
+        setFreeze((prev) => !prev);
+        onToggleFreeze();
+      }
+    }, [abonement.extended, onToggleFreeze]);
+
+    return (
       <div className="abonement__info">
-        <div className="flex items-center justify-center">
-          <div
-            className={classNames("abonement__status status-absolute", {
-              "status-absolute--green": abonement.status === "active",
-              "status-absolute--red":
-                abonement.status === "ended" || abonement.status === "expired",
-              "status-absolute--gray": abonement.status === "inactive",
-            })}
-          >
-            {abonement.status}
-          </div>
-          <div className="status-absolute">{abonement.type}</div>
+        <div className="flex items-center justify-between absolute w-full top-0 left-0">
+          <StatusBadge status={abonement.status} />
+          <div className="status status--right-border">{abonement.type}</div>
+        </div>
 
-          {user?.role === "admin" && (
-            <div className="mb-4">
+        {isAdmin && (
+          <div className="flex flex-col gap-2 text-center pb-4">
+            <div>
               id: <span className="text-pink-800">{abonement.id}</span>
             </div>
-          )}
-        </div>
+
+            <div className="bg-orange-400 text-white px-6 rounded-full font-bold">
+              <span className="px-4">
+                {t(`prices.${abonement.paymentMethod}`)}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-4">
+              {t("abonement.freeze")}
+              <StateToggler
+                state={freeze}
+                disabled={freeze}
+                handleClick={handleFreeze}
+              />
+            </div>
+          </div>
+        )}
 
         <div className="abonement__container">
           <div className="flex flex-col gap-2">
@@ -88,7 +104,7 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
             <div>
               <b>{t("abonement.from")}</b>{" "}
               {abonement.activatedAt
-                ? abonement.activatedAt.slice(0, 10)
+                ? new Date(abonement.activatedAt).toLocaleDateString()
                 : null}
             </div>
           </div>
@@ -103,25 +119,38 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
             <div>
               <b>{t("abonement.to")}</b>{" "}
               {abonement.expiratedAt
-                ? abonement.expiratedAt.slice(0, 10)
+                ? new Date(abonement.expiratedAt).toLocaleDateString()
                 : null}
             </div>
           </div>
-          {userRole === "admin" && (
-            <div className="abonement__freeze-container">
-              Freeze
-              <StateToggler state={freeze} handleClick={handleClick} />
-            </div>
-          )}
         </div>
       </div>
-      <div className="abonement__history">
-        <h2 className="abonement__title abonement__history-title bg-pink-700">
-          {t("abonement.history")}
-        </h2>
+    );
+  }
+);
+
+const AbonementHistory = memo(({ reservations }: AbonementHistoryProps) => {
+  const { t } = useTranslation();
+  const [showHistory, setShowHistory] = useState(false);
+
+  return (
+    <div className="abonement__history">
+      <button
+        onClick={() => setShowHistory((prev) => !prev)}
+        className="abonement__history-title bg-pink-700 flex items-center justify-between"
+        aria-expanded={showHistory}
+      >
+        <span>{t("abonement.history")}</span>
+        <BarsArrowDownIcon
+          className={classNames("h-5 w-5 transition-transform", {
+            "transform rotate-180": showHistory,
+          })}
+        />
+      </button>
+      {showHistory && (
         <div className="abonement__container">
-          {abonement.reservations.length > 0 ? (
-            abonement.reservations.map((el) => (
+          {reservations.length > 0 ? (
+            reservations.map((el) => (
               <HistoryElement key={el.id} data={el.training} trainer={false} />
             ))
           ) : (
@@ -130,18 +159,109 @@ export default function Abonement({ abonement, userRole }: AbonementProps) {
             </p>
           )}
         </div>
-      </div>
+      )}
+    </div>
+  );
+});
 
-      {user?.role === "admin" && (
+const Abonement: React.FC<AbonementProps> = ({ abonement, className = "" }) => {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { data: user } = useAppSelector(selectUser);
+  const { notification, handleNotification } = useNotification();
+  const { client, setClient, refreshClient } = useClientContext();
+  const isAdmin = user?.role === "admin";
+
+  const handleToggleFreeze = useCallback(async () => {
+    try {
+      const updatedAbonement = await abonementService.update(abonement.id, {
+        ...abonement,
+        extended: !abonement.extended,
+      });
+
+      if (setClient && client) {
+        setClient({
+          ...client,
+          abonements: client.abonements.map((el) =>
+            el.id === abonement.id ? updatedAbonement : el
+          ),
+        });
+      }
+
+      handleNotification(
+        t("abonement.freezeSuccess", {
+          status: updatedAbonement.extended
+            ? t("common.frozen")
+            : t("common.unfrozen"),
+        })
+      );
+    } catch (error) {
+      handleNotification(getErrorMessage(error), "error");
+    }
+  }, [abonement, setClient, client]);
+
+  const handleDelete = async () => {
+    try {
+      await abonementService.remove(abonement.id);
+
+      if (client && setClient) {
+        setClient({
+          ...client,
+          abonements: client.abonements.filter((a) => a.id !== abonement.id),
+        });
+      } else {
+        await refreshClient();
+      }
+
+      handleNotification(
+        `Abonement with id: ${abonement.id} was successfully deleted`
+      );
+      return true;
+    } catch (error) {
+      handleNotification(getErrorMessage(error), "error");
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const isNotExpired = new Date(abonement.expiratedAt) > new Date();
+    const hasReservations = abonement.reservations.length > 0;
+
+    if (isNotExpired && hasReservations) {
+      dispatch(checkTrainingReturn(abonement.id));
+    }
+  }, [
+    abonement.reservations.length,
+    abonement.expiratedAt,
+    abonement.id,
+    dispatch,
+  ]);
+
+  return (
+    <div className={`abonement ${className}`}>
+      <AbonementInfo
+        abonement={abonement}
+        isAdmin={isAdmin}
+        onToggleFreeze={handleToggleFreeze}
+      />
+
+      <AbonementHistory reservations={abonement.reservations} />
+
+      {isAdmin && abonement.status === "inactive" && (
         <div className="p-4">
           <ConfirmModal
             triggerName={t("abonement.remove")}
             triggerClassName="bg-pink-800 text-white"
             onConfirm={handleDelete}
             notification={notification}
+            // confirmButtonText={t("common.delete")}
+            // cancelButtonText={t("common.cancel")}
+            // title={t("abonement.confirmDelete")}
           />
         </div>
       )}
     </div>
   );
-}
+};
+
+export default memo(Abonement);

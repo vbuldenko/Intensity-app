@@ -96,7 +96,7 @@ const Statistics: React.FC<{
   const renderStats = (stats: Record<string, any>) => {
     return Object.entries(stats).map(([key, value]) => (
       <div className="statistics__section" key={key}>
-        <p className="statistics__section-title  status-absolute">
+        <p className="statistics__section-title  status status--right-border absolute top-0 right-0">
           {t(`adminDashboard.${key}`)}:
         </p>
         <div className="statistics__section-content">

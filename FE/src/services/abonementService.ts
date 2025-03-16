@@ -12,6 +12,12 @@ function getAll(): Promise<Abonement[]> {
 function add(newAbonement: Partial<Abonement>): Promise<OriginalAbonement> {
   return axiosClient.post(`/abonements`, newAbonement);
 }
+function update(
+  id: string | number,
+  newAbonement: OriginalAbonement
+): Promise<OriginalAbonement> {
+  return axiosClient.patch(`/abonements/${id}`, newAbonement);
+}
 function remove(abonementId: number | string) {
   return axiosClient.delete(`/abonements/${abonementId}`);
 }
@@ -19,5 +25,6 @@ function remove(abonementId: number | string) {
 export const abonementService = {
   getAll,
   add,
+  update,
   remove,
 };

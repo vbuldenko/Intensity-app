@@ -68,32 +68,31 @@ export const create = async (payload, user) => {
   await client.save();
   return savedAbonement;
 };
-// export const update = async (
-//   abonementId: string,
-//   userId: string,
-//   payload: Payload,
-// ) => {
-//   const abonement = await Abonement.findById(abonementId);
-//   if (!abonement || abonement.user.toString() !== userId) {
-//     throw ApiError.NotFound({
-//       abonement: 'Abonement not found or not owned by the user',
-//     });
-//   }
-//   const currentDate = new Date();
-//   if (payload.updateType === 'freeze' && !abonement.paused) {
-//     abonement.paused = true;
-//     abonement.expiratedAt.setDate(abonement.expiratedAt.getDate() + 7);
-//   } else if (payload.updateType === 'freeze' && abonement.paused) {
-//     throw new Error('Abonement is already paused.');
-//   }
-//   await abonement.save();
-//   return Abonement.findById(abonement._id).populate({
-//     path: 'visitedTrainings',
-//     populate: {
-//       path: 'visitors',
-//     },
-//   });
-// };
+export const update = async (abonementId, user, payload) => {
+  const abonement = await Abonement.findById(abonementId);
+  if (!abonement) {
+    throw ApiError.NotFound({
+      abonement: 'Abonement not found',
+    });
+  }
+  if (user.role === 'admin' && !abonement.extended) {
+    abonement.extended = true;
+    const expirationDate = new Date(abonement.expiratedAt);
+    expirationDate.setDate(expirationDate.getDate() + 7);
+    abonement.expiratedAt = expirationDate;
+  } else if (abonement.extended) {
+    throw new Error('Abonement is already paused.');
+  }
+
+  await abonement.save();
+
+  return Abonement.findById(abonement._id).populate({
+    path: 'reservations',
+    populate: {
+      path: 'training',
+    },
+  });
+};
 export const remove = async abonementId => {
   const abonement = await Abonement.findById(abonementId);
   if (!abonement) {

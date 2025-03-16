@@ -1,3 +1,5 @@
+@use "../abstracts/placeholders";
+
 h1 {
   @extend %h1;
 }

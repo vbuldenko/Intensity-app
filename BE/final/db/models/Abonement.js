@@ -45,6 +45,10 @@ const AbonementSchema = new Schema(
       enum: ['card', 'cash'],
       default: 'card',
     },
+    extended: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

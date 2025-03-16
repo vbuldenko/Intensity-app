@@ -100,16 +100,19 @@ const UserListItem = ({
   const status = getStatus(userType, abonements?.length, trainings?.length);
 
   return (
-    <div key={id} className="users__item card-element">
+    <div key={id} className="users__item card-element relative">
       <Link to={`${id}`} className="users__title">
         <p className="users__name">
           {firstName} {lastName}
         </p>
         <div
-          className={classNames("status", {
-            status: status === t("userList.active"),
-            "status--gray": status === t("userList.inactive"),
-          })}
+          className={classNames(
+            "status status--right-border absolute top-0 right-0",
+            {
+              "status--green": status === t("userList.active"),
+              "status--gray": status === t("userList.inactive"),
+            }
+          )}
         >
           {status}
         </div>

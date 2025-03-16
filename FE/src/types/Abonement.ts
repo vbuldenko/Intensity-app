@@ -6,7 +6,7 @@ export interface Abonement {
   amount: number;
   price: number;
   left: number;
-  paused: boolean;
+  extended: boolean;
   createdAt: string;
   updatedAt: string;
   activatedAt: string;

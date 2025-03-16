@@ -20,16 +20,16 @@ export async function getById(req, res) {
     throw ApiError.NotFound({ abonement: 'Not found' });
   }
 }
-// export async function update(req: Request, res: Response): Promise<void> {
-//   const user = getUserFromRequest(req);
-//   const abonementId = Number(req.params.id);
-//   const updatedAbonement = await abonementService.update(
-//     abonementId,
-//     user.id,
-//     req.body,
-//   );
-//   res.json(updatedAbonement);
-// }
+export async function update(req, res) {
+  const user = getUserFromRequest(req);
+  const abonementId = req.params.id;
+  const updatedAbonement = await abonementService.update(
+    abonementId,
+    user,
+    req.body,
+  );
+  res.json(updatedAbonement);
+}
 export async function create(req, res) {
   const user = getUserFromRequest(req);
   const newAbonement = await abonementService.create(req.body, user);

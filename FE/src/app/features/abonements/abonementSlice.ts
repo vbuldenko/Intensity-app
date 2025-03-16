@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
-import { fetchAbonements } from "./abonementThunk";
+import { fetchAbonements, updateAbonement } from "./abonementThunk";
 import { ErrorResponse } from "../../../types/Error";
 import { Abonement } from "../../../types/Abonement";
 import {
@@ -26,7 +26,11 @@ const initialState: AbonementState = {
 export const abonementSlice = createSlice({
   name: "abonements",
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAbonements.pending, (state) => {
@@ -97,12 +101,35 @@ export const abonementSlice = createSlice({
         (state, action: PayloadAction<ErrorResponse | undefined>) => {
           state.error = action.payload?.message || "An unknown error occurred";
         }
+      )
+      .addCase(updateAbonement.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        updateAbonement.fulfilled,
+        (state, action: PayloadAction<Abonement>) => {
+          const updatedAbonement = action.payload;
+          if (state.data) {
+            const index = state.data.findIndex(
+              (a) => a.id === updatedAbonement.id
+            );
+            if (index !== -1) {
+              state.data[index] = updatedAbonement;
+            }
+          }
+        }
+      )
+      .addCase(
+        updateAbonement.rejected,
+        (state, action: PayloadAction<ErrorResponse | undefined>) => {
+          state.loading = false;
+          state.error = action.payload?.message || "An unknown error occurred";
+        }
       );
   },
 });
 
-// export const {
-// } = abonementSlice.actions;
+export const { setError } = abonementSlice.actions;
 
 export const selectAbonements = (state: RootState) => state.abonements.data;
 

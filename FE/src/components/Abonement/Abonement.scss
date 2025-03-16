@@ -68,15 +68,16 @@
   }
 
   &__history-title {
+    position: absolute;
+    top: -1rem;
+    left: 50%;
     min-width: max-content;
     display: flex;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
     line-height: 1.5;
     height: 2rem;
-    position: absolute;
-    top: -1rem;
-    left: 50%;
     transform: translateX(-50%);
     padding: 0 3rem;
     border-radius: 1rem;

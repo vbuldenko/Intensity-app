@@ -1,19 +1,19 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
 
-@import "base/reset";
-@import "base/typography";
+@use "base/reset";
+@use "base/typography";
 
-@import "abstracts/variables";
-@import "abstracts/mixins";
-@import "abstracts/functions";
-@import "abstracts/placeholders";
+@use "abstracts/variables";
+@use "abstracts/mixins";
+@use "abstracts/functions";
+@use "abstracts/placeholders";
 
 // Shared component styles
-@import "components/buttons";
-@import "components/icons";
-@import "components/cards";
+@use "components/buttons";
+@use "components/icons";
+@use "components/cards";
 
 :root {
   --root-font-size: 16px;
@@ -21,17 +21,17 @@
 
 html {
   font-size: var(--root-font-size);
-  background-color: $color-black-dark;
+  background-color: variables.$color-black-dark;
 }
 
 body {
-  background-color: $color-black-dark;
+  background-color: variables.$color-black-dark;
   // overscroll-behavior: none;
 }
 
 /* Apply the background color to the #root element */
 #root {
-  background-color: $color-black-dark;
+  background-color: variables.$color-black-dark;
   min-height: 100%;
 }
 
@@ -43,7 +43,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: $color-black-dark;
+  background-color: variables.$color-black-dark;
   z-index: -1;
 }
 
@@ -55,40 +55,40 @@ main {
   gap: 56px;
   margin-bottom: auto;
 
-  @include on-tablet {
+  @include mixins.on-tablet {
     gap: 64px;
   }
 
-  @include on-desktop {
+  @include mixins.on-desktop {
     gap: 80px;
   }
 }
 
-.status {
-  color: $color-green;
-  border: 1px solid $color-green;
-  border-radius: $big-br;
-  padding: 0 1rem;
+// .status {
+//   color: $color-green;
+//   border: 1px solid $color-green;
+//   border-radius: $big-br;
+//   padding: 0 1rem;
 
-  &--green {
-    border: 1px solid $color-green;
-    color: $color-green;
-  }
-  &--red {
-    border: 1px solid $color-red;
-    color: $color-red;
-  }
+//   &--green {
+//     border: 1px solid $color-green;
+//     color: $color-green;
+//   }
+//   &--red {
+//     border: 1px solid $color-red;
+//     color: $color-red;
+//   }
 
-  &--gray {
-    border: 1px solid $gray-color-3;
-    color: $gray-color-3;
-  }
-}
+//   &--gray {
+//     border: 1px solid $gray-color-3;
+//     color: $gray-color-3;
+//   }
+// }
 
 .status-absolute {
   position: absolute;
   top: 0;
-  right: 0;
+  // right: 0;
   line-height: 1;
   // background: rgb(255, 111, 171);
   background: white;
@@ -98,31 +98,31 @@ main {
   justify-content: center;
   align-items: center;
   color: rgb(160, 0, 77);
-  color: $color-red;
-  border-radius: 0 $big-br;
+  color: variables.$color-red;
+  border-radius: 0 variables.$big-br;
 
   &--green {
     right: auto;
     left: 0;
-    border-radius: $big-br 0;
-    background: $color-green;
-    color: $color-white;
+    border-radius: variables.$big-br 0;
+    background: variables.$color-green;
+    color: variables.$color-white;
   }
 
   &--red {
     right: auto;
     left: 0;
-    border-radius: $big-br 0;
-    background: $color-red;
-    color: $color-white;
+    border-radius: variables.$big-br 0;
+    background: variables.$color-red;
+    color: variables.$color-white;
   }
 
   &--gray {
     right: auto;
     left: 0;
-    border-radius: $big-br 0;
-    background: $gray-color-3;
-    color: $color-white;
+    border-radius: variables.$big-br 0;
+    background: variables.$gray-color-3;
+    color: variables.$color-white;
   }
 
   &--void {
@@ -130,40 +130,99 @@ main {
     margin-right: 0.25rem;
     padding: 0.25rem 0.5rem;
     background: transparent;
-    border: 1px solid $color-red;
-    border-radius: $big-br;
+    border: 1px solid variables.$color-red;
+    border-radius: variables.$big-br;
 
     &-green {
       right: auto;
       left: 0;
       margin-left: 0.25rem;
-      border: 1px solid $color-green;
-      color: $color-green;
+      border: 1px solid variables.$color-green;
+      color: variables.$color-green;
     }
     &-red {
       right: auto;
       left: 0;
       margin-left: 0.25rem;
-      border: 1px solid $color-red;
-      color: $color-red;
+      border: 1px solid variables.$color-red;
+      color: variables.$color-red;
     }
 
     &-gray {
       right: auto;
       left: 0;
       margin-left: 0.25rem;
-      border: 1px solid $gray-color-3;
-      color: $gray-color-3;
+      border: 1px solid variables.$gray-color-3;
+      color: variables.$gray-color-3;
+    }
+  }
+}
+
+.status {
+  line-height: 1;
+  // background: rgb(255, 111, 171);
+  background: white;
+  padding: 0.5rem 1.25rem;
+  min-width: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(160, 0, 77);
+  color: variables.$color-red;
+
+  &--right-border {
+    color: variables.$color-red;
+    border-radius: 0 variables.$big-br;
+  }
+
+  &--left-border {
+    color: variables.$color-red;
+    border-radius: variables.$big-br 0;
+  }
+
+  &--green {
+    background: variables.$color-green;
+    color: variables.$color-white;
+  }
+
+  &--red {
+    background: variables.$color-red;
+    color: variables.$color-white;
+  }
+
+  &--gray {
+    background: variables.$gray-color-3;
+    color: variables.$color-white;
+  }
+
+  &--void {
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: 1px solid variables.$color-red;
+    border-radius: variables.$big-br;
+
+    &-green {
+      border: 1px solid variables.$color-green;
+      color: variables.$color-green;
+    }
+    &-red {
+      border: 1px solid variables.$color-red;
+      color: variables.$color-red;
+    }
+
+    &-gray {
+      border: 1px solid variables.$gray-color-3;
+      color: variables.$gray-color-3;
     }
   }
 }
 
 .action-button {
-  background-color: $gray-color-10;
-  color: $color-green;
+  background-color: variables.$gray-color-10;
+  color: variables.$color-green;
   padding: 0.75rem 2rem;
-  border: 1px solid $gray-color-10;
-  border-radius: $big-br;
+  border: 1px solid variables.$gray-color-10;
+  border-radius: variables.$big-br;
   box-shadow:
     5px 5px 10px 0px rgba(174, 174, 192, 0.2),
     /* -5px -5px 5px 0px rgba(255, 255, 255, 0.4), 2px 2px 4px 0px #fff inset, */ -2px -2px
@@ -182,30 +241,30 @@ main {
 }
 
 .container {
-  @include content-padding-inline;
+  @include mixins.content-padding-inline;
 }
 
 .accent-label-primary {
-  background: $color-green;
+  background: variables.$color-green;
   color: #fff;
-  border: 1px solid $color-green;
+  border: 1px solid variables.$color-green;
   border-radius: 0 0 0.25rem 0.25rem;
   padding: 0.1rem 1rem;
 }
 
 .card-element {
-  background: $card-background;
+  background: variables.$card-background;
   min-width: 250px;
-  box-shadow: $shadow3;
-  border-radius: $big-br;
-  border: 1px solid $card-background;
+  box-shadow: variables.$shadow3;
+  border-radius: variables.$big-br;
+  border: 1px solid variables.$card-background;
 }
 
 .small-card-element {
-  background: $card-background;
-  box-shadow: $shadow3;
-  border-radius: $big-br;
-  border: 1px solid $card-background;
+  background: variables.$card-background;
+  box-shadow: variables.$shadow3;
+  border-radius: variables.$big-br;
+  border: 1px solid variables.$card-background;
 }
 
 .app {
@@ -215,8 +274,8 @@ main {
 }
 
 .dark {
-  background-color: $color-black-dark;
-  color: $color-white;
+  background-color: variables.$color-black-dark;
+  color: variables.$color-white;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -234,9 +293,9 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $color-red;
-  border: 3px solid $color-black-dark;
-  color: $color-white;
+  background: variables.$color-red;
+  border: 3px solid variables.$color-black-dark;
+  color: variables.$color-white;
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
@@ -251,10 +310,10 @@ main {
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
-  background: $color-red;
-  border: 3px solid $color-black-dark;
-  color: $color-white;
-  border-radius: $big-br;
+  background: variables.$color-red;
+  border: 3px solid variables.$color-black-dark;
+  color: variables.$color-white;
+  border-radius: variables.$big-br;
   width: 4rem;
   height: 1.8rem;
   font-size: 0.8rem;

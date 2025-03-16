@@ -1,8 +1,10 @@
+@use "../abstracts/variables";
+
 .notification {
   position: relative;
   background-color: rgba(255, 0, 0, 0.11);
   box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.05);
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   padding: 1rem;
 
   &--error {
@@ -40,7 +42,7 @@
     border-color: rgba(255, 0, 0, 0);
   }
   50% {
-    border-color: $color-red;
+    border-color: variables.$color-red;
   }
   100% {
     border-color: rgba(255, 0, 0, 0);
@@ -51,7 +53,7 @@
     border-color: rgba(255, 0, 0, 0);
   }
   50% {
-    border-color: $color-green;
+    border-color: variables.$color-green;
   }
   100% {
     border-color: rgba(255, 0, 0, 0);

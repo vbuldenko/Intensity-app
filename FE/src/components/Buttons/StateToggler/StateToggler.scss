@@ -7,19 +7,19 @@
     width: 3rem;
     height: 1.5rem;
     border-radius: 1rem;
-    background-color: var(--gray-color);
+    background-color: $gray-color-3;
     position: relative;
     transition: background-color 0.3s ease;
 
     &--active {
-      background-color: var(--green-color);
+      background-color: $color-green;
     }
   }
 
   &__slider {
     width: 1.5rem;
     height: 1.5rem;
-    background-color: var(--white-color);
+    background-color: $color-white;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -27,7 +27,7 @@
     left: 0;
     transition: left 0.3s ease;
 
-    .switch-button.active & {
+    .switch-container__button.switch-container__button--active & {
       left: calc(100% - 1.5rem);
     }
   }
@@ -37,6 +37,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--green-color);
+    color: $color-green;
   }
 }

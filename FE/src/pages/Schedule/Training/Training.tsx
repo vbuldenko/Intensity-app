@@ -103,12 +103,15 @@ export default function Training({ training }: { training: TrainingType }) {
         })}
       >
         {training.isCancelled && (
-          <div className="status-absolute status-absolute--red">
+          <div className="status status--red status--left-border absolute top-0 left-0">
             {t("training.statusCancelled")}
           </div>
         )}
-        <div className="schedule__training-data--accent ">
-          <p>{training.type.toUpperCase()}</p>{" "}
+        <div className="schedule__training-data--accent flex gap-2 justify-center items-center flex-wrap">
+          <p>{training.type.toUpperCase()}</p>
+          {user?.role === ROLE.admin && (
+            <p className="text-red-500">ID:{training.id}</p>
+          )}
         </div>
         {user && (
           <p className="schedule__training-data">
