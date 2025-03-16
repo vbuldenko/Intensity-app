@@ -8,12 +8,9 @@ import { checkTrainingReturn } from "../../app/features/trainings/trainingThunk"
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { selectUser } from "../../app/features/user/userSlice";
-import { abonementService } from "../../services/abonementService";
-import { getErrorMessage } from "../../utils/utils";
-import { useNotification } from "../../hooks/useNotification";
 import ConfirmModal from "../ConfirmModal";
 import { BarsArrowDownIcon } from "@heroicons/react/24/outline";
-import { useClientContext } from "../../pages/Account/UserList/User/User";
+import { useAbonementManagement } from "../../hooks/useAbonementManagment";
 
 interface AbonementProps {
   abonement: AbonementType;
@@ -165,63 +162,15 @@ const AbonementHistory = memo(({ reservations }: AbonementHistoryProps) => {
 });
 
 const Abonement: React.FC<AbonementProps> = ({ abonement, className = "" }) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { data: user } = useAppSelector(selectUser);
-  const { notification, handleNotification } = useNotification();
-  const { client, setClient, refreshClient } = useClientContext();
   const isAdmin = user?.role === "admin";
 
-  const handleToggleFreeze = useCallback(async () => {
-    try {
-      const updatedAbonement = await abonementService.update(abonement.id, {
-        ...abonement,
-        extended: !abonement.extended,
-      });
-
-      if (setClient && client) {
-        setClient({
-          ...client,
-          abonements: client.abonements.map((el) =>
-            el.id === abonement.id ? updatedAbonement : el
-          ),
-        });
-      }
-
-      handleNotification(
-        t("abonement.freezeSuccess", {
-          status: updatedAbonement.extended
-            ? t("common.frozen")
-            : t("common.unfrozen"),
-        })
-      );
-    } catch (error) {
-      handleNotification(getErrorMessage(error), "error");
-    }
-  }, [abonement, setClient, client]);
-
-  const handleDelete = async () => {
-    try {
-      await abonementService.remove(abonement.id);
-
-      if (client && setClient) {
-        setClient({
-          ...client,
-          abonements: client.abonements.filter((a) => a.id !== abonement.id),
-        });
-      } else {
-        await refreshClient();
-      }
-
-      handleNotification(
-        `Abonement with id: ${abonement.id} was successfully deleted`
-      );
-      return true;
-    } catch (error) {
-      handleNotification(getErrorMessage(error), "error");
-      return false;
-    }
-  };
+  const { notification, handleToggleFreeze, handleDelete } =
+    useAbonementManagement({
+      abonement,
+    });
 
   useEffect(() => {
     const isNotExpired = new Date(abonement.expiratedAt) > new Date();
