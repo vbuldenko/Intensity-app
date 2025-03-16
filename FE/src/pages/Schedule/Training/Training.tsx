@@ -57,6 +57,8 @@ export default function Training({ training }: { training: TrainingType }) {
               return t("training.abonement_expired");
             case "Abonement has ended!":
               return t("training.no_trainings_left");
+            case "Out of abonement validity range!":
+              return t("training.outranged");
             case "Cancel forbidden!":
               return t("training.cancel_forbidden_rule");
             case "Reservation period has passed!":

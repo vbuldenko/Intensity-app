@@ -141,6 +141,10 @@ export const handleReservation = async (
     throw ApiError.BadRequest('Abonement has ended!');
   }
 
+  if (new Date(abonement.expiratedAt) < new Date(training.date)) {
+    throw ApiError.BadRequest('Out of abonement validity range!');
+  }
+
   if (!reservationAccess(training.date, training.reservations.length)) {
     throw ApiError.BadRequest('Reservation period has passed!');
   }

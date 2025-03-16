@@ -190,6 +190,7 @@
     "followus": "Follow us"
   },
   "training": {
+    "outranged": "Out of abonement validity range!",
     "reservation_period_passed": "The reservation period has passed!",
     "no_abonement": "No abonement, buy one to proceed!",
     "no_abonement2": "No abonement, or your abonement has expired buy one to proceed!",
