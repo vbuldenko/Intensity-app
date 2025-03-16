@@ -73,6 +73,9 @@ export function reservationAccess(scheduledTime: Date, reservedPlaces: number) {
   const currentHour = currentDateTime.getHours();
   const hoursDiff = calculateHoursDiff(currentDateTime, scheduledTime);
 
+  if (reservedPlaces >= 8) {
+    return false; // Allowed to reserve if there are no places reserved
+  }
   // Rule 1: If scheduled time has passed, reservation is closed
   if (currentDateTime >= scheduledTime) {
     return false;
