@@ -53,6 +53,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
       <TrainerSalaryStats
         currentMonthTrainings={currentMonthTrainings}
         currentDayTrainings={currentDayTrainings}
+        isTop={user.email === "amanzhelam@gmail.com"}
       />
       <ScheduledTrainings
         title={t("trainerOverview.todayTrainings")}

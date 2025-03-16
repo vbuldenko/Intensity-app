@@ -6,10 +6,15 @@ import { WeekDays } from "../types/WeekDays";
 export function getSalaryPerTraining(visitors: number): number {
   return visitors <= 3 ? 350 : 350 + (visitors - 3) * 50;
 }
+export function getSalaryForTop(visitors: number): number {
+  return visitors * 175;
+}
 
-export function getCurrentWage(trainings: Training[]): number {
+export function getCurrentWage(trainings: Training[], isTop = false): number {
+  const calculator = isTop ? getSalaryForTop : getSalaryPerTraining;
+
   return trainings.reduce((totalSalary, { reservations }) => {
-    return totalSalary + getSalaryPerTraining(reservations.length);
+    return totalSalary + calculator(reservations.length);
   }, 0);
 }
 

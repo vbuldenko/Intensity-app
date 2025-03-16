@@ -6,11 +6,13 @@ import { Training } from "../../../../../types/Training";
 interface TrainerSalaryStatisticsProps {
   currentMonthTrainings: Training[];
   currentDayTrainings: Training[];
+  isTop?: boolean;
 }
 
 const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
   currentMonthTrainings,
   currentDayTrainings,
+  isTop,
 }) => {
   const { t } = useTranslation();
 
@@ -34,13 +36,13 @@ const TrainerSalaryStats: React.FC<TrainerSalaryStatisticsProps> = ({
           {t("trainerOverview.currentTotal")}{" "}
         </p>
         <span className="trainer-overview__value text-teal-600">
-          {getCurrentWage(currentMonthTrainings)} ₴
+          {getCurrentWage(currentMonthTrainings, isTop)} ₴
         </span>
       </div>
       <div className="trainer-overview__result">
         <p className="trainer-overview__label">{t("trainerOverview.today")} </p>
         <span className="trainer-overview__value text-teal-600">
-          {getCurrentWage(currentDayTrainings)} ₴
+          {getCurrentWage(currentDayTrainings, isTop)} ₴
         </span>
       </div>
       <div className="trainer-overview__result">
