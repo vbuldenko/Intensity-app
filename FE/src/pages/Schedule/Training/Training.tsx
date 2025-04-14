@@ -132,7 +132,7 @@ export default function Training({ training }: { training: TrainingType }) {
                     reservedPlaces >= 8,
                 })}
               >
-                {reservedPlaces <= 8
+                {reservedPlaces < 8
                   ? `${t("training.left")} ${training.capacity - reservedPlaces}`
                   : t("training.no_places")}
               </p>
@@ -172,7 +172,7 @@ export default function Training({ training }: { training: TrainingType }) {
         {user?.role === "client" && (
           <ReservationButton
             access={
-              reservedPlaces <= 8
+              reservedPlaces < 8
                 ? access
                 : access && reservation?.training === training.id
             }
