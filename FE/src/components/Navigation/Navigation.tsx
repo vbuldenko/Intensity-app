@@ -12,13 +12,19 @@ import "./Navigation.scss";
 type Props = {
   className?: string;
   handleClick?: () => void;
+  // ref: React.RefObject<HTMLElement>;
 };
 
-export const Navigation: React.FC<Props> = ({ className, handleClick }) => {
+export const Navigation: React.FC<Props> = ({
+  // ref,
+  className,
+  handleClick,
+}) => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAppSelector(selectUser);
 
   return (
+    // <nav ref={ref} className={className ? `nav ${className}` : "nav"}>
     <nav className={className ? `nav ${className}` : "nav"}>
       <ul className="nav__list">
         {Object.entries(NavBarLinks).map(([key, value]) => (

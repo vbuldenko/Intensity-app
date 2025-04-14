@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import "./MenuButton.scss";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 export const MenuButton: React.FC<Props> = ({ isMenuOpen, toggleMenu }) => {
   return (
     <button
-      className={`burger-menu ${isMenuOpen ? "open" : ""}`}
+      className={classNames("burger-menu", { open: isMenuOpen })}
       onClick={toggleMenu}
     >
       <span></span>

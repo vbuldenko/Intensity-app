@@ -1,25 +1,29 @@
+// import { useRef, useState } from "react";
 import { useState } from "react";
 import { Navigation } from "../../Navigation";
 import { Logo } from "../../Elements/Logo";
-// import { Toggler } from "../../Elements/Toggler";
 import { MenuButton } from "../../Buttons/MenuButton";
 import "./Header.scss";
 import { useTheme } from "../../../contexts/ThemeContext";
 import CustomSelect from "../../Buttons/CustomSelect";
 import { useTranslation } from "react-i18next";
+// import useClickOutside from "../../../hooks/useClickOutside";
 
 export const Header = () => {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lang, setLang] = useState<"ua" | "en">("ua");
+  // const navigationRef = useRef<HTMLElement>(null);
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
   };
 
+  // useClickOutside(navigationRef, closeMobileMenu);
+
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
   function handleChangeLanguage(value: "ua" | "en") {
@@ -34,6 +38,7 @@ export const Header = () => {
         <Navigation
           className={isMenuOpen ? "mobile" : ""}
           handleClick={closeMobileMenu}
+          // ref={navigationRef}
         />
       </div>
 
