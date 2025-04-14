@@ -6,8 +6,6 @@ export function filterAbonements(
   abonements: Abonement[],
   viewOption: ViewOption
 ): Abonement[] {
-  const currentDate = new Date();
-
   const expirationDateFilter = (abonement: Abonement): boolean => {
     const expirationDate = abonement.expiratedAt
       ? new Date(abonement.expiratedAt)
@@ -17,10 +15,7 @@ export function filterAbonements(
       case "active":
         return abonement.status === "active";
       case "expired":
-        return (
-          (expirationDate !== null && expirationDate < currentDate) ||
-          abonement.status === "ended"
-        );
+        return abonement.status === "expired" || abonement.status === "ended";
       case "inactive":
         return abonement.status === "inactive" && expirationDate === null;
       default: // 'all' option

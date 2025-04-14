@@ -126,8 +126,15 @@ export default function Training({ training }: { training: TrainingType }) {
           <div className="schedule__training-data">
             <p>{training.time}</p>
             {user?.role !== ROLE.admin && (
-              <p className="m-text w-max">
-                {t("training.left")} {training.capacity - reservedPlaces}
+              <p
+                className={classNames("m-text w-max", {
+                  "border bg-slate-500 rounded-full px-4 py-1 ":
+                    reservedPlaces >= 8,
+                })}
+              >
+                {reservedPlaces <= 8
+                  ? `${t("training.left")} ${training.capacity - reservedPlaces}`
+                  : t("training.no_places")}
               </p>
             )}
             {user?.role === ROLE.admin && (
@@ -164,7 +171,11 @@ export default function Training({ training }: { training: TrainingType }) {
 
         {user?.role === "client" && (
           <ReservationButton
-            access={access}
+            access={
+              reservedPlaces <= 8
+                ? access
+                : access && reservation?.training === training.id
+            }
             isReserved={reservation ? true : false}
             isSubmitting={isSubmitting}
             isDataUpdating={loading}
