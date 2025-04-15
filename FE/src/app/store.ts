@@ -3,12 +3,14 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./features/user/userSlice";
 import trainingReducer from "./features/trainings/trainingSlice";
 import abonementReducer from "./features/abonements/abonementSlice";
+import clientReducer from "./features/users/clientSlice";
 import { logOut } from "./features/user/userThunk";
 
 const appReducer = combineReducers({
   user: userReducer,
   trainings: trainingReducer,
   abonements: abonementReducer,
+  clients: clientReducer,
 });
 
 const rootReducer = (

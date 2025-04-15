@@ -2,27 +2,17 @@ import { useEffect, useState, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchInput from "../../../components/Elements/Search/Search";
 import "./UserList.scss";
-import { userService } from "../../../services/userService";
 import Selector from "../../../components/Buttons/Selector";
 import classNames from "classnames";
 import { User } from "../../../types/User";
 import { useTranslation } from "react-i18next";
 import Loader from "../../../components/Elements/Loader";
 import ScrollToTopButton from "../../../components/Buttons/ScrollToTopButton/ScrollToTopButton";
-
-const useFetchedUsers = () => {
-  const [data, setData] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    userService.getAll().then((users) => {
-      setData(users);
-      setLoading(false);
-    });
-  }, []);
-
-  return { data, loading };
-};
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  fetchClients,
+  selectClients,
+} from "../../../app/features/users/clientSlice";
 
 const useQueryParams = () => {
   const location = useLocation();
@@ -158,7 +148,8 @@ const getStatus = (
 };
 
 export default function UserList() {
-  const { data, loading } = useFetchedUsers();
+  const dispatch = useAppDispatch();
+  const { data, loading } = useAppSelector(selectClients);
   const { userType, setUserType, searchQuery, setSearchQuery } =
     useQueryParams();
 
@@ -166,6 +157,12 @@ export default function UserList() {
     () => data.filter((user) => user.role === userType),
     [data, userType]
   );
+
+  useEffect(() => {
+    if (data.length === 0) {
+      dispatch(fetchClients());
+    }
+  }, [dispatch, data.length]);
 
   const filteredUsers = useMemo(
     () =>
