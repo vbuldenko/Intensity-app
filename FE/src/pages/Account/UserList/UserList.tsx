@@ -177,11 +177,15 @@ export default function UserList() {
     [users, searchQuery]
   );
 
+  // Paginate users only if no search query is present
   const paginatedUsers = useMemo(() => {
+    if (searchQuery) {
+      return filteredUsers; // Show all filtered users if searchQuery is present
+    }
     const startIndex = (currentPage - 1) * usersPerPage;
     const endIndex = startIndex + usersPerPage;
     return filteredUsers.slice(startIndex, endIndex);
-  }, [filteredUsers, currentPage, usersPerPage]);
+  }, [filteredUsers, currentPage, usersPerPage, searchQuery]);
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
