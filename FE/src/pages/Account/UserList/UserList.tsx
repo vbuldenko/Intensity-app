@@ -13,6 +13,7 @@ import {
   fetchClients,
   selectClients,
 } from "../../../app/features/users/clientSlice";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const useQueryParams = () => {
   const location = useLocation();
@@ -148,6 +149,8 @@ const getStatus = (
 };
 
 export default function UserList() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
   const dispatch = useAppDispatch();
   const { data, loading } = useAppSelector(selectClients);
   const { userType, setUserType, searchQuery, setSearchQuery } =
@@ -174,6 +177,14 @@ export default function UserList() {
     [users, searchQuery]
   );
 
+  const paginatedUsers = useMemo(() => {
+    const startIndex = (currentPage - 1) * usersPerPage;
+    const endIndex = startIndex + usersPerPage;
+    return filteredUsers.slice(startIndex, endIndex);
+  }, [filteredUsers, currentPage, usersPerPage]);
+
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
   return (
     <div className="users">
       <UserListHeader
@@ -186,12 +197,36 @@ export default function UserList() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="users__list">
-          {filteredUsers.map((user) => (
-            <UserListItem key={user.id} user={user} userType={userType} />
-          ))}
-        </div>
+        <>
+          {/* Pagination Controls */}
+          <div className="flex justify-between items-center mb-2">
+            <button
+              className="bg-teal-500 text-white px-2 py-2 rounded-md"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              <ChevronLeftIcon className="menu__icon" />
+            </button>
+            <span className="text-gray-400">
+              {currentPage} of {totalPages}
+            </span>
+            <button
+              className="bg-teal-500 text-white px-2 py-2 rounded-md"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              <ChevronRightIcon className="menu__icon" />
+            </button>
+          </div>
+
+          <div className="users__list">
+            {paginatedUsers.map((user) => (
+              <UserListItem key={user.id} user={user} userType={userType} />
+            ))}
+          </div>
+        </>
       )}
+
       <ScrollToTopButton />
     </div>
   );
