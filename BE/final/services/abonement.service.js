@@ -54,7 +54,7 @@ export const create = async (payload, user) => {
   }
   const newAbonement = new Abonement({
     user: client._id,
-    status: 'inactive',
+    status: payload.type === 'group' ? 'inactive' : 'ended',
     type: payload.type,
     amount: payload.amount,
     price: payload.price,

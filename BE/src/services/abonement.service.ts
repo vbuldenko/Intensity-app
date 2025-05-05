@@ -70,12 +70,12 @@ export const create = async (payload: any, user: any) => {
 
   const newAbonement = new Abonement({
     user: client._id,
-    status: 'inactive',
+    status: payload.type === 'group' ? 'inactive' : 'ended',
     type: payload.type,
     amount: payload.amount,
     price: payload.price,
     left: payload.amount,
-  });
+  } as IAbonement);
 
   if (role === 'admin') {
     newAbonement.paymentMethod = payload.paymentMethod;

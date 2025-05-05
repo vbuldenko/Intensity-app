@@ -129,10 +129,10 @@ export default function Training({ training }: { training: TrainingType }) {
               <p
                 className={classNames("m-text w-max", {
                   "border bg-slate-500 rounded-full px-4 py-1 ":
-                    reservedPlaces >= 8,
+                    reservedPlaces >= training.capacity,
                 })}
               >
-                {reservedPlaces < 8
+                {reservedPlaces < training.capacity
                   ? `${t("training.left")} ${training.capacity - reservedPlaces}`
                   : t("training.no_places")}
               </p>
@@ -172,7 +172,7 @@ export default function Training({ training }: { training: TrainingType }) {
         {user?.role === "client" && (
           <ReservationButton
             access={
-              reservedPlaces < 8
+              reservedPlaces < training.capacity
                 ? access
                 : access && reservation?.training === training.id
             }
