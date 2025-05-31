@@ -5,18 +5,20 @@ function getSchedule(): Promise<ScheduleTraining[]> {
   return axiosClient.get("/schedule");
 }
 
-function addTraining(newTraining: ScheduleTraining): Promise<ScheduleTraining> {
+function addTraining(
+  newTraining: Partial<ScheduleTraining>
+): Promise<ScheduleTraining> {
   return axiosClient.post(`/schedule`, newTraining);
 }
 
 function updateTraining(
-  trainingId: number,
+  trainingId: string,
   updatedTraining: Partial<ScheduleTraining>
 ): Promise<ScheduleTraining> {
   return axiosClient.put(`/schedule/${trainingId}`, updatedTraining);
 }
 
-function deleteTraining(trainingId: number): Promise<void> {
+function deleteTraining(trainingId: string): Promise<void> {
   return axiosClient.delete(`/schedule/${trainingId}`);
 }
 
