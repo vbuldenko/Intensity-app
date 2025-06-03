@@ -5,7 +5,6 @@ import {
 import "./TrainerOverview.scss";
 import { User } from "../../../../types/User";
 import { useTranslation } from "react-i18next";
-import TrainerTrainingHistoryCard from "./TrainerTrainingHistoryCard";
 import TrainerSalaryStats from "./SalaryStats";
 import ScheduledTrainings from "./ScheduledTrainings";
 import ScrollToTopButton from "../../../../components/Buttons/ScrollToTopButton/ScrollToTopButton";
@@ -32,22 +31,6 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
     "day"
   );
 
-  const todayLeftTrainings = filterTrainingsByDate(
-    currentDayTrainings,
-    currentDate,
-    "day",
-    true
-  );
-
-  // Calculate tomorrow's date
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(currentDate.getDate() + 1);
-  const tomorrowTrainings = filterTrainingsByDate(
-    trainerTrainings,
-    tomorrowDate,
-    "day"
-  );
-
   return (
     <div className="trainer-overview">
       <TrainerSalaryStats
@@ -56,24 +39,24 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
         isTop={user.email === "amanzhelam@gmail.com"}
       />
       <ScheduledTrainings
-        title={t("trainerOverview.todayTrainings")}
-        trainings={todayLeftTrainings}
-      />
-      <ScheduledTrainings
-        title={t("trainerOverview.tomorrowTrainings")}
-        trainings={tomorrowTrainings}
+        className="p-4"
+        trainings={trainerTrainings}
+        title={t("trainerOverview.trainingList")}
+        initialDay="today"
+        showCounter={true}
+        showDaySelector={true}
       />
 
-      <div className="trainer-overview__trainings-section card-element">
+      {/* <div className="trainer-overview__trainings-section card-element">
         <h3 className="trainer-overview__title">
           {t("trainerOverview.history")}
-        </h3>
-        {/* <Selector
+        </h3> */}
+      {/* <Selector
           selection={abonementView}
           handleSelection={handleViewChange}
           buttonNames={buttonNames}
         /> */}
-        <div className="trainer-overview__trainings-list">
+      {/* <div className="trainer-overview__trainings-list">
           {currentMonthTrainings.length > 0 ? (
             currentMonthTrainings.map((el) => (
               <TrainerTrainingHistoryCard key={el.id} training={el} />
@@ -84,7 +67,7 @@ const TrainerOverview: React.FC<TrainerOverviewProps> = ({ user }) => {
             </p>
           )}
         </div>
-      </div>
+      </div> */}
       <ScrollToTopButton />
     </div>
   );

@@ -38,7 +38,7 @@ const Login = () => {
         <h2 className="auth__title">{t("login.title")}</h2>
         {error && (
           <Notification
-            message={error === "Not authorized" ? t("gen.authError") : error}
+            message={error === "Not authorized" ? t("common.authError") : error}
             type="error"
           />
         )}

@@ -2,9 +2,12 @@ import { ScheduleTraining } from "../types/Schedule";
 import { Training } from "../types/Training";
 import { isTomorrow } from "./utils";
 import { WeekDays } from "../types/WeekDays";
+import { SALARY } from "./constants";
 
 export function getSalaryPerTraining(visitors: number): number {
-  return visitors <= 3 ? 350 : 350 + (visitors - 3) * 50;
+  const minRate = SALARY.base;
+  const additionalRate = SALARY.additional;
+  return visitors <= 3 ? minRate : minRate + (visitors - 3) * additionalRate;
 }
 export function getSalaryForTop(visitors: number): number {
   return visitors * 175;
@@ -36,26 +39,26 @@ export const filterByVisitors = (
 
 export const filterTrainingsByDate = (
   trainings: Training[],
-  currentDate: Date,
+  date: Date,
   filterType: "month" | "day",
   upToCurrentMoment: boolean = false
 ) => {
   return trainings.filter((training) => {
     const trainingDate = new Date(training.date);
-    const isSameYear = trainingDate.getFullYear() === currentDate.getFullYear();
-    const isSameMonth = trainingDate.getMonth() === currentDate.getMonth();
+    const isSameYear = trainingDate.getFullYear() === date.getFullYear();
+    const isSameMonth = trainingDate.getMonth() === date.getMonth();
 
     if (filterType === "month") {
       if (isSameYear && isSameMonth) {
-        return upToCurrentMoment ? trainingDate <= currentDate : true;
+        return upToCurrentMoment ? trainingDate <= date : true;
       }
     }
 
     if (filterType === "day") {
-      const isSameDay = trainingDate.getDate() === currentDate.getDate();
+      const isSameDay = trainingDate.getDate() === date.getDate();
       if (isSameYear && isSameMonth && isSameDay) {
         return upToCurrentMoment
-          ? trainingDate.getHours() >= currentDate.getHours()
+          ? trainingDate.getHours() >= date.getHours()
           : true;
       }
     }

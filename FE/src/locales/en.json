@@ -1,11 +1,18 @@
 {
   "welcome": "Welcome to fitness studio",
-  "gen": {
+  "common": {
     "info": "Information",
     "ensure": "Are you sure?",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "authError": "Authentication period has passed, please log in again!"
+    "authError": "Authentication period has passed, please log in again!",
+    "yesterday": "Yesterday",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "customDate": "Custom Date",
+    "sort": "Sort by",
+    "earliest": "Earliest",
+    "latest": "Latest"
   },
   "login": {
     "title": "Log in",
@@ -289,7 +296,8 @@
     "tomorrowTrainings": "Tomorrow trainings",
     "noTrainings": "No trainings found",
     "history": "Training history",
-    "noHistory": "No history found"
+    "noHistory": "No history found",
+    "trainingList": "Training List"
   },
   "userList": {
     "total": "Total",

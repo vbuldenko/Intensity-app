@@ -71,7 +71,7 @@ const FooterNav = () => {
 
   return (
     <nav>
-      <h2 className="footer__title">{t("gen.info")}</h2>
+      <h2 className="footer__title">{t("common.info")}</h2>
       <ul className="footer__nav-list">
         {Object.entries(NavBarLinks).map(([key, value]) => (
           <li className="footer__nav-item" key={key}>

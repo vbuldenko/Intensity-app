@@ -40,7 +40,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             />
           )}
           <p className="text-center">
-            {confirmMessage ? confirmMessage : t("gen.ensure")}
+            {confirmMessage ? confirmMessage : t("common.ensure")}
           </p>
           <div className="flex justify-center gap-4">
             <button
