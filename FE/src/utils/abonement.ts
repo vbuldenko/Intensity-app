@@ -36,8 +36,8 @@ export function getCurrentAbonement(
     .filter((abonement) => abonement.status === "active")
     .sort(
       (a, b) =>
-        new Date(b.activatedAt).getTime() - new Date(a.activatedAt).getTime()
-    ); // Most recent active first
+        new Date(a.activatedAt).getTime() - new Date(b.activatedAt).getTime()
+    ); // Most late active first
 
   if (activeAbonements.length > 0) return activeAbonements[0];
 

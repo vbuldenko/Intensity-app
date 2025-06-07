@@ -46,8 +46,8 @@ export default function Training({ training }: { training: TrainingType }) {
           trainingId: training.id,
           // abonementId: reservation ? reservation.abonement : abonement?.id,
           abonementId: "67b98d4d2b2fa44c83b2c33b" as any,
-          updateType: "reservation", // updateType,
-          // updateType,
+          // updateType: "reservation", // updateType,
+          updateType,
         })
       ).unwrap();
     } catch (error) {
